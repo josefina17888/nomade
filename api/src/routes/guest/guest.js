@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const Host = require("../models/GUest");
+const Guest = require("../../models/Guest");
 
 
 router.post("/", async (req, res) => {
