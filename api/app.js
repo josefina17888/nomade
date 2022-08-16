@@ -1,14 +1,14 @@
 const express = require('express');
+const routes = require('./src/routes');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const routes = require('./routes/index.js');
-
-require('./db.js');
-
-const server = express();
 const cors = require('cors')
 
+const server = express();
+require('./db.js');
+
+server.use(routes);
 server.name = 'API';
 
 server.use(cors())
@@ -24,7 +24,7 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use('/', routes);
+
 
 
 // Error catching endware.
@@ -33,7 +33,7 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   const message = err.message || err;
   console.error(err);
   res.status(status).send(message);
-});
+}); 
 
 module.exports = server;
 

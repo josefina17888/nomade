@@ -1,17 +1,13 @@
-/* const { Router } = require('express');
-const hostRoute = require ('./src/routes/host')
-const bookingRoute = require ('./src/routes/booking')
+const { Router } = require('express');
 const router = Router();
 
+/* router.get('/', (req, res) =>{
+  res.send('Hello world!')
+}) */
+const hostRoute = require ('./host');
+const bookingRoute = require ('./booking');
 
+router.use("/api/host", hostRoute);
+router.use("/api/booking", bookingRoute); 
 
-  //middleware
-  app.use(express.json());
-  app.use(morgan("common"));
-
-
-  app.use("/api/host", hostRoute);
-  app.use("/api/booking", bookingRoute); 
-
-  
-  */
+module.exports = router;
