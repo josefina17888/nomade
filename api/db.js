@@ -1,14 +1,17 @@
-const db = require("mongoose");
+const express = require ("express");
+const mongoose = require ("mongoose");
+const dotenv = require ("dotenv");
+
+dotenv.config();
 
 
-db.Promise = global.Promise
+mongoose.connect(process.env.MONGO_URL,
+    (err)=>{
+    if(err){
+        console.log("********ERROR DE CONEXION****")
+    }else{
+        console.log("********CONEXION CORRECTA****")
+    }
+});
 
-async function connect(uri) {
-    db.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-    console.log('[db] Conectada con éxito')
-}
-
-module.exports = connect
+module.exports = mongoose;
