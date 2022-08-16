@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 
-const PostSchema = new mongoose.Schema({
+const BookingSchema = new mongoose.Schema({
   checkIn: { type: Date, required: true },
   checkOut: { type: Date, required: true },
   night: { type: Number, required: true },
@@ -18,4 +19,4 @@ const PostSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+module.exports = mongoose.model("Booking", BookingSchema);
