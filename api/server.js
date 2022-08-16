@@ -5,7 +5,7 @@ const morgan = require('morgan');
 require("dotenv").config();
 const db = require("./db")
 const cors = require("cors")
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://Nabil:1234@cluster0.ctyy9yf.mongodb.net/?retryWrites=true&w=majority`;
 
 db(uri)
 
