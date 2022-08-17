@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {addGuest,upDate,getGuest} = require("./controller")
+const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
 const Model = require("../../models/Guest");
 
 
@@ -42,5 +42,17 @@ router.patch("/:id", async (req, res) => {
             res.status(404).send(error)
         }    
 });
+
+router.delete("/:id", async (req,res) => {
+    const {id} = req.params
+    try{
+    await deleteMessage(id)
+    res.status(200).send(`Usuario: ${id} eliminado `)
+    }
+    catch (error){
+        res.status(404).send(error)
+    }
+})
+
 
 module.exports = router

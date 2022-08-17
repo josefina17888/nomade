@@ -43,6 +43,15 @@ async function upDate (id , body) {
     
 }
 
+async function deleteMessage (id) {
+    if (!id) {
+        return "Falta Id"
+    }
+    const deleteGuest = await Model.deleteOne({_id:id})
+    return deleteGuest
+}
+
+
 
 
 
@@ -50,7 +59,7 @@ module.exports = {
     addGuest,
     getGuest,
     upDate,
-    // deleteMessage
+    deleteMessage
 }
 
 
