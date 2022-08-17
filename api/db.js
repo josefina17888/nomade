@@ -1,14 +1,17 @@
-const db = require("mongoose");
+const express = require ("express");
+const mongoose = require ("mongoose");
+const dotenv = require ("dotenv");
+const morgan = require ("morgan"); 
+const app = express();
 
+dotenv.config();
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority;`
 
-db.Promise = global.Promise
-
-async function connect(uri) {
-    db.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-    console.log('[db] Conectada con éxito')
-}
-
-module.exports = connect
+mongoose.connect(process.env.MONGO_URL,
+    (err)=>{
+    if(err){
+        console.log("********ERROR DE CONEXION****")
+    }else{
+        console.log("********CONEXION CORRECTA****")
+    }
+});
