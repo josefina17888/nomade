@@ -21,7 +21,7 @@ const hostSchema = new Schema({
   Lodging: [
     {
       type: Schema.ObjectId,
-      ref: "Lodging",
+      ref: "lodging",
     },
   ],
 });
