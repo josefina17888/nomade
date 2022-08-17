@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const HostSchema = new Schema({
+const hostSchema = new Schema({
   name: {
     type: String,
   },
@@ -21,11 +21,11 @@ const HostSchema = new Schema({
   Lodging: [
     {
       type: Schema.ObjectId,
-      ref: "Lodging",
+      ref: "lodging",
     },
   ],
 });
 
-const model = mongoose.model("Host", HostSchema);
+const model = mongoose.model("Host", hostSchema);
 
 module.exports = model;

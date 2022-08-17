@@ -9,6 +9,11 @@ const GuestSchema = new Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+    min: 6,
+  },
   cellPhone: {
     type: String,
   },
