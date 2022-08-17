@@ -21,8 +21,7 @@ const guestReviewSchema = new Schema({
         type: String
     },
     dated: {
-        type: Date,
-        required: true
+        type: Date
     }
 })
 
