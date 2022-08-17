@@ -12,11 +12,11 @@ const BookingSchema = new mongoose.Schema({
   hostId: {
     type: Schema.ObjectId,
     ref: "Host",
-  },
+  }/* ,
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
-  }
+  } */
 });
 
 module.exports = mongoose.model("Booking", BookingSchema);
