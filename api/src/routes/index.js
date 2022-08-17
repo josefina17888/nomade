@@ -5,9 +5,6 @@ var bodyParser = require('body-parser')
 router.use(bodyParser.json()) 
 router.use(bodyParser.urlencoded({ extended: true }))
 
-/* router.get('/', (req, res) =>{
-  res.send('Hello world!')
-}) */
 const hostRoute = require ('../routes/host/host');
 const bookingRoute = require ('../routes/booking/booking');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')

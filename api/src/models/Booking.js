@@ -16,7 +16,7 @@ const BookingSchema = new mongoose.Schema({
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
-  },
+  }
 });
 
 module.exports = mongoose.model("Booking", BookingSchema);
