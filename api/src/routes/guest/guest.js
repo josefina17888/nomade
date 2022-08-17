@@ -1,16 +1,46 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
-const Guest = require("../../models/Guest");
+const {addGuest,upDate,getGuest} = require("./controller")
+const Model = require("../../models/Guest");
+
+
+router.get("/", async(req,res) => {
+    let {filterGuest} = req.query
+    try {
+        const guest = await getGuest(filterGuest)
+        res.status(201).send(guest)
+    }
+    catch(error) {
+        res.status(500).send(error)
+    }
+})
 
 
 router.post("/", async (req, res) => {
-   
-      res.status(200).json(savedHost);
- 
-      res.status(500).json(err);
-   
-  });
-
+  const {username, name , lastname , email , cellPhone , dni , country,picture, birthDate} = req.body
+    
+    try{
+      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,picture, birthDate)
+      res.status(201).send(newGuest)
+      }
+      catch (error){
+          res.status(404).send(error)
+      }
   
- module.exports = router;
+
+});
+
+router.patch("/:id", async (req, res) => {
+    const{id} = req.params
+    const {username, name , lastname , email , cellPhone , country,picture, birthDate} = req.body  
+    try{
+
+        const updateGuest = await upDate(id , req.body)
+        res.status(201).send("Actualizado con éxito")
+        }
+        catch (error){
+            res.status(404).send(error)
+        }    
+});
+
+module.exports = router

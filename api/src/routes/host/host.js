@@ -6,11 +6,11 @@ const Host = require("../../models/Host");
 
 router.post("/", async (req, res) => {
    
-  res.status(200).json(savedHost);
+      res.status(200).json(savedHost);
+ 
+      res.status(500).json(err);
+   
+  });
 
-  res.status(500).json(err);
-
-});
-
-
-module.exports = router;
+  
+ module.exports = router;
