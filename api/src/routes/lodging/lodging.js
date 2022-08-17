@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
+const Host = require("../../models/Host");
 
 router.post("/", async (req, res) => {
   //crear nuevo hospedaje
@@ -49,6 +50,15 @@ router.post("/", async (req, res) => {
   } catch (err) {
     res.json(err);
   }
+});
+
+router.get("/", async (req, res) => {
+
+  Lodging.find({}, function (err, lodging) {
+    Host.populate(lodging, { path: "hostId" }, function (err, lodging) {
+      res.status(200).send(lodging);
+    });
+  });
 });
 
 module.exports = router;
