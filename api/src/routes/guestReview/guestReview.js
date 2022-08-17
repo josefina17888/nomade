@@ -8,6 +8,9 @@ router.post("/", async (req, res) => {
     if (!rating || !comments){
         return res.status(400).send({message: 'Rating and comments are required'})
     }
+    else if (rating < 1 || rating > 5){
+        return res.status(400).send({message: 'Rating must be between 1 and 5'})
+    }
     else { 
         try {
             const guestRevs = new guestReview(req.body);
