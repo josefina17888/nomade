@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer")
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
 const Model = require("../../models/Guest");
 
+const upload = multer({
+    dest:"public/files/uploads/images"
+});
+
+
+  
 
 router.get("/", async(req,res) => {
     let {filterGuest} = req.query
@@ -16,11 +23,13 @@ router.get("/", async(req,res) => {
 })
 
 
-router.post("/", async (req, res) => {
-  const {username, name , lastname , email , cellPhone , dni , country,picture, birthDate} = req.body
+router.post("/", upload.single("picture") ,async (req, res) => {
+  const {username, name , lastname , email , cellPhone , dni , country, birthDate} = req.body
+  const {filename} = req.file
+  console.log(req.file)
     
     try{
-      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,picture, birthDate)
+      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,filename, birthDate)
       res.status(201).send(newGuest)
       }
       catch (error){

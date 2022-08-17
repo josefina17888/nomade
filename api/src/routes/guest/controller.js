@@ -13,14 +13,21 @@ async function getGuest (filterGuest){
       }    
 }
 
-async function addGuest (username, name , lastname , email , cellPhone , dni , country,picture, birthDate) {
+async function addGuest (username, name , lastname , email , cellPhone , dni , country,filename, birthDate) {
     
-    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !picture || !birthDate ) {
+    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate ) {
         return "Faltan datos"
     }
 
+        console.log(filename)
+        let fileUrl = ""
+        if(filename){
+            fileUrl = "http://localhost:3000/api/public/files/uploads/images/" + filename + ".jpg"
+        }
+        console.log("fileUrl:", fileUrl)
+
     const newGuest = {
-        username, name , lastname , email , cellPhone , dni , country,picture, birthDate
+        username, name , lastname , email , cellPhone , dni , country,picture: fileUrl, birthDate
     };
     try{
         const myGuest = await new Model(newGuest);
