@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const path = require('path')
 
 require('./db.js');
 
@@ -10,6 +11,9 @@ const server = express();
 const cors = require('cors')
 
 server.name = 'API';
+
+server.use(express.static(path.join(__dirname,"public")));
+// server.use('/images', express.static('images'));
 
 server.use(cors())
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));

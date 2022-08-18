@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
 const hostSchema = new Schema({
   name: {
     type: String,
@@ -25,6 +26,10 @@ const hostSchema = new Schema({
     },
   ],
 });
+
+hostSchema.methods.setImgUrl = function setImgUrl (filename) {
+  this.photo = `http://localhost:3000/files/uploads/${filename}`
+}
 
 const model = mongoose.model("Host", hostSchema);
 
