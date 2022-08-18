@@ -3,9 +3,11 @@ const routes = require('./src/routes');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors')
+const path = require("path")
+require('./db.js');
 
 const server = express();
-require('./db.js');
+
 
 server.use(routes);
 server.name = 'API';
@@ -13,7 +15,7 @@ server.name = 'API';
 server.use(cors())
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
-server.use("/app", express.static("public"));
+server.use(express.static(path.join(__dirname,"public")));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => {

@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 router.use(bodyParser.json()) 
 router.use(bodyParser.urlencoded({ extended: true }))
 
+
 const hostRoute = require ('../routes/host/host');
 const bookingRoute = require ('../routes/booking/booking');
 

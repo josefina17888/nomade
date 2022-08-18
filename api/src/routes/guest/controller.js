@@ -13,26 +13,23 @@ async function getGuest (filterGuest){
       }    
 }
 
-async function addGuest (username, name , lastname , email , cellPhone , dni , country,filename, birthDate) {
+async function addGuest (username, name , lastname , email , cellPhone , dni , country,filename, birthDate,password) {
     
-    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate ) {
+    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate || !password ) {
         return "Faltan datos"
     }
+  
+    const newGuest = new Model({
+        username, name , lastname , email , cellPhone , dni , country, birthDate,password
+    });
 
-        console.log(filename)
-        let fileUrl = ""
-        if(filename){
-            fileUrl = "http://localhost:3000/api/public/files/uploads/images/" + filename + ".jpg"
-        }
-        console.log("fileUrl:", fileUrl)
+    if(filename) {
+        newGuest.setImgUrl(filename)
+    }
 
-    const newGuest = {
-        username, name , lastname , email , cellPhone , dni , country,picture: fileUrl, birthDate
-    };
     try{
-        const myGuest = await new Model(newGuest);
-        myGuest.save()
-        return myGuest
+        await newGuest.save()
+        return newGuest
     }
     catch(error){
         console.log(error)
@@ -57,8 +54,6 @@ async function deleteMessage (id) {
     const deleteGuest = await Model.deleteOne({_id:id})
     return deleteGuest
 }
-
-
 
 
 

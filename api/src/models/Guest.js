@@ -34,5 +34,11 @@ const GuestSchema = new Schema({
   birthDate: { type: Date },
 });
 
+
+GuestSchema.methods.setImgUrl = function setImgUrl (filename) {
+  this.picture = "http://localhost:3001/files/uploads/" + filename
+}
+
+
 const model = mongoose.model("Guest", GuestSchema);
 module.exports = model;
