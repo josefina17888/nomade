@@ -17,7 +17,7 @@ const hostSchema = new Schema({
   dni: String,
   country: String,
   birthDate: Date,
-  photo: String,
+  picture: String,
   Lodging: [
     {
       type: Schema.ObjectId,
@@ -25,6 +25,11 @@ const hostSchema = new Schema({
     },
   ],
 });
+
+hostSchema.methods.setImgUrl = function setImgUrl (filename) {
+  this.picture = "http://localhost:3001/files/uploads/" + filename
+}
+
 
 const model = mongoose.model("Host", hostSchema);
 

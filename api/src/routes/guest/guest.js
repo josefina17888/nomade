@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
-const Model = require("../../models/Guest");
 const upload = require("../../../libs/storage")
  
 
