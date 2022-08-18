@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const Host = require("../../models/Host");
+<<<<<<< HEAD
 const Booking = require("../../models/Booking");
 const Lodging = require("../../models/Lodging");
+=======
+>>>>>>> 054d9ba0ca5b364cda319efd7096f8e7ce2aaeb4
 
 
 router.post("/", async (req, res) => {

@@ -8,7 +8,7 @@ const LodgingSchema = new Schema({
   typeOfRoom: [{ type: String }],
   bathrooms: { type: Number },
   typeOfBathrooms: { type: String },
-
+  price:{ type: Number},
   city: { type: String },
   country: { type: String },
   address: { type: String },
