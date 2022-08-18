@@ -2,36 +2,22 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const Booking = require("../../models/Booking");
-const Host = require('../../models/Host');
-const { default: mongoose } = require("mongoose");
+const Host = require("../../models/Host");
+const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 
-router.get('/', async(req, res) =>{
-    Booking.find(function (err, booking) {
-        if (err) res.send(500, err.message);
-    
-        console.log("GET /booking");
-        res.status(200).json(booking);
-      })
-}) 
-
-router.post("/:id", async (req, res) => {
+//POST del nuevo booking de Guest
+router.post("/:guestId/:lodgingId", async (req, res) => {
   try {
-    const booking = toId(req.params.hostId)
-    console.log(booking)
-    /* const host = Host.findById(req.params)
-    console.log(host) */
-    /* const booking = new Booking(req.body);
-    booking.save()
-    console.log(booking)
-    Host.populate(booking, { path: "hostId" })
-    res.status(200).json(booking); */
-
+    const newBooking = await Booking.create(req.body)
+    newBooking.lodgingId = toId(req.params.lodgingId)
+    newBooking.guestId = toId(req.params.guestId)
+    newBooking.save();
+    res.status(200).json(newBooking);
   } catch (error) {
-      res.status(500).json(error)
+    res.status(400).send("Booking not created");
+    console.log(error);
   }
-}); 
+});
 
 module.exports = router;
-
-
