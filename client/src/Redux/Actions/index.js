@@ -2,6 +2,7 @@ import axios from "axios";
 
 
 
+
 export function getLodgings (){
     return async function(dispatch){
         try{
