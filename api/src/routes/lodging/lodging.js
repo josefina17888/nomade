@@ -27,5 +27,26 @@ router.post("/:hostId", async (req, res) => {
   }
   })
 
+  //get Lodgings filtrado por city
+  router.get("/", async (req, res) => {
+    let cityFiltered = req.query;
+    if (cityFiltered){
+      try {
+        if (city !== undefined){
+          await Lodging.find({city: cityFiltered},  (err, lodging) =>{
+            console.log(cityFiltered); 
+            res.status(200).send(lodging);
+          })
+        }
+      } catch(error){
+        res.json(error)
+      }
+    }
+    else {
+      res.status(404).send('Ocurrió un error')
+    }
+
+  });
+
 module.exports = router;
 
