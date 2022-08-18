@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 
 //Postea un nuevo Guest
 router.post("/", upload.single("picture") ,async (req, res) => {
-    
+
     try{
       const newGuest = await Guest.create(req.body);
       newGuest.save();
@@ -45,9 +45,21 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       catch (error){
           res.status(404).send(error)
       }
-  
+
 
 });
+
+
+router.get("/", async (req, res) => {
+    try {
+      Guest.find({}, function (err, guest) {
+        res.status(200).send(guest);
+      });
+    } catch (error) {
+      res.status(400).send('Guests not found')
+          console.log(error)
+    }
+  });
 
 router.patch("/:id", async (req, res) => {
     const{id} = req.params
@@ -76,3 +88,5 @@ router.delete("/:id", async (req,res) => {
 
 
 module.exports = router
+
+
