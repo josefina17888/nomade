@@ -1,20 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const Host = require("../../models/Booking");
+const Booking = require("../../models/Booking");
+const Host = require("../../models/Host");
+const mongoose = require("mongoose");
+const toId = mongoose.Types.ObjectId;
 
-router.get('/', async(req, res) =>{
-    res.send('Hola')
-})
+//POST del nuevo booking de Guest
+router.post("/:guestId/:lodgingId", async (req, res) => {
+  try {
+    const newBooking = await Booking.create(req.body)
+    newBooking.lodgingId = toId(req.params.lodgingId)
+    newBooking.guestId = toId(req.params.guestId)
+    newBooking.save();
+    res.status(200).json(newBooking);
+  } catch (error) {
+    res.status(400).send("Booking not created");
+    console.log(error);
+  }
+});
 
-
-router.post("/", async (req, res) => {
-   
-      res.status(200).json(savedHost);
- 
-      res.status(500).json(err);
-   
-  });
-
-  
- module.exports = router;
+module.exports = router;
