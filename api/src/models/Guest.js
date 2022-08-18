@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const GuestSchema = new Schema({
   username: { type: String, required: true },
   name: { type: String, required: true },
-  lastName: { type: String, required: true },
+  lastname: { type: String, required: true },
   email: {
     type: String,
     required: true,
@@ -31,7 +31,7 @@ const GuestSchema = new Schema({
       ref: "GuestReview",
     },
   ],
-  dateBirth: { type: Date },
+  birthDate: { type: Date },
 });
 
 const model = mongoose.model("Guest", GuestSchema);
