@@ -2,15 +2,26 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer")
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
-const Model = require("../../models/Guest");
+const Guest = require("../../models/Guest");
+const Booking = require('../../models/Booking')
 
 const upload = multer({
     dest:"public/files/uploads/images"
 });
 
+//Obtiene todas las reservaciones de un Guest
+router.get("/:guestId/bookings", async(req,res) => {
+    try {
+        Booking.find({guestId: req.params.guestId},(error, bookings)=>{
+            res.json(bookings)
+        })
+    }
+    catch(error) {
+        res.status(500).send(error)
+    }
+})
 
-  
-
+//obtiene todos los Guest
 router.get("/", async(req,res) => {
     let {filterGuest} = req.query
     try {
@@ -24,13 +35,11 @@ router.get("/", async(req,res) => {
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
-  const {username, name , lastname , email , cellPhone , dni , country, birthDate} = req.body
-  const {filename} = req.file
-  console.log(req.file)
     
     try{
-      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,filename, birthDate)
-      res.status(201).send(newGuest)
+      const newGuest = await Guest.create(req.body);
+      newGuest.save();
+      res.status(200).send(newGuest);
       }
       catch (error){
           res.status(404).send(error)

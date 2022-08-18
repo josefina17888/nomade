@@ -9,10 +9,10 @@ const BookingSchema = new mongoose.Schema({
   guests: { type: Number, required: true },
   costNight: { type: Number, required: true },
   totalCost: { type: Number, required: true },
-  hostId: {
+  lodgingId: {
     type: Schema.ObjectId,
-    ref: "Host",
-  },
+    ref: "Lodging",
+  } ,
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
