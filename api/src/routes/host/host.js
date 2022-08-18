@@ -32,7 +32,6 @@ router.post("/", async (req, res) => {
 
 
   //ver todas las reservaciones de un complejo de un host
-  //falta relacion lodging y booking
   router.get('/:hostId/:lodgingId', async(req, res)=>{
     try {
         Booking.find({lodgingId: req.params.lodgingId},(error, bookings)=>{

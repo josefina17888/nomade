@@ -22,18 +22,19 @@ router.get("/:guestId/bookings", async(req,res) => {
 })
 
 //obtiene todos los Guest
-router.get("/", async(req,res) => {
-    let {filterGuest} = req.query
+
+router.get("/", async (req, res) => {
     try {
-        const guest = await getGuest(filterGuest)
-        res.status(201).send(guest)
+      Guest.find({}, function (err, guest) {
+        res.status(200).send(guest);
+      });
+    } catch (error) {
+      res.status(400).send('Guests not found')
+          console.log(error)
     }
-    catch(error) {
-        res.status(500).send(error)
-    }
-})
+  });
 
-
+//Postea un nuevo Guest
 router.post("/", upload.single("picture") ,async (req, res) => {
     
     try{
@@ -61,6 +62,7 @@ router.patch("/:id", async (req, res) => {
         }    
 });
 
+//Esta ruta es probable que no se considere en el Back y se modifique por Borrado Lógico
 router.delete("/:id", async (req,res) => {
     const {id} = req.params
     try{
