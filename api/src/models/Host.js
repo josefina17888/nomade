@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const hostSchema = new Schema({
   name: {
     type: String,
-  }/* ,
+  },
   lastName: {
     type: String,
   },
@@ -23,7 +23,7 @@ const hostSchema = new Schema({
       type: Schema.ObjectId,
       ref: "lodging",
     },
-  ], */
+  ],
 });
 
 const model = mongoose.model("Host", hostSchema);
