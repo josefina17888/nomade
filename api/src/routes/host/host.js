@@ -9,6 +9,7 @@ const toId = mongoose.Types.ObjectId
 
 
 
+/// postea el host 
 router.post("/", async (req, res) => {
   const {name , lastname , email , cellPhone , dni ,country, birthDate, photo} = req.body
   try {
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
 
 });
 
-/// trae los lodgings de un host
+/// trae todos los lodgings de un host
 router.get("/:hostId", async (req, res) => {
   Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
 
@@ -42,5 +43,3 @@ router.get("/:hostId", async (req, res) => {
 
   
   module.exports = router;
-
-

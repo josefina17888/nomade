@@ -2,14 +2,13 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer")
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
-const Model = require("../../models/Guest");
+const Guest = require("../../models/Guest");
+const Booking = require('../../models/Booking')
 
 const upload = multer({
     dest:"public/files/uploads/images"
 }); 
 
-
-  
 router.post("/", upload.single("picture") ,async (req, res) => {
 
     try{
@@ -62,4 +61,5 @@ router.delete("/:id", async (req,res) => {
 
 
 module.exports = router
+
 
