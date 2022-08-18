@@ -1,65 +1,52 @@
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Host = require("../../models/Host");
+const mongoose = require ("mongoose")
+const toId = mongoose.Types.ObjectId
 
-router.post("/", async (req, res) => {
-  //crear nuevo hospedaje
-  const newLodging = new Lodging({
-    lodgingType: req.body.lodgingType,
-    rooms: req.body.rooms,
-    typeOfRoom: req.body.typeOfRoom,
-    bathrooms: req.body.bathrooms,
-    typeOfBathrooms: req.body.typeOfBathrooms,
-    city: req.body.city,
-    country: req.body.country,
-    address: req.body.address,
-    numOfGuests: req.body.numOfGuests,
-    checkIn: req.body.checkIn,
-    checkOut: req.body.checkOut,
-    services: {
-      wifi: req.body.wifi,
-      ac: req.body.ac,
-      tv: req.body.tv,
-      security: req.body.security,
-      cleaning: req.body.cleaning,
-      parking: req.body.parking,
-      laundry: req.body.laundry,
-      hotWater: req.body.hotWater,
-      kitchen: req.body.kitchen,
-      pool: req.body.pool,
-      dining: req.body.dinin,
-      pets: req.body.pets,
-    },
-    description: req.body.description,
-  });
-  try {
-     /* const relacion = await Lodging.aggregate([{
-        $lookup:{
-            from:"Host",
-            localfield: "hostId",
-            foreignField: "_id",
-            as: "host"
-        }
-    }])
-    console.log("*********relacion*********", relacion)  */
-    // guardar usuario  y respuesta
-    const lodging = await newLodging.save();
-    console.log(lodging);
+//esta crea el hospedaje y le asigna el host
+router.post("/:hostId", async (req, res) => {
+try{
+  const newLodging = await Lodging.create(req.body)
+ newLodging.hostId = toId(req.params.hostId)
+ newLodging.save()
+  res.json(newLodging)
+}catch(err){
+  res.json(err)
+}
+}) 
 
-    res.status(200).json(lodging);
-  } catch (err) {
-    res.json(err);
-  }
-});
 
-router.get("/", async (req, res) => {
+// esto crea una relacion al hacer get
+/* router.get("/relacionado/:lodgingId/:hostId", async (req, res) => {
 
-  Lodging.find({}, function (err, lodging) {
-    Host.populate(lodging, { path: "hostId" }, function (err, lodging) {
+  req.params.hostId = toId(req.params.hostId)
+  const lodging = await Lodging.findById(req.params.lodgingId)
+  lodging.hostId = req.params.hostId
+  lodging.save()
+  res.json(lodging)
+
+}); */
+
+
+//trae todos los hospedajes con la info agregada del host
+router.get("/all", async (req, res) => {
+
+ const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"});
+ res.json(lodging)
+}); 
+
+
+///////////trae el lodging con toda la info del host////////////
+ router.get("/", async (req, res) => {
+  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
+  res.send(lodging)
+
+  /* Lodging.find({},  (err, lodging) =>{ 
       res.status(200).send(lodging);
-    });
-  });
-});
+    
+  }) */
+}); 
 
 module.exports = router;
 
