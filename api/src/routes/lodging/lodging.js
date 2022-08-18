@@ -3,11 +3,13 @@ const Lodging = require("../../models/Lodging");
 const Host = require("../../models/Host");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
-
+const upload = require("../../../libs/storage")
 //esta crea el hospedaje y le asigna el host
-router.post("/:hostId", async (req, res) => {
+router.post("/:hostId", upload.array("images"), async (req, res) => {
 try{
   const newLodging = await Lodging.create(req.body)
+  newLodging.images = req.files.map(e=> "http://localhost:3001/files/uploads/" + e.filename)
+  console.log(newLodging.images )
  newLodging.hostId = toId(req.params.hostId)
  newLodging.save()
   res.json(newLodging)
@@ -19,13 +21,11 @@ try{
 
 // esto crea una relacion al hacer get
 /* router.get("/relacionado/:lodgingId/:hostId", async (req, res) => {
-
   req.params.hostId = toId(req.params.hostId)
   const lodging = await Lodging.findById(req.params.lodgingId)
   lodging.hostId = req.params.hostId
   lodging.save()
   res.json(lodging)
-
 }); */
 
 
@@ -49,6 +49,5 @@ router.get("/all", async (req, res) => {
 }); 
 
 module.exports = router;
-
 
 
