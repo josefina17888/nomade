@@ -1,36 +1,62 @@
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Host = require("../../models/Host");
-<<<<<<< HEAD
-const mongoose = require("mongoose");
-const toId = mongoose.Types.ObjectId;
-=======
->>>>>>> 054d9ba0ca5b364cda319efd7096f8e7ce2aaeb4
 
-router.get("/:hostId/", async (req, res) => {
-  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
-  res.send(lodging)
+router.post("/lodging",upload.single("pictures"), async (req, res) => {
+  //crear nuevo hospedaje
+ 
+  const newLodging = new Lodging({
+    lodgingType: req.body.lodgingType,
+    rooms: req.body.rooms,
+    typeOfRoom: req.body.typeOfRoom,
+    bathrooms: req.body.bathrooms,
+    typeOfBathrooms: req.body.typeOfBathrooms,
+    city: req.body.city,
+    country: req.body.country,
+    address: req.body.address,
+    numOfGuests: req.body.numOfGuests,
+    checkIn: req.body.checkIn,
+    checkOut: req.body.checkOut,
+   
+    services: {
+      wifi: req.body.wifi,
+      ac: req.body.ac,
+      tv: req.body.tv,
+      security: req.body.security,
+      cleaning: req.body.cleaning,
+      parking: req.body.parking,
+      laundry: req.body.laundry,
+      hotWater: req.body.hotWater,
+      kitchen: req.body.kitchen,
+      pool: req.body.pool,
+      dining: req.body.dinin,
+      pets: req.body.pets,
+    },
+    description: req.body.description,
+  });
+  if(req.file.filename) {
+    newLodging.setImgUrl(req.file.filename)
+  }
+  try {
+     /* const relacion = await Lodging.aggregate([{
+        $lookup:{
+            from:"Host",
+            localfield: "hostId",
+            foreignField: "_id",
+            as: "host"
+        }
+    }])
+    console.log("*********relacion*********", relacion)  */
+    // guardar usuario  y respuesta
+    const lodging = await newLodging.save();
+    console.log(lodging);
+
+    res.status(200).json(lodging);
+  } catch (err) {
+    res.json(err);
+  }
 });
 
-<<<<<<< HEAD
-//get all Lodgings para mostrar en Home
-router.get("/", async (req, res) => {
-  Lodging.find({},  (err, lodging) =>{ 
-    res.status(200).send(lodging);
-})
-}); 
-
-router.post("/:hostId", async (req, res) => {
-  try{
-    const newLodging = await Lodging.create(req.body)
-   newLodging.hostId = toId(req.params.hostId)
-   newLodging.save()
-    res.json(newLodging)
-  }catch(err){
-    res.json(err)
-  }
-  })
-=======
 router.get("/", async (req, res) => {
 
   Lodging.find({}, function (err, lodging) {
@@ -39,7 +65,6 @@ router.get("/", async (req, res) => {
     });
   });
 });
->>>>>>> 054d9ba0ca5b364cda319efd7096f8e7ce2aaeb4
 
 module.exports = router;
 

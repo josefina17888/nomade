@@ -15,6 +15,7 @@ const LodgingSchema = new Schema({
   numOfGuests: { type: Number },
   checkIn: { type: String },
   checkOut: { type: String },
+  pictures: {type :String },
   services: {
     wifi: { type: Boolean },
     ac: { type: Boolean },
@@ -42,7 +43,11 @@ const LodgingSchema = new Schema({
     type: Schema.ObjectId,
     ref: "LodgingReview",
   },
+
+  
 });
+
+
 
 const model = mongoose.model("Lodging", LodgingSchema);
 
