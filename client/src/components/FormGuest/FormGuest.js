@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
 import style from "./FormUser.module.css";
-import { postGuest} from '../../Redux/Actions/index';
+import { postGuest} from "../../Redux/Actions";
 
 export default function FormUser() {
   const dispatch= useDispatch()
@@ -49,17 +49,6 @@ function handleChange(e){
       ...input,
       [e.target.name] : e.target.value
   })
-}
-
-  function handleChange(e){
-    
-    setInput({
-        ...input,
-       
-        [e.target.name] : e.target.value,
-        [e.target.picture] : e.target.file
-    })
-   
 }
 
   return (
@@ -147,3 +136,4 @@ function handleChange(e){
     </div>
   );
 }
+

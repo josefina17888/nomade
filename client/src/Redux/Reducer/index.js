@@ -65,6 +65,15 @@ function rootReducer (state = initialState, action){
             };
 
 
+            case 'GET_BY_NAME':
+                if(typeof(action.payload)==='string'){
+                return alert(" Not Found");
+          }
+            return{
+              ...state,
+            lodgings: action.payload
+            } 
+
         case 'GET_LODGING_DETAIL':
             return {
                 ...state,
@@ -75,6 +84,7 @@ function rootReducer (state = initialState, action){
         default: 
             return state;
         }
+       
         }
        
 export default rootReducer;
