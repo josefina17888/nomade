@@ -6,10 +6,14 @@ const toId = mongoose.Types.ObjectId
 const upload = require("../../../libs/storage")
 
 //esta crea el hospedaje y le asigna el host
-router.post("/:hostId", async (req, res) => {
+router.post("/:hostId", upload.single("picture"), async (req, res) => {
+  const {filename} = req.file
   try{
     const newLodging = await Lodging.create(req.body)
    newLodging.hostId = toId(req.params.hostId)
+   if(filename) {
+    newLodging.setImgUrl(filename)
+    }
    newLodging.save()
     res.json(newLodging)
   }catch(err){
