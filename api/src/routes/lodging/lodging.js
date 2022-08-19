@@ -5,6 +5,7 @@ const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 const upload = require("../../../libs/storage")
 //esta crea el hospedaje y le asigna el host
+
 router.post("/:hostId", upload.array("picture"), async (req, res) => {
 try{
   const newLodging = await Lodging.create(req.body)
@@ -17,6 +18,7 @@ try{
   res.json(err)
 }
 }) 
+
 
 
 // esto crea una relacion al hacer get

@@ -22,7 +22,9 @@ router.post("/", upload.single("picture") ,async (req, res) => {
   console.log(req.file)
    
     try{
+
       const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,  picture, birthDate,password)
+
       res.status(201).send(newGuest)
     }
       catch (error){

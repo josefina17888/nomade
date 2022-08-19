@@ -1,0 +1,15 @@
+.paging {
+    font-weight: bold;
+    font-size: small;
+    font-style: normal;
+    text-decoration: none;
+    text-decoration-line: none;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    display: inline-block;
+    list-style-type: none;
+    margin-right: 40px;
+}
+

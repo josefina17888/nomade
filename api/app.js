@@ -7,7 +7,10 @@ const path = require("path")
 const server = express();
 require('./db.js');
 
-server.options("*",cors())
+
+
+server.options('*', cors())
+
 server.name = 'API';
 
 

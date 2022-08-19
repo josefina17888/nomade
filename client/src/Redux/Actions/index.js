@@ -18,6 +18,13 @@ export function getLodgings (){
 }
 }
 
+export function orderPrice(payload){
+  return {
+      type: "ORDER_PRICE",
+      payload
+  }
+}
+
 export function setLoaderTrue() {
     return {
       type: "LOADER_TRUE",
@@ -30,6 +37,7 @@ export function setLoaderTrue() {
     }
   }
 
+
   export function postGuest(payload){
     return async function(dispatch){
       console.log(payload)
@@ -38,3 +46,18 @@ export function setLoaderTrue() {
         return json
 }
 } 
+
+  export function getDetail (_id){
+    return async function (dispatch){
+        try{
+            const res = await axios.get("http://localhost:3001/api/lodging/" + _id)
+            return dispatch({
+                type: "GET_LODGING_DETAIL",
+                payload: res.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+

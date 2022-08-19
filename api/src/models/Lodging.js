@@ -50,6 +50,11 @@ const LodgingSchema = new mongoose.Schema({
   
 });
 
+LodgingSchema.methods.setImgUrl = function setImgUrl (filename) {
+  this.picture = "http://localhost:3001/files/uploads/" + filename
+}
+
+
 const model = mongoose.model("Lodging", LodgingSchema);
 
 module.exports = model;
