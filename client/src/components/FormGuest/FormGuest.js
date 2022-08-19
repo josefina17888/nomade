@@ -8,6 +8,7 @@ import { postGuest} from "../../Redux/Actions";
 export default function FormUser() {
   const dispatch= useDispatch()
   const history = useHistory()
+ 
   const [input, setInput] = useState({
     username: "",
     name: "",
@@ -25,7 +26,10 @@ export default function FormUser() {
   function handleSubmit(e){
     e.preventDefault()
     dispatch(postGuest(input))  
+    console.log(e.target.file)
     alert("Usuario creado correctamente!!")
+    
+
     setInput({
       username: "",
       name: "",
@@ -40,13 +44,20 @@ export default function FormUser() {
     history.push("/login")
 }
 
-
-
+function handleChange(e){
+  setInput({
+      ...input,
+      [e.target.name] : e.target.value
+  })
+}
 
   function handleChange(e){
+    
     setInput({
         ...input,
-        [e.target.name] : e.target.value
+       
+        [e.target.name] : e.target.value,
+        [e.target.picture] : e.target.file
     })
    
 }
