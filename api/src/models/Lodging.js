@@ -12,7 +12,7 @@ const LodgingSchema = new mongoose.Schema({
   beds:[{type: String}],
   bathrooms: { type: Number },
   ownBathroom: { type: Boolean },
-  price:{ type: String },
+  price:{  type: Number},
   picture: [{ type: String }],
   city: { type: String },
   country: { type: String },

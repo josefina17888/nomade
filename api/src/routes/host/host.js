@@ -7,11 +7,16 @@ const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 
 /// postea el host 
-router.post("/:guestId", async (req, res) => {
+
+router.post("/:guestId", upload.single("photo"), async (req, res) => {
   const {name , lastname , email , cellPhone , dni ,country, birthDate } = req.body
+  const filename = req.file
   try {
     const myHost = await Host.create(req.body);
     myHost.guestId = toId(req.params.guestId);
+    if(filename) {
+      myHost.setImgUrl(req.file.filename)
+  }
     myHost.save()
         res.status(200).json(myHost)
     } catch (error) {
@@ -52,5 +57,16 @@ router.get("/", async (req, res) => {
     }
   })
 
+  router.put("/:id", async (req, res) => {
+    const { name, lastname, email, cellPhone, country, photo } = req.body;
   
-module.exports = router;
+    try {
+      await Host.findByIdAndUpdate(req.params.id, req.body);
+      res.send('Actualizado con exito')
+    } catch (error) {
+      res.status(400).send("no se pudo actualizar el Host");
+      console.log(error);
+    }
+  })
+
+  module.exports = router;

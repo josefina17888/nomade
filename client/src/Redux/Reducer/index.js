@@ -1,12 +1,23 @@
+
+import {
+  LOGIN_USER,
+} from '../Actions/index';
+
 const initialState = {
     lodgings: [],
     loader: true,
-    detail: {}
+    detail: {},
+    user: null,
 }
 
 function rootReducer (state = initialState, action){
 
     switch(action.type){
+        case LOGIN_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
         case 'GET_LODGINGS':
                return {
                    ...state,
@@ -54,6 +65,15 @@ function rootReducer (state = initialState, action){
             };
 
 
+            case 'GET_BY_NAME':
+                if(typeof(action.payload)==='string'){
+                return alert(" Not Found");
+          }
+            return{
+              ...state,
+            lodgings: action.payload
+            } 
+
         case 'GET_LODGING_DETAIL':
             return {
                 ...state,
@@ -64,6 +84,8 @@ function rootReducer (state = initialState, action){
         default: 
             return state;
         }
+       
         }
        
 export default rootReducer;
+

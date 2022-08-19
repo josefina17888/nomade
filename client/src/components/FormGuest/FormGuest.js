@@ -51,17 +51,6 @@ function handleChange(e){
   })
 }
 
-  function handleChange(e){
-    
-    setInput({
-        ...input,
-       
-        [e.target.name] : e.target.value,
-        [e.target.picture] : e.target.file
-    })
-   
-}
-
   return (
     <div className={style.containerUser}>
       <form onSubmit={(e)=>handleSubmit(e)}>
@@ -147,3 +136,4 @@ function handleChange(e){
     </div>
   );
 }
+
