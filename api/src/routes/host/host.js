@@ -10,7 +10,7 @@ const toId = mongoose.Types.ObjectId
 
 /// postea el host 
 router.post("/:guestId", async (req, res) => {
-  const {name , lastname , email , cellPhone , dni ,country, birthDate, photo} = req.body
+  const {name , lastname , email , cellPhone , dni ,country, birthDate } = req.body
   try {
     const myHost = await Host.create(req.body);
     myHost.guestId = toId(req.params.guestId);
