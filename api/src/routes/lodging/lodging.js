@@ -30,7 +30,6 @@ router.post("/:hostId", async (req, res) => {
 
 //trae todos los hospedajes con la info agregada del host
 router.get("/all", async (req, res) => {
-  let cityFiltered = req.query;
   if (cityFiltered){
       try {
         if (city !== undefined){
