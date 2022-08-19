@@ -56,4 +56,6 @@ async function deleteMessage (id) {
 }
 
 
-
+module.exports = {
+    addGuest
+}
