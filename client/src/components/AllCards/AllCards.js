@@ -5,6 +5,7 @@ import { getLodgings, setLoaderFalse, setLoaderTrue } from '../../Redux/Actions/
 import AllCardsPaging from './AllCardsPaging/AllCardsPaging';
 import Card from '../Card/Card'
 import { Link } from 'react-router-dom';
+import styles from './AllCards.module.css'
 
 export default function AllCards() {
   
@@ -28,7 +29,7 @@ export default function AllCards() {
   return (
     <div>
     <div>AllCards</div>
-    <div>
+    <div className={styles.home}>
         <div>
           { !loader ? <AllCardsPaging
           lodgingPerPage= {lodgingPerPage}
@@ -41,8 +42,8 @@ export default function AllCards() {
             currentLodging.length < 1 ? <h2>No lodgings were found</h2> : 
             currentLodging.map((e) => {
                 return (
-                <div key={e.id}>
-                    <Link to={`/api/lodging/${e.id}`}>
+                <div key={e.lodgingId}>
+                    <Link to={`/api/lodging/${e.lodgingId}`}>
                         <Card
                         lodgingType={e.lodgingType}
                         guests={e.guests}
