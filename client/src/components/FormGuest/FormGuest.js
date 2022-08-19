@@ -46,6 +46,7 @@ export default function FormUser() {
 
 
 
+
   function handleChange(e){
     console.log(e.target.files)
     setInput({
@@ -56,6 +57,7 @@ export default function FormUser() {
     })
    
 }
+
 
   return (
     <div className={style.containerUser}>
@@ -141,4 +143,9 @@ export default function FormUser() {
   </form>
     </div>
   );
+
+
+
 }
+
+

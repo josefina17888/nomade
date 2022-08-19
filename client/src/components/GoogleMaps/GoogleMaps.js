@@ -3,7 +3,6 @@ import React from "react";
 import { GoogleMap, useLoadScript, Autocomplete } from "@react-google-maps/api";
 import style from "./GoogleMaps.module.css";
 
-
 export default function GoogleMaps() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyC5qq1NGWjUmjiuvDFormsHEGGQ2QtIVng",
@@ -19,7 +18,7 @@ export default function GoogleMaps() {
       e.preventDefault();
       setDirection(e.target.value);
     }
-  }
+  };
 
   if (!isLoaded) return <div>Loading...</div>;
 

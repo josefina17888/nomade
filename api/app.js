@@ -7,7 +7,10 @@ const path = require("path")
 const server = express();
 require('./db.js');
 
-server.options("*",cors())
+
+
+server.options('*', cors())
+
 server.name = 'API';
 
 
@@ -39,4 +42,3 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 }); 
 
 module.exports = server;
-
