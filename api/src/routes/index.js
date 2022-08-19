@@ -11,6 +11,8 @@ const guestRoute = require ('../routes/guest/guest');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
 
+const guestReview = require('../routes/guestReview/guestReview')
+
 router.use("/api/host", hostRoute);
 router.use("/api/booking", bookingRoute); 
 router.use("/api/guest", guestRoute); 
