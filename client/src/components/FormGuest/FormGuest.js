@@ -26,9 +26,9 @@ export default function FormUser() {
   function handleSubmit(e){
     e.preventDefault()
     dispatch(postGuest(input))  
-    console.log(e.target.file)
-    alert("Usuario creado correctamente!!")
     
+    alert("Usuario creado correctamente!!")
+    console.log(e.target.value)
 
     setInput({
       username: "",
@@ -44,27 +44,22 @@ export default function FormUser() {
     history.push("/login")
 }
 
-function handleChange(e){
-  setInput({
-      ...input,
-      [e.target.name] : e.target.value
-  })
-}
+
 
   function handleChange(e){
-    
+    console.log(e.target.files)
     setInput({
         ...input,
-       
+        [e.target.name]: e.target.files,
         [e.target.name] : e.target.value,
-        [e.target.picture] : e.target.file
+       
     })
    
 }
 
   return (
     <div className={style.containerUser}>
-      <form onSubmit={(e)=>handleSubmit(e)}>
+      <form onSubmit={(e)=>handleSubmit(e)} encType='multipart/form-data'>
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
