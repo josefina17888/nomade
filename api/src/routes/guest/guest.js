@@ -17,11 +17,14 @@ router.get("/", async(req,res) => {
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
-  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
-  const {filename} = req.file
+  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password,picture} = req.body
+  console.log(req.body)
+  console.log(req.file)
    
     try{
-      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country, filename, birthDate, password)
+
+      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,  picture, birthDate,password)
+
       res.status(201).send(newGuest)
     }
       catch (error){
@@ -69,5 +72,3 @@ router.delete("/:id", async (req,res) => {
 
 
 module.exports = router
-
-

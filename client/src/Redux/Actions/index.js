@@ -37,6 +37,16 @@ export function setLoaderTrue() {
     }
   }
 
+
+  export function postGuest(payload){
+    return async function(dispatch){
+      console.log(payload)
+        var json = await axios.post("http://localhost:3001/api/guest", payload)
+        console.log(json)
+        return json
+}
+} 
+
   export function getDetail (_id){
     return async function (dispatch){
         try{
@@ -50,3 +60,4 @@ export function setLoaderTrue() {
         }
     }
 }
+

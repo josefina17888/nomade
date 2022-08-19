@@ -53,11 +53,13 @@ function rootReducer (state = initialState, action){
              pokeLoader: false,
             };
 
+
         case 'GET_LODGING_DETAIL':
             return {
                 ...state,
                 detail: action.payload
             }    
+
         
         default: 
             return state;
