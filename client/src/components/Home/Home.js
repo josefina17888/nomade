@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
     <div>Home</div>
-    <AllCards/>
+    <AllCards />
     </div>
   )
 }
