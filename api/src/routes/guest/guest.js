@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cors = require("cors")
 const multer = require("multer")
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
 const Guest = require("../../models/Guest");
@@ -8,6 +9,8 @@ const Booking = require('../../models/Booking')
 const upload = multer({
     dest:"public/files/uploads/images"
 }); 
+
+
 
 router.post("/", upload.single("picture") ,async (req, res) => {
 

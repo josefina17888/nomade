@@ -25,6 +25,8 @@ function rootReducer (state = initialState, action){
              ...state,
              pokeLoader: false,
             };
+
+            
         
         default: 
             return state;

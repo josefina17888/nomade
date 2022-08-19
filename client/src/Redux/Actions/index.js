@@ -29,3 +29,12 @@ export function setLoaderTrue() {
       type: "LOADER_FALSE",
     }
   }
+
+  export function postGuest(payload){
+    return async function(dispatch){
+      console.log(payload)
+        var json = await axios.post("http://localhost:3001/api/guest", payload)
+        console.log(json)
+        return json
+}
+} 
