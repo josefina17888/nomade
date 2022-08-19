@@ -18,6 +18,13 @@ export function getLodgings (){
 }
 }
 
+export function orderPrice(payload){
+  return {
+      type: "ORDER_PRICE",
+      payload
+  }
+}
+
 export function setLoaderTrue() {
     return {
       type: "LOADER_TRUE",
