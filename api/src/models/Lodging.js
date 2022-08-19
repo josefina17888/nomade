@@ -53,4 +53,3 @@ const LodgingSchema = new mongoose.Schema({
 const model = mongoose.model("Lodging", LodgingSchema);
 
 module.exports = model;
- 

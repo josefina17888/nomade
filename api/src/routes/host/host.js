@@ -4,11 +4,10 @@ const axios = require("axios");
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
-
 const toId = mongoose.Types.ObjectId
 
+/// postea el host 
 
-//// postea el host 
 router.post("/:guestId", async (req, res) => {
   const {name , lastname , email , cellPhone , dni ,country, birthDate, photo} = req.body
   try {
@@ -40,7 +39,6 @@ router.get("/:hostId", async (req, res) => {
 
   
 
-  
   module.exports = router;
 
 
