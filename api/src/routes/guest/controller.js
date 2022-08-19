@@ -13,18 +13,18 @@ async function getGuest (filterGuest){
       }    
 }
 
-async function addGuest (username, name , lastname , email , cellPhone , dni , country,filename, birthDate,password) {
+async function addGuest (username, name , lastname , email , cellPhone , dni , country,picture, birthDate,password) {
     
-    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate || !password ) {
+    if (!username) {
         return "Faltan datos"
     }
   
     const newGuest = new Model({
         username, name , lastname , email , cellPhone , dni , country, birthDate,password
     });
-
-    if(filename) {
-        newGuest.setImgUrl(filename)
+   console.log(picture)
+    if(picture) {
+        newGuest.setImgUrl(picture)
     }
 
     try{

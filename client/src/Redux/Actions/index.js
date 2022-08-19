@@ -36,3 +36,28 @@ export function setLoaderTrue() {
       type: "LOADER_FALSE",
     }
   }
+
+
+  export function postGuest(payload){
+    return async function(dispatch){
+      console.log(payload)
+        var json = await axios.post("http://localhost:3001/api/guest", payload)
+        console.log(json)
+        return json
+}
+} 
+
+  export function getDetail (_id){
+    return async function (dispatch){
+        try{
+            const res = await axios.get("http://localhost:3001/api/lodging/" + _id)
+            return dispatch({
+                type: "GET_LODGING_DETAIL",
+                payload: res.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+

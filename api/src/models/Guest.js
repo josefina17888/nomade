@@ -18,6 +18,7 @@ const GuestSchema = new Schema({
 
 
 GuestSchema.methods.setImgUrl = function setImgUrl (filename) {
+  console.log(filename)
   this.picture = "http://localhost:3001/files/uploads/" + filename
 }
 

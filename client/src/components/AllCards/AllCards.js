@@ -45,8 +45,8 @@ export default function AllCards() {
             currentLodging.length < 1 ? <h2>No se encontraron alojamientos</h2> : 
             currentLodging.map((e) => {
                 return (
-                <div key={e.lodgingId}>
-                    <Link to={`/api/lodging/${e.lodgingId}`}>
+                <div key={e._id}>
+                    <Link to={`/${e._id}`}>
                         <Card
                         lodgingType={e.lodgingType}
                         price={e.price}
