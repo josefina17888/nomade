@@ -8,12 +8,12 @@ const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 
 
-
-/// postea el host 
-router.post("/", async (req, res) => {
+//// postea el host 
+router.post("/:guestId", async (req, res) => {
   const {name , lastname , email , cellPhone , dni ,country, birthDate, photo} = req.body
   try {
-    const myHost = await new Host(req.body);
+    const myHost = await Host.create(req.body);
+    myHost.guestId = toId(req.params.guestId);
     myHost.save()
         res.status(200).json(myHost)
     } catch (error) {
@@ -22,7 +22,6 @@ router.post("/", async (req, res) => {
     }
 
 });
-
 /// trae todos los lodgings de un host
 router.get("/:hostId", async (req, res) => {
   Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
@@ -43,3 +42,5 @@ router.get("/:hostId", async (req, res) => {
 
   
   module.exports = router;
+
+

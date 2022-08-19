@@ -30,25 +30,42 @@ try{
 
 
 //trae todos los hospedajes con la info agregada del host
-router.get("/all", async (req, res) => {
+/*  router.get("/see", async (req, res) => {
 
- const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"});
- res.json(lodging)
-}); 
+ const lodging = await Lodging.find({}, (err, lodging) =>{ 
+  res.json(lodging);
 
+})
+});  */
+ 
 
 ///////////trae el lodging con toda la info del host////////////
- router.get("/", async (req, res) => {
-  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
-  res.send(lodging)
+ //router.get("/all", async (req, res) => {
+  //const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
+ /// res.send(lodging)
 
   /* Lodging.find({},  (err, lodging) =>{ 
       res.status(200).send(lodging);
     
   }) */
-}); 
+//}); 
+
+router.get("/all", async (req, res) => {
+  let cityFiltered = req.query.city;
+  if (cityFiltered){
+      try {
+        if (city !== undefined){
+          await Lodging.find({city: cityFiltered},  (err, lodging) =>{
+            console.log(cityFiltered); 
+            res.status(200).send(lodging);
+          })
+        }
+      } catch(error){ res.json(error)}
+    } else {
+  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"});
+  res.json(lodging)
+  }
+});
 
 module.exports = router;
-
-
 
