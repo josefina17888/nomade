@@ -1,27 +1,21 @@
 const express = require('express');
-const routes = require('./src/routes');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-<<<<<<< HEAD
-const routes = require('./routes/index.js');
+const routes = require('./src/routes');
 const path = require('path')
 
 require('./db.js');
-
-const server = express();
-
 const cors = require('cors')
 
 const server = express();
 require('./db.js');
 
-server.use(routes);
+server.options('*', cors())
 server.name = 'API';
 
 server.use(express.static(path.join(__dirname,"public")));
 // server.use('/images', express.static('images'));
 
-server.use(cors())
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
 server.use("/app", express.static("public"));
@@ -36,6 +30,8 @@ server.use((req, res, next) => {
 });
 
 
+server.use(cors())
+server.use(routes);
 
 
 // Error catching endware.

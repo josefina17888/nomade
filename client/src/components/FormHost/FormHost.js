@@ -1,11 +1,14 @@
-import {React, useState} from 'react'
-import{useDispatch} from 'react-redux'
+import React from 'react'
+import {useState} from 'react'
+import {useHistory} from 'react-router-dom'
+import{useDispatch, use} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
 
 export default function FormHost() {
   const dispatch = useDispatch()
-  
+  const history = useHistory()
+
   const [input,setInput] = useState({
     name : '',
     lastName: '',
@@ -14,6 +17,7 @@ export default function FormHost() {
     dni: '',
     country: '',
     birthDate: '',
+    photo:'',
 })
 
 
@@ -26,67 +30,64 @@ function handleName(e){
 function handleLastName(e){
   setInput({
       ...input,
-      [e.target.lastName]: e.target.value
+      [e.target.name]: e.target.value
   })
 }
 function handleEmail(e){
   setInput({
       ...input,
-      [e.target.email]: e.target.value
+      [e.target.name]: e.target.value
   })
 }
 
 function handleCellPhone(e){
   setInput({
       ...input,
-      [e.target.cellPhone]: e.target.value
+      [e.target.name]: e.target.value
   })
 }
 function handleDni(e){
   setInput({
       ...input,
-      [e.target.dni]: e.target.value
+      [e.target.name]: e.target.value
   })
 }
 function handleCountry(e){
   setInput({
       ...input,
-      [e.target.country]: e.target.value
+      [e.target.name]: e.target.value
   })
 }
 function handleBirthDate(e){
   setInput({
       ...input,
-      [e.target.birthDate]: e.target.value
+      [e.target.name]: e.target.value
+  })
+}
+function handlePhoto(e){
+  setInput({
+      ...input,
+      [e.target.name]: e.target.value
   })
 }
 
 function handleSubmit(e){
   e.preventDefault()
-  dispatch(postHost(input))
-      alert('Host creado!')
-      // Swal(
-      //     'Host Creado!','','success',{buttons:false,timer:2000}
-      //   )
-      setInput({ name : '',
-      lastName: '',
-      email: '',
-      cellPhone: '',
-      dni: '',
-      country: '',
-      birthDate: '',
-      })
-       
+  history.push('/host')
+  alert("host creado")
  }
 
 
   return (
     <div className={estilos.formulario}>
-      <div >FormHost</div>
-      <form onSubmit={(e)=>handleSubmit(e)}>
+      <div>FormHost</div>
+      {/* <form onSubmit={(e)=>handleSubmit(e)} > */}
+
+      <form action='http://localhost:3001/api/host' method="POST" encType="multipart/form-data" onSubmit={(e)=>handleSubmit(e)}>
         <label>Nombre:</label>
         <input 
-        type="text" 
+        type="text"
+        name="name" 
         value={input.name}
         onChange={handleName}
         placeholder="Nombre"
@@ -94,7 +95,8 @@ function handleSubmit(e){
         />
         <label>Apellido:</label>
         <input 
-        type="text" 
+        type="text"
+        name= "lastName"
         value={input.lastName}
         onChange={handleLastName}
         placeholder="Apellido"
@@ -102,7 +104,8 @@ function handleSubmit(e){
         />
         <label>Email:</label>
         <input 
-        type="text" 
+        type="text"
+        name= "email"
         value={input.email}
         onChange={handleEmail}
         placeholder="Email"
@@ -111,6 +114,7 @@ function handleSubmit(e){
         <label>Telefono:</label>
         <input 
         type="text" 
+        name="cellPhone"
         value={input.cellPhone}
         onChange={handleCellPhone}
         placeholder="Telefono"
@@ -119,6 +123,7 @@ function handleSubmit(e){
         <label>DNI:</label>
         <input 
         type="text" 
+        name="dni"
         value={input.dni}
         onChange={handleDni}
         placeholder="DNI"
@@ -126,7 +131,8 @@ function handleSubmit(e){
         />
         <label>Pais:</label>
         <input 
-        type="text" 
+        type="text"
+        name="country" 
         onChange={handleCountry}
         value={input.country}
         placeholder="Pais"
@@ -134,16 +140,19 @@ function handleSubmit(e){
         <label>Fecha de Nacimiento:</label>
         <input 
         type="date" 
+        name="birthDate"
         onChange={handleBirthDate}
         value={input.birthDate}
         placeholder="Fecha de Nacimiento"
         />
         <label>Foto:</label>
         <input 
-        type="file" 
+        name="photo"
+        type="file"
+        onChange={handlePhoto}
         />
         <button type='submit'>Registrarme</button>
-      </form>
+        </form>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import GoogleMaps from './components/GoogleMaps/GoogleMaps.js';
 import Home from './components/Home/Home.js';
 import FormUser from './components/FormGuest/FormGuest.js';
-import FormHost from './components/FormHost/FormHost.jsx'
+import FormHost from './components/FormHost/FormHost.js'
 
 function App() {
   return (
