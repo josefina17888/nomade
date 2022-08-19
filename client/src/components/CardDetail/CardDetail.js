@@ -35,7 +35,7 @@ export default function CardDetail(props){
             </div>
             </div>
             } 
-            <Link to= '/home'>
+            <Link to= '/'>
                 <button>Volver</button>
             </Link>
         </div>

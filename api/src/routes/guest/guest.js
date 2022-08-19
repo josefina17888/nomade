@@ -15,9 +15,9 @@ router.get("/", async(req,res) => {
     }
 })
 
-const upload = multer({
+/* const upload = multer({
     dest:"public/files/uploads/images"
-});
+}); */
 
 //Obtiene todas las reservaciones de un Guest
 router.get("/:guestId/bookings", async(req,res) => {
