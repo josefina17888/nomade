@@ -13,6 +13,32 @@ function rootReducer (state = initialState, action){
                    loader: false
                }
 
+       case 'ORDER_PRICE':
+           
+        let sortedLodgingsPrice = action.payload === 'lowest' ? 
+        state.lodgings.sort(function (a, b){
+            if (a.price > b.price) {
+                return 1
+            }
+            if (b.price > a.price) {
+                return -1
+            }
+            return 0
+        })  
+                : state.lodgings.sort(function (a, b){
+                    if (a.price > b.price) {
+                        return -1
+                    }
+                    if (b.price > a.price) {
+                        return 1
+                    }
+                    return 0
+                })
+                return {
+                    ...state,
+                    lodgings: sortedLodgingsPrice
+                }
+
         case 'LOADER_TRUE': 
             return {
              ...state,

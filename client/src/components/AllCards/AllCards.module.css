@@ -1,4 +1,4 @@
-.home {
+.paging {
     font-weight: bold;
     font-size: small;
     font-style: normal;
@@ -8,5 +8,8 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    display: inline-block;
+    list-style-type: none;
+    margin-right: 40px;
 }
 
