@@ -1,0 +1,12 @@
+.home {
+    font-weight: bold;
+    font-size: small;
+    font-style: normal;
+    text-decoration: none;
+    text-decoration-line: none;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
