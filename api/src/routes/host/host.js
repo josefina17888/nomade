@@ -4,14 +4,14 @@ const axios = require("axios");
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
-
 const toId = mongoose.Types.ObjectId
 
 /// postea el host 
-router.post("/", async (req, res) => {
-  const {name , lastname , email , cellPhone , dni ,country, birthDate, photo} = req.body
+router.post("/:guestId", async (req, res) => {
+  const {name , lastname , email , cellPhone , dni ,country, birthDate } = req.body
   try {
-    const myHost = await new Host(req.body);
+    const myHost = await Host.create(req.body);
+    myHost.guestId = toId(req.params.guestId);
     myHost.save()
         res.status(200).json(myHost)
     } catch (error) {

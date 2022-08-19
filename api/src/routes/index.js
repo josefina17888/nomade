@@ -1,9 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-
-const bodyParser = require('body-parser')
-
-
+var bodyParser = require('body-parser')
 router.use(bodyParser.json()) 
 router.use(bodyParser.urlencoded({ extended: true }))
 
