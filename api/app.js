@@ -10,7 +10,6 @@ require('./db.js');
 const server = express();
 
 
-server.use(routes);
 server.options('*', cors())
 server.name = 'API';
 
