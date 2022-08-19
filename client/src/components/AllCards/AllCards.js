@@ -43,7 +43,10 @@ export default function AllCards() {
                 return (
                 <div key={e.id}>
                     <Link to={`/api/lodging/${e.id}`}>
-                        <Card/>
+                        <Card
+                        lodgingType={e.lodgingType}
+                        guests={e.guests}
+                        description={e.description}/>
                     </Link>
                 </div>)})
             }
