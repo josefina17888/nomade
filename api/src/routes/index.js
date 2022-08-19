@@ -1,9 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-
-const bodyParser = require('body-parser')
-
-
+var bodyParser = require('body-parser')
 router.use(bodyParser.json()) 
 router.use(bodyParser.urlencoded({ extended: true }))
 
@@ -14,6 +11,8 @@ const guestRoute = require ('../routes/guest/guest');
 const loginRoute = require ('../routes/login/login');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
+
+const guestReview = require('../routes/guestReview/guestReview')
 
 router.use("/api/host", hostRoute);
 router.use("/api/booking", bookingRoute); 
