@@ -15,7 +15,7 @@ export const loginUser = (user) => {
 export function getLodgings (){
     return async function(dispatch){
         try{
-        const json = await axios.get("http://localhost:3001/api/lodging/all")
+        const json = await axios.get("http://localhost:3001/api/lodging/")
         
         dispatch({
             type:"GET_LODGINGS",
