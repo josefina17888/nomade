@@ -4,6 +4,8 @@ const multer = require("multer")
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const upload = multer({
     dest:"public/files/uploads/images"
@@ -22,6 +24,44 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 
 
 });
+
+router.post("/login", async(req, res)=>{
+    try{
+        const user= await Guest.findOne({email: req.body.email, password: req.body.password  })
+        
+        if(user) {
+            const token = jwt.sign({
+                email: req.body.email,
+                password: req.body.password
+            }, 'secret123')
+            return res.json({ status: 'ok', user: token})
+        } else {
+            return res.json({ status: 'error', user: false})
+        }
+
+    }catch(err){
+       res.status(500).json(err)
+    }
+})
+
+// router.post("/login", async (req, res) => {
+//     try{
+//         const user = await Guest.findOne({email:req.body.email, password:req.body.password});
+
+//         const validPassword = await bcrypt.compare(req.body.password, user.password)
+//         !validPassword && res.status(400).json("Wrong password")
+
+//         if(user){
+//             res.status(200).send(user);
+//         }
+//         else{
+//             res.status(404).send("No existe el usuario");
+//         }
+//     }
+//     catch (error){
+//         res.status(404).send(error)
+//     }
+// } );
 
 
 router.get("/", async (req, res) => {
