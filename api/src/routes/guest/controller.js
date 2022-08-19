@@ -15,13 +15,14 @@ async function getGuest (filterGuest){
 
 async function addGuest (username, name , lastname , email , cellPhone , dni , country,filename, birthDate,password) {
     
-    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate || !password ) {
+    if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate || !password || !filename) {
         return "Faltan datos"
     }
   
     const newGuest = new Model({
         username, name , lastname , email , cellPhone , dni , country, birthDate,password
     });
+    console.log(newGuest)
 
     if(filename) {
         newGuest.setImgUrl(filename)
@@ -53,6 +54,10 @@ async function deleteMessage (id) {
     }
     const deleteGuest = await Model.deleteOne({_id:id})
     return deleteGuest
+}
+
+module.exports = {
+    addGuest
 }
 
 

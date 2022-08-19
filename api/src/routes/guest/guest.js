@@ -19,7 +19,6 @@ router.get("/", async(req,res) => {
 router.post("/", upload.single("picture") ,async (req, res) => {
   const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
   const {filename} = req.file
-   
     try{
       const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country, filename, birthDate,password)
       res.status(201).send(newGuest)
