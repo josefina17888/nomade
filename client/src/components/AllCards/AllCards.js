@@ -27,23 +27,10 @@ export default function AllCards() {
     dispatch(getLodgings());
   }, [dispatch]) 
 
-    //order price
-  function handleOrderPrice (e){
-    e.preventDefault();
-    dispatch(orderPrice(e.target.value));
-    setCurrentPage(1);
-    setOrder(`Ordered ${e.target.value}`);
-  }
-
   return (
     <div>
     <div>AllCards</div>
     <div className={styles.paging}>
-      <h3>Ordenar por costo</h3>
-        <select onClick={e => handleOrderPrice(e)}>
-            <option value= 'lowest'>Más barato a más costoso</option>
-            <option value= 'highest'>Más costoso a más barato</option>
-        </select>
     </div>
     <div className={styles.paging}>
         <div>
