@@ -24,6 +24,7 @@ const hostSchema = new Schema({
       ref: "lodging",
     },
   ],
+
 });
 
 hostSchema.methods.setImgUrl = function setImgUrl (filename) {
