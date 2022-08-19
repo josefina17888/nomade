@@ -1,21 +1,61 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer")
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
-const Guest = require("../../models/Guest");
-const Booking = require('../../models/Booking')
+const upload = require("../../../libs/storage")
+ 
+
+router.get("/", async(req,res) => {
+    let {filterGuest} = req.query
+    try {
+        const guest = await getGuest(filterGuest)
+        res.status(201).send(guest)
+    }
+    catch(error) {
+        res.status(500).send(error)
+    }
+})
 
 const upload = multer({
     dest:"public/files/uploads/images"
-}); 
+});
 
+//Obtiene todas las reservaciones de un Guest
+router.get("/:guestId/bookings", async(req,res) => {
+    try {
+        Booking.find({guestId: req.params.guestId},(error, bookings)=>{
+            res.json(bookings)
+        })
+    }
+    catch(error) {
+        res.status(500).send(error)
+    }
+})
+
+//obtiene todos los Guest
+
+router.get("/", async (req, res) => {
+    try {
+      Guest.find({}, function (err, guest) {
+        res.status(200).send(guest);
+      });
+    } catch (error) {
+      res.status(400).send('Guests not found')
+          console.log(error)
+    }
+  });
+
+//Postea un nuevo Guest
 router.post("/", upload.single("picture") ,async (req, res) => {
-
+  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password,picture} = req.body
+  console.log(req.body)
+  console.log(req.file)
+   
     try{
-      const newGuest = await Guest.create(req.body);
-      newGuest.save();
-      res.status(200).send(newGuest);
-      }
+
+      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,  picture, birthDate,password)
+
+      res.status(201).send(newGuest)
+    }
       catch (error){
           res.status(404).send(error)
       }
@@ -46,6 +86,7 @@ router.patch("/:id", async (req, res) => {
         }    
 });
 
+//Esta ruta es probable que no se considere en el Back y se modifique por Borrado Lógico
 router.delete("/:id", async (req,res) => {
     const {id} = req.params
     try{
@@ -59,5 +100,3 @@ router.delete("/:id", async (req,res) => {
 
 
 module.exports = router
-
-

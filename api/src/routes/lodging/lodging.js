@@ -59,7 +59,6 @@ router.get("/:lodgingId", async (req, res) => {
 
 // esto crea una relacion al hacer get (FUNCIONA)
 /* router.get("/relacionado/:lodgingId/:hostId", async (req, res) => {
-
   req.params.hostId = toId(req.params.hostId)
   const lodging = await Lodging.findById(req.params.lodgingId)
   lodging.hostId = req.params.hostId
