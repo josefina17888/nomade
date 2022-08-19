@@ -1,6 +1,7 @@
 const initialState = {
     lodgings: [],
-    loader: true
+    loader: true,
+    detail: {}
 }
 
 function rootReducer (state = initialState, action){
@@ -51,6 +52,12 @@ function rootReducer (state = initialState, action){
              ...state,
              pokeLoader: false,
             };
+
+        case 'GET_LODGING_DETAIL':
+            return {
+                ...state,
+                detail: action.payload
+            }    
         
         default: 
             return state;

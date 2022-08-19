@@ -36,3 +36,17 @@ export function setLoaderTrue() {
       type: "LOADER_FALSE",
     }
   }
+
+  export function getDetail (_id){
+    return async function (dispatch){
+        try{
+            const res = await axios.get("http://localhost:3001/api/lodging/" + _id)
+            return dispatch({
+                type: "GET_LODGING_DETAIL",
+                payload: res.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
