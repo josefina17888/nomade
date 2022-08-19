@@ -1,12 +1,23 @@
+
+import {
+  LOGIN_USER,
+} from '../Actions/index';
+
 const initialState = {
     lodgings: [],
     loader: true,
-    detail: {}
+    detail: {},
+    user: null,
 }
 
 function rootReducer (state = initialState, action){
 
     switch(action.type){
+        case LOGIN_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
         case 'GET_LODGINGS':
                return {
                    ...state,
@@ -77,3 +88,4 @@ function rootReducer (state = initialState, action){
         }
        
 export default rootReducer;
+
