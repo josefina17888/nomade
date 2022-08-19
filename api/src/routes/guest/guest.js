@@ -19,8 +19,6 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       catch (error){
           res.status(404).send(error)
       }
-
-
 });
 
 

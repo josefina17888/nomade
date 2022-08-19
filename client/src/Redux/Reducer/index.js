@@ -25,10 +25,20 @@ function rootReducer (state = initialState, action){
              ...state,
              pokeLoader: false,
             };
+
+            case 'GET_BY_NAME':
+                if(typeof(action.payload)==='string'){
+                return alert(" Not Found");
+          }
+            return{
+              ...state,
+            lodgings: action.payload
+            } 
         
         default: 
             return state;
         }
+       
         }
        
 export default rootReducer;
