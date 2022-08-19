@@ -1,17 +1,55 @@
+
+import {
+  LOGIN_USER,
+} from '../Actions/index';
+
 const initialState = {
     lodgings: [],
-    loader: true
+    loader: true,
+    detail: {},
+    user: null,
 }
 
 function rootReducer (state = initialState, action){
 
     switch(action.type){
+        case LOGIN_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
         case 'GET_LODGINGS':
                return {
                    ...state,
                    lodgings: action.payload,
                    loader: false
                }
+
+       case 'ORDER_PRICE':
+           
+        let sortedLodgingsPrice = action.payload === 'lowest' ? 
+        state.lodgings.sort(function (a, b){
+            if (a.price > b.price) {
+                return 1
+            }
+            if (b.price > a.price) {
+                return -1
+            }
+            return 0
+        })  
+                : state.lodgings.sort(function (a, b){
+                    if (a.price > b.price) {
+                        return -1
+                    }
+                    if (b.price > a.price) {
+                        return 1
+                    }
+                    return 0
+                })
+                return {
+                    ...state,
+                    lodgings: sortedLodgingsPrice
+                }
 
         case 'LOADER_TRUE': 
             return {
@@ -25,10 +63,29 @@ function rootReducer (state = initialState, action){
              ...state,
              pokeLoader: false,
             };
+
+
+            case 'GET_BY_NAME':
+                if(typeof(action.payload)==='string'){
+                return alert(" Not Found");
+          }
+            return{
+              ...state,
+            lodgings: action.payload
+            } 
+
+        case 'GET_LODGING_DETAIL':
+            return {
+                ...state,
+                detail: action.payload
+            }    
+
         
         default: 
             return state;
         }
+       
         }
        
 export default rootReducer;
+

@@ -1,58 +1,139 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux"
+import { Link,useHistory } from "react-router-dom";
 import style from "./FormUser.module.css";
-import jwt_decode from "jwt-decode";
+import { postGuest} from "../../Redux/Actions";
 
 export default function FormUser() {
-
-  const [user, setUser] = useState({})
-
-  const handleCallbackResponse = (response) => {
-    console.log(response.credential);
-    let userObject = jwt_decode(response.credential)
-    console.log(userObject)
-    setUser(userObject)
-  };
-
+  const dispatch= useDispatch()
+  const history = useHistory()
+ 
+  const [input, setInput] = useState({
+    username: "",
+    name: "",
+    lastname: "",
+    email:"",
+    password:"",
+    cellPhone:"",
+    country:"",
+    picture: "",
+    birthDate:""
+})    
   useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "256902498483-9ebr0f78d0u8qjh7n6db8u5haao7826a.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-
-    google.accounts.id.renderButton(document.getElementById("google-signin"), {
-      theme: "outline",
-      size: "large",
-    });
   }, []);
+
+  function handleSubmit(e){
+    e.preventDefault()
+    dispatch(postGuest(input))  
+    console.log(e.target.file)
+    alert("Usuario creado correctamente!!")
+    
+
+    setInput({
+      username: "",
+      name: "",
+      lastname: "",
+      email:"",
+      password:"",
+      cellPhone:"",
+      country:"",
+      picture: "",
+      birthDate:""
+    })    
+    history.push("/login")
+}
+
+function handleChange(e){
+  setInput({
+      ...input,
+      [e.target.name] : e.target.value
+  })
+}
 
   return (
     <div className={style.containerUser}>
-      <h1 className={style.title}>Iniciar Sesión</h1>
+      <form onSubmit={(e)=>handleSubmit(e)}>
+      <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
           className={style.inputEmail}
           type="text"
-          placeholder="Correo Electrónico"
+          name ="username"
+          value={input.username}
+          placeholder="Nombre de usuario"
+          onChange={handleChange}
+        />
+         <input
+          className={style.inputEmail}
+          type="text"
+          name ="name"
+          value={input.name}
+          placeholder="Nombre"
+          onChange={handleChange}
         />
         <input
           className={style.inputPassword}
+          type="text"
+          name ="lastname"
+          value={input.lastname}
+          placeholder="Apellido"
+          onChange={handleChange}
+        />
+         <input
+          className={style.inputEmail}
+          type="text"
+          name ="email"
+          value={input.email}
+          placeholder="Email"
+          onChange={handleChange}
+        />
+         <input
+          className={style.inputEmail}
           type="password"
-          placeholder="Contraseña"
+          name ="password"
+          value={input.password}
+          placeholder="contraseña"
+          onChange={handleChange}
+        />
+        <input
+          className={style.inputPassword}
+          type="text"
+          name ="cellPhone"
+          value={input.cellPhone}
+          placeholder="Celular"
+          onChange={handleChange}
+        />
+         <input
+          className={style.inputEmail}
+          type="text"
+          name ="country"
+          value={input.country}
+          placeholder="pais"
+          onChange={handleChange}
+        />
+         <input
+          className={style.inputEmail}
+          type="date"
+          name ="birthDate"
+          value={input.birthDate}
+          placeholder="fecha de nacimiento"
+          onChange={handleChange}
+        />
+        <input
+          className={style.inputPassword}
+          type="file"
+          name ="picture"
+          value={input.picture}
+          placeholder="Foto de perfil"
+          onChange={handleChange}
         />
       </div>
       <button className={style.button} type="submit">
         Iniciar Sesion
       </button>
-      <span className={style.line}>O</span>
-      <div className={style.buttonGoogle} id="google-signin"></div>
-      <div className={style.textFinal}>
-        <p>¿Aun no tienes cuenta?</p>
-        <Link to="/registro">¡Crea tu cuenta aqui!</Link>
-      </div>
+  </form>
     </div>
   );
 }
+

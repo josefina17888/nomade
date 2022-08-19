@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
 const hostSchema = new Schema({
+  
   name: {
     type: String,
   },
@@ -27,11 +29,11 @@ const hostSchema = new Schema({
   guestId: {type: mongoose.Types.ObjectId, ref: "Guest"},
   dni: { type: String, required: true },
   hostDniPicture: { type: String },
-  lodgingId: [{type: mongoose.Types.ObjectId, ref: "Lodging"}], 
+  lodgingId: [{type: mongoose.Types.ObjectId, ref: "Lodging"}],
 });
 
 hostSchema.methods.setImgUrl = function setImgUrl (filename) {
-  this.picture = "http://localhost:3001/files/uploads/" + filename
+  this.hostDniPicture = "http://localhost:3001/files/uploads/" + filename
 }
 
 

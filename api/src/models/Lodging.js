@@ -12,8 +12,8 @@ const LodgingSchema = new mongoose.Schema({
   beds:[{type: String}],
   bathrooms: { type: Number },
   ownBathroom: { type: Boolean },
-  price:{ type: String },
-  images: [{ type: String }],
+  price:{  type: Number},
+  picture: [{ type: String }],
   city: { type: String },
   country: { type: String },
   address: { type: String },
@@ -49,6 +49,11 @@ const LodgingSchema = new mongoose.Schema({
   }, 
   
 });
+
+LodgingSchema.methods.setImgUrl = function setImgUrl (filename) {
+  this.picture = "http://localhost:3001/files/uploads/" + filename
+}
+
 
 const model = mongoose.model("Lodging", LodgingSchema);
 
