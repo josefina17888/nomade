@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import style from "./LoginUser.module.css";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/actions/index";
+import { loginUser } from '../../Redux/Actions/index';
 import { useHistory } from "react-router-dom";
 
 export default function LoginUser() {

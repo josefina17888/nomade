@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
 import style from "./FormUser.module.css";
-import { postGuest} from "../../Redux/Actions";
+import { postGuest} from '../../Redux/Actions/index';
 
 export default function FormUser() {
   const dispatch= useDispatch()

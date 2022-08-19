@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
-<<<<<<< HEAD
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-=======
 const upload = require("../../../libs/storage")
  
 
@@ -20,11 +18,10 @@ router.get("/", async(req,res) => {
         res.status(500).send(error)
     }
 })
->>>>>>> 301369ce5ac89080767865146d6465b672f84f50
 
-const upload = multer({
-    dest:"public/files/uploads/images"
-});
+// const upload = multer({
+//     dest:"public/files/uploads/images"
+// });
 
 //Obtiene todas las reservaciones de un Guest
 router.get("/:guestId/bookings", async(req,res) => {
@@ -88,25 +85,6 @@ router.post("/login", async(req, res)=>{
        res.status(500).json(err)
     }
 })
-
-// router.post("/login", async (req, res) => {
-//     try{
-//         const user = await Guest.findOne({email:req.body.email, password:req.body.password});
-
-//         const validPassword = await bcrypt.compare(req.body.password, user.password)
-//         !validPassword && res.status(400).json("Wrong password")
-
-//         if(user){
-//             res.status(200).send(user);
-//         }
-//         else{
-//             res.status(404).send("No existe el usuario");
-//         }
-//     }
-//     catch (error){
-//         res.status(404).send(error)
-//     }
-// } );
 
 
 router.get("/", async (req, res) => {

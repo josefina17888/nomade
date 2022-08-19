@@ -1,7 +1,7 @@
 
 import {
   LOGIN_USER,
-} from '../actions/index';
+} from '../Actions/index';
 
 const initialState = {
     lodgings: [],
