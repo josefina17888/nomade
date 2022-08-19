@@ -57,11 +57,3 @@ async function deleteMessage (id) {
 
 
 
-module.exports = {
-    addGuest,
-    getGuest,
-    upDate,
-    deleteMessage
-}
-
-
