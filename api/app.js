@@ -4,16 +4,19 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const cors = require('cors')
 const path = require("path")
-const server = express();
 require('./db.js');
 
+
+const server = express();
+
+
+server.use(routes);
 server.options('*', cors())
 server.name = 'API';
 
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
 server.use(express.static(path.join(__dirname,"public"))); 
-
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
