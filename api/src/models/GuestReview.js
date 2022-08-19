@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const guestReviewSchema = new Schema({
-    userId: {
+const GuestReviewSchema = new Schema({
+    guestId: {
         type: Schema.ObjectId,
         ref: 'Guest'
     },
@@ -21,10 +21,9 @@ const guestReviewSchema = new Schema({
         type: String
     },
     dated: {
-        type: Date,
-        required: true
+        type: Date
     }
 })
 
-const model = mongoose.model("GuestReview", guestReviewSchema);
+const model = mongoose.model("GuestReview", GuestReviewSchema);
 module.exports = model;

@@ -19,12 +19,7 @@ const hostSchema = new Schema({
   country: String,
   birthDate: Date,
   photo: String,
-  Lodging: [
-    {
-      type: Schema.ObjectId,
-      ref: "Lodging",
-    },
-  ],
+  lodgingId: [{type: mongoose.Types.ObjectId, ref: "Lodging"}], 
 });
 
 hostSchema.methods.setImgUrl = function setImgUrl (filename) {

@@ -1,23 +1,28 @@
 const mongoose = require("mongoose");
+const Host = require('../models/Host')
 const Schema = mongoose.Schema;
 
-const LodgingSchema = new Schema({
+
+const LodgingSchema = new mongoose.Schema({
+  
   lodgingType: { type: String },
-
-  rooms: { type: Number, default: null },
-  typeOfRoom: [{ type: String, default: null }],
+  guests: {type: Number},
+  rooms: { type: Number  },
+  typeOfRoom: [{ type: String }],
+  beds:[{type: String}],
   bathrooms: { type: Number },
-  typeOfBathrooms: { type: String },
-
+  ownBathroom: { type: Boolean },
+  price:{ type: String},
+  images: [{ type: String }],
   city: { type: String },
   country: { type: String },
   address: { type: String },
   numOfGuests: { type: Number },
-  checkIn: { type: String },
-  checkOut: { type: String },
+  checkInHour: { type: String },
+  checkOutHour: { type: String },
   services: {
-    wifi: { type: String },
-    ac: { type: String },
+    wifi: { type: Boolean },
+    ac: { type: Boolean },
     tv: { type: Boolean },
     security: { type: Boolean },
     cleaning: { type: Boolean },
@@ -30,6 +35,19 @@ const LodgingSchema = new Schema({
     pets: { type: Boolean },
   },
   description: { type: String },
+  hostId: {
+    type: mongoose.Types.ObjectId, 
+    ref:"Host",
+  },
+ bookingId: {
+    type: Schema.ObjectId,
+    ref: "Booking"},
+  
+  LodgingReviewId: {
+    type: Schema.ObjectId,
+    ref: "LodgingReview",
+  }, 
+  
 });
 
 const model = mongoose.model("Lodging", LodgingSchema);
