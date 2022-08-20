@@ -7,7 +7,7 @@ import Logo from "../../assets/nomadeLogo.svg";
 export default function NavBar() {
   return (
     <React.Fragment>
-      <nav className={s.nav}>
+      <nav className="navbar navbar-expand-lg bg-light">
         <div className={s.div_logo}>
           <Link to="/">
             <img alt="bg-button" src={Logo} className={s.logo} />
@@ -23,7 +23,7 @@ export default function NavBar() {
           <div className="dropdown">
             <button
               className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-            ></button>
+            >Action</button>
             <ul className="dropdown-menu" role="menu">
               <li>
                 <Link to="/registerguest" className="dropdown-item">
