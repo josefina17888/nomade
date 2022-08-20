@@ -1,14 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { loginUser } from '../../Redux/Actions/index';
-import { useHistory } from "react-router-dom";
 
 export default function LoginUser() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +17,14 @@ export default function LoginUser() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password, loggedIn: true }));
+    dispatch(loginUser({email, password}));
+    window.localStorage.setItem(
+      "userLogin",
+      JSON.stringify({ email })
+    );
+
+    // history.push("/");
+
   }
 
   const handleCallbackResponse = (response) => {
@@ -52,6 +59,7 @@ export default function LoginUser() {
             className={style.inputEmail}
             type="text"
             placeholder="Correo Electrónico"
+            // required={true}
           />
           <input
             value={password}
@@ -59,8 +67,9 @@ export default function LoginUser() {
             className={style.inputPassword}
             type="password"
             placeholder="Contraseña"
+            // required={true}
           />
-          <button className={style.button} type="submit">Iniciar Sesion</button>
+          <input  value='Iniciar Sesión' className={style.button} type="submit"></input>
         </form>
         <span className={style.line}>O</span>
         <div className={style.buttonGoogle} id="google-signin"></div>

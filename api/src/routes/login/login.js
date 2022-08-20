@@ -13,8 +13,8 @@ router.post("/", async (req, res) => {
     if (user) {
       const token = jwt.sign(
         {
-          email: req.body.email,
-          password: req.body.password,
+          email: user.email,
+          name: user.name,
         }, process.env.SECURE_TOKEN,
       );
 

@@ -1,81 +1,75 @@
-
-import {
-  LOGIN_USER,
-} from '../Actions/index';
-
 const initialState = {
-    lodgings: [],
-    loader: true,
-    detail: {},
-    user: null,
-}
+  lodgings: [],
+  loader: true,
+  detail: {},
+  user: null,
+  isLogin: false,
+};
 
-function rootReducer (state = initialState, action){
-
-    switch(action.type){
-        case LOGIN_USER:
+function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    case "LOGIN_USER":
+      if(!action.payload) {
+        alert('Usuario o contraseña incorrecta')
+      }
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       };
-        case 'GET_LODGINGS':
-               return {
-                   ...state,
-                   lodgings: action.payload,
-                   loader: false
-               }
+    case "GET_LODGINGS":
+      return {
+        ...state,
+        lodgings: action.payload,
+        loader: false,
+      };
+      
+    case "ORDER_PRICE":
+      let sortedLodgingsPrice =
+        action.payload === "lowest"
+          ? state.lodgings.sort(function (a, b) {
+              if (a.price > b.price) {
+                return 1;
+              }
+              if (b.price > a.price) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.lodgings.sort(function (a, b) {
+              if (a.price > b.price) {
+                return -1;
+              }
+              if (b.price > a.price) {
+                return 1;
+              }
+              return 0;
+            });
+      return {
+        ...state,
+        lodgings: sortedLodgingsPrice,
+      };
 
-       case 'ORDER_PRICE':
-           
-        let sortedLodgingsPrice = action.payload === 'lowest' ? 
-        state.lodgings.sort(function (a, b){
-            if (a.price > b.price) {
-                return 1
-            }
-            if (b.price > a.price) {
-                return -1
-            }
-            return 0
-        })  
-                : state.lodgings.sort(function (a, b){
-                    if (a.price > b.price) {
-                        return -1
-                    }
-                    if (b.price > a.price) {
-                        return 1
-                    }
-                    return 0
-                })
-                return {
-                    ...state,
-                    lodgings: sortedLodgingsPrice
-                }
+    case "LOADER_TRUE":
+      return {
+        ...state,
+        pokeLoader: true,
+      };
 
-        case 'LOADER_TRUE': 
-            return {
-             ...state,
-             pokeLoader: true,
-            };
-             
-             
-        case 'LOADER_FALSE': 
-            return {
-             ...state,
-             pokeLoader: false,
-            };
+    case "LOADER_FALSE":
+      return {
+        ...state,
+        pokeLoader: false,
+      };
 
+    case "GET_LODGING_DETAIL":
+      return {
+        ...state,
+        detail: action.payload,
+      };
 
-        case 'GET_LODGING_DETAIL':
-            return {
-                ...state,
-                detail: action.payload
-            }    
+    default:
+      return state;
+  }
+}
 
-        
-        default: 
-            return state;
-        }
-        }
-       
 export default rootReducer;
-

@@ -67,25 +67,6 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 
 });
 
-router.post("/login", async(req, res)=>{
-    try{
-        const user= await Guest.findOne({email: req.body.email, password: req.body.password  })
-        
-        if(user) {
-            const token = jwt.sign({
-                email: req.body.email,
-                password: req.body.password
-            }, 'secret123')
-            return res.json({ status: 'ok', user: token})
-        } else {
-            return res.json({ status: 'error', user: false})
-        }
-
-    }catch(err){
-       res.status(500).json(err)
-    }
-})
-
 
 router.get("/", async (req, res) => {
     try {
