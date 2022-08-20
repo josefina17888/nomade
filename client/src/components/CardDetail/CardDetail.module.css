@@ -1,0 +1,107 @@
+.gral{
+    margin-top: 20%;
+    display: flex;
+    flex-direction: row;
+}
+
+.text{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.padding{
+    padding: 10px
+}
+
+.city {
+    color: rgb(114, 113, 113);
+    margin-left: 50%
+}
+
+.titles {
+    color: #069A8E;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.hr {
+    width: 70%;
+    margin-left: 0%;
+}
+
+.button {
+    transition-duration: 0.4s;
+    background-color: rgb(59, 64, 64);
+    color: rgb(248, 247, 246);
+    font-weight: bold;
+    border: 0mm;
+    border-radius: 4px;
+    padding: 8px 28px;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
+  
+  .button:hover {
+    background-color: rgb(248, 247, 246); 
+    color: rgb(59, 64, 64);
+  }
+
+  .card{
+    border-color: #069A8E;
+    border-radius: 4px;
+    border-width: 10px;
+    background-color: #069A8E;
+  }
+
+  .button1 {
+    transition-duration: 0.4s;
+    background-color: #069A8E;
+    color: rgb(248, 247, 246);
+    font-weight: bold;
+    border: 0mm;
+    border-radius: 4px;
+    padding: 8px 58px;
+    white-space: nowrap;
+    align-self: center;
+  }
+  
+  .button1:hover {
+    background-color: rgb(248, 247, 246); 
+    color: #069A8E;
+  }
+
+  .flexcontainer {
+    display: flex;
+    padding: 10px;
+    justify-content:end
+  }
+
+  .flexcontainer1 {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flexcontainer2{
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    justify-content: center;
+    white-space: nowrap;
+    border-color: rgb(176, 171, 171);
+    border-width: 2px;
+  }
+
+  .flexcontainer3{
+    border-color: rgb(176, 171, 171);
+    border-width: 2px;
+    display: flex;
+    flex-direction: column;
+    padding: 2px
+  }
+
+  .select {
+    padding: 10px;
+    justify-content: left;
+    align-self: left;
+  }

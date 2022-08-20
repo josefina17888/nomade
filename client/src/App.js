@@ -6,7 +6,7 @@ import Home from './components/Home/Home.js';
 import LoginUser from './components/LoginUser/LoginUser.js';
 import FormUser from './components/FormGuest/FormGuest.js';
 import CardDetail from './components/CardDetail/CardDetail';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
