@@ -1,12 +1,13 @@
 
 import {
   LOGIN_USER,
+  GET_BY_CITY
 } from '../Actions/index';
 
 const initialState = {
     lodgings: [],
     loader: true,
-    detail: {},
+    detail: [],
     user: null,
 }
 
@@ -54,24 +55,26 @@ function rootReducer (state = initialState, action){
         case 'LOADER_TRUE': 
             return {
              ...state,
-             pokeLoader: true,
+             loader: true,
             };
              
              
         case 'LOADER_FALSE': 
             return {
              ...state,
-             pokeLoader: false,
+             loader: false,
             };
 
 
-            case 'GET_BY_NAME':
+            case 'GET_BY_CITY':
                 if(typeof(action.payload)==='string'){
                 return alert(" Not Found");
+
           }
             return{
               ...state,
             lodgings: action.payload
+            
             } 
 
         case 'GET_LODGING_DETAIL':

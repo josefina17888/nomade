@@ -24,7 +24,7 @@ export default function FormHost() {
     dni: '',
     country: '',
     birthDate: '',
-    photo:'',
+    hostDniPicture:'',
 })
 
 
@@ -154,7 +154,7 @@ function handleSubmit(e){
         />
         <label>Foto:</label>
         <input 
-        name="photo"
+        name="hostDniPicture"
         type="file"
         onChange={handlePhoto}
         />
