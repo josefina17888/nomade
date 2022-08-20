@@ -7,9 +7,6 @@ const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 const upload = require("../../../libs/storage")
 
-const upload = require('../../../libs/storage.js')
-
-/// postea el host 
 
 /// postea el host 
 
