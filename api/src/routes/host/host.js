@@ -6,13 +6,20 @@ const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 
+const upload = require('../../../libs/storage.js')
+
 /// postea el host 
 
-router.post("/:guestId", async (req, res) => {
-  const {name , lastname , email , cellPhone , dni ,country, birthDate, photo} = req.body
+/// postea el host 
+
+router.post("/:guestId", upload.single("photo"), async (req, res) => {
+  const filename = req.file
   try {
     const myHost = await Host.create(req.body);
     myHost.guestId = toId(req.params.guestId);
+    if(filename) {
+      myHost.setImgUrl(req.file.filename)
+  }
     myHost.save()
         res.status(200).json(myHost)
     } catch (error) {
@@ -21,6 +28,7 @@ router.post("/:guestId", async (req, res) => {
     }
 
 });
+
 /// trae todos los lodgings de un host
 router.get("/:hostId", async (req, res) => {
   Lodging.find({hostId: req.params.hostId}, (error,docs)=>{

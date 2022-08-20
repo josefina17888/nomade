@@ -33,6 +33,7 @@ router.post("/:hostId", async (req, res) => {
 router.get("/", async (req, res) => {
   const citySearching = await req.query.city;
   allLodgings = await Lodging.find();
+  console.log(allLodgings)
   try {
     if (citySearching) {
       Lodging.find({ city: citySearching }, (err, lodging) => {
