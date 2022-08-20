@@ -1,20 +1,15 @@
 const express = require("express");
 const router = express.Router();
-<<<<<<< HEAD
-
 const upload = require("../../../libs/storage")
- const Host = require("../../models/Host");
-=======
+const Host = require("../../models/Host");
 const axios = require("axios");
-
->>>>>>> 45e417c3fa47c56b8b911a25fa3b5510d684138f
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 
 /// postea el host 
 
-router.post("/:guestId", upload.single("photo"), async (req, res) => {
+router.post("/:guestId", upload.single("picture"), async (req, res) => {
   const {name , lastname , email , cellPhone , dni ,country, birthDate } = req.body
   const filename = req.file
   try {

@@ -19,9 +19,6 @@ router.get("/", async(req,res) => {
     }
 })
 
-// const upload = multer({
-//     dest:"public/files/uploads/images"
-// });
 
 //Obtiene todas las reservaciones de un Guest
 router.get("/:guestId/bookings", async(req,res) => {
@@ -52,8 +49,9 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single("picture") ,async (req, res) => {
   const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
   const {filename} = req.file
+  console.log(filename)
     try{
-      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,  picture, birthDate,password)
+      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,  filename, birthDate,password)
       res.status(201).send(newGuest)
     }
       catch (error){

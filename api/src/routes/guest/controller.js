@@ -14,7 +14,8 @@ async function getGuest (filterGuest){
 }
 
 async function addGuest (username, name , lastname , email , cellPhone , dni , country,filename, birthDate,password) {
-
+    console.log(username, name , lastname , email , cellPhone , dni , country,filename, birthDate,password)
+    console.log("holsa")
     if (!username || !name || !lastname || !email || !cellPhone || !dni || !country || !birthDate || !password || !filename) {
         return "Faltan datos"
     }
@@ -22,6 +23,7 @@ async function addGuest (username, name , lastname , email , cellPhone , dni , c
     const newGuest = new Model({
         username, name , lastname , email , cellPhone , dni , country, birthDate,password
     });
+    console.log(hola)
 
     if(filename) {
         newGuest.setImgUrl(filename)
@@ -60,6 +62,3 @@ module.exports = {
 }
 
 
-module.exports = {
-    addGuest
-}
