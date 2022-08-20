@@ -2,10 +2,11 @@ const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Host = require("../../models/Host");
 const mongoose = require("mongoose");
+const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 
-//BUCCA LODGING Y REALCIONA EL HOST
-router.post("/:hostId", async (req, res) => {
+//BUCCA LODGING Y RELACIONA EL HOST
+router.post("/:hostId", upload.single("picture"), async (req, res) => {
   try {
     const newLodging = await Lodging.create(req.body);
     newLodging.hostId = toId(req.params.hostId);
