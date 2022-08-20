@@ -6,7 +6,8 @@ import Home from './components/Home/Home.js';
 import LoginUser from './components/LoginUser/LoginUser.js';
 import FormUser from './components/FormGuest/FormGuest.js';
 import CardDetail from './components/CardDetail/CardDetail';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import FormHost from './components/FormHost/FormHost'
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route path="/map" component={GoogleMaps} />
           <Route path="/login" component={LoginUser} />
           <Route path="/registerguest" component={FormUser} />
-          <Route exact path= '/:id' component={CardDetail}/>
+          <Route exact path= '/detail/:id' component={CardDetail}/>
+          <Route path='/form' component={FormHost}/>
         </Switch>
       </BrowserRouter>
    </div>
