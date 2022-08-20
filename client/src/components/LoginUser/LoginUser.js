@@ -22,7 +22,7 @@ export default function LoginUser() {
       "userLogin",
       JSON.stringify({ email })
     );
-
+    // window.location.href = '/'
     // history.push("/");
 
   }

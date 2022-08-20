@@ -11,11 +11,13 @@ function rootReducer(state = initialState, action) {
     case "LOGIN_USER":
       if(!action.payload) {
         alert('Usuario o contraseña incorrecta')
+      } else {
+        window.location.href = '/'
+        return {
+          ...state,
+          user: action.payload,
+        };
       }
-      return {
-        ...state,
-        user: action.payload
-      };
     case "GET_LODGINGS":
       return {
         ...state,
