@@ -9,8 +9,8 @@ const LodgingSchema = new mongoose.Schema({
   title:{type: String},
   guests: {type: Number},
   rooms: { type: Number  },
-/*   typeOfRoom: [{ type: String }], */
- /*  beds:[{type: String}], */
+  typeOfRoom: [{ type: String }],
+  beds:[{type: String}], 
   bathrooms: { type: Number },
   ownBathroom: { type: Boolean },
   price:{  type: Number},
