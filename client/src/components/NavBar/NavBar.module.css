@@ -1,8 +1,29 @@
-.container {
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Condensed&display=swap');
+
+.nav {
     width: 100vw;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
   }
-  
+.div_logo{
+    width: 150px;
+}
+.logo{
+    width: 100%;
+}
+.div_host{
+    background-color: white;
+    border: none;
+    color: #069a8e;
+    cursor: pointer;
+    font-family: 'Cabin Condensed', sans-serif;
+    font-size: 18px;
+}
+.container_navLink_btn{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
