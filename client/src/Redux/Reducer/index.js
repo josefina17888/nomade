@@ -6,7 +6,7 @@ import {
 const initialState = {
     lodgings: [],
     loader: true,
-    detail: {},
+    detail: [],
     user: null,
 }
 
@@ -54,14 +54,14 @@ function rootReducer (state = initialState, action){
         case 'LOADER_TRUE': 
             return {
              ...state,
-             pokeLoader: true,
+             loader: true,
             };
              
              
         case 'LOADER_FALSE': 
             return {
              ...state,
-             pokeLoader: false,
+             loader: false,
             };
 
 

@@ -5,6 +5,7 @@ const axios = require("axios");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
+const upload = require("../../../libs/storage")
 
 /// postea el host 
 

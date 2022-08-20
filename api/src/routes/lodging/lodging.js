@@ -49,9 +49,12 @@ router.get("/", async (req, res) => {
 ///BUSCA UN LODGING POR ID/// (FUNCIONA)
 router.get("/:lodgingId", async (req, res) => {
   try {
-    Lodging.find({ _id: req.params.lodgingId }, (error, docs) => {
-      res.send(docs);
-    });
+    // Lodging.find({ _id: req.params.lodgingId }, (error, docs) => {
+    //   res.json(docs);
+    // });
+    const findLodging = await Lodging.find({_id: req.params.lodgingId})
+    const found = findLodging[0]
+    res.json(found)
   } catch (err) {
     res.json(err);
   }
