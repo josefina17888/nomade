@@ -1,6 +1,7 @@
 
 import {
   LOGIN_USER,
+  GET_BY_CITY
 } from '../Actions/index';
 
 const initialState = {
@@ -65,13 +66,15 @@ function rootReducer (state = initialState, action){
             };
 
 
-            case 'GET_BY_NAME':
+            case 'GET_BY_CITY':
                 if(typeof(action.payload)==='string'){
                 return alert(" Not Found");
+
           }
             return{
               ...state,
             lodgings: action.payload
+            
             } 
 
         case 'GET_LODGING_DETAIL':

@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export const LOGIN_USER = "LOGIN_USER";
+export const GET_BY_CITY = " GET_BY_CITY";
+
 
 export const loginUser = (user) => {
   return async (dispatch) => {
@@ -15,7 +17,8 @@ export const loginUser = (user) => {
 export function getLodgings (){
     return async function(dispatch){
         try{
-        const json = await axios.get("http://localhost:3001/api/lodging/")
+        const json = await axios.get("http://localhost:3001/api/lodging")
+        console.log(json)
         
         dispatch({
             type:"GET_LODGINGS",
@@ -49,11 +52,12 @@ export function setLoaderTrue() {
 export function getByCity(city){
   return async function(dispatch){
     try{
-      let json= await axios.get(`/lodging?city=${city}`)
-      console.log(json)
+      let json= await axios.get(`http://localhost:3001/api/lodging?city=${city}`)
+      console.log(json.data)
       return dispatch({
         type: 'GET_BY_CITY',
         payload: json.data
+        
       })
     }catch(error){
       console.log(error)
@@ -85,15 +89,4 @@ export function getByCity(city){
     }
 }
 
-export function postHost(payload) {
-  return async function () {
-      try {
-          const response = await axios.post('http://localhost:3001/api/host', payload)
-          console.log(payload)
-          return response
 
-      } catch (error) {
-          console.log(error)
-      }
-  }
-}

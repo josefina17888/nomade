@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLodgings, orderPrice, setLoaderFalse, setLoaderTrue } from '../../Redux/Actions/index';
-import AllCardsPaging from './AllCardsPaging/AllCardsPaging';
+import AllCardsPaging from '../AllCardsPaging/AllCardsPaging';
 import Card from '../Card/Card'
 import { Link } from 'react-router-dom';
 import styles from './AllCards.module.css'
@@ -28,10 +28,8 @@ export default function AllCards() {
   }, [dispatch]) 
 
   return (
-    <div>
-    <div>AllCards</div>
-    <div className={styles.paging}>
-    </div>
+    <div className={styles.gral}>
+  <div className={styles.container}>
     <div className={styles.paging}>
         <div>
           { !loader ? <AllCardsPaging
@@ -48,14 +46,16 @@ export default function AllCards() {
                 <div key={e._id}>
                     <Link to={`/${e._id}`}>
                         <Card
-                        lodgingType={e.lodgingType}
+                        title={e.title}
                         price={e.price}
                         guests={e.guests}
+                        picture={e.picture}
                         description={e.description}/>
                     </Link>
                 </div>)})
             }
             </div>
+        </div>
         </div>
         </div>
   )
