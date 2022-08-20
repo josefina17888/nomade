@@ -16,6 +16,7 @@ export default function FormUser() {
     email:"",
     password:"",
     cellPhone:"",
+    dni:"",
     country:"",
     picture: "",
     birthDate:""
@@ -37,6 +38,7 @@ export default function FormUser() {
       email:"",
       password:"",
       cellPhone:"",
+      dni:"",
       country:"",
       picture: "",
       birthDate:""
@@ -53,7 +55,7 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      <form onSubmit={(e)=>handleSubmit(e)}>
+      <form action="http://localhost:3001/api/host"  method="POST" encType="multipart/form-data" onSubmit={(e)=>handleSubmit(e)}>
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
@@ -94,6 +96,14 @@ function handleChange(e){
           name ="password"
           value={input.password}
           placeholder="contraseña"
+          onChange={handleChange}
+        />
+        <input
+          // className={style.inputEmail}
+          type="text"
+          name ="dni"
+          value={input.dni}
+          placeholder="dni"
           onChange={handleChange}
         />
         <input
