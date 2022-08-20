@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
 });
 
 
+
 //Obtiene todas las reservaciones de un Guest
 router.get("/:guestId/bookings", async(req,res) => {
     try {
