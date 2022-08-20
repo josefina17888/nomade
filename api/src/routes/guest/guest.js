@@ -1,12 +1,39 @@
 const express = require("express");
 const router = express.Router();
-const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
+const {upDate,getGuest,deleteMessage} = require("./controller")
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const upload = require("../../../libs/storage")
- 
+// const cloudinary = require("../../../libs/cloudinary")
+const Model = require("../../models/Guest");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({ 
+  cloud_name: 'dbq85fwfz', 
+  api_key: '578434861277536', 
+  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+});
+
+
+router.post("/", upload.single("picture") ,async (req, res) => {
+  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
+  console.log(username, name , lastname , email , cellPhone , dni , country, birthDate ,password)
+  console.log(req.file)
+  
+    try{
+      const result = await cloudinary.uploader.upload(req.file.path)
+      console.log(result)
+      const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+      await newGuest.save()
+      res.status(201).send(newGuest)
+    }
+      catch (error){
+          res.status(404).send(error)
+      }
+});
+
 
 router.get("/", async(req,res) => {
     let {filterGuest} = req.query
@@ -45,19 +72,7 @@ router.get("/", async (req, res) => {
     }
   });
 
-//Postea un nuevo Guest
-router.post("/", upload.single("picture") ,async (req, res) => {
-  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
-  const {filename} = req.file
-  console.log(filename)
-    try{
-      const newGuest = await addGuest(username, name , lastname , email , cellPhone , dni , country,  filename, birthDate,password)
-      res.status(201).send(newGuest)
-    }
-      catch (error){
-          res.status(404).send(error)
-      }
-});
+
 
 router.post("/login", async(req, res)=>{
     try{

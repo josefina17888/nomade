@@ -13,7 +13,10 @@ const GuestSchema = new Schema({
   picture: { type: String },
   booking: [{ type: Schema.ObjectId, ref: "Booking" }, ],
   reviews: [{ type: Schema.ObjectId, ref: "GuestReview", }, ],
-  birthDate: { type: Date }
+  birthDate: { type: Date },
+  // public_id: {
+  //   type: String
+  // }
 });
 
 
