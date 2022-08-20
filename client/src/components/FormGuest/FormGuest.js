@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
 import style from "./FormUser.module.css";
-import { postGuest} from "../../Redux/Actions";
+
 
 export default function FormUser() {
   const dispatch= useDispatch()
@@ -24,27 +24,27 @@ export default function FormUser() {
   useEffect(() => {
   }, []);
 
-  function handleSubmit(e){
-    e.preventDefault()
-    dispatch(postGuest(input))  
-    console.log(e.target.file)
-    alert("Usuario creado correctamente!!")
+//   function handleSubmit(e){
+//     e.preventDefault()
+//     // dispatch(postGuest(input))  
+//     console.log(e.target.file)
+//     alert("Usuario creado correctamente!!")
     
 
-    setInput({
-      username: "",
-      name: "",
-      lastname: "",
-      email:"",
-      password:"",
-      cellPhone:"",
-      dni:"",
-      country:"",
-      picture: "",
-      birthDate:""
-    })    
-    history.push("/login")
-}
+//     setInput({
+//       username: "",
+//       name: "",
+//       lastname: "",
+//       email:"",
+//       password:"",
+//       cellPhone:"",
+//       dni:"",
+//       country:"",
+//       picture: "",
+//       birthDate:""
+//     })    
+//     history.push("/login")
+// }
 
 function handleChange(e){
   setInput({
@@ -55,7 +55,7 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      <form action="http://localhost:3001/api/host"  method="POST" encType="multipart/form-data" onSubmit={(e)=>handleSubmit(e)}>
+      <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data" >
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input

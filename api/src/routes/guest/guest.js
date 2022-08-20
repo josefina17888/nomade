@@ -27,7 +27,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       console.log(result)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
       await newGuest.save()
-      res.status(201).send(newGuest)
+      res.redirect("http://localhost:3000/login");
+      // res.status(201).send()
     }
       catch (error){
           res.status(404).send(error)

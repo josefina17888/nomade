@@ -6,23 +6,36 @@ const axios = require("axios");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
+const cloudinary = require('cloudinary')
+
+cloudinary.config({ 
+  cloud_name: 'dbq85fwfz', 
+  api_key: '578434861277536', 
+  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+});
 
 
 /// postea el host 
 
 /// postea el host 
+
 
 
 router.post("/:guestId", upload.single("picture"), async (req, res) => {
 
   const filename = req.file
+  const result = await cloudinary.v2.uploader.upload(req.file.path)
+  console.log(result)
   try {
-    const myHost = await Host.create(req.body);
+    const myHost = new Host()
+    myHost.dni= req.body.dni
+    myHost.hostDniPicture= result.url
     myHost.guestId = toId(req.params.guestId);
-    if(filename) {
-      myHost.setImgUrl(req.file.filename)
-  }
-    myHost.save()
+    // if(filename) {
+    //   myHost.setImgUrl(req.file.filename)
+  // }
+
+    await myHost.save()
         res.status(200).json(myHost)
     } catch (error) {
         res.status(400).send('no se pudo guardar el Host')
@@ -49,7 +62,7 @@ router.get("/:hostId", async (req, res) => {
       });
     });
 
-  
+
 
   module.exports = router;
 
