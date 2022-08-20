@@ -17,7 +17,7 @@ function App() {
           <Route path="/map" component={GoogleMaps} />
           <Route path="/login" component={LoginUser} />
           <Route path="/registerguest" component={FormUser} />
-          <Route exact path= '/:id' component={CardDetail}/>
+          <Route exact path= '/:_id' component={CardDetail}/>
         </Switch>
       </BrowserRouter>
    </div>

@@ -30,7 +30,7 @@ return(
         value={city}
         onChange={handleInputChange}
       />
-     <input type="submit" value="Buscar" /> 
+      <input type="submit" value="Buscar" />  
       
     </form>
   ); 
