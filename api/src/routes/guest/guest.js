@@ -20,20 +20,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/", async(req,res) => {
-    let {filterGuest} = req.query
-    try {
-        const guest = await getGuest(filterGuest)
-        res.status(201).send(guest)
-    }
-    catch(error) {
-        res.status(500).send(error)
-    }
-})
 
-/* const upload = multer({
-    dest:"public/files/uploads/images"
-}); */
 
 //Obtiene todas las reservaciones de un Guest
 router.get("/:guestId/bookings", async(req,res) => {
