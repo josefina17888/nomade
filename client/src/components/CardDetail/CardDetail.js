@@ -34,12 +34,7 @@ export default function CardDetail(props){
               <h3>Costo por noche: {myLodging.price}</h3>
             </div>
             </div>
-<<<<<<< HEAD
-            </div>
-            } 
-=======
       } 
->>>>>>> 156749ade138991316c2943f1c3c8a71452888b5
             <Link to= '/'>
                 <button>Volver</button>
             </Link>

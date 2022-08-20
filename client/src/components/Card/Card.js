@@ -9,7 +9,7 @@ export default function Card({ title, guests, description, price, picture }) {
       </div>
       <div className={styles.container}>
         <div className={styles.text}>
-          <h3>{title.toUpperCase()}</h3>
+          {/* <h3>{title.toUpperCase()}</h3> */}
           <h4>{price}</h4>
           <h4>Cantidad de huéspedes: {guests}</h4>
           <h4>Descripción: {description}</h4>
