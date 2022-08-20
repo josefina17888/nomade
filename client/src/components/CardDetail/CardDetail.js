@@ -62,19 +62,15 @@ export default function CardDetail(props){
               <div className={styles.flexcontainer1}>
               <h3 className={styles.padding}>${myLodging.price} por noche</h3>
               
-              <div className={styles.flexcontainer2}>
-              <div className={styles.flexcontainer3}>
-              <h6>Llegada</h6>
+              <div>
                 <DatePickerOk />
-              </div>
-              <div className={styles.flexcontainer3}>
-              <h6>Salida</h6>
-                <DatePickerOk />
-              </div>
               </div>
 
-              <div>
+              <div className={styles.flexcontainer3}>
                 <h6 className={styles.select}>Huéspedes</h6>
+                <form>
+                  <input type="text"></input>
+                </form>
               </div>
               
               <div>

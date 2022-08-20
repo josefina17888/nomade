@@ -78,18 +78,11 @@
     display: flex;
     padding: 10px;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 
-  .flexcontainer2{
-    display: flex;
-    padding: 10px;
-    flex-direction: row;
-    justify-content: center;
-    white-space: nowrap;
-    border-color: rgb(176, 171, 171);
-    border-width: 2px;
+  .select {
+    justify-content: left;
+    align-self: left;
   }
 
   .flexcontainer3{
@@ -97,11 +90,9 @@
     border-width: 2px;
     display: flex;
     flex-direction: column;
-    padding: 2px
-  }
-
-  .select {
-    padding: 10px;
-    justify-content: left;
-    align-self: left;
+    padding: 2px;
+    margin-bottom: 10px;
+    justify-content: center;
+    justify-items: left;
+    justify-self: left;
   }
