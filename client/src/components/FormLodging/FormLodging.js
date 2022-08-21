@@ -24,6 +24,7 @@ export default function FormLodging() {
   })
   const [input, setInput] = useState({
     lodgingType: "",
+    currency:"",
     guests: "",
     rooms: "",
     typeOfRoom:"",
@@ -41,9 +42,11 @@ export default function FormLodging() {
     ac: "",
     tv: "",
     security:"",
+    title:"",
     cleaning:"",
     parking: "",
     laundry: "",
+    currency: "",
     hotWater:"",
     kitchen:"" ,
     pool:"",
@@ -54,61 +57,6 @@ export default function FormLodging() {
 })    
   useEffect(() => {
   }, []);
-
-//   function handleSubmit(e){
-//     e.preventDefault()
-//     input.services = service
-//     dispatch(postLodging(input))  
-    
-//     alert("Hospedaje creado correctamente!!")
-    
-
-//     setInput({
-//       lodgingType: "",
-//       guests: "",
-//       rooms: "",
-//       typeOfRoom:"",
-//       beds:"",
-//       bathrooms:"",
-//       ownBathroom:"",
-//       price: "",
-//       city:"",
-//       country: "",
-     
-//       numOfGuests:"",
-//       checkInHour:"",
-//       checkOutHour:"",
-//       address:{wifi: "",
-//       ac: "",
-//       tv: "",
-//       security:"",
-//       cleaning:"",
-//       parking: "",
-//       laundry: "",
-//       hotWater:"",
-//       kitchen:"" ,
-//       pool:"",
-//       dining: "",
-//       pets: "",},
-//       description: "",
-//       picture:""
-//     })
-//     setService({
-//       wifi: "",
-//       ac: "",
-//       tv: "",
-//       security:"",
-//       cleaning:"",
-//       parking: "",
-//       laundry: "",
-//       hotWater:"",
-//       kitchen:"" ,
-//       pool:"",
-//       dining: "",
-//       pets: "",
-//     })
-    
-// }
 
   function handleChange(e){
     setInput({
@@ -137,7 +85,7 @@ function handleSelect(e){
   })
  
   }
-  if(e.target.value === "no") {
+  else if(e.target.value === "no") {
     
     
     setService({
@@ -153,6 +101,18 @@ function handleSelect(e){
   })
 
   }
+  else {
+    setService({
+      ...service,
+      [e.target.name] : e.target.value,
+     
+  })
+    setInput({
+      ...input,
+     ["services"] : service,
+     
+  })
+  }
  
 }
 
@@ -161,67 +121,99 @@ function handleSelect(e){
       <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
       <h1 className={style.title}>Registra tu alojamiento</h1>
       <div className={style.containerForm}>
-        <input
+        {/* <input
           className={style.lodgingType}
           type="text"
           name ="lodgingType"
           value={input.lodgingType}
           placeholder="Tipo de alojamiento"
           onChange={handleChange}
+        /> */}
+          <input
+          className={style.inputPassword}
+          type="text"
+          name ="title"
+          value={input.title}
+          placeholder="Titulo del hospedaje"
+          onChange={handleChange}
         />
-         <input
+          <select   onChange={handleChange} name="lodgingType" >
+                    <option disabled selected>Tipo de hospedaje</option>
+                    <option>Cabaña</option>
+                    <option>Albergue</option>
+                    <option>Hostal</option>
+                    <option>Hotel</option>
+                    <option>Casa</option>
+                    <option>Apartamento</option>
+                    <option>habitacion</option>
+          </select>
+          <select   onChange={handleChange}  name ="guests" >
+                    <option disabled selected>Huespeds</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>mas de 10</option>
+          </select>
+          <select   onChange={handleChange}  name ="rooms" >
+                    <option disabled selected>habitaciones</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>mas de 5</option>
+          </select>
+          <select   onChange={handleChange}  name ="beds" >
+                    <option disabled selected>Camas</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>mas de 5</option>
+          </select>
+          <select   onChange={handleChange}  name ="currency" >
+                    <option disabled selected>moneda:</option>
+                    <option>Dolar esatado unidense</option>
+                    <option>Euro</option>
+                    <option>Peso Argentino</option>
+                    <option>Peso Chileno</option>
+                    <option>Peso Mexicano</option>
+          </select>
+          <input
           className={style.inputEmail}
           type="number"
-          name ="guests"
-          value={input.guests}
-          placeholder="cantidad de huespeds"
+          name ="price"
+          min="1" step="any"
+          value={input.price}
+          placeholder="Precio por noche"
           onChange={handleChange}
         />
-        <input
-          className={style.inputPassword}
-          type="number"
-          name ="rooms"
-          value={input.rooms}
-          placeholder="Cantidad de habitaciones"
-          onChange={handleChange}
-        />
-         <input
+
+         <label>Baño propio<input type="checkbox"  onChange={handleChange} name="ownBathroom" /></label>
+         <select   onChange={handleChange}  name ="bathrooms" >
+                    <option disabled selected>Baños</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>mas de 3</option>
+                 
+          </select>
+         
+          {/* <input
           className={style.inputEmail}
           type="text"
           name ="typeOfRoom"
           value={input.typeOfRoom}
           placeholder="tipo de habitacion"
           onChange={handleChange}
-        />
-         <input
-          className={style.inputEmail}
-          type="number"
-          name ="beds"
-          value={input.beds}
-          placeholder="Cantidad de camas"
-          onChange={handleChange}
-        />
-        <input
-          className={style.inputPassword}
-          type="number"
-          name ="bathrooms"
-          value={input.bathrooms}
-          placeholder="Cantidad de baños"
-          onChange={handleChange}
-        />
-         <select  className={style.created} onChange={handleChange} name="ownBathroom" >
-                    <option disabled selected>Baño propio</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-         <input
-          className={style.inputEmail}
-          type="number"
-          name ="price"
-          value={input.price}
-          placeholder="Precio por noche"
-          onChange={handleChange}
-        />
+        /> */}
+
         <input
           className={style.inputPassword}
           type="text"
@@ -247,7 +239,7 @@ function handleSelect(e){
           placeholder="Direccion"
           onChange={handleChange}
         />
-         <input
+         <textarea
           className={style.inputPassword}
           type="text"
           name ="description"
@@ -265,66 +257,19 @@ function handleSelect(e){
           multiple
         />
         <h3>servicios</h3>
-        <select  className={style.created} onChange={handleSelect} name="wifi" >
-                    <option disabled selected>Wifi</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select  className={style.created} onChange={handleSelect} name="ac" >
-                    <option disabled selected>ac</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select className={style.created} onChange={handleSelect} name="tv" >
-                    <option disabled selected>tv</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select  className={style.created} onChange={handleSelect} name="security" >
-                    <option disabled selected>securidad</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select  className={style.created} onChange={handleSelect} name="cleaning" >
-                    <option disabled selected>Limpieza</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select className={style.created} onChange={handleSelect} name="parking" >
-                    <option disabled selected>Estacionamiento</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select  className={style.created} onChange={handleSelect} name="laundry" >
-                <option disabled selected>Lavanderia</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select className={style.created} onChange={handleSelect} name="hotWater" >
-                    <option disabled selected>Agua caliente</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select className={style.created} onChange={handleSelect} name="kitchen" >
-                    <option disabled selected>cocina</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select className={style.created} onChange={handleSelect} name="pool" >
-                    <option disabled selected>Piscina</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select className={style.created} onChange={handleSelect} name="dining" >
-                    <option disabled selected>Comedor</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
-          <select  className={style.created} onChange={handleSelect} name="pets" >
-                    <option disabled selected>Mascotas</option>
-                    <option>si</option>
-                    <option>no</option>
-          </select>
+          <label>wifi<input type="checkbox"  onChange={handleSelect} name="wifi" /></label>
+          <label>ac<input type="checkbox"  onChange={handleSelect} name="ac" /></label>
+          <label>tv<input type="checkbox"  onChange={handleSelect}  name="tv" /></label>
+          <label>securidad<input type="checkbox"  onChange={handleSelect}  name="security" /></label>
+          <label>Limpieza<input type="checkbox"  onChange={handleSelect} name="cleaning" /></label>
+          <label>Estacionamiento<input type="checkbox"  onChange={handleSelect} name="parking" /></label>
+          <label>Lavanderia<input type="checkbox"  onChange={handleSelect} name="laundry" /></label>
+          <label>Agua caliente<input type="checkbox"  onChange={handleSelect} name="hotWater" /></label>
+          <label>cocina<input type="checkbox"  onChange={handleSelect} name="kitchen" /></label>
+          <label>Piscina<input type="checkbox"  onChange={handleSelect} name="pool"  /></label>
+          <label>Comedor<input type="checkbox"  onChange={handleSelect}  name="dining" /></label>
+          <label>Mascotas<input type="checkbox"  onChange={handleSelect} name="pets" /></label>
+          
       </div>
       <button className={style.button}  type="submit">
         Crear hospedaje

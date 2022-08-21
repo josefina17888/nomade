@@ -6,9 +6,7 @@ import Home from './components/Home/Home.js';
 import LoginUser from './components/LoginUser/LoginUser.js';
 import FormUser from './components/FormGuest/FormGuest.js';
 import CardDetail from './components/CardDetail/CardDetail';
-
 import FormLodging from './components/FormLodging/FormLodging.js';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
 
