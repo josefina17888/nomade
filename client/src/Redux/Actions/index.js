@@ -14,7 +14,7 @@ export const loginUser = (user) => {
   };
 };
 
-export function getLodgings (){
+export function getLodgings (lodgingId){
     return async function(dispatch){
         try{
         const json = await axios.get("http://localhost:3001/api/lodging")
@@ -29,6 +29,7 @@ export function getLodgings (){
     }
 }
 }
+
 
 export function orderPrice(payload){
   return {
@@ -78,7 +79,8 @@ export function getByCity(city){
   export function getDetail (lodgingId){
     return async function (dispatch){
         try{
-            const res = await axios.get("http://localhost:3001/api/lodging/" + lodgingId)
+            const res = await axios.get("http://localhost:3001/api/lodging/detail/" + lodgingId)
+            console.log(res)
             return dispatch({
                 type: "GET_LODGING_DETAIL",
                 payload: res.data

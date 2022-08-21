@@ -65,7 +65,7 @@ export default function AllCards() {
                       price={e.price}
                       guests={e.guests}
                       picture={e.picture}
-                      description={e.description}
+                     // description={e.description}
                     />
                   </Link>
                 </div>

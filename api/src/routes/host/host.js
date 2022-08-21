@@ -6,6 +6,7 @@ const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 const cloudinary = require('cloudinary')
+const upload = require("../../../libs/storage")
 cloudinary.config({ 
   cloud_name: 'demf45vva', 
   api_key: '833159259333685', 
