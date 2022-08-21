@@ -14,10 +14,6 @@ cloudinary.config({
 });
 
 
-
-/// postea el host 
-
-
 /// postea el host 
 
 

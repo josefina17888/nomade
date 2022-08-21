@@ -36,7 +36,7 @@ export default function AllCards() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.paging}>
+      <div className={styles.pag}>
         <div>
           {!loader ? (
             <AllCardsPaging
@@ -57,15 +57,15 @@ export default function AllCards() {
             currentLodging.map((e) => {
               return (
                 <div className={styles.card}>
-                <div key={e._id} >
-                  <Link to={`/detail/${e._id}`} className={styles.link}>
+                <div className={styles.link} key={e._id} >
+                  <Link to={`/detail/${e._id}` } className={styles.a} >
                     <Card
                       city={e.city}
                       country={e.country}
                       price={e.price}
                       guests={e.guests}
                       picture={e.picture}
-                      description={e.description}
+                      currency={e.currency}
                     />
                   </Link>
                 </div>
