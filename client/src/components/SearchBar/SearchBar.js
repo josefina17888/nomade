@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getByCity } from "../../Redux/Actions";
+import s from "./SearchBar.module.css";
+import { BsSearch } from "react-icons/bs";
 
 
 export default function SearchBar(){
@@ -23,14 +25,15 @@ function handleSubmit(e){
 }
 
 return(
-    <form className="searchForm" onSubmit={handleSubmit}>   
-      <input className="searchInput"
+    <form className={s.searchForm} onSubmit={handleSubmit}>   
+      <input className={s.searchInput}
         type="text"
         placeholder="Ciudad"
         value={city}
         onChange={handleInputChange}
       />
-      <input type="submit" value="Buscar" />  
+      <button type="submit" className={s.searchButton}><BsSearch className={s.searchIcon}/>
+        </button>
       
     </form>
   ); 
