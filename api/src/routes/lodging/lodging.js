@@ -3,12 +3,30 @@ const Lodging = require("../../models/Lodging");
 const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
+const upload = require("../../../libs/storage")
+const cloudinary = require("cloudinary").v2;
 
+cloudinary.config({ 
+  cloud_name: 'dtw1cvtdr', 
+  api_key: '828297737868324', 
+  api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
+});
 //BUCCA LODGING Y REALCIONA EL HOST
-router.post("/:hostId", async (req, res) => {
+router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
-    const newLodging = await Lodging.create(req.body);
+    let fotos = req.files.map(e=>e.path)
+    let result=[]
+    for(let i=0; i<fotos.length; i++)
+    {
+    result.push(await cloudinary.uploader.upload(fotos[i]))
+    }
+    // const {lodgingType, guests,rooms,typeOfRoom, beds, bathrooms, ownBathroom, price, city, country, address, numOfGuests ,checkInHour ,checkOutHour ,description} = req.body
+    const newLodging = await new Lodging(req.body);
+    let fotosSubidas = result.map(e=>e.url)
+    newLodging.picture= fotosSubidas
+    
     newLodging.hostId = toId(req.params.hostId);
+   
     newLodging.save();
     res.json(newLodging);
   } catch (err) {
