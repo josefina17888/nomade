@@ -9,7 +9,7 @@ const LodgingSchema = new mongoose.Schema({
   title:{type: String},
   guests: {type: Number, required:true },
   rooms: { type: Number, required:true },
-  typeOfRoom: [{ type: String, required:true }],
+  typeOfRoom: [{ type: String}],
   beds:{type: Number, required:true }, 
   bathrooms: { type: Number },
   ownBathroom: { type: Boolean },
