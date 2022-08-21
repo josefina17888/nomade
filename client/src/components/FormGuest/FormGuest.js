@@ -32,7 +32,7 @@ export default function FormUser() {
 //     alert("Usuario creado correctamente!!")
 
     
-    alert("Usuario creado correctamente!!")
+
   
 
 //     setInput({

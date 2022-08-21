@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../../../libs/storage")
+
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
