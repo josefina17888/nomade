@@ -15,11 +15,11 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/map" component={GoogleMaps} />
-          <Route path="/login" component={LoginUser} />
-          <Route path="/registerguest" component={FormUser} />
-          <Route exact path= '/detail/:id' component={CardDetail}/>
-          <Route path='/form' component={FormHost}/>
+          <Route exact path="/map" component={GoogleMaps} />
+          <Route exact path="/login" component={LoginUser} />
+          <Route exact path="/registerguest" component={FormUser} />
+          <Route exact path= '/detail/:_id' component={CardDetail}/>
+          <Route exact path='/form' component={FormHost}/>
         </Switch>
       </BrowserRouter>
    </div>

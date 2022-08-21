@@ -11,6 +11,7 @@ cloudinary.config({
   api_key: '833159259333685', 
   api_secret: 'h4LyLt_DsuPclEhJCkuB5rlX_Qw' 
 });
+const upload = require("../../../libs/storage")
 
 
 router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
