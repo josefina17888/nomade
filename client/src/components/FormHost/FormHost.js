@@ -9,6 +9,9 @@ export default function FormHost() {
   const dispatch = useDispatch()
   const history = useHistory()
 
+  let guestId = localStorage.getItem("userInfo")
+  guestId = JSON.parse(guestId)._id
+
   const [input,setInput] = useState({
     dni: '',
     hostDniPicture:'',
@@ -41,7 +44,7 @@ function handleSubmit(e){
       <div>FormHost</div>
       {/* <form onSubmit={(e)=>handleSubmit(e)} > */}
 
-      <form action='http://localhost:3001/api/host/62fee5b9b8d4d30a90f487ea' method="POST" encType="multipart/form-data">
+      <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
         <label>DNI:</label>
         <input 
         type="text" 
