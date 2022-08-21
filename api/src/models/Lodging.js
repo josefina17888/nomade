@@ -6,14 +6,16 @@ const Schema = mongoose.Schema;
 const LodgingSchema = new mongoose.Schema({
   
   lodgingType: { type: String },
+  title:{type: String},
   guests: {type: Number},
   rooms: { type: Number  },
   typeOfRoom: [{ type: String }],
-  beds:[{type: String}],
+  beds:[{type: String}], 
   bathrooms: { type: Number },
   ownBathroom: { type: Boolean },
   price:{  type: Number},
-  picture: [{ type: String }],
+  currency: { type: String },
+  picture: { type: String },
   city: { type: String },
   country: { type: String },
   address: { type: String },

@@ -8,6 +8,12 @@
     text-decoration: none;
     text-decoration-line: none;
     font-family: 'Poppins', sans-serif;
+  
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   
   /* On mouse-over, add a deeper shadow */

@@ -2,9 +2,11 @@ const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Host = require("../../models/Host");
 const mongoose = require("mongoose");
+const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 const upload = require("../../../libs/storage")
 const cloudinary = require("cloudinary").v2;
+
 
 cloudinary.config({ 
   cloud_name: 'dtw1cvtdr', 
@@ -13,6 +15,7 @@ cloudinary.config({
 });
 //BUCCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
+
   try {
     console.log(req.body.wifi)
     let fotos = req.files.map(e=>e.path)
@@ -64,6 +67,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 router.get("/", async (req, res) => {
   const citySearching = await req.query.city;
   allLodgings = await Lodging.find();
+  console.log(allLodgings)
   try {
     if (citySearching) {
       Lodging.find({ city: citySearching }, (err, lodging) => {
@@ -80,9 +84,12 @@ router.get("/", async (req, res) => {
 ///BUSCA UN LODGING POR ID/// (FUNCIONA)
 router.get("/:lodgingId", async (req, res) => {
   try {
-    Lodging.find({ _id: req.params.lodgingId }, (error, docs) => {
-      res.send(docs);
-    });
+    // Lodging.find({ _id: req.params.lodgingId }, (error, docs) => {
+    //   res.json(docs);
+    // });
+    const findLodging = await Lodging.find({_id: req.params.lodgingId})
+    const found = findLodging[0]
+    res.json(found)
   } catch (err) {
     res.json(err);
   }

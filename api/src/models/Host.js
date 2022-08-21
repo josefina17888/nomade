@@ -3,17 +3,38 @@ const Schema = mongoose.Schema;
 
 
 const hostSchema = new Schema({
-
+  
+  name: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  cellPhone: {
+    type: String,
+  },
+  dni: String,
+  country: String,
+  birthDate: Date,
+  picture: String,
+  Lodging: [
+    {
+      type: Schema.ObjectId,
+      ref: "lodging",
+    },
+  ],
   guestId: {type: mongoose.Types.ObjectId, ref: "Guest"},
   dni: { type: String, required: true },
-
-  hostDniPicture: { type: String, required: true },
+  hostDniPicture: { type: String },
   lodgingId: {type: mongoose.Types.ObjectId, ref: "Lodging"}, 
 });
 
-hostSchema.methods.setImgUrl = function setImgUrl (filename) {
-  this.picture = "http://localhost:3001/files/uploads/" + filename
-}
+// hostSchema.methods.setImgUrl = function setImgUrl (filename) {
+//   this.hostDniPicture = "http://localhost:3001/files/uploads/" + filename
+// }
 
 
 const model = mongoose.model("Host", hostSchema);
