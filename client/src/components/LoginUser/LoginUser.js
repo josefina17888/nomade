@@ -1,26 +1,35 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import style from "./LoginUser.module.css";
 import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from '../../Redux/Actions/index';
+
 
 export default function LoginUser() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const selector = useSelector((state) => state.user);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [userGoogle, setUserGoogle] = useState({});
+  
+  useEffect(() => {
+    const loggedUserJson = window.localStorage.getItem("userLogin")
+    console.log(loggedUserJson)
+    if(loggedUserJson) {
+      const user = JSON.parse(loggedUserJson)
+      dispatch(loginUser(user))
+    }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({email, password}));
     window.localStorage.setItem(
-      "userLogin",
-      JSON.stringify({ email })
+      "userLogin" , JSON.stringify({email})
     );
     // window.location.href = '/'
     // history.push("/");
@@ -75,7 +84,7 @@ export default function LoginUser() {
         <div className={style.buttonGoogle} id="google-signin"></div>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
-          <Link to="/registro">¡Crea tu cuenta aqui!</Link>
+          <Link to="/registerguest">¡Crea tu cuenta aqui!</Link>
         </div>
       </div>
     </div>

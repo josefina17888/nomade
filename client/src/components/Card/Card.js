@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Card.module.css";
 
-export default function Card({ city, country, guest, price, picture }) {
+export default function Card({ city, country, guests, price, picture, description }) {
   return (
     <div className={styles.card}>
       <div className={styles.img}>

@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
         {
           email: user.email,
           name: user.name,
-        }, process.env.SECURE_TOKEN,
+        }, process.env.SECURE_TOKEN, { expiresIn: "7d" }
       );
 
       return res.json({ status: "ok", user: token });

@@ -7,15 +7,13 @@ export const GET_BY_CITY = " GET_BY_CITY";
 export const loginUser = (user) => {
   return async (dispatch) => {
     const response = await axios.post("http://localhost:3001/api/login", user);
-    let variableNueva = response.data
+    let userData = response.data
     dispatch({
       type: "LOGIN_USER",
-      payload: variableNueva.user,
+      payload: userData.user,
     });
-    
   };
 };
-
 
 export function getLodgings (){
     return async function(dispatch){
