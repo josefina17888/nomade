@@ -33,7 +33,7 @@ export default function FormUser() {
 
     
     alert("Usuario creado correctamente!!")
-    console.log(e.target.value)
+  
 
 //     setInput({
 //       username: "",
