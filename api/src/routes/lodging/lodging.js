@@ -4,7 +4,6 @@ const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
-const upload = require("../../../libs/storage")
 const cloudinary = require("cloudinary").v2;
 
 
@@ -82,7 +81,7 @@ router.get("/", async (req, res) => {
 });
 
 ///BUSCA UN LODGING POR ID/// (FUNCIONA)
-router.get("/:lodgingId", async (req, res) => {
+router.get("/detail/:lodgingId", async (req, res) => {
   try {
     // Lodging.find({ _id: req.params.lodgingId }, (error, docs) => {
     //   res.json(docs);

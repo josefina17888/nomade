@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./AllCardsPaging.module.css"
 
 export default function AllCardsPaging ({lodgingPerPage, stateLodgings, paging}){
     const pageNumbers = [];
@@ -8,16 +9,15 @@ export default function AllCardsPaging ({lodgingPerPage, stateLodgings, paging})
     }
 
     return(
-        <nav>
-            <ul>
+        
+           <div>
                 {pageNumbers.map((number) => {
                     return(
-                    <li key={number}>
-                    <button onClick = { ()=> paging(number) } > {number} </button>
-                    </li>
+                    <button 
+                   className={styles.pag} onClick = { ()=> paging(number) } > {number} </button>
                     )})
                 }
-            </ul>
-        </nav>
+            </div>
+        
     )
 }

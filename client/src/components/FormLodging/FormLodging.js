@@ -24,6 +24,7 @@ export default function FormLodging() {
   })
   const [input, setInput] = useState({
     lodgingType: "",
+    currency:"",
     guests: "",
     rooms: "",
     typeOfRoom:"",
@@ -220,6 +221,14 @@ function handleSelect(e){
           name ="price"
           value={input.price}
           placeholder="Precio por noche"
+          onChange={handleChange}
+        />
+         <input
+          className={style.inputEmail}
+          type="string"
+          name ="currency"
+          value={input.currency}
+          placeholder="moneda"
           onChange={handleChange}
         />
         <input
