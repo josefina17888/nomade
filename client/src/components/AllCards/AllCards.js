@@ -58,7 +58,7 @@ export default function AllCards() {
               return (
                 <div className={styles.card}>
                 <div key={e._id} >
-                  <Link to={`/${e._id}`} className={styles.link}>
+                  <Link to={`/detail/${e._id}`} className={styles.link}>
                     <Card
                       city={e.city}
                       country={e.contry}
