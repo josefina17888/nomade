@@ -6,7 +6,7 @@ import styles from './Home.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.home}>
+    <div className="with-new-header touch">
     <NavBar/>
     <Menu/>
     <AllCards/>
