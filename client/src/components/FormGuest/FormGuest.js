@@ -24,12 +24,16 @@ export default function FormUser() {
   useEffect(() => {
   }, []);
 
+
 //   function handleSubmit(e){
 //     e.preventDefault()
 //     // dispatch(postGuest(input))  
 //     console.log(e.target.file)
 //     alert("Usuario creado correctamente!!")
+
     
+    //alert("Usuario creado correctamente!!")
+    //console.log(e.target.value)
 
 //     setInput({
 //       username: "",
@@ -46,16 +50,27 @@ export default function FormUser() {
 //     history.push("/login")
 // }
 
-function handleChange(e){
-  setInput({
-      ...input,
-      [e.target.name] : e.target.value
-  })
+
+
+
+  function handleChange(e){
+    console.log(e.target.files)
+    setInput({
+        ...input,
+        [e.target.name]: e.target.files,
+        [e.target.name] : e.target.value,
+       
+    })
+   
 }
+
 
   return (
     <div className={style.containerUser}>
+
+
       <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data" >
+
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
@@ -145,5 +160,8 @@ function handleChange(e){
   </form>
     </div>
   );
+
+
+
 }
 
