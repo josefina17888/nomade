@@ -36,18 +36,6 @@ export default function AllCards() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.pag}>
-        <div>
-          {!loader ? (
-            <AllCardsPaging
-              lodgingPerPage={lodgingPerPage}
-              stateLodgings={stateLodgings.length}
-              paging={paging}
-            />
-          ) : null}
-        </div>
-        </div>
-
         <div className={styles.cards}>
           {loader ? (
             <h2>Loading...</h2>
@@ -74,7 +62,18 @@ export default function AllCards() {
             })
           )}
         </div>
-      
+
+        <div className={styles.pag}>
+        <div>
+          {!loader ? (
+            <AllCardsPaging
+              lodgingPerPage={lodgingPerPage}
+              stateLodgings={stateLodgings.length}
+              paging={paging}
+            />
+          ) : null}
+        </div>
+        </div>
     </div>
   );
 }
