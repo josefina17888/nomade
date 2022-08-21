@@ -68,7 +68,7 @@ export function getByCity(city){
 
   export function postGuest(payload){
     return async function(dispatch){
-      console.log(payload)
+      
         var json = await axios.post("http://localhost:3001/api/guest", payload)
         return json
 }
@@ -86,6 +86,15 @@ export function getByCity(city){
             console.log(error)
         }
     }
+}
+
+export function postLodging(payload){
+  return async function(dispatch){
+    console.log(payload)
+      var json = await axios.post("http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2" , payload)
+     
+      return json
+}
 }
 
 
