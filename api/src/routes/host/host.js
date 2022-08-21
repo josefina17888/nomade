@@ -5,7 +5,6 @@ const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
-const upload = require('../../../libs/storage.js')
 const cloudinary = require('cloudinary')
 
 cloudinary.config({ 

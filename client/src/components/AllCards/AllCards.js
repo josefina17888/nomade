@@ -61,7 +61,7 @@ export default function AllCards() {
                   <Link to={`/detail/${e._id}`} className={styles.link}>
                     <Card
                       city={e.city}
-                      country={e.contry}
+                      country={e.country}
                       price={e.price}
                       guests={e.guests}
                       picture={e.picture}
