@@ -24,6 +24,7 @@ export default function FormLodging() {
   })
   const [input, setInput] = useState({
     lodgingType: "",
+    currency:"",
     guests: "",
     rooms: "",
     typeOfRoom:"",
@@ -193,6 +194,7 @@ function handleSelect(e){
           placeholder="Precio por noche"
           onChange={handleChange}
         />
+
          <label>Baño propio<input type="checkbox"  onChange={handleChange} name="ownBathroom" /></label>
          <select   onChange={handleChange}  name ="bathrooms" >
                     <option disabled selected>Baños</option>
@@ -211,6 +213,7 @@ function handleSelect(e){
           placeholder="tipo de habitacion"
           onChange={handleChange}
         /> */}
+
         <input
           className={style.inputPassword}
           type="text"

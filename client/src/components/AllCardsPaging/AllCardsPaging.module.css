@@ -1,0 +1,13 @@
+.pag {
+    border-radius: 50px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    margin: 2em .2em 3em;
+    border: 1px solid #069a8e;
+    font-size: .8em;
+    
+}
+.pag:hover{
+    background-color: #9494945d;
+}
