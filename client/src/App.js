@@ -19,10 +19,10 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/map" component={GoogleMaps} />
           <Route path="/login" component={LoginUser} />
-          <Route exact path= '/registerlodging' component={FormLodging}/>
+          <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:id' component={CardDetail}/>
-          <Route path='/form' component={FormHost}/>
+          <Route path='/:guestId/form' component={FormHost}/>
 
         </Switch>
       </BrowserRouter>
