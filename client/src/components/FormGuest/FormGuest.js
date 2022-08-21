@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector} from "react-redux"
+import { useDispatch} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
 import style from "./FormUser.module.css";
-import { postGuest} from "../../Redux/Actions";
+
 
 export default function FormUser() {
   const dispatch= useDispatch()
@@ -16,6 +16,7 @@ export default function FormUser() {
     email:"",
     password:"",
     cellPhone:"",
+    dni:"",
     country:"",
     picture: "",
     birthDate:""
@@ -23,26 +24,27 @@ export default function FormUser() {
   useEffect(() => {
   }, []);
 
-  function handleSubmit(e){
-    e.preventDefault()
-    dispatch(postGuest(input))  
-    console.log(e.target.file)
-    alert("Usuario creado correctamente!!")
+//   function handleSubmit(e){
+//     e.preventDefault()
+//     // dispatch(postGuest(input))  
+//     console.log(e.target.file)
+//     alert("Usuario creado correctamente!!")
     
 
-    setInput({
-      username: "",
-      name: "",
-      lastname: "",
-      email:"",
-      password:"",
-      cellPhone:"",
-      country:"",
-      picture: "",
-      birthDate:""
-    })    
-    history.push("/login")
-}
+//     setInput({
+//       username: "",
+//       name: "",
+//       lastname: "",
+//       email:"",
+//       password:"",
+//       cellPhone:"",
+//       dni:"",
+//       country:"",
+//       picture: "",
+//       birthDate:""
+//     })    
+//     history.push("/login")
+// }
 
 function handleChange(e){
   setInput({
@@ -53,11 +55,11 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      <form onSubmit={(e)=>handleSubmit(e)}>
+      <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data" >
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
-          className={style.inputEmail}
+          // className={style.inputEmail}
           type="text"
           name ="username"
           value={input.username}
@@ -65,7 +67,7 @@ function handleChange(e){
           onChange={handleChange}
         />
          <input
-          className={style.inputEmail}
+          // className={style.inputEmail}
           type="text"
           name ="name"
           value={input.name}
@@ -73,7 +75,7 @@ function handleChange(e){
           onChange={handleChange}
         />
         <input
-          className={style.inputPassword}
+          // className={style.inputPassword}
           type="text"
           name ="lastname"
           value={input.lastname}
@@ -81,7 +83,7 @@ function handleChange(e){
           onChange={handleChange}
         />
          <input
-          className={style.inputEmail}
+          // className={style.inputEmail}
           type="text"
           name ="email"
           value={input.email}
@@ -89,7 +91,7 @@ function handleChange(e){
           onChange={handleChange}
         />
          <input
-          className={style.inputEmail}
+          // className={style.inputEmail}
           type="password"
           name ="password"
           value={input.password}
@@ -97,7 +99,15 @@ function handleChange(e){
           onChange={handleChange}
         />
         <input
-          className={style.inputPassword}
+          // className={style.inputEmail}
+          type="text"
+          name ="dni"
+          value={input.dni}
+          placeholder="dni"
+          onChange={handleChange}
+        />
+        <input
+          // className={style.inputPassword}
           type="text"
           name ="cellPhone"
           value={input.cellPhone}
@@ -105,7 +115,7 @@ function handleChange(e){
           onChange={handleChange}
         />
          <input
-          className={style.inputEmail}
+          // className={style.inputEmail}
           type="text"
           name ="country"
           value={input.country}
@@ -113,7 +123,7 @@ function handleChange(e){
           onChange={handleChange}
         />
          <input
-          className={style.inputEmail}
+          // className={style.inputEmail}
           type="date"
           name ="birthDate"
           value={input.birthDate}
@@ -121,7 +131,7 @@ function handleChange(e){
           onChange={handleChange}
         />
         <input
-          className={style.inputPassword}
+          // className={style.inputPassword}
           type="file"
           name ="picture"
           value={input.picture}

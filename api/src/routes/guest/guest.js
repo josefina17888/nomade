@@ -1,12 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const {addGuest,upDate,getGuest,deleteMessage} = require("./controller")
-const Host = require("../../models/Host");
+const {upDate,getGuest,deleteMessage} = require("./controller")
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const upload = require("../../../libs/storage")
+const Model = require("../../models/Guest");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({ 
+  cloud_name: 'dbq85fwfz', 
+  api_key: '578434861277536', 
+  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+});
+
+
+router.post("/", upload.single("picture") ,async (req, res) => {
+  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
+    try{
+      const result = await cloudinary.uploader.upload(req.file.path)
+      console.log(result)
+      const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+      await newGuest.save()
+      res.redirect("http://localhost:3000/");
+    }
+      catch (error){
+          res.status(404).send(error)
+      }
+});
+
+
  
 ////TRAE TODOS LOS GUEST (FUNCIONA)////
 router.get("/", async (req, res) => {
@@ -35,6 +59,7 @@ router.get("/:guestId/bookings", async(req,res) => {
 })
 
 
+
 //Postea un nuevo Guest
 router.post("/", upload.single("picture") ,async (req, res) => {
     try{
@@ -45,6 +70,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
           res.status(404).send(error)
       }
 });
+
 
 ///ACTUALIZA EL GUEST (FUNCIONA)////
 router.patch("/:guestId", async (req, res) => {
