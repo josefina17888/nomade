@@ -4,7 +4,7 @@ const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
-const upload = require("../../../libs/storage")
+
 const cloudinary = require("cloudinary").v2;
 
 
@@ -27,20 +27,22 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     // const {lodgingType, guests,rooms,typeOfRoom, beds, bathrooms, ownBathroom, price, city, country, address, numOfGuests ,checkInHour ,checkOutHour ,description} = req.body
     const newLodging = await new Lodging(req.body);
     let fotosSubidas = result.map(e=>e.url)
+    
     newLodging.picture= fotosSubidas
-    newLodging.services.wifi= req.body.wifi === "si" ? true : false 
-    newLodging.services.ac= req.body.ac=== "si" ? true : false 
-    newLodging.services.tv= req.body.tv=== "si" ? true : false 
-    newLodging.services.security= req.body.security=== "si" ? true : false 
-    newLodging.services.cleaning= req.body.cleaning=== "si" ? true : false 
-    newLodging.services.parking= req.body.parking=== "si" ? true : false 
-    newLodging.services.laundry= req.body.laundry=== "si" ? true : false 
-    newLodging.services.hotWater= req.body.hotWater=== "si" ? true : false 
-    newLodging.services.kitchen= req.body.kitchen=== "si" ? true : false 
-    newLodging.services.pool= req.body.pool=== "si" ? true : false 
-    newLodging.services.dining= req.body.dining=== "si" ? true : false 
-    newLodging.services.pets= req.body.pets=== "si" ? true : false 
-    newLodging.ownBathroom= req.body.ownBathroom === "si" ? true : false 
+    newLodging.ownBathroom= req.body.ownBathroom === "on" ? true : false 
+    newLodging.services.wifi= req.body.wifi === "on" ? true : false 
+    newLodging.services.ac= req.body.ac=== "on" ? true : false 
+    newLodging.services.tv= req.body.tv=== "on" ? true : false 
+    newLodging.services.security= req.body.security=== "on" ? true : false 
+    newLodging.services.cleaning= req.body.cleaning=== "on" ? true : false 
+    newLodging.services.parking= req.body.parking=== "on" ? true : false 
+    newLodging.services.laundry= req.body.laundry=== "on" ? true : false 
+    newLodging.services.hotWater= req.body.hotWater=== "on" ? true : false 
+    newLodging.services.kitchen= req.body.kitchen=== "on" ? true : false 
+    newLodging.services.pool= req.body.pool=== "on" ? true : false 
+    newLodging.services.dining= req.body.dining=== "on" ? true : false 
+    newLodging.services.pets= req.body.pets=== "on" ? true : false 
+   
     newLodging.hostId = toId(req.params.hostId);
    
     newLodging.save();
