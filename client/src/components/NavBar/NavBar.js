@@ -7,6 +7,10 @@ import { FaUserCircle } from "react-icons/fa";
 import { ImUserPlus, ImUserCheck } from "react-icons/im";
 
 export default function NavBar() {
+
+  let guestId = localStorage.getItem("userInfo")
+  guestId = JSON.parse(guestId)._id
+
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
@@ -34,7 +38,7 @@ export default function NavBar() {
               <div className="c1yo0219 dir dir-ltr">
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
-                    <Link to="/form" className="nav-link py-2 px-0 px-lg-2">
+                    <Link to={`${guestId}/form`} className="nav-link py-2 px-0 px-lg-2">
                       <button className={s.btn_host}>Hospeda nómades</button>
                     </Link>
                   </div>
