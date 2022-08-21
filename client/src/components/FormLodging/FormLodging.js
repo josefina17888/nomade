@@ -37,7 +37,7 @@ export default function FormLodging() {
     numOfGuests:"",
     checkInHour:"",
     checkOutHour:"",
-    services: [{wifi: "",
+    services: {wifi: "",
     ac: "",
     tv: "",
     security:"",
@@ -48,7 +48,7 @@ export default function FormLodging() {
     kitchen:"" ,
     pool:"",
     dining: "",
-    pets: ""}],
+    pets: ""},
     description: "",
     picture:""
 })    
@@ -116,6 +116,7 @@ export default function FormLodging() {
         [e.target.name] : e.target.value,
        
     })
+    
    console.log(input)
 }
 
@@ -134,7 +135,7 @@ function handleSelect(e){
      ["services"] : service,
      
   })
-  input.services= service
+ 
   }
   if(e.target.value === "no") {
     
