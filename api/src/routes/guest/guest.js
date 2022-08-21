@@ -72,6 +72,33 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 });
 
 
+
+
+router.get("/", async (req, res) => {
+    try {
+      Guest.find({}, function (err, guest) {
+        res.status(200).send(guest);
+      });
+    } catch (error) {
+      res.status(400).send('Guests not found')
+          console.log(error)
+    }
+  });
+
+router.patch("/:id", async (req, res) => {
+    const{id} = req.params
+    const {username, name , lastname , email , cellPhone , country,picture, birthDate} = req.body  
+    try{
+
+        const updateGuest = await upDate(id , req.body)
+        res.status(201).send("Actualizado con éxito")
+        }
+        catch (error){
+            res.status(404).send(error)
+        }    
+});
+
+
 ///ACTUALIZA EL GUEST (FUNCIONA)////
 router.patch("/:guestId", async (req, res) => {
   try {
@@ -82,6 +109,7 @@ res.status(400).send("no se pudo actualizar el Guest");
 console.log(error);
 }
 })
+
 
 //Esta ruta es probable que no se considere en el Back y se modifique por Borrado Lógico
 router.delete("/:id", async (req,res) => {
