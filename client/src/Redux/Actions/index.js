@@ -30,11 +30,17 @@ export function getLodgings (lodgingId){
 }
 }
 
-
+//MENU
 export function orderPrice(payload){
   return {
       type: "ORDER_PRICE",
       payload
+  }
+}
+export function filterTypeHouse(payload){
+  return{
+    type: "FILTER_TYPE_HOUSE",
+    payload
   }
 }
 

@@ -3,7 +3,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import s from "../NavBar/NavBar.module.css";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
-import { TbUserCircle } from "react-icons/tb";
+import { FaUserCircle } from "react-icons/fa";
+import { ImUserPlus, ImUserCheck } from "react-icons/im";
 
 export default function NavBar() {
   return (
@@ -46,29 +47,26 @@ export default function NavBar() {
                         </Link>
                       </div>
                       <div className={s.container_btn_icon}>
-                          <button
-                            className={s.button}
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <TbUserCircle className={s.icon} />
-                          </button>
-                        <ul
-                          className="dropdown-menu dropdown-menu-end show"
-                          data-bs-popper="static"
+                        <button
+                          className={s.button}
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
                         >
-                          <li>
+                          <FaUserCircle className={s.icon} />
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
                             <Link
                               to="/registerguest"
                               className="dropdown-item current"
                             >
-                              Registrarse
+                            <ImUserPlus/>  Registrarse
                             </Link>
                           </li>
                           <li>
                             <Link to="/login" className="dropdown-item">
-                              Iniciar sesión
+                              <ImUserCheck/>  Iniciar sesión
                             </Link>
                           </li>
                         </ul>
