@@ -28,7 +28,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.hostId = toId(req.params.hostId);
    
     newLodging.save();
-    res.json(newLodging);
+    res.redirect("http://localhost:3000/")
   } catch (err) {
     res.json(err);
   }
