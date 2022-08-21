@@ -72,7 +72,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 });
 
 
-<<<<<<< HEAD
+
 
 router.get("/", async (req, res) => {
     try {
@@ -98,8 +98,7 @@ router.patch("/:id", async (req, res) => {
         }    
 });
 
-=======
->>>>>>> 1980c258ce77015b91a054213e2f993416fe9884
+
 ///ACTUALIZA EL GUEST (FUNCIONA)////
 router.patch("/:guestId", async (req, res) => {
   try {

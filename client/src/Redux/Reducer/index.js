@@ -9,15 +9,6 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "LOGIN_USER":
-      if (!action.payload) {
-        alert("Usuario o contraseña incorrecta");
-      } else {
-        return {
-          ...state,
-          user: action.payload,
-        };
-      }
     case "GET_LODGINGS":
       return {
         ...state,

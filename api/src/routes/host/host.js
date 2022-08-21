@@ -5,7 +5,6 @@ const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
-const upload = require('../../../libs/storage.js')
 const cloudinary = require('cloudinary')
 
 cloudinary.config({ 
@@ -13,8 +12,6 @@ cloudinary.config({
   api_key: '578434861277536', 
   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
 });
-
-const upload = require('../../../libs/storage.js')
 
 
 /// postea el host 

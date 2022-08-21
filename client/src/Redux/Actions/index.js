@@ -1,19 +1,6 @@
 import axios from "axios";
 
-
-export const LOGIN_USER = "LOGIN_USER";
 export const GET_BY_CITY = " GET_BY_CITY";
-
-export const loginUser = (user) => {
-  return async (dispatch) => {
-    const response = await axios.post("http://localhost:3001/api/login", user);
-    let userData = response.data
-    dispatch({
-      type: "LOGIN_USER",
-      payload: userData.user,
-    });
-  };
-};
 
 export function getLodgings (){
     return async function(dispatch){
