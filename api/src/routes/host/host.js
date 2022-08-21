@@ -33,7 +33,7 @@ router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
   // }
 
     await myHost.save()
-        res.status(200).json(myHost)
+    res.redirect("http://localhost:3000/");
     } catch (error) {
         res.status(400).send('no se pudo guardar el Host')
         console.log(error)
