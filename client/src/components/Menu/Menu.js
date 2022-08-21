@@ -1,26 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { filterTypeHouse, orderPrice } from "../../Redux/Actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import s from "../Menu/Menu.module.css";
 import { TbMap2 } from "react-icons/tb";
 import { GiSpookyHouse } from "react-icons/gi";
 import { MdOutlinePets } from "react-icons/md";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 export default function Menu() {
-  
+  const allLodgings = useSelector(state => state.lodgings)
   const dispatch = useDispatch();
-  //order price
-  function handleOrderPrice(e) {
-    e.preventDefault();
-    dispatch(orderPrice(e.target.value));
-    //setCurrentPage(1);
-    //setOrder(`Ordered ${e.target.value}`);
-  }
+//Ordernar por Lodging tipo: Casa
   function handleFilterTypeHouse(e){
     e.preventDefault();
     dispatch(filterTypeHouse(e.target.value))
   }
+  /* function handleFilterByPets(e){
+    e.preventDefault();
+    dispatch(filterTypeHouse(e.target.value))
+  } */
   return (
     <div className="n1p4yt3r dir dir-ltr">
       <div className={s.container}>
@@ -69,13 +67,6 @@ export default function Menu() {
                 </div>
               </span>
             </button>
-          </div>
-          <div>
-            <span>Ordena por</span>
-            <select onClick={(e) => handleOrderPrice(e)}>
-              <option value="lowest">Menor precio</option>
-              <option value="highest">Mayor precio</option>
-            </select>
           </div>
         </div>
       </div>
