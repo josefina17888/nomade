@@ -9,6 +9,7 @@ import { ImUserPlus, ImUserCheck } from "react-icons/im";
 export default function NavBar() {
   const guestId = "";
 
+
   if (localStorage.getItem("userInfo")) {
     try {
       guestId = JSON.parse(guestId)._id;
@@ -18,7 +19,6 @@ export default function NavBar() {
     }
   }
 
-  
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
