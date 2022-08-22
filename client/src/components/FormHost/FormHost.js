@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
-import {useHistory, } from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'

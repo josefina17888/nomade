@@ -6,17 +6,17 @@ import Logo from "../../assets/nomadeLogo.svg";
 import { TbUserCircle } from "react-icons/tb";
 
 export default function NavBar() {
-
-  const guestId = "";
+   const guestId = "";
 
   if (localStorage.getItem("userInfo")) {
     try {
-      guestId = JSON.parse(guestId)._id;
+      let guestId = JSON.parse(guestId)._id;
       return guestId;
     } catch (error) {
       console.log(error);
     }
   }
+
 
   return (
     <React.Fragment>
@@ -51,21 +51,24 @@ export default function NavBar() {
                   <div>
                     <nav className={s.nav_inside}>
                       <div className="_176ugpa">
-                      <Link to={ guestId ? `${guestId}/form` :"/registerguest"} className="nav-link py-2 px-0 px-lg-2">
+                        <Link
+                          to={guestId ? `${guestId}/form` : `${guestId}/form`}
+                          className="nav-link py-2 px-0 px-lg-2"
+                        >
                           <button className={s.btn_host}>
                             Hospeda nómades
                           </button>
                         </Link>
                       </div>
                       <div className={s.container_btn_icon}>
-                          <button
-                            className={s.button}
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
-                            <TbUserCircle className={s.icon} />
-                          </button>
+                        <button
+                          className={s.button}
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <TbUserCircle className={s.icon} />
+                        </button>
                         <ul
                           className="dropdown-menu dropdown-menu-end show"
                           data-bs-popper="static"

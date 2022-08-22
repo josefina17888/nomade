@@ -119,7 +119,9 @@ function handleSelect(e){
   return (
     <div className={style.containerUser}>
       <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
+      <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>
+      </div>
       <div className={style.containerForm}>
         {/* <input
           className={style.lodgingType}
@@ -257,19 +259,20 @@ function handleSelect(e){
           multiple
         />
         <h3>servicios</h3>
-          <label>wifi<input type="checkbox"  onChange={handleSelect} name="wifi" /></label>
-          <label>ac<input type="checkbox"  onChange={handleSelect} name="ac" /></label>
-          <label>tv<input type="checkbox"  onChange={handleSelect}  name="tv" /></label>
-          <label>securidad<input type="checkbox"  onChange={handleSelect}  name="security" /></label>
-          <label>Limpieza<input type="checkbox"  onChange={handleSelect} name="cleaning" /></label>
-          <label>Estacionamiento<input type="checkbox"  onChange={handleSelect} name="parking" /></label>
-          <label>Lavanderia<input type="checkbox"  onChange={handleSelect} name="laundry" /></label>
-          <label>Agua caliente<input type="checkbox"  onChange={handleSelect} name="hotWater" /></label>
-          <label>cocina<input type="checkbox"  onChange={handleSelect} name="kitchen" /></label>
-          <label>Piscina<input type="checkbox"  onChange={handleSelect} name="pool"  /></label>
-          <label>Comedor<input type="checkbox"  onChange={handleSelect}  name="dining" /></label>
-          <label>Mascotas<input type="checkbox"  onChange={handleSelect} name="pets" /></label>
-          
+        <div className={style.services}>
+          <label>WIFI <input type="checkbox"  onChange={handleSelect} name="wifi" /></label>
+          <label>AC <input type="checkbox"  onChange={handleSelect} name="ac" /></label>
+          <label>TV <input type="checkbox"  onChange={handleSelect}  name="tv" /></label>
+          <label>securidad <input type="checkbox"  onChange={handleSelect}  name="security" /></label>
+          <label>Limpieza <input type="checkbox"  onChange={handleSelect} name="cleaning" /></label>
+          <label>Estacionamiento <input type="checkbox"  onChange={handleSelect} name="parking" /></label>
+          <label>Lavanderia <input type="checkbox"  onChange={handleSelect} name="laundry" /></label>
+          <label>Agua caliente <input type="checkbox"  onChange={handleSelect} name="hotWater" /></label>
+          <label>cocina <input type="checkbox"  onChange={handleSelect} name="kitchen" /></label>
+          <label>Piscina <input type="checkbox"  onChange={handleSelect} name="pool"  /></label>
+          <label>Comedor <input type="checkbox"  onChange={handleSelect}  name="dining" /></label>
+          <label>Mascotas <input type="checkbox"  onChange={handleSelect} name="pets" /></label>
+          </div>
       </div>
       <button className={style.button}  type="submit">
         Crear hospedaje

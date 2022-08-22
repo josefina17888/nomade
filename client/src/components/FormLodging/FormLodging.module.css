@@ -6,11 +6,19 @@
     flex-wrap: wrap;
     height: 100vh;
     width: 50%;
+    
+}
+.containerUser form{
+    padding-bottom: 50px;
 }
 
 .title {
     margin-top: 80px;
     font-size: 30px;
+}
+.titulo{
+  
+    margin-bottom:-50px ;
 }
 
 .containerForm {
@@ -71,4 +79,8 @@
     font-size: 18px;
     color: #069A8E;
     text-align: center;
+}
+
+.services label{
+margin: 5px;
 }
