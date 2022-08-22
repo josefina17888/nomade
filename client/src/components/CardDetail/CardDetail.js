@@ -6,6 +6,7 @@ import { getDetail } from "../../Redux/Actions/index";
 import Card from "react-bootstrap/Card";
 import ControlledCarousel from "./Carousel/Carousel";
 import DatePickerOk from "./DatePicker/DatePicker";
+import ServiciosIncluidos from "./ServiciosIncluidos/serviciosincluidos";
 import styles from "./CardDetail.module.css"
 
 export default function CardDetail(props){ 
@@ -51,7 +52,7 @@ export default function CardDetail(props){
           <div className={styles.padding}>
             <h3 className={styles.titles}>Servicios Incluidos</h3>
             <hr className={styles.hr}></hr>
-              <h4>{myLodging.services}</h4>
+              <ServiciosIncluidos />
           </div>
         </div>
 
