@@ -73,7 +73,6 @@ export function getByCity(city){
     return async function (dispatch){
         try{
             const res = await axios.get("http://localhost:3001/api/lodging/detail/" + lodgingId)
-            console.log(res)
             return dispatch({
                 type: "GET_LODGING_DETAIL",
                 payload: res.data
