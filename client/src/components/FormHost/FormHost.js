@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
-import {useHistory, } from 'react-router-dom'
+import {useHistory } from 'react-router-dom'
 import{useDispatch} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
@@ -41,7 +41,7 @@ function handleSubmit(e){
       <div>FormHost</div>
       {/* <form onSubmit={(e)=>handleSubmit(e)} > */}
 
-      <form action='http://localhost:3001/api/host/62fee5b9b8d4d30a90f487ea' method="POST" encType="multipart/form-data">
+      <form action='http://localhost:3001/api/host/62fee8c2b61823ba9f599567' method="POST" encType="multipart/form-data">
         <label>DNI:</label>
         <input 
         type="text" 
