@@ -21,7 +21,7 @@ function App() {
           <Route path="/login" component={LoginUser} />
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
-          <Route exact path= '/detail/:id' component={CardDetail}/>
+          <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:guestId/form' component={FormHost}/>
 
         </Switch>

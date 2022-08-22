@@ -1,23 +1,38 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import s from "../NavBar/NavBar.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
 import { FaUserCircle } from "react-icons/fa";
 import { ImUserPlus, ImUserCheck } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import {
+  getLodgings
+} from "../../Redux/Actions/index";
 
 export default function NavBar() {
+  const dispatch = useDispatch();
+  const guestId = "";
 
-  let guestId = localStorage.getItem("userInfo")
-  guestId = JSON.parse(guestId)._id
-
+  if (localStorage.getItem("userInfo")) {
+    try {
+      guestId = JSON.parse(guestId)._id;
+      return guestId;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  function handleClearState(e){
+    e.preventDefault();
+    dispatch(getLodgings())
+  }
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
         <header className="c1kffd0v cxy853f c1g36qz5 dir dir-ltr">
           <div className={s.nav}>
             <div className="c1xsvlgx dir dir-ltr">
-              <div className={s.div_logo}>
+              <div className={s.div_logo} onClick={handleClearState}>
                 <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
                   <div className="l10sdlqs dir dir-ltr">
                     <img
@@ -38,7 +53,11 @@ export default function NavBar() {
               <div className="c1yo0219 dir dir-ltr">
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
-                    <Link to={`${guestId}/form`} className="nav-link py-2 px-0 px-lg-2">
+                  <Link
+                          to={guestId ? `${guestId}/form` : "/registerguest"}
+                          className="nav-link py-2 px-0 px-lg-2"
+                        >
+                    {/* <Link to={`/form`} className="nav-link py-2 px-0 px-lg-2"> */}
                       <button className={s.btn_host}>Hospeda nómades</button>
                     </Link>
                   </div>

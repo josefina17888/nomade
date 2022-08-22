@@ -10,10 +10,6 @@
     align-items: center;
     padding: 0.8em;
 }
-.icon_map{
-    color: #757373;
-    font-size: 1.25em;
-}
 .container_icons{
     display: flex;
     flex-direction: row;
@@ -32,13 +28,12 @@
     border:none;
     color:#069A8E;
     background-color: white;
-    border-radius: 0.5em;;
+    border-radius: 0.5em;
 }
 .button_icon:hover{
     box-shadow: 0.188em 0.188em 2.5em 0 rgba(0,0,0,0.2);
     transition: .7s;
 }
 .text_desc_icon{
-
-    font-size: 0.6em;
+    font-size: 0.8em;
 }
