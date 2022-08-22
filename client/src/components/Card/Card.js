@@ -3,7 +3,7 @@ import styles from "./Card.module.css";
 import { VscPerson } from "react-icons/vsc";
 import { IoIosStar } from "react-icons/io";
 import { GrFavorite } from "react-icons/gr";
-import { IoHeartOutline } from "react-icons/io5";
+import Favorite from "../Favorite/Favorite";
 
 export default function Card({ city, country, guests, price, picture, currency }) {
   return (
@@ -13,7 +13,9 @@ export default function Card({ city, country, guests, price, picture, currency }
         <div>
         <img src={picture} alt="img not found" width="200px" height="250px" />
         </div>
-        <div><IoHeartOutline className={styles.fav}/></div>
+        <div>
+          <Favorite/>
+          </div>
           <div className={styles.icons}>
           <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
           <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> 4,5</div>
