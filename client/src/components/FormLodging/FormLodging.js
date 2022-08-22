@@ -181,11 +181,11 @@ function handleSelect(e){
           </select>
           <select   onChange={handleChange}  name ="currency" >
                     <option disabled selected>moneda:</option>
-                    <option>Dolar esatado unidense</option>
-                    <option>Euro</option>
-                    <option>Peso Argentino</option>
-                    <option>Peso Chileno</option>
-                    <option>Peso Mexicano</option>
+                    <option>USD</option>
+                    <option>€</option>
+                    <option>ARS</option>
+                    <option>CLP</option>
+                    <option>MXN</option>
           </select>
           <input
           className={style.inputEmail}
