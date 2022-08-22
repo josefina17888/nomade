@@ -2,30 +2,28 @@ const express = require("express");
 const router = express.Router();
 const Guest = require("../../models/Guest");
 const jwt = require("jsonwebtoken");
+const generateToken = require("../../utils/generateToken");
 
 router.post("/", async (req, res) => {
-  try {
-    const user = await Guest.findOne({
-      email: req.body.email,
-      password: req.body.password,
-    });
-
-    if (user) {
-      const token = jwt.sign(
-        {
-          email: req.body.email,
-          password: req.body.password,
-        }, process.env.SECURE_TOKEN,
-      );
-
-      return res.json({ status: "ok", user: token });
-    } else {
-      return res.json({ status: "error", user: false });
-    }
-  } catch (err) {
-    res.status(500).json(err);
+  const { email, password } = req.body;
+console.log(req.body)
+  const user = await Guest.findOne({ email });
+  console.log(user)
+  const prueba = await user.matchPassword(password)
+  console.log(prueba)
+  if(user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id)
+    })
+  } else {
+    res.status(400).send("Invalid email or password");
   }
-});
+  
+})
+
 
 
 module.exports = router

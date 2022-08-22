@@ -1,20 +1,33 @@
 import React from "react";
-import styles from "./Card.module.css"
+import styles from "./Card.module.css";
+import { VscPerson } from "react-icons/vsc";
+import { IoIosStar } from "react-icons/io";
+import { GrFavorite } from "react-icons/gr";
+import { IoHeartOutline } from "react-icons/io5";
 
-export default function Card ({ lodgingType, guests, description, price, picture }) {
-    return (
-        <div className={styles.card}>
-            <div>
-            <img src= {picture} alt="img not found" width="200px" height="250px" />   
-            </div>
-            <div className={styles.container}>
-            <div className={styles.text}>
-            <h3>{lodgingType.toUpperCase()}</h3>
-            <h4>{price}</h4>
-            <h4>Cantidad de huéspedes: {guests}</h4>
-            <h4>Descripción: {description}</h4>
-            </div>
-            </div>
+
+export default function Card({ city, country, guests, price, picture, currency }) {
+  return (
+
+    <div className={styles.card}>
+      <div className={styles.img}>
+        <div>
+        {picture.map((c)=>(
+                         <img src={c.picture} alt="img not found" width="200px" height="250px" />
+                        
+                        ))}
         </div>
-    )
+        <div><IoHeartOutline className={styles.fav}/></div>
+          <div className={styles.icons}>
+          <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
+          <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> 4,5</div>
+      </div>
+      </div>
+        <div className={styles.text}>
+          </div>
+          <h3 className={styles.city}>{`${city}, ${country}`}</h3>
+          <p className={styles.price}>${`${price} ${currency}`}</p>
+          <p className={styles.noche}> noche </p>
+    </div>
+  );
 }

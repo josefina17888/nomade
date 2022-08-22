@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
-import {useHistory } from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
@@ -8,6 +8,9 @@ import estilos from './FormHost.module.css'
 export default function FormHost() {
   const dispatch = useDispatch()
   const history = useHistory()
+
+  let guestId = localStorage.getItem("userInfo")
+  guestId = JSON.parse(guestId)._id
 
   const [input,setInput] = useState({
     dni: '',
@@ -41,7 +44,8 @@ function handleSubmit(e){
       <div>FormHost</div>
       {/* <form onSubmit={(e)=>handleSubmit(e)} > */}
 
-      <form action='http://localhost:3001/api/host/62fee8c2b61823ba9f599567' method="POST" encType="multipart/form-data">
+
+      <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
         <label>DNI:</label>
         <input 
         type="text" 

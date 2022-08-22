@@ -10,3 +10,8 @@
   border: 1px solid #ccc;
   border-radius: 6px;
 }
+
+.map {
+  width: 100vw;
+  height: 100vh;
+}
