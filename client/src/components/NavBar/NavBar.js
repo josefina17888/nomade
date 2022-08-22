@@ -3,7 +3,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import s from "../NavBar/NavBar.module.css";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
-import { TbUserCircle } from "react-icons/tb";
+import { FaUserCircle } from "react-icons/fa";
+import { ImUserPlus, ImUserCheck } from "react-icons/im";
 
 export default function NavBar() {
   const guestId = "";
@@ -24,26 +25,22 @@ export default function NavBar() {
         <header className="c1kffd0v cxy853f c1g36qz5 dir dir-ltr">
           <div className={s.nav}>
             <div className="c1xsvlgx dir dir-ltr">
-              <div>
-                <div className={s.div_logo}>
-                  <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
-                    <div className="l10sdlqs dir dir-ltr">
-                      <img
-                        alt="bg-button"
-                        src={Logo}
-                        className={s.logo}
-                        width="150"
-                        height="60"
-                      />
-                    </div>
-                  </Link>
-                </div>
+              <div className={s.div_logo}>
+                <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
+                  <div className="l10sdlqs dir dir-ltr">
+                    <img
+                      alt="bg-button"
+                      src={Logo}
+                      className={s.logo}
+                      width="150"
+                      height="60"
+                    />
+                  </div>
+                </Link>
               </div>
             </div>
             <div>
-              <div>
-                <SearchBar />
-              </div>
+              <SearchBar />
             </div>
             <div className="cylj8v3 dir dir-ltr">
               <div className="c1yo0219 dir dir-ltr">
@@ -73,24 +70,17 @@ export default function NavBar() {
                           className="dropdown-menu dropdown-menu-end show"
                           data-bs-popper="static"
                         >
-                          <li>
-                            <Link
-                              to="/registerguest"
-                              className="dropdown-item current"
-                            >
-                              Registrarse
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/login" className="dropdown-item">
-                              Iniciar sesión
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </nav>
+                          <ImUserPlus /> Registrarse
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/login" className="dropdown-item">
+                          <ImUserCheck /> Iniciar sesión
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
-                </div>
+                </nav>
               </div>
             </div>
           </div>

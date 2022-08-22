@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require('../../../libs/storage.js')
+const upload = require("../../../libs/storage")
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
@@ -12,6 +12,7 @@ cloudinary.config({
   api_key: '578434861277536', 
   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
 });
+const upload = require("../../../libs/storage")
 
 
 /// postea el host 
