@@ -17,39 +17,39 @@ function rootReducer(state = initialState, action) {
         allLodgings: action.payload,
         loader: false,
       };
-
-    case "ORDER_PRICE":
-      let sortedLodgingsPrice =
-        action.payload === "lowest"
-          ? state.lodgings.sort(function (a, b) {
-              if (a.price > b.price) {
-                return 1;
-              }
-              if (b.price > a.price) {
-                return -1;
-              }
-              return 0;
-            })
-          : state.lodgings.sort(function (a, b) {
-              if (a.price > b.price) {
-                return -1;
-              }
-              if (b.price > a.price) {
-                return 1;
-              }
-              return 0;
-            });
-      return {
-        ...state,
-        lodgings: sortedLodgingsPrice,
-      };
     case "FILTER_TYPE_HOUSE":
-      const house = state.lodgings.filter((e) => e.lodgingType === "casa");
+      const house = state.lodgings.filter((e) => e.lodgingType === "Casa");
       return {
         ...state,
         lodgings: house,
       };
 
+    case "FILTER_BY_PETS":
+      const filtering = state.lodgings
+      const pets = filtering.filter(e => e.services.pets === true)
+      console.log(pets)
+      return {
+        ...state,
+        lodgings: pets,
+      };
+    case "ORDER_BY_LOWEST":
+      const lowest = state.lodgings.sort(function (a, b) {
+        return a.price - b.price;
+      });
+      return {
+        ...state,
+        lodgings: lowest.map(e=>e),
+      };
+
+    case "ORDER_BY_HIGHEST":
+      const highest = state.lodgings.sort(function (a, b) {
+        return b.price - a.price;
+      });
+      console.log(highest);
+      return {
+        ...state,
+        lodgings: highest.map(e=>e),
+      };
     case "LOADER_TRUE":
       return {
         ...state,

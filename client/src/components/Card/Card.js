@@ -5,6 +5,7 @@ import { IoIosStar } from "react-icons/io";
 import { GrFavorite } from "react-icons/gr";
 import Favorite from "../Favorite/Favorite";
 
+
 export default function Card({ city, country, guests, price, picture, currency }) {
   return (
 

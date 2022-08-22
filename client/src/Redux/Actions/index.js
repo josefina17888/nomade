@@ -19,18 +19,33 @@ export function getLodgings (lodgingId){
 }
 
 //MENU
-export function orderPrice(payload){
-  return {
-      type: "ORDER_PRICE",
-      payload
-  }
-}
 export function filterTypeHouse(payload){
   return{
     type: "FILTER_TYPE_HOUSE",
     payload
   }
 }
+export function filterByPets(payload){
+  return{
+    type: "FILTER_BY_PETS",
+    payload
+  }
+}
+
+export function orderByLowerCost(payload){
+  return{
+    type: "ORDER_BY_LOWEST",
+    payload
+  }
+}
+export function orderByHigherCost(payload){
+  return{
+    type: "ORDER_BY_HIGHEST",
+    payload
+  }
+}
+
+//Aquí termina Menú
 
 export function setLoaderTrue() {
     return {
@@ -73,7 +88,6 @@ export function getByCity(city){
     return async function (dispatch){
         try{
             const res = await axios.get("http://localhost:3001/api/lodging/detail/" + lodgingId)
-            console.log(res)
             return dispatch({
                 type: "GET_LODGING_DETAIL",
                 payload: res.data

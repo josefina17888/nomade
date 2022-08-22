@@ -52,7 +52,7 @@ export default function AllCards() {
                       country={e.country}
                       price={e.price}
                       guests={e.guests}
-                      picture={e.picture}
+                      picture={e.picture[0]}
                       currency={e.currency}
                     />
                   </Link>
