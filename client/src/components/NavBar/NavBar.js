@@ -17,6 +17,7 @@ export default function NavBar() {
     }
   }
 
+  
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
