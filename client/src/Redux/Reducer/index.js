@@ -2,6 +2,7 @@ import { LOGIN_USER, GET_BY_CITY } from "../Actions/index";
 
 const initialState = {
   lodgings: [],
+  allLodgings: [],
   loader: true,
   detail: {},
   user: null,
@@ -13,6 +14,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         lodgings: action.payload,
+        allLodgings: action.payload,
         loader: false,
       };
 
@@ -40,6 +42,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         lodgings: sortedLodgingsPrice,
+      };
+    case "FILTER_TYPE_HOUSE":
+      const house = state.lodgings.filter((e) => e.lodgingType === "casa");
+      return {
+        ...state,
+        lodgings: house,
       };
 
     case "LOADER_TRUE":

@@ -3,20 +3,22 @@ import SearchBar from "../SearchBar/SearchBar";
 import s from "../NavBar/NavBar.module.css";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
-import { TbUserCircle } from "react-icons/tb";
+import { FaUserCircle } from "react-icons/fa";
+import { TbUserCircle } from "react-icons/tb"
+import { ImUserPlus, ImUserCheck } from "react-icons/im";
 
 export default function NavBar() {
   
+
 
   let guestId = localStorage.getItem("userInfo");
  
   if(!guestId) {
   } else {
     var userToken = JSON.parse(guestId)._id;
-    console.log(userToken)
   }
 
-  return (
+   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
         <header className="c1kffd0v cxy853f c1g36qz5 dir dir-ltr">
