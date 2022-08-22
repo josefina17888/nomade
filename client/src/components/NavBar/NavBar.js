@@ -6,6 +6,18 @@ import Logo from "../../assets/nomadeLogo.svg";
 import { TbUserCircle } from "react-icons/tb";
 
 export default function NavBar() {
+
+  const guestId = "";
+
+  if (localStorage.getItem("userInfo")) {
+    try {
+      guestId = JSON.parse(guestId)._id;
+      return guestId;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
@@ -39,7 +51,7 @@ export default function NavBar() {
                   <div>
                     <nav className={s.nav_inside}>
                       <div className="_176ugpa">
-                        <Link to="/form" className="nav-link py-2 px-0 px-lg-2">
+                      <Link to={ guestId ? `${guestId}/form` :"/registerguest"} className="nav-link py-2 px-0 px-lg-2">
                           <button className={s.btn_host}>
                             Hospeda nómades
                           </button>

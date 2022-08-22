@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../../../libs/storage")
+
+const upload = require('../../../libs/storage.js')
+
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
@@ -33,7 +35,11 @@ router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
   // }
 
     await myHost.save()
-    res.redirect("http://localhost:3000/");
+
+    let hostId = myHost._id
+        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        // res.status(200).json(myHost)
+
     } catch (error) {
         res.status(400).send('no se pudo guardar el Host')
         console.log(error)
