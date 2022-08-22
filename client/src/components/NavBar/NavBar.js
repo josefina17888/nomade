@@ -12,15 +12,11 @@ import {
 
 export default function NavBar() {
   const dispatch = useDispatch();
-  const guestId = "";
-
-  if (localStorage.getItem("userInfo")) {
-    try {
-      guestId = JSON.parse(guestId)._id;
-      return guestId;
-    } catch (error) {
-      console.log(error);
-    }
+  let guestId = localStorage.getItem("userInfo");
+ 
+  if(!guestId) {
+  } else {
+    var userToken = JSON.parse(guestId)._id;
   }
   function handleClearState(e){
     e.preventDefault();
@@ -54,7 +50,7 @@ export default function NavBar() {
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
                   <Link
-                          to={guestId ? `${guestId}/form` : "/registerguest"}
+                          to={userToken ? `${userToken}/form` : "/registerguest"}
                           className="nav-link py-2 px-0 px-lg-2"
                         >
                     {/* <Link to={`/form`} className="nav-link py-2 px-0 px-lg-2"> */}
