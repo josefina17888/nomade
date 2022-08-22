@@ -6,7 +6,6 @@ import NavBar from '../NavBar/NavBar';
 import styles from './Home.module.css'
 
 export default function Home() {
-  const dispatch = useDispatch();
   return (
     <div className="c1kae56o dir dir-ltr">
     <NavBar/>
