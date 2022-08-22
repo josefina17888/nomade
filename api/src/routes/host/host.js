@@ -1,17 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
+const upload = require("../../../libs/storage")
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
 const cloudinary = require('cloudinary')
+
 cloudinary.config({ 
-  cloud_name: 'demf45vva', 
-  api_key: '833159259333685', 
-  api_secret: 'h4LyLt_DsuPclEhJCkuB5rlX_Qw' 
+  cloud_name: 'dbq85fwfz', 
+  api_key: '578434861277536', 
+  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
 });
 const upload = require("../../../libs/storage")
+
+
+/// postea el host 
+
 
 
 router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
@@ -29,7 +34,9 @@ router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
   // }
 
     await myHost.save()
-        res.status(200).json(myHost)
+    let hostId = myHost._id
+        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        // res.status(200).json(myHost)
     } catch (error) {
         res.status(400).send('no se pudo guardar el Host')
         console.log(error)

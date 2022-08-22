@@ -1,27 +1,20 @@
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 import React from "react";
-import { GoogleMap, useLoadScript, Autocomplete } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Autocomplete, Marker } from "@react-google-maps/api";
 import style from "./GoogleMaps.module.css";
 
+
 export default function GoogleMaps() {
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyC5qq1NGWjUmjiuvDFormsHEGGQ2QtIVng",
     libraries: ["places"],
   });
-
+  
   const center = useMemo(() => ({ lat: -33.45694, lng: -70.64827 }), []);
 
-  const [direction, setDirection] = useState(null);
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      setDirection(e.target.value);
-    }
-  };
-
   if (!isLoaded) return <div>Loading...</div>;
-
+  
   return (
     <div className={style.containerMap}>
       <GoogleMap
@@ -40,13 +33,13 @@ export default function GoogleMaps() {
       ></GoogleMap>
       <Autocomplete>
         <input
-          value={direction}
           type="text"
           placeholder="Search:"
           className={style.input}
-          onKeyPress={handleKeyPress}
         />
       </Autocomplete>
     </div>
   );
 }
+
+

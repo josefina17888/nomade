@@ -36,7 +36,34 @@ export default function AllCards() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.paging}>
+        <div className={styles.cards}>
+          {loader ? (
+            <h2>Loading...</h2>
+          ) : currentLodging.length < 1 ? (
+            <h2>No se encontraron alojamientos</h2>
+          ) : (
+            currentLodging.map((e) => {
+              return (
+                <div className={styles.card}>
+                <div className={styles.link} key={e._id} >
+                  <Link to={`/detail/${e._id}` } className={styles.a} >
+                    <Card
+                      city={e.city}
+                      country={e.country}
+                      price={e.price}
+                      guests={e.guests}
+                      picture={e.picture}
+                      currency={e.currency}
+                    />
+                  </Link>
+                </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        <div className={styles.pag}>
         <div>
           {!loader ? (
             <AllCardsPaging
@@ -47,34 +74,6 @@ export default function AllCards() {
           ) : null}
         </div>
         </div>
-
-        <div className={styles.cards}>
-          {loader ? (
-            <h2>Loading...</h2>
-          ) : currentLodging.length < 1 ? (
-            <h2>No se encontraron alojamientos</h2>
-          ) : (
-            currentLodging.map((e) => {
-              return (
-                <div className={styles.card}>
-                <div key={e._id} >
-                  <Link to={`/detail/${e._id}`} className={styles.link}>
-                    <Card
-                      city={e.city}
-                      country={e.contry}
-                      price={e.price}
-                      guests={e.guests}
-                      picture={e.picture}
-                      description={e.description}
-                    />
-                  </Link>
-                </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-      
     </div>
   );
 }

@@ -1,25 +1,14 @@
-.paging {
-    font-weight: bold;
-    font-size: small;
-    font-style: normal;
-    text-decoration: none;
-    text-decoration-line: none;
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    display: inline-block;
-    list-style-type: none;
-    margin-right: 40px;
-}
+
 
 .container{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
+}
+.pag{
+    height: 20px;
    
-  
 }
 .cards{
       
@@ -30,17 +19,30 @@
     max-width: 90%;
     min-height: 80vh;
    
-  
-   
 }
 .card{
     margin: 0.7em; 
-    width: 19%;
-    border: solid 1px black;
+    width: 300px;
+    height: 40vh;
+    padding: 0.3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 10px;
 }
+.card:hover {
+    box-shadow: 3px 3px 40px 0 rgba(0,0,0,0.2);
+    transition: .7s;
+  
+  } 
 
 .link{
+    
+    cursor: pointer;
+    
+}
+.a{
     text-decoration: none;
     color: black;
+    height: 100%;
 }

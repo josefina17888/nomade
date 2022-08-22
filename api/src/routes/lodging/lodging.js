@@ -5,13 +5,48 @@ const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 
-//BUCCA LODGING Y RELACIONA EL HOST
-router.post("/:hostId", upload.single("picture"), async (req, res) => {
+const cloudinary = require("cloudinary").v2;
+
+
+cloudinary.config({ 
+  cloud_name: 'dtw1cvtdr', 
+  api_key: '828297737868324', 
+  api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
+});
+//BUCCA LODGING Y REALCIONA EL HOST
+router.post("/:hostId",upload.array("picture"), async (req, res) => {
+
   try {
-    const newLodging = await Lodging.create(req.body);
+    console.log(req.body.wifi)
+    let fotos = req.files.map(e=>e.path)
+    let result=[]
+    for(let i=0; i<fotos.length; i++)
+    {
+    result.push(await cloudinary.uploader.upload(fotos[i]))
+    }
+    // const {lodgingType, guests,rooms,typeOfRoom, beds, bathrooms, ownBathroom, price, city, country, address, numOfGuests ,checkInHour ,checkOutHour ,description} = req.body
+    const newLodging = await new Lodging(req.body);
+    let fotosSubidas = result.map(e=>e.url)
+    
+    newLodging.picture= fotosSubidas
+    newLodging.ownBathroom= req.body.ownBathroom === "on" ? true : false 
+    newLodging.services.wifi= req.body.wifi === "on" ? true : false 
+    newLodging.services.ac= req.body.ac=== "on" ? true : false 
+    newLodging.services.tv= req.body.tv=== "on" ? true : false 
+    newLodging.services.security= req.body.security=== "on" ? true : false 
+    newLodging.services.cleaning= req.body.cleaning=== "on" ? true : false 
+    newLodging.services.parking= req.body.parking=== "on" ? true : false 
+    newLodging.services.laundry= req.body.laundry=== "on" ? true : false 
+    newLodging.services.hotWater= req.body.hotWater=== "on" ? true : false 
+    newLodging.services.kitchen= req.body.kitchen=== "on" ? true : false 
+    newLodging.services.pool= req.body.pool=== "on" ? true : false 
+    newLodging.services.dining= req.body.dining=== "on" ? true : false 
+    newLodging.services.pets= req.body.pets=== "on" ? true : false 
+   
     newLodging.hostId = toId(req.params.hostId);
+   
     newLodging.save();
-    res.json(newLodging);
+    res.redirect("http://localhost:3000/")
   } catch (err) {
     res.json(err);
   }
@@ -49,7 +84,7 @@ router.get("/", async (req, res) => {
 });
 
 ///BUSCA UN LODGING POR ID/// (FUNCIONA)
-router.get("/:lodgingId", async (req, res) => {
+router.get("/detail/:lodgingId", async (req, res) => {
   try {
     // Lodging.find({ _id: req.params.lodgingId }, (error, docs) => {
     //   res.json(docs);

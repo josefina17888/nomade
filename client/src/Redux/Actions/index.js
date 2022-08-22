@@ -1,20 +1,8 @@
 import axios from "axios";
 
-export const LOGIN_USER = "LOGIN_USER";
 export const GET_BY_CITY = " GET_BY_CITY";
 
-
-export const loginUser = (user) => {
-  return async (dispatch) => {
-    const response = await axios.post("http://localhost:3001/api/login", user);
-    dispatch({
-      type: LOGIN_USER,
-      payload: response.data,
-    });
-  };
-};
-
-export function getLodgings (){
+export function getLodgings (lodgingId){
     return async function(dispatch){
         try{
         const json = await axios.get("http://localhost:3001/api/lodging")
@@ -30,10 +18,17 @@ export function getLodgings (){
 }
 }
 
+//MENU
 export function orderPrice(payload){
   return {
       type: "ORDER_PRICE",
       payload
+  }
+}
+export function filterTypeHouse(payload){
+  return{
+    type: "FILTER_TYPE_HOUSE",
+    payload
   }
 }
 
@@ -68,9 +63,8 @@ export function getByCity(city){
 
   export function postGuest(payload){
     return async function(dispatch){
-      console.log(payload)
+      
         var json = await axios.post("http://localhost:3001/api/guest", payload)
-        console.log(json)
         return json
 }
 } 
@@ -87,6 +81,15 @@ export function getByCity(city){
             console.log(error)
         }
     }
+}
+
+export function postLodging(payload){
+  return async function(dispatch){
+    console.log(payload)
+      var json = await axios.post("http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2" , payload)
+     
+      return json
+}
 }
 
 
