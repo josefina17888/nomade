@@ -17,9 +17,8 @@ export default function CardDetail(props){
   }, [dispatch])
 
   const myLodging = useSelector((state) => state.detail)
-  console.log(myLodging)
-  // console.log(Object.keys(myLodging))
-  // const { lodgingType, price, description, picture } = myLodging
+
+  
   return(
   <div className={styles.text}>
     {

@@ -15,7 +15,7 @@ useEffect(() => {
 const myLodging = useSelector((state) => state.detail)
 const picture1 = myLodging.picture[0]
 const picture2 = myLodging.picture[1]
-const picture3 = myLodging.picture [2]
+const picture3 = myLodging.picture[2]
 
 const [index, setIndex] = useState(0);
 
