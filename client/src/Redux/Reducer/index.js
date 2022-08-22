@@ -25,7 +25,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case "FILTER_BY_PETS":
-      const pets = state.lodgings.filter((e) => e.pets === true);
+      const pets = state.lodgings.filter( l => l.services.pets === true)
       return {
         ...state,
         lodgings: pets,
