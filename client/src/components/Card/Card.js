@@ -12,10 +12,7 @@ export default function Card({ city, country, guests, price, picture, currency }
     <div className={styles.card}>
       <div className={styles.img}>
         <div>
-        {picture.map((c)=>(
-                         <img src={c.picture} alt="img not found" width="200px" height="250px" />
-                        
-                        ))}
+        <img src={picture} alt="img not found" width="200px" height="250px" />
         </div>
         <div><IoHeartOutline className={styles.fav}/></div>
           <div className={styles.icons}>
