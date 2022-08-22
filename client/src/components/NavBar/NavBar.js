@@ -1,30 +1,24 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import s from "../NavBar/NavBar.module.css";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
 import { FaUserCircle } from "react-icons/fa";
 import { ImUserPlus, ImUserCheck } from "react-icons/im";
 import { useDispatch } from "react-redux";
-import {
-  getLodgings
-} from "../../Redux/Actions/index";
+import { getLodgings } from "../../Redux/Actions/index";
 
 export default function NavBar() {
   const dispatch = useDispatch();
-  const guestId = "";
+  let guestId = localStorage.getItem("userInfo");
 
-  if (localStorage.getItem("userInfo")) {
-    try {
-      guestId = JSON.parse(guestId)._id;
-      return guestId;
-    } catch (error) {
-      console.log(error);
-    }
+  if (!guestId) {
+  } else {
+    var userToken = JSON.parse(guestId)._id;
   }
-  function handleClearState(e){
+  function handleClearState(e) {
     e.preventDefault();
-    dispatch(getLodgings())
+    dispatch(getLodgings());
   }
   return (
     <React.Fragment>
@@ -53,11 +47,11 @@ export default function NavBar() {
               <div className="c1yo0219 dir dir-ltr">
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
-                  <Link
-                          to={guestId ? `${guestId}/form` : "/registerguest"}
-                          className="nav-link py-2 px-0 px-lg-2"
-                        >
-                    {/* <Link to={`/form`} className="nav-link py-2 px-0 px-lg-2"> */}
+                    <Link
+                      to={userToken ? `${userToken}/form` : "/registerguest"}
+                      className="nav-link py-2 px-0 px-lg-2"
+                    >
+                      {/* <Link to={`/form`} className="nav-link py-2 px-0 px-lg-2"> */}
                       <button className={s.btn_host}>Hospeda nómades</button>
                     </Link>
                   </div>
