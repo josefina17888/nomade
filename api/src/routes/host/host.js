@@ -12,7 +12,7 @@ cloudinary.config({
   api_key: '578434861277536', 
   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
 });
-const upload = require("../../../libs/storage")
+
 
 
 /// postea el host 
