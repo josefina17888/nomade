@@ -18,9 +18,6 @@ cloudinary.config({
 /// postea el host 
 
 
-/// postea el host 
-
-
 
 router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
@@ -37,7 +34,9 @@ router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
   // }
 
     await myHost.save()
-        res.status(200).json(myHost)
+    let hostId = myHost._id
+        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        // res.status(200).json(myHost)
     } catch (error) {
         res.status(400).send('no se pudo guardar el Host')
         console.log(error)

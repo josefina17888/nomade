@@ -1,24 +1,54 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
 import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { loginUser } from '../../Redux/Actions/index';
-import { useHistory } from "react-router-dom";
 
 export default function LoginUser() {
-  const dispatch = useDispatch();
-
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if(userInfo){
+      history.push("/");
+    }
+  }, [history]);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      if(email === "" || password === ""){
+        alert("Por favor ingrese todos los campos");
+      }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:3001/api/login",
+        {
+          email,
+          password,
+        },
+        config
+      );
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      // alert("Bienvenido");
+      setEmail("");
+      setPassword("");
+      history.push("/");
+    } catch (error) {
+      alert("Usuario o contraseña incorrectos");
+      setError(error.response.data.message);
+    }
+  };
 
   const [userGoogle, setUserGoogle] = useState({});
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(loginUser({ email, password, loggedIn: true }));
-  }
 
   const handleCallbackResponse = (response) => {
     console.log(response.credential);
@@ -45,30 +75,62 @@ export default function LoginUser() {
     <div>
       <div className={style.containerUser}>
         <h1 className={style.title}>Iniciar Sesión</h1>
-        <form onSubmit={(e) => handleSubmit(e)} className={style.containerForm}>
+        <form onSubmit={submitHandler} className={style.containerForm}>
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             className={style.inputEmail}
+            value={email}
             type="text"
             placeholder="Correo Electrónico"
+            onChange={(e) => setEmail(e.target.value)}
+            // required={true}
           />
           <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             className={style.inputPassword}
+            value={password}
             type="password"
             placeholder="Contraseña"
+            onChange={(e) => setPassword(e.target.value)}
+            // required={true}
           />
-          <button className={style.button} type="submit">Iniciar Sesion</button>
+          <input
+            value="Iniciar Sesión"
+            className={style.button}
+            type="submit"
+          ></input>
         </form>
         <span className={style.line}>O</span>
         <div className={style.buttonGoogle} id="google-signin"></div>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
-          <Link to="/registro">¡Crea tu cuenta aqui!</Link>
+          <Link to="/registerguest">¡Crea tu cuenta aqui!</Link>
         </div>
       </div>
     </div>
   );
 }
+
+// const dispatch = useDispatch();
+//   // const selector = useSelector((state) => state.user);
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+
+//   useEffect(() => {
+//     const loggedUserJson = window.localStorage.getItem("userLogin")
+//     console.log(loggedUserJson)
+//     if(loggedUserJson) {
+//       const user = JSON.parse(loggedUserJson)
+//       dispatch(loginUser(user))
+//     }
+//   }, [])
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     dispatch(loginUser({email, password}));
+//     window.localStorage.setItem(
+//       "userLogin" , JSON.stringify({email})
+//     );
+//     // window.location.href = '/'
+//     // history.push("/");
+
+//   }
