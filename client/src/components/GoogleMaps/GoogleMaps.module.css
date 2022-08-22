@@ -1,0 +1,17 @@
+.input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 15px auto;
+  height: 30px;
+  width: 300px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.map {
+  width: 100vw;
+  height: 100vh;
+}

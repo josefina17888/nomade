@@ -3,20 +3,21 @@ const Schema = mongoose.Schema;
 
 
 const BookingSchema = new mongoose.Schema({
-  checkIn: { type: Date, required: true },
-  checkOut: { type: Date, required: true },
+  checkIn: { type:String, required: true },
+  checkOut: { type: String, required: true },
   night: { type: Number, required: true },
   guests: { type: Number, required: true },
-  costNight: { type: Number, required: true },
-  totalCost: { type: Number, required: true },
-  hostId: {
+  costNight: { type: Number },
+  totalCost: { type: Number },
+  lodgingId: {
     type: Schema.ObjectId,
-    ref: "Host",
-  },
+    ref: "Lodging",
+  } ,
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
   }
 });
 
-module.exports = mongoose.model("Booking", BookingSchema);
+const model = mongoose.model("Booking", BookingSchema);
+module.exports = model;

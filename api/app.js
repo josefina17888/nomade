@@ -1,19 +1,22 @@
 const express = require('express');
 const routes = require('./src/routes');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors')
-
+const path = require("path")
 const server = express();
 require('./db.js');
 
-server.use(routes);
+
+
+server.options('*', cors())
+
 server.name = 'API';
 
-server.use(cors())
+
 server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
+server.use(express.static(path.join(__dirname,"public"))); 
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
@@ -24,6 +27,8 @@ server.use((req, res, next) => {
   next();
 });
 
+server.use(cors())
+server.use(routes);
 
 
 
@@ -36,4 +41,3 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 }); 
 
 module.exports = server;
-
