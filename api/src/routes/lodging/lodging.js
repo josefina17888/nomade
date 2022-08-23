@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 const cloudinary = require("cloudinary").v2;
-
+const {addServices} = require("./controller")
 
 cloudinary.config({ 
   cloud_name: 'dtw1cvtdr', 
@@ -16,34 +16,19 @@ cloudinary.config({
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
 
   try {
-    console.log(req.body.wifi)
     let fotos = req.files.map(e=>e.path)
     let result=[]
     for(let i=0; i<fotos.length; i++)
     {
     result.push(await cloudinary.uploader.upload(fotos[i]))
     }
-    // const {lodgingType, guests,rooms,typeOfRoom, beds, bathrooms, ownBathroom, price, city, country, address, numOfGuests ,checkInHour ,checkOutHour ,description} = req.body
     const newLodging = await new Lodging(req.body);
     let fotosSubidas = result.map(e=>e.url)
-    
+    let service = await addServices(req.body)
+    newLodging.services = service
+    newLodging.ownBathroom= req.body.ownBathroom === "on" ? true : false
     newLodging.picture= fotosSubidas
-    newLodging.ownBathroom= req.body.ownBathroom === "on" ? true : false 
-    newLodging.services.wifi= req.body.wifi === "on" ? true : false 
-    newLodging.services.ac= req.body.ac=== "on" ? true : false 
-    newLodging.services.tv= req.body.tv=== "on" ? true : false 
-    newLodging.services.security= req.body.security=== "on" ? true : false 
-    newLodging.services.cleaning= req.body.cleaning=== "on" ? true : false 
-    newLodging.services.parking= req.body.parking=== "on" ? true : false 
-    newLodging.services.laundry= req.body.laundry=== "on" ? true : false 
-    newLodging.services.hotWater= req.body.hotWater=== "on" ? true : false 
-    newLodging.services.kitchen= req.body.kitchen=== "on" ? true : false 
-    newLodging.services.pool= req.body.pool=== "on" ? true : false 
-    newLodging.services.dining= req.body.dining=== "on" ? true : false 
-    newLodging.services.pets= req.body.pets=== "on" ? true : false 
-   
     newLodging.hostId = toId(req.params.hostId);
-   
     newLodging.save();
     res.redirect("http://localhost:3000/")
   } catch (err) {
