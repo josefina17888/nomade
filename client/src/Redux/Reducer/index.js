@@ -6,7 +6,9 @@ const initialState = {
   loader: true,
   detail: {},
   user: null,
-  favNumber:0
+  favNumber:0,
+  guest: {}
+
 };
 
 function rootReducer(state = initialState, action) {
@@ -95,7 +97,12 @@ function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
 
-      case
+    
+    case "GET_GUEST":
+      return {
+        ...state,
+        guest: action.payload
+      }
 
     default:
       return state;

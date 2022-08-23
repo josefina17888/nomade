@@ -1,0 +1,34 @@
+.formulario{
+    top: 2rem;
+
+}
+.formulario > form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    flex-wrap: wrap;
+    width: 50%;
+    position: relative;
+    height: 90vh;
+    margin-top: 5rem;
+    padding-top: 1rem;
+}
+
+.formulario > form>button {
+    width: 220px;
+    margin-top: 50px;
+    background-color: #069A8E;
+    height: 35px;
+    font-size: 18px;
+    color: #c5c2c2;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.formulario > form>button:hover{
+    color: white;
+    box-shadow: 3px 3px 40px 0 rgba(78, 75, 75, 0.603);
+    transition: .7s;
+  
+}
