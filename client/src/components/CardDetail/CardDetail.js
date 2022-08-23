@@ -101,8 +101,8 @@ export default function CardDetail(props){
             <h3 className={styles.titles}>Alojamiento</h3>
             <hr className={styles.hr}></hr>
             <div>
-              <h4>{myLodging.lodgingType}</h4>
-              <h4>{myLodging.name}</h4>
+            <h4>{myLodging.title}</h4>
+            <h4>{myLodging.lodgingType}</h4>
             </div>
           </div>
             
