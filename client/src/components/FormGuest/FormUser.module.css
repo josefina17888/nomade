@@ -19,7 +19,7 @@
 }
 
 .inputEmail {
-    width: 100%;
+    width: 12em;
     height: 25px;
 }
 
@@ -71,4 +71,11 @@
     font-size: 18px;
     color: #069A8E;
     text-align: center;
+}
+
+.inputEmailReg{
+    border-color: red;
+}
+.inputEmail{
+    border-color: green;
 }
