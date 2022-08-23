@@ -2,9 +2,9 @@ import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDetail, getLodgings } from "../../Redux/Actions/index";
-import Card from "react-bootstrap/Card";
+import { getDetail } from "../../Redux/Actions/index";
 import Carousel from 'react-bootstrap/Carousel';
+import Card from "react-bootstrap/Card"
 import DatePickerOk from "./DatePicker/DatePicker";
 import styles from "./CardDetail.module.css"
 import { AiOutlineWifi, AiFillCar } from 'react-icons/ai';
@@ -13,20 +13,39 @@ import { MdLocalDining, MdOutlinePets, MdOndemandVideo, MdCleaningServices, MdSe
 import { FaSwimmingPool } from 'react-icons/fa';
 
 export default function CardDetail(props){ 
+  
   const dispatch = useDispatch();
-    
   useEffect(() => {
-      dispatch(getDetail(props.match.params._id))
-  }, [dispatch])
+    dispatch(getDetail(props.match.params._id))
+}, [dispatch])
 
   const myLodging = useSelector((state) => state.detail)
   console.log(myLodging)
-  //variables necesarias para renderizar servicios
-  const services = myLodging.services
-  // const services = services1[services]
-  console.log(services)
-  // const wifi = services.wifi
-  // const ac = services.ac
+
+  // const servicios = useSelector((state) => state.detail.services)
+  
+
+  const servicios = myLodging.services
+  console.log(servicios)
+
+  const lodgingServices = []
+  const lodgingNoServices = []
+
+  for (const property in servicios) {
+    if (property === true) {
+      lodgingServices.push(property)
+      console.log(property)
+    }
+    else {
+      lodgingNoServices.push(property)
+      console.log(property)
+    }
+  }
+
+
+  // const ac = myLodging[0].services.ac
+  // const ac = servicios.ac
+  // console.log(ac)
   // const tv = services.tv
   // const security = services.security
   // const cleaning = services.cleaning
@@ -112,10 +131,22 @@ export default function CardDetail(props){
             <h3 className={styles.titles}>Servicios Incluidos</h3>
             <hr className={styles.hr}></hr>
 
-            {/* <div>
+          <div>
+            {
+              lodgingServices.map((e) => {
+                React.createElement(
+                  'p',
+                  {e}
+                )
+              })
+            }
+          </div>
+           {/* <div>
            <div><AiOutlineWifi /></div>
-           <div>wifi === true ? <p className={styles.p1}>Wifi</p> : <p className={styles.p2}>Wifi</p></div>
-        
+           <div>
+            {wifi ? <p className={styles.p1}>Wifi</p> : <p className={styles.p2}>Wifi</p>}
+            </div> */}
+        {/*
            <div><GiThermometerCold /></div>
            <div>ac === true ? <p className={styles.p1}>Aire Acondicionado</p> : <p className={styles.p2}>Aire Acondicionado</p></div>
 
@@ -149,8 +180,8 @@ export default function CardDetail(props){
            <div><MdOutlinePets /></div>
            <div>pets === true ? <p className={styles.p1}>Mascotas</p> : <p className={styles.p2}>Mascotas</p></div>
 
-       </div> */}
-
+        */}
+          {/* </div> */}
           </div>
         </div>
 
