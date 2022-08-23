@@ -16,7 +16,7 @@ export default function AllCards() {
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
-  const [lodgingPerPage, setLodgingPerPage] = useState(20); // setear en 20 la cantidad de hospedajes por página
+  const [lodgingPerPage, setLodgingPerPage] = useState(12); // setear en 20 la cantidad de hospedajes por página
   const indexLastLodging = currentPage * lodgingPerPage;
   const indexFirstLodging = indexLastLodging - lodgingPerPage;
   const currentLodging = stateLodgings.slice(

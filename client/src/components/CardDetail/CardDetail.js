@@ -2,11 +2,10 @@ import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDetail } from "../../Redux/Actions/index";
+import { getDetail, getLodgings } from "../../Redux/Actions/index";
 import Card from "react-bootstrap/Card";
 import Carousel from 'react-bootstrap/Carousel';
 import DatePickerOk from "./DatePicker/DatePicker";
-import ServiciosIncluidos from "./ServiciosIncluidos/serviciosincluidos";
 import styles from "./CardDetail.module.css"
 import { AiOutlineWifi, AiFillCar } from 'react-icons/ai';
 import { GiThermometerCold, GiCookingPot, GiWashingMachine, GiShower } from 'react-icons/gi';
@@ -21,10 +20,11 @@ export default function CardDetail(props){
   }, [dispatch])
 
   const myLodging = useSelector((state) => state.detail)
-
-  // //variables necesarias para renderizar servicios
-  // const services = myLodging.services
-
+  console.log(myLodging)
+  //variables necesarias para renderizar servicios
+  const services = myLodging.services
+  // const services = services1[services]
+  console.log(services)
   // const wifi = services.wifi
   // const ac = services.ac
   // const tv = services.tv
@@ -159,7 +159,7 @@ export default function CardDetail(props){
             <Card className={styles.card}> 
 
               <div className={styles.flexcontainer1}>
-              <h3 className={styles.padding}>${myLodging.price} por noche</h3>
+              <h3 className={styles.padding}>${myLodging.currency} {myLodging.price} por noche</h3>
               
               <div>
                 <DatePickerOk />
