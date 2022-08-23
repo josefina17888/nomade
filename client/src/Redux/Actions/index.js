@@ -82,7 +82,21 @@ export function getByCity(city){
         var json = await axios.post("http://localhost:3001/api/guest", payload)
         return json
 }
-} 
+}
+
+export function getGuest(payload){
+  return async function (dispatch){
+    try{
+        const res = await axios.get("http://localhost:3001/api/guest/" + payload)
+        return dispatch({
+            type: "GET_GUEST",
+            payload: res.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+}
 
   export function getDetail (lodgingId){
     return async function (dispatch){
