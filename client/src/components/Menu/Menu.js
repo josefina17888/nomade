@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import {
   filterByPets,
@@ -12,17 +12,20 @@ import { TbMap2 } from "react-icons/tb";
 import { GiSpookyHouse } from "react-icons/gi";
 import { MdOutlinePets } from "react-icons/md";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
-export default function Menu() {
+export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLodging}) {
   const allLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
+
   //Ordernar por Lodging tipo: Casa
   function handleFilterTypeHouse(e) {
     e.preventDefault();
     dispatch(filterTypeHouse(e.target.value));
+    paging(1)
   }
   function handleFilterByPets(e) {
     e.preventDefault();
     dispatch(filterByPets(e.target.value));
+    paging(1)
   }
   function handleOrderByLowest(e) {
     e.preventDefault();
