@@ -6,6 +6,7 @@ const initialState = {
   loader: true,
   detail: {},
   user: null,
+  favNumber:0
 };
 
 function rootReducer(state = initialState, action) {
@@ -93,6 +94,8 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+
+      case
 
     default:
       return state;

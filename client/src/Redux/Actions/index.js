@@ -105,6 +105,30 @@ export function postLodging(payload){
      
       return json
 }
+
 }
+
+
+export function addFavorite(payload){
+  return async function(dispatch){
+    try{
+      var json = await axios.post('http://localhost:3001/api/favorite', payload)
+    }catch(err){
+      console.log(err)
+    }
+  }
+}
+
+export function favoriteNumber(payload){
+  return async function(dispatch){
+    try{
+      var response = await axios.post('http://localhost:3001/api/favorite/favoriteNumber', payload)
+      return response.data.favoriteNumber
+    }catch(err){
+      alert("failed to get favorire number")
+    }
+  }
+}
+
 
 

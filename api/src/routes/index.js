@@ -11,6 +11,7 @@ const guestRoute = require ('../routes/guest/guest');
 const loginRoute = require ('../routes/login/login');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
+const favoriteRoute = require ('../routes/favorite/favorite.js') 
 
 
 const guestReview = require('../routes/guestReview/guestReview')
@@ -22,6 +23,8 @@ router.use("/api/login", loginRoute);
 router.use("/api/lodging", lodgingRoute); 
 router.use("/api/lodgingReview", lodgingReviewRoute); 
 router.use("/api/guestReview", guestReviewRoute); 
+router.use("/api/favorite", favoriteRoute);  
+
 
 
 

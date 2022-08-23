@@ -1,11 +1,21 @@
-.fav{
+.favButton{
     margin-top:10px;
     position: absolute;
     top: 0px;
     right: 15px;
+    height: 2em;
+    width: 2.5em;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    background-color: rgba(12, 137, 247, 0);
+    outline: none;
+    border: 0px;
+  }
+  .fav{
     font-weight: bold;
     font-size: 1.5em;
-    color: rgba(255, 255, 255, 0.585);
-  
-  
+    color: rgba(255, 255, 255, 0.848);
   }
+  

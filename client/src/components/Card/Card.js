@@ -6,7 +6,7 @@ import { GrFavorite } from "react-icons/gr";
 import Favorite from "../Favorite/Favorite";
 
 
-export default function Card({ city, country, guests, price, picture, currency }) {
+export default function Card({ city, country, guests, price, picture, currency, lodgingInfo }) {
   return (
 
     <div className={styles.card}>
@@ -15,18 +15,18 @@ export default function Card({ city, country, guests, price, picture, currency }
         <img src={picture} alt="img not found" width="200px" height="250px" />
         </div>
         <div>
-          <Favorite/>
+          <Favorite userFrom={localStorage.getItem("userInfo")} lodgingInfo={lodgingInfo}/>
           </div>
-          <div className={styles.icons}>
-          <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
-          <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> 4,5</div>
+          <div className={ styles.icons }>
+          <div className={ styles.guests }><VscPerson className={ styles.guestsIcon }/> { guests }</div>
+          <div className={ styles.rating }><IoIosStar className={ styles.ratingIcon }/> 4,5</div>
       </div>
       </div>
-        <div className={styles.text}>
+        <div className={ styles.text }>
           </div>
-          <h3 className={styles.city}>{`${city}, ${country}`}</h3>
-          <p className={styles.price}>${`${price} ${currency}`}</p>
-          <p className={styles.noche}> noche </p>
+          <h3 className={ styles.city }>{`${ city }, ${ country }`}</h3>
+          <p className={ styles.price }>${`${ price } ${ currency }`}</p>
+          <p className={ styles.noche }> noche </p>
     </div>
   );
 }

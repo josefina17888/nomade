@@ -48,12 +48,14 @@ export default function AllCards() {
                 <div className={styles.link} key={e._id} >
                   <Link to={`/detail/${e._id}` } className={styles.a} >
                     <Card
+                      _id={e._id}
                       city={e.city}
                       country={e.country}
                       price={e.price}
                       guests={e.guests}
                       picture={e.picture[0]}
                       currency={e.currency}
+                      lodgingInfo={stateLodgings}
                     />
                   </Link>
                 </div>
