@@ -16,7 +16,8 @@ const toId = mongoose.Types.ObjectId;
  */
       try{
         const newFav= await Favorite.create(req.body)
-        newFav.lodgingId = toId(req.body.lodgingId)  
+        //newFav.lodgingId = toId(req.body.lodgingId)  
+        console.log(req.body)
          newFav.guestId  = toId(guestId) 
          newFav.save() 
         res.json(newFav)
@@ -46,7 +47,7 @@ const toId = mongoose.Types.ObjectId;
   }) 
   router.get("/all", async (req, res) => {
 
-    const lodging = await Lodging.find().populate({path:"hostId", model: "Host"});
+    const lodging = await Host.find().populate({path:"lodgingId", model: "Lodging"});
     res.json(lodging)
    })
 

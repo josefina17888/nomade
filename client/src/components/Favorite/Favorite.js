@@ -5,7 +5,7 @@ import { useDispatch, useSelector} from "react-redux"
 import { addFavorite, getLodgings} from '../../Redux/Actions';
 
 export default function Favorite(props) {
-  const dispatch= useDispatch()
+/*   const dispatch= useDispatch()
   let stateLodgings = useSelector((state) => state.lodgings);
   
   const [favs, setFavs] = useState({
@@ -38,5 +38,5 @@ export default function Favorite(props) {
             <FaHeart className={s.fav}/>
             </button>
         </div>
-  )
+  ) */
 }

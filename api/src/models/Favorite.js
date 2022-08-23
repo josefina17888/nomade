@@ -11,6 +11,7 @@ const FavoriteSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Lodging"
     },
+    title:{type:String}
  
 
 });
