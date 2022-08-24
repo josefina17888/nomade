@@ -7,11 +7,11 @@ const LodgingSchema = new mongoose.Schema({
   
   lodgingType: { type: String, required:true },
   title:{type: String},
-  guests: {type: Number, required:true },
-  rooms: { type: Number, required:true },
+  guests: {type: String, required:true },
+  rooms: {type: String, required:true },
   typeOfRoom: [{ type: String}],
-  beds:{type: Number, required:true }, 
-  bathrooms: { type: Number },
+  beds:{type: String, required:true }, 
+  bathrooms: { type: String },
   ownBathroom: { type: Boolean },
   price:{  type: Number, required:true},
   currency: { type: String, required:true },
@@ -22,7 +22,7 @@ const LodgingSchema = new mongoose.Schema({
   checkInHour: { type: String },
   checkOutHour: { type: String },
   
-  services: [{
+  services: {
     wifi: { type: Boolean },
     ac: { type: Boolean },
     tv: { type: Boolean },
@@ -35,7 +35,7 @@ const LodgingSchema = new mongoose.Schema({
     pool: { type: Boolean },
     dining: { type: Boolean },
     pets: { type: Boolean },
-  }],
+  },
   description: { type: String, required:true  },
   hostId: {
     type: mongoose.Types.ObjectId, 

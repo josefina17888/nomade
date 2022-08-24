@@ -28,7 +28,7 @@ server.use((req, res, next) => {
 });
 
 server.use(cors())
-server.use(routes);
+server.use("/", routes);
 
 
 

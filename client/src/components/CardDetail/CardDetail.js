@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDetail } from "../../Redux/Actions/index";
-import Card from "react-bootstrap/Card";
 import Carousel from 'react-bootstrap/Carousel';
+import Card from "react-bootstrap/Card"
 import DatePickerOk from "./DatePicker/DatePicker";
-import ServiciosIncluidos from "./ServiciosIncluidos/serviciosincluidos";
 import styles from "./CardDetail.module.css"
 import { AiOutlineWifi, AiFillCar } from 'react-icons/ai';
 import { GiThermometerCold, GiCookingPot, GiWashingMachine, GiShower } from 'react-icons/gi';
@@ -14,29 +13,34 @@ import { MdLocalDining, MdOutlinePets, MdOndemandVideo, MdCleaningServices, MdSe
 import { FaSwimmingPool } from 'react-icons/fa';
 
 export default function CardDetail(props){ 
+  
   const dispatch = useDispatch();
-    
   useEffect(() => {
-      dispatch(getDetail(props.match.params._id))
-  }, [dispatch])
+    dispatch(getDetail(props.match.params._id))
+}, [dispatch])
 
   const myLodging = useSelector((state) => state.detail)
+  console.log(myLodging)
 
-  // //variables necesarias para renderizar servicios
-  // const services = myLodging.services
+  // const servicios = useSelector((state) => state.detail.services)
+  
 
-  // const wifi = services.wifi
-  // const ac = services.ac
-  // const tv = services.tv
-  // const security = services.security
-  // const cleaning = services.cleaning
-  // const parking = services.parking
-  // const laundry = services.laundry
-  // const hotWater = services.hotWater
-  // const kitchen = services.kitchen
-  // const pool = services.pool
-  // const dining = services.dining
-  // const pets = services.pets
+  const servicios = myLodging.services
+  // console.log(servicios)
+
+  const lodgingServices = []
+  const lodgingNoServices = []
+
+  for (const property in servicios) {
+    if (servicios[property] === true) {
+      lodgingServices.push(property)
+    }
+    else {
+      lodgingNoServices.push(property)
+    }
+  }
+  console.log(lodgingServices)
+  console.log(lodgingNoServices)
 
   //variables necesarias para carrusel de imagenes
   const picture = myLodging.picture;
@@ -97,8 +101,8 @@ export default function CardDetail(props){
             <h3 className={styles.titles}>Alojamiento</h3>
             <hr className={styles.hr}></hr>
             <div>
-              <h4>{myLodging.lodgingType}</h4>
-              <h4>{myLodging.name}</h4>
+            <h4>{myLodging.title}</h4>
+            <h4>{myLodging.lodgingType}</h4>
             </div>
           </div>
             
@@ -112,45 +116,78 @@ export default function CardDetail(props){
             <h3 className={styles.titles}>Servicios Incluidos</h3>
             <hr className={styles.hr}></hr>
 
-            {/* <div>
+          {/* <div>
+            {
+              lodgingServices.map((e) => {
+                return(
+                  <p className={styles.p1}>{e}</p>
+                )
+              })
+            }
+          </div> */}
+           <div className={styles.flexcontainer2}>
+
+            <div className={styles.flexcontainer4}>
            <div><AiOutlineWifi /></div>
-           <div>wifi === true ? <p className={styles.p1}>Wifi</p> : <p className={styles.p2}>Wifi</p></div>
-        
+           <div>{lodgingServices.includes("wifi") ? <p className={styles.p1}>Wifi</p> : <p className={styles.p2}>Wifi</p>}</div>
+            </div>
+
+            <div className={styles.flexcontainer4}>
            <div><GiThermometerCold /></div>
-           <div>ac === true ? <p className={styles.p1}>Aire Acondicionado</p> : <p className={styles.p2}>Aire Acondicionado</p></div>
+           <div>{lodgingServices.includes("ac") === true ? <p className={styles.p1}>Aire Acondicionado</p> : <p className={styles.p2}>Aire Acondicionado</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><GiShower /></div>
-           <div>hotWater === true ? <p className={styles.p1}>Agua Caliente</p> : <p className={styles.p2}>Agua Caliente</p></div>
-        
+           <div>{lodgingServices.includes("hotWater") === true ? <p className={styles.p1}>Agua Caliente</p> : <p className={styles.p2}>Agua Caliente</p>}</div>
+           </div>
+
+            <div className={styles.flexcontainer4}>
            <div><MdOndemandVideo /></div>
-           <div>tv === true ? <p className={styles.p1}>Televisión</p> : <p className={styles.p2}>Televisión</p></div>
-        
+           <div>{lodgingServices.includes("tv") === true ? <p className={styles.p1}>Televisión</p> : <p className={styles.p2}>Televisión</p>}</div>
+            </div>
+           
+            <div className={styles.flexcontainer4}>
            <div><MdSecurity /></div>
-           <div>security === true ? <p className={styles.p1}>Seguridad</p> : <p className={styles.p2}>Seguridad</p></div>
+           <div>{lodgingServices.includes("security") === true ? <p className={styles.p1}>Seguridad</p> : <p className={styles.p2}>Seguridad</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><AiFillCar /></div>
-           <div>parking === true ? <p className={styles.p1}>Estacionamiento</p> : <p className={styles.p2}>Estacionamiento</p></div>
+           <div>{lodgingServices.includes("parking") === true ? <p className={styles.p1}>Estacionamiento</p> : <p className={styles.p2}>Estacionamiento</p>}</div>
+            </div>
 
+            <div className={styles.flexcontainer4}>
            <div><MdCleaningServices /></div>
-           <div>cleaning === true ? <p className={styles.p1}>Limpieza</p> : <p className={styles.p2}>Limpieza</p></div>
+           <div>{lodgingServices.includes("cleaning") === true ? <p className={styles.p1}>Limpieza</p> : <p className={styles.p2}>Limpieza</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><GiWashingMachine /></div>
-           <div>laundry === true ? <p className={styles.p1}>Lavanderia</p> : <p className={styles.p2}>Lavadero</p></div>
+           <div>{lodgingServices.includes("laundry") === true ? <p className={styles.p1}>Lavandería</p> : <p className={styles.p2}>Lavandería</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><GiCookingPot /></div>
-           <div>kitchen === true ? <p className={styles.p1}>Cocina</p> : <p className={styles.p2}>Cocina</p></div>
-        
+           <div>{lodgingServices.includes("kitchen") === true ? <p className={styles.p1}>Cocina</p> : <p className={styles.p2}>Cocina</p>}</div>
+           </div>
+
+            <div className={styles.flexcontainer4}>
            <div><MdLocalDining /></div>
-           <div>dining === true ? <p className={styles.p1}>Comedor</p> : <p className={styles.p2}>Comedor</p></div>
-        
+           <div>{lodgingServices.includes("dining") === true ? <p className={styles.p1}>Comedor</p> : <p className={styles.p2}>Comedor</p>}</div>
+           </div>
+
+            <div className={styles.flexcontainer4}>
            <div><FaSwimmingPool /></div>
-           <div>pool === true ? <p className={styles.p1}>Piscina</p> : <p className={styles.p2}>Piscina</p></div>
+           <div>{lodgingServices.includes("pool") === true ? <p className={styles.p1}>Piscina</p> : <p className={styles.p2}>Piscina</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><MdOutlinePets /></div>
-           <div>pets === true ? <p className={styles.p1}>Mascotas</p> : <p className={styles.p2}>Mascotas</p></div>
+           <div>{lodgingServices.includes("pets") === true ? <p className={styles.p1}>Mascotas</p> : <p className={styles.p2}>Mascotas</p>}</div>
+           </div>
 
-       </div> */}
-
+          </div>
           </div>
         </div>
 
@@ -159,7 +196,7 @@ export default function CardDetail(props){
             <Card className={styles.card}> 
 
               <div className={styles.flexcontainer1}>
-              <h3 className={styles.padding}>${myLodging.price} por noche</h3>
+              <h3 className={styles.padding}>${myLodging.currency} {myLodging.price} por noche</h3>
               
               <div>
                 <DatePickerOk />

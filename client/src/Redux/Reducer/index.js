@@ -6,6 +6,7 @@ const initialState = {
   loader: true,
   detail: {},
   user: null,
+  guest: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -25,7 +26,9 @@ function rootReducer(state = initialState, action) {
       };
 
     case "FILTER_BY_PETS":
-      const pets = state.lodgings.filter((e) => e.pets === true);
+      const filtering = state.lodgings
+      const pets = filtering.filter(e => e.services.pets === true)
+      console.log(pets)
       return {
         ...state,
         lodgings: pets,
@@ -36,7 +39,7 @@ function rootReducer(state = initialState, action) {
       });
       return {
         ...state,
-        lodgings: lowest,
+        lodgings: lowest.map(e=>e),
       };
 
     case "ORDER_BY_HIGHEST":
@@ -46,7 +49,7 @@ function rootReducer(state = initialState, action) {
       console.log(highest);
       return {
         ...state,
-        lodgings: highest,
+        lodgings: highest.map(e=>e),
       };
     case "LOADER_TRUE":
       return {
@@ -91,7 +94,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-
+    
+    case "GET_GUEST":
+      return {
+        ...state,
+        guest: action.payload
+      }
     default:
       return state;
   }
