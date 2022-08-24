@@ -8,7 +8,9 @@ const initialState = {
   user: null,
   guest: {},
   startDate: '',
-  endDate: ''
+  endDate: '',
+  allGuests: {},
+  duplicate: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -101,6 +103,17 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         guest: action.payload
+      }
+
+    case "GET_ALL_GUESTS":
+      return {
+        ...state,
+        allGuests: action.payload
+      }
+    case "GET_GUEST_BY_EMAIL":
+      return{
+        ...state,
+        duplicate: action.payload
       }
     default:
       return state;
