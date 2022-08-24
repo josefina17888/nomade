@@ -33,7 +33,22 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       }
 });
 
-
+//Filtra por email
+router.get("/", async (req, res) => {
+  const emailSearch = req.query.email;
+  allGuest = await Guest.find();
+  try {
+    if (emailSearch) {
+      Guest.find({ email: emailSearch }, (err, email) => {
+        res.send(email);
+      });
+    } else {
+      res.json(allGuest);
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
  
 ////TRAE TODOS LOS GUEST (FUNCIONA)////
 router.get("/", async (req, res) => {
@@ -46,6 +61,8 @@ router.get("/", async (req, res) => {
         console.log(error)
   }
 });
+
+
 
 //Trae un guest en particular
 router.get("/:_id", async(req,res) => {

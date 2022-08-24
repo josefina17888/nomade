@@ -84,6 +84,7 @@ export function getByCity(city){
 }
 }
 
+//Trae un guest por Id
 export function getGuest(payload){
   return async function (dispatch){
     try{
@@ -96,6 +97,38 @@ export function getGuest(payload){
         console.log(error)
     }
 }
+}
+
+//Filtra el guest por email
+export function getGuestByEmail(email){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`http://localhost:3001/api/guest?email=${email}`)
+      return dispatch({
+        type: 'GET_GUEST_BY_EMAIL',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
+// Trae todos los Guests
+export function allGuests(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("http://localhost:3001/api/guest")
+      return dispatch({
+        type: "GET_ALL_GUESTS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
   export function getDetail (lodgingId){
