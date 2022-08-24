@@ -81,6 +81,14 @@ router.get("/detail/:lodgingId", async (req, res) => {
   }
 });
 
+/// trae todos los lodgings de un host
+router.get("/:hostId", async (req, res) => {
+  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+    console.log(docs)
+      res.send(docs)
+  })
+})
+
 // esto crea una relacion al hacer get (FUNCIONA)
 /* router.get("/relacionado/:lodgingId/:hostId", async (req, res) => {
   req.params.hostId = toId(req.params.hostId)

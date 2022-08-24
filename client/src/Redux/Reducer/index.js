@@ -7,6 +7,8 @@ const initialState = {
   detail: {},
   user: null,
   guest: {},
+  startDate: '',
+  endDate: ''
 };
 
 function rootReducer(state = initialState, action) {

@@ -9,6 +9,7 @@ import CardDetail from './components/CardDetail/CardDetail';
 import FormLodging from './components/FormLodging/FormLodging.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
+import Booking from './components/Booking/Booking'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:guestId/form' component={FormHost}/>
+          <Route exact path= '/:guestId/:_id' component={Booking}/>
         </Switch>
       </BrowserRouter>
    </div>
