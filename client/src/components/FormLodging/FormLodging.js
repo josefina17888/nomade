@@ -28,14 +28,13 @@ export default function FormLodging() {
     checkInHour:"",
     checkOutHour:"",
     description: "",
-    picture:""
+    picture:[]
 })    
   useEffect(() => {
   }, []);
 
   function handleChange(e){
-    console.log(input)
-    console.log(errors)
+   
     if(e.target.name!== "picture")
     {
     setInput({
@@ -49,14 +48,15 @@ export default function FormLodging() {
   }))
 }
 else{
+  console.log(Object.entries(e.target.files).length)
+  let imgs = Object.entries(e.target.files).length
   setInput({
     ...input,
-    [e.target.name] : e.target.value,
-   
+    [e.target.name] : e.target.value
 })
 setErrors(validate({
   ...input,
-  [e.target.name] : e.target.value
+  [e.target.name] : imgs
 }))
 }
 }
