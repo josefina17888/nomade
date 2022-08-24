@@ -47,6 +47,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Trae un guest en particular
+router.get("/:_id", async(req,res) => {
+  try {
+    Guest.find({_id: req.params._id},(error, guest)=>{
+          res.json(guest)
+      })
+  }
+  catch(error) {
+      res.status(500).send(error)
+  }
+})
+
 
 
 //Obtiene todas las reservaciones de un Guest

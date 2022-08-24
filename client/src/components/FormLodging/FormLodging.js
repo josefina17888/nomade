@@ -4,25 +4,14 @@ import { useDispatch, useSelector} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
 import style from "./FormLodging.module.css";
 import { postGuest, postLodging} from "../../Redux/Actions";
+import validate from "./validation";   
 
 export default function FormLodging() {
   const dispatch= useDispatch()
   const history = useHistory()
-  const [service, setService]= useState({
-    wifi: "",
-    ac: "",
-    tv: "",
-    security:"",
-    cleaning:"",
-    parking: "",
-    laundry: "",
-    hotWater:"",
-    kitchen:"" ,
-    pool:"",
-    dining: "",
-    pets: "",
-  })
+  const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
+    title: "",
     lodgingType: "",
     currency:"",
     guests: "",
@@ -38,20 +27,6 @@ export default function FormLodging() {
     numOfGuests:"",
     checkInHour:"",
     checkOutHour:"",
-    services: {wifi: "",
-    ac: "",
-    tv: "",
-    security:"",
-    title:"",
-    cleaning:"",
-    parking: "",
-    laundry: "",
-    currency: "",
-    hotWater:"",
-    kitchen:"" ,
-    pool:"",
-    dining: "",
-    pets: ""},
     description: "",
     picture:""
 })    
@@ -59,61 +34,31 @@ export default function FormLodging() {
   }, []);
 
   function handleChange(e){
+    console.log(input)
+    console.log(errors)
+    if(e.target.name!== "picture")
+    {
     setInput({
         ...input,
         [e.target.name] : e.target.value,
        
     })
-    
-   console.log(input)
+    setErrors(validate({
+      ...input,
+      [e.target.name] : e.target.value
+  }))
 }
-
-function handleSelect(e){
-  if(e.target.value === "si") {
-    
-    
-    setService({
-      ...service,
-      [e.target.name] : true,
-     
-  })
-
-    setInput({
-      ...input,
-     ["services"] : service,
-     
-  })
- 
-  }
-  else if(e.target.value === "no") {
-    
-    
-    setService({
-      ...service,
-      [e.target.name] : false,
-     
-  })
-
-    setInput({
-      ...input,
-     ["services"] : service,
-     
-  })
-
-  }
-  else {
-    setService({
-      ...service,
-      [e.target.name] : e.target.value,
-     
-  })
-    setInput({
-      ...input,
-     ["services"] : service,
-     
-  })
-  }
- 
+else{
+  setInput({
+    ...input,
+    [e.target.name] : e.target.value,
+   
+})
+setErrors(validate({
+  ...input,
+  [e.target.name] : e.target.value
+}))
+}
 }
 
   return (
@@ -160,8 +105,7 @@ function handleSelect(e){
                     <option>7</option>
                     <option>8</option>
                     <option>9</option>
-                    <option>10</option>
-                    <option>mas de 10</option>
+                    <option>+10</option>
           </select>
           <select   onChange={handleChange}  name ="rooms" >
                     <option disabled selected>habitaciones</option>
@@ -169,7 +113,7 @@ function handleSelect(e){
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
-                    <option>mas de 5</option>
+                    <option>+5</option>
           </select>
           <select   onChange={handleChange}  name ="beds" >
                     <option disabled selected>Camas</option>
@@ -177,7 +121,7 @@ function handleSelect(e){
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
-                    <option>mas de 5</option>
+                    <option>+5</option>
           </select>
           <select   onChange={handleChange}  name ="currency" >
                     <option disabled selected>moneda:</option>
@@ -203,7 +147,7 @@ function handleSelect(e){
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
-                    <option>mas de 3</option>
+                    <option>+4</option>
                  
           </select>
          
@@ -260,24 +204,45 @@ function handleSelect(e){
         />
         <h3>servicios</h3>
         <div className={style.services}>
-          <label>WIFI <input type="checkbox"  onChange={handleSelect} name="wifi" /></label>
-          <label>AC <input type="checkbox"  onChange={handleSelect} name="ac" /></label>
-          <label>TV <input type="checkbox"  onChange={handleSelect}  name="tv" /></label>
-          <label>securidad <input type="checkbox"  onChange={handleSelect}  name="security" /></label>
-          <label>Limpieza <input type="checkbox"  onChange={handleSelect} name="cleaning" /></label>
-          <label>Estacionamiento <input type="checkbox"  onChange={handleSelect} name="parking" /></label>
-          <label>Lavanderia <input type="checkbox"  onChange={handleSelect} name="laundry" /></label>
-          <label>Agua caliente <input type="checkbox"  onChange={handleSelect} name="hotWater" /></label>
-          <label>cocina <input type="checkbox"  onChange={handleSelect} name="kitchen" /></label>
-          <label>Piscina <input type="checkbox"  onChange={handleSelect} name="pool"  /></label>
-          <label>Comedor <input type="checkbox"  onChange={handleSelect}  name="dining" /></label>
-          <label>Mascotas <input type="checkbox"  onChange={handleSelect} name="pets" /></label>
+          <label>WIFI <input type="checkbox" name="wifi" /></label>
+          <label>AC <input type="checkbox" name="ac" /></label>
+          <label>TV <input type="checkbox" name="tv" /></label>
+          <label>securidad <input type="checkbox"  name="security" /></label>
+          <label>Limpieza <input type="checkbox"  name="cleaning" /></label>
+          <label>Estacionamiento <input type="checkbox"  name="parking" /></label>
+          <label>Lavanderia <input type="checkbox"  name="laundry" /></label>
+          <label>Agua caliente <input type="checkbox"   name="hotWater" /></label>
+          <label>cocina <input type="checkbox"  name="kitchen" /></label>
+          <label>Piscina <input type="checkbox" name="pool"  /></label>
+          <label>Comedor <input type="checkbox"    name="dining" /></label>
+          <label>Mascotas <input type="checkbox"   name="pets" /></label>
           </div>
       </div>
+      {Object.entries(errors).length === 0 && input.title !== ""?
+      <div>
       <button className={style.button}  type="submit">
         Crear hospedaje
+      </button></div>:<div>
+        <p >{errors.title}</p>
+        <p>{errors.lodgingType}</p>
+        <p >{errors.guests}</p>
+        <p>{errors.rooms}</p>
+        <p >{errors.currency}</p>
+        <p >{errors.price}</p>
+        <p >{errors.bathrooms}</p>
+        <p >{errors.city}</p>
+        <p >{errors.country}</p>
+        <p >{errors.address}</p>
+        <p >{errors.description}</p>
+        <p >{errors.picture}</p>
+        <p >{errors.beds}</p>
+       <button className={style.button} disabled  type="submit">
+       Crear hospedaje
+     </button>
+     </div>
+     }
+    
 
-      </button>
   </form>
     </div>
   );

@@ -1,21 +1,32 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import {useHistory, useParams} from 'react-router-dom'
-import{useDispatch} from 'react-redux'
+import{useDispatch, useSelector} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
+import {getGuest} from '../../Redux/Actions'
 
 export default function FormHost() {
   const dispatch = useDispatch()
-  const history = useHistory()
 
   let guestId = localStorage.getItem("userInfo")
   guestId = JSON.parse(guestId)._id
-
   const [input,setInput] = useState({
     dni: '',
     hostDniPicture:'',
 })
+const guestInfo = useSelector((state)=>state.guest)
+useEffect(() => {
+  dispatch(getGuest(guestId))
+  
+},[dispatch])
+
+let tieneDni=true
+for (var i in guestInfo[0]){
+  if(guestInfo[0].dni !== "") {
+    tieneDni = false
+  }
+}
 
 function handleDni(e){
   setInput({
@@ -32,36 +43,49 @@ function handlePhoto(e){
   })
 }
 
-function handleSubmit(e){
-  e.preventDefault()
-  history.push('/form')
-  alert("host creado")
- }
+// function handleSubmit(e){
+//   e.preventDefault()
+//   history.push('/form')
+//   alert("host creado")
+//  }
 
 
   return (
     <div className={estilos.formulario}>
-      <div>FormHost</div>
-      {/* <form onSubmit={(e)=>handleSubmit(e)} > */}
+    { tieneDni ?
 
+    
       <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
         <label>DNI:</label>
         <input 
-        type="text" 
+        type="number" 
         name="dni"
         value={input.dni}
         onChange={handleDni}
         placeholder="DNI"
         required
         />
-        <label>Foto:</label>
+        <label>Foto de tu DNI:</label>
         <input 
         name="hostDniPicture"
         type="file"
         onChange={handlePhoto}
+        required
         />
         <button type='submit'>Registrarme</button>
         </form>
+        :
+        <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+    <label>Foto:</label>
+    <input 
+    name="hostDniPicture"
+    type="file"
+    onChange={handlePhoto}
+    required
+    />
+    <button type='submit'>Registrarme</button>
+    </form>
+  }
     </div>
   )
 }
