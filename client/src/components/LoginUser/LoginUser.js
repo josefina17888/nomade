@@ -4,9 +4,9 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
 import jwt_decode from "jwt-decode";
-import { GoogleOAuthProvider , GoogleLogin  } from '@react-oauth/google';
-import { createOrGetUser } from "../../utlis/google";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { createOrGetUserGoogle } from "../../utils/userGoogle";
 
 export default function LoginUser() {
   const history = useHistory();
@@ -16,7 +16,7 @@ export default function LoginUser() {
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-    if(userInfo){
+    if (userInfo) {
       history.push("/");
     }
   }, [history]);
@@ -24,7 +24,7 @@ export default function LoginUser() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      if(email === "" || password === ""){
+      if (email === "" || password === "") {
         alert("Por favor ingrese todos los campos");
       }
       const config = {
@@ -41,7 +41,6 @@ export default function LoginUser() {
         config
       );
       localStorage.setItem("userInfo", JSON.stringify(data));
-      // alert("Bienvenido");
       setEmail("");
       setPassword("");
       history.push("/");
@@ -50,29 +49,6 @@ export default function LoginUser() {
       setError(error.response.data.message);
     }
   };
-
-  const [userGoogle, setUserGoogle] = useState({});
-
-  const handleCallbackResponse = (response) => {
-    console.log(response.credential);
-    let userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    setUserGoogle(userObject);
-  };
-
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "256902498483-9ebr0f78d0u8qjh7n6db8u5haao7826a.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-
-    google.accounts.id.renderButton(document.getElementById("google-signin"), {
-      theme: "outline",
-      size: "large",
-    });
-  }, []);
 
   return (
     <div>
@@ -85,7 +61,6 @@ export default function LoginUser() {
             type="text"
             placeholder="Correo Electrónico"
             onChange={(e) => setEmail(e.target.value)}
-            // required={true}
           />
           <input
             className={style.inputPassword}
@@ -93,7 +68,6 @@ export default function LoginUser() {
             type="password"
             placeholder="Contraseña"
             onChange={(e) => setPassword(e.target.value)}
-            // required={true}
           />
           <input
             value="Iniciar Sesión"
@@ -102,17 +76,17 @@ export default function LoginUser() {
           ></input>
         </form>
         <span className={style.line}>O</span>
-        {/* <div className={style.buttonGoogle} id="google-signin"></div> */}
         <GoogleOAuthProvider clientId="907533456062-vgg23gdc62dqm1875s1nblgf66qe471c.apps.googleusercontent.com">
-        <GoogleLogin 
-         onSuccess={response => {
-          createOrGetUser(response);
-          history.push("/");
-          }}
-        onError={() => {
-        console.log('Login Failed');
-  }}
-/>;
+          <GoogleLogin
+            onSuccess={(response) => {
+              createOrGetUserGoogle(response);
+              history.push("/");
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          ;
         </GoogleOAuthProvider>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
@@ -122,5 +96,3 @@ export default function LoginUser() {
     </div>
   );
 }
-
-
