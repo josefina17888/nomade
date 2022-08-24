@@ -85,7 +85,7 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      <form action="/api/guest"  method="POST" encType="multipart/form-data" >
+      <form action= {`${process.env.REACT_APP_API}/api/guest`}  method="POST" encType="multipart/form-data" >
 
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
