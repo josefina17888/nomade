@@ -76,12 +76,20 @@ export function getByCity(city){
   }
 }
 
-  export function postGuest(payload){
+export function postGuest(payload){
     return async function(dispatch){
       
         var json = await axios.post("http://localhost:3001/api/guest", payload)
         return json
+    }
 }
+
+export function getBooking(payload){
+  return async function(dispatch){
+    
+      var json = await axios.post("http://localhost:3001/api/booking/:guestId/:lodgingId", payload)
+      return json
+  }
 } 
 
   export function getDetail (lodgingId){

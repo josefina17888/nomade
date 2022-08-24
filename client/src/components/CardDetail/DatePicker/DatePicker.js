@@ -3,10 +3,11 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./DatePicker.module.css"
+import { Link } from "react-router-dom";
 
-export default function DatePickerOk (){
-    const [startDate, setStartDate] = useState(new Date("2014/02/08"));
-    const [endDate, setEndDate] = useState(new Date("2014/02/10"));
+export default function DatePickerOk (lodgingdId){
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 return(
     <div className={styles.flexcontainer2}>
         <div className={styles.flexcontainer3}>
@@ -32,6 +33,11 @@ return(
           minDate={startDate}
         />
     </div>
+    <div>
+              <Link to= '/'>
+                <button className={styles.button1}>Reservá ahora</button>
+              </Link>
+              </div>
     </div>
 
 )}

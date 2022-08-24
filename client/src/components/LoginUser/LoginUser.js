@@ -4,6 +4,9 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
 import jwt_decode from "jwt-decode";
+import { GoogleOAuthProvider , GoogleLogin  } from '@react-oauth/google';
+import { createOrGetUser } from "../../utlis/google";
+
 
 export default function LoginUser() {
   const history = useHistory();
@@ -99,7 +102,18 @@ export default function LoginUser() {
           ></input>
         </form>
         <span className={style.line}>O</span>
-        <div className={style.buttonGoogle} id="google-signin"></div>
+        {/* <div className={style.buttonGoogle} id="google-signin"></div> */}
+        <GoogleOAuthProvider clientId="907533456062-vgg23gdc62dqm1875s1nblgf66qe471c.apps.googleusercontent.com">
+        <GoogleLogin 
+         onSuccess={response => {
+          createOrGetUser(response);
+          history.push("/");
+          }}
+        onError={() => {
+        console.log('Login Failed');
+  }}
+/>;
+        </GoogleOAuthProvider>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
           <Link to="/registerguest">¡Crea tu cuenta aqui!</Link>
@@ -109,28 +123,4 @@ export default function LoginUser() {
   );
 }
 
-// const dispatch = useDispatch();
-//   // const selector = useSelector((state) => state.user);
 
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   useEffect(() => {
-//     const loggedUserJson = window.localStorage.getItem("userLogin")
-//     console.log(loggedUserJson)
-//     if(loggedUserJson) {
-//       const user = JSON.parse(loggedUserJson)
-//       dispatch(loginUser(user))
-//     }
-//   }, [])
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     dispatch(loginUser({email, password}));
-//     window.localStorage.setItem(
-//       "userLogin" , JSON.stringify({email})
-//     );
-//     // window.location.href = '/'
-//     // history.push("/");
-
-//   }

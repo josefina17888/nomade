@@ -21,6 +21,7 @@ export default function CardDetail(props){
   }, [dispatch])
 
   const myLodging = useSelector((state) => state.detail)
+  console.log(myLodging.services)
 
   // //variables necesarias para renderizar servicios
   // const services = myLodging.services
@@ -156,30 +157,30 @@ export default function CardDetail(props){
 
           <div>
             <div className={styles.flexcontainer1}>
-            <Card className={styles.card}> 
+            <Card className={styles.card} /> 
 
               <div className={styles.flexcontainer1}>
               <h3 className={styles.padding}>${myLodging.price} por noche</h3>
               
               <div>
-                <DatePickerOk />
+                <DatePickerOk lodgingdId={props.match.params._id} />
               </div>
 
-              <div className={styles.flexcontainer3}>
+              {/* <div className={styles.flexcontainer3}>
                 <h6 className={styles.select}>Huéspedes</h6>
                 <form>
                   <input type="text"></input>
                 </form>
-              </div>
+              </div> */}
               
-              <div>
+              {/* <div>
               <Link to= '/'>
                 <button className={styles.button1}>Reservá ahora</button>
               </Link>
-              </div>
+              </div> */}
             
               </div>
-            </Card>
+            {/* </Card> */}
               </div>
           </div>
       </div>

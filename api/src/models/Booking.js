@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 
 const BookingSchema = new mongoose.Schema({
-  checkIn: { type:String, required: true },
-  checkOut: { type: String, required: true },
-  night: { type: Number, required: true },
-  guests: { type: Number, required: true },
+  // checkIn: { type:String, required: true },
+  // checkOut: { type: String, required: true },
+  checkIn: { type: Date},
+  checkOut: { type:Date },
+  night: { type: Number },
+  guests: { type: Number},
   costNight: { type: Number },
   totalCost: { type: Number },
   lodgingId: {

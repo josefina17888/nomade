@@ -22,7 +22,7 @@ const LodgingSchema = new mongoose.Schema({
   checkInHour: { type: String },
   checkOutHour: { type: String },
   
-  services: [{
+  services: {
     wifi: { type: Boolean },
     ac: { type: Boolean },
     tv: { type: Boolean },
@@ -35,7 +35,7 @@ const LodgingSchema = new mongoose.Schema({
     pool: { type: Boolean },
     dining: { type: Boolean },
     pets: { type: Boolean },
-  }],
+  },
   description: { type: String, required:true  },
   hostId: {
     type: mongoose.Types.ObjectId, 
@@ -48,7 +48,8 @@ const LodgingSchema = new mongoose.Schema({
   LodgingReviewId: {
     type: Schema.ObjectId,
     ref: "LodgingReview",
-  }, 
+  },
+  unavailableDate: [{type: Date}] 
   
 });
 
