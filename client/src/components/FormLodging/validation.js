@@ -54,11 +54,11 @@ export default function validate (input)
         else if (input.picture < 1){
             errors.picture = "Debe completar el campo imagen. recuerde subir 3 fotos";
         }
-        else if (input.picture !== 3){
+        if (typeof input.picture !== 'string' && input.picture !== 3){
             errors.picture = "Debes subir 3 imagenes";
+           
         }
-       
-       
+   
 
         return errors
     }
