@@ -7,7 +7,7 @@ import style from "./GoogleMaps.module.css";
 export default function GoogleMaps() {
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyC5qq1NGWjUmjiuvDFormsHEGGQ2QtIVng",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
   

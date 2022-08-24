@@ -76,8 +76,9 @@ export default function LoginUser() {
           ></input>
         </form>
         <span className={style.line}>O</span>
-        <GoogleOAuthProvider clientId="907533456062-vgg23gdc62dqm1875s1nblgf66qe471c.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin
+            className={style.buttonGoogle}
             onSuccess={(response) => {
               createOrGetUserGoogle(response);
               history.push("/");
@@ -86,7 +87,6 @@ export default function LoginUser() {
               console.log("Login Failed");
             }}
           />
-          ;
         </GoogleOAuthProvider>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>

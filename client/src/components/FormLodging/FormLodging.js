@@ -28,15 +28,21 @@ export default function FormLodging() {
     checkInHour:"",
     checkOutHour:"",
     description: "",
-    picture:[]
+    picture:""
 })    
   useEffect(() => {
   }, []);
 
+
+  function handleDelete(){
+    
+    document.getElementById("file").click()
+  }
+
   function handleChange(e){
-   
+   console.log(input.picture)
     if(e.target.name!== "picture")
-    {
+    {  
     setInput({
         ...input,
         [e.target.name] : e.target.value,
@@ -48,7 +54,41 @@ export default function FormLodging() {
   }))
 }
 else{
-  console.log(Object.entries(e.target.files).length)
+ 
+  if(document.getElementById("imgPreview0"))
+  {
+    for(let i = 0; i<3 ; i++)
+    {
+      if(document.getElementById("imgPreview" + i))
+      {
+        document.getElementById("imgPreview" + i).remove();
+      }
+    }
+  }
+  for(let i= 0; i<e.target.files.length;i++ )
+  {
+          let  reader = new FileReader()
+            reader.readAsDataURL(e.target.files[i])
+            reader.onload = function(){
+            let preview = document.getElementById("preview")
+            let imagen=document.createElement("img")
+            imagen.src = reader.result;
+            imagen.style.width = "200px"
+            imagen.id= "imgPreview"+ i
+            preview.append(imagen)
+            console.log(reader)
+        }
+  }
+  if(!document.getElementById("reset"))
+  {
+    let buttonDelet = document.getElementById("buttonDelet")
+    let boton=document.createElement("button")
+    boton.type="button"
+    boton.id= "reset"
+    boton.onclick = handleDelete
+    boton.innerHTML = "Cambiar seleccion";
+    buttonDelet.append(boton)
+  }
   let imgs = Object.entries(e.target.files).length
   setInput({
     ...input,
@@ -62,28 +102,22 @@ setErrors(validate({
 }
 
   return (
+
     <div className={style.containerUser}>
       <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
+      <script src="./preview.js"></script>
       <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>
       </div>
       <div className={style.containerForm}>
-        {/* <input
-          className={style.lodgingType}
-          type="text"
-          name ="lodgingType"
-          value={input.lodgingType}
-          placeholder="Tipo de alojamiento"
-          onChange={handleChange}
-        /> */}
           <input
-          className={style.inputPassword}
           type="text"
           name ="title"
           value={input.title}
           placeholder="Titulo del hospedaje"
           onChange={handleChange}
         />
+        <p >{errors.title}</p>
           <select   onChange={handleChange} name="lodgingType" >
                     <option disabled selected>Tipo de hospedaje</option>
                     <option>Cabaña</option>
@@ -94,6 +128,7 @@ setErrors(validate({
                     <option>Apartamento</option>
                     <option>habitacion</option>
           </select>
+          <p>{errors.lodgingType}</p>
           <select   onChange={handleChange}  name ="guests" >
                     <option disabled selected>Huespeds</option>
                     <option>1</option>
@@ -107,6 +142,7 @@ setErrors(validate({
                     <option>9</option>
                     <option>+10</option>
           </select>
+          <p >{errors.guests}</p>
           <select   onChange={handleChange}  name ="rooms" >
                     <option disabled selected>habitaciones</option>
                     <option>1</option>
@@ -115,6 +151,7 @@ setErrors(validate({
                     <option>4</option>
                     <option>+5</option>
           </select>
+          <p>{errors.rooms}</p>
           <select   onChange={handleChange}  name ="beds" >
                     <option disabled selected>Camas</option>
                     <option>1</option>
@@ -123,16 +160,18 @@ setErrors(validate({
                     <option>4</option>
                     <option>+5</option>
           </select>
+          <p >{errors.beds}</p>
+          
           <select   onChange={handleChange}  name ="currency" >
                     <option disabled selected>moneda:</option>
                     <option>USD</option>
-                    <option>€</option>
+                    <option>EUR</option>
                     <option>ARS</option>
                     <option>CLP</option>
                     <option>MXN</option>
           </select>
+          <p >{errors.currency}</p>
           <input
-          className={style.inputEmail}
           type="number"
           name ="price"
           min="1" step="any"
@@ -140,7 +179,7 @@ setErrors(validate({
           placeholder="Precio por noche"
           onChange={handleChange}
         />
-
+        <p >{errors.price}</p>
          <label>Baño propio<input type="checkbox"  onChange={handleChange} name="ownBathroom" /></label>
          <select   onChange={handleChange}  name ="bathrooms" >
                     <option disabled selected>Baños</option>
@@ -150,58 +189,53 @@ setErrors(validate({
                     <option>+4</option>
                  
           </select>
-         
-          {/* <input
-          className={style.inputEmail}
-          type="text"
-          name ="typeOfRoom"
-          value={input.typeOfRoom}
-          placeholder="tipo de habitacion"
-          onChange={handleChange}
-        /> */}
-
+          <p >{errors.bathrooms}</p>
         <input
-          className={style.inputPassword}
           type="text"
           name ="city"
           value={input.city}
           placeholder="Ciudad"
           onChange={handleChange}
         />
-        
+        <p >{errors.city}</p>
          <input
-          className={style.inputPassword}
           type="text"
           name ="country"
           value={input.country}
           placeholder="Pais"
           onChange={handleChange}
         />
+        <p >{errors.country}</p>
          <input
-          className={style.inputPassword}
           type="text"
           name ="address"
           value={input.address}
           placeholder="Direccion"
           onChange={handleChange}
         />
+        <p >{errors.address}</p>
          <textarea
-          className={style.inputPassword}
           type="text"
           name ="description"
           value={input.description}
           placeholder="Descripcion"
           onChange={handleChange}
         />
+        <p >{errors.description}</p>
          <input
-          className={style.inputPassword}
           type="file"
           name ="picture"
+          id="file"
           value={input.picture}
           placeholder="picture"
           onChange={handleChange}
           multiple
         />
+        <div id="contenedorHandle">
+        <div id="preview"></div>
+        <div id="buttonDelet"></div>
+        </div>
+        <p >{errors.picture}</p>
         <h3>servicios</h3>
         <div className={style.services}>
           <label>WIFI <input type="checkbox" name="wifi" /></label>
@@ -218,36 +252,19 @@ setErrors(validate({
           <label>Mascotas <input type="checkbox"   name="pets" /></label>
           </div>
       </div>
-      {Object.entries(errors).length === 0 && input.title !== ""?
+      {console.log(input.picture)}
+      {Object.entries(errors).length === 0 && input.title !== "" && input.picture !== ""?
       <div>
       <button className={style.button}  type="submit">
         Crear hospedaje
       </button></div>:<div>
-        <p >{errors.title}</p>
-        <p>{errors.lodgingType}</p>
-        <p >{errors.guests}</p>
-        <p>{errors.rooms}</p>
-        <p >{errors.currency}</p>
-        <p >{errors.price}</p>
-        <p >{errors.bathrooms}</p>
-        <p >{errors.city}</p>
-        <p >{errors.country}</p>
-        <p >{errors.address}</p>
-        <p >{errors.description}</p>
-        <p >{errors.picture}</p>
-        <p >{errors.beds}</p>
        <button className={style.button} disabled  type="submit">
        Crear hospedaje
      </button>
      </div>
      }
-    
-
   </form>
     </div>
   );
-
-
-
 }
 
