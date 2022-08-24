@@ -1,14 +1,17 @@
+import e from "cors";
 import React from "react";
 import { useEffect, useState } from "react";
-import { useDispatch} from "react-redux"
+import { useDispatch, useSelector} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
+import {getGuestByEmail} from '../../Redux/Actions'
+import {IoCheckmarkCircleOutline, IoCloseCircleOutline} from 'react-icons/io5'
 import style from "./FormUser.module.css";
-
 
 export default function FormUser() {
   const dispatch= useDispatch()
   const history = useHistory()
- 
+  const [errors,setErrors] =useState({})
+  const [errorButton, setErrorButton]= useState(true)
   const [input, setInput] = useState({
     username: "",
     name: "",
@@ -21,121 +24,140 @@ export default function FormUser() {
     picture: "",
     birthDate:""
 })    
-  useEffect(() => {
-  }, []);
+const guestByEmail = useSelector((state)=>state.duplicate)
 
+  //   function handleSubmit(e){
+  //     e.preventDefault()
+  //     // dispatch(postGuest(input))  
+  //     console.log(e.target.file)
+  //     alert("Usuario creado correctamente!!")
+  
+  
+  //     setInput({
+  //       username: "",
+  //       name: "",
+  //       lastname: "",
+  //       email:"",
+  //       password:"",
+  //       cellPhone:"",
+  //       dni:"",
+  //       country:"",
+  //       picture: "",
+  //       birthDate:""
+  //     })    
+  //     history.push("/login")
+  // }
 
-//   function handleSubmit(e){
-//     e.preventDefault()
-//     // dispatch(postGuest(input))  
-//     console.log(e.target.file)
-//     alert("Usuario creado correctamente!!")
-
-
-//     setInput({
-//       username: "",
-//       name: "",
-//       lastname: "",
-//       email:"",
-//       password:"",
-//       cellPhone:"",
-//       dni:"",
-//       country:"",
-//       picture: "",
-//       birthDate:""
-//     })    
-//     history.push("/login")
+// let emailRegistrado = true
+// for(var i in guests){
+//   if (i[email] === input.email){
+//     emailRegistrado = false
+//   }
+//   console.log(i[email])
 // }
-
-
-
-
-  function handleChange(e){
-    console.log(e.target.files)
-    setInput({
-        ...input,
-        [e.target.name]: e.target.files,
-        [e.target.name] : e.target.value,
-       
-    })
-   
+function handleChange(e){
+  setInput({
+    ...input,
+    [e.target.name]: e.target.files,
+    [e.target.name] : e.target.value,
+  })
+  // let mensaje = true
+    // setErrors(validate({
+    //   ...input,
+    //   [e.target.name]: e.target.value
+    // }))
+    // if(Object.keys(errors).length !==0){
+    //   setErrorButton(true)
+    // }else{
+    //   setErrorButton(false)
+    // }
+    // setNotRequired(required({
+    //   ...input,
+    //   [e.target.name] : e.target.value,
+    // }))
+    // if(Object.keys(required.length !==0)){
+    //    mensaje = true
+    // }else{
+    //    mensaje = false
+    // }
+    dispatch(getGuestByEmail(e.target.value))
 }
-
 
   return (
     <div className={style.containerUser}>
-
-
       <form action="/api/guest"  method="POST" encType="multipart/form-data" >
 
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
-          // className={style.inputEmail}
-          type="text"
-          name ="username"
-          value={input.username}
-          placeholder="Nombre de usuario"
-          onChange={handleChange}
-        />
-         <input
-          // className={style.inputEmail}
           type="text"
           name ="name"
           value={input.name}
           placeholder="Nombre"
           onChange={handleChange}
+          title="Nombre solo acepta letras y espacios en blanco"
+          pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
+          required
         />
         <input
-          // className={style.inputPassword}
           type="text"
           name ="lastname"
           value={input.lastname}
           placeholder="Apellido"
           onChange={handleChange}
+          title="Apellido solo acepta letras y espacios en blanco"
+          pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
+          required
         />
          <input
-          // className={style.inputEmail}
           type="text"
           name ="email"
           value={input.email}
           placeholder="Email"
           onChange={handleChange}
-        />
+          title="Email incorrecto"
+          pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"
+          required
+          />
+          {guestByEmail.length === 0 ? <IoCheckmarkCircleOutline/>: <IoCloseCircleOutline/>}
          <input
-          // className={style.inputEmail}
           type="password"
           name ="password"
           value={input.password}
           placeholder="contraseña"
           onChange={handleChange}
+          title="La contraseña debe contener solo letras [a-z], números[0-9] o caracteres especiales (@#$%&)"
+          pattern="^[a-z0-9\.@#\$%&]+$"
+          required
         />
         <input
-          // className={style.inputEmail}
           type="text"
           name ="dni"
           value={input.dni}
           placeholder="dni"
           onChange={handleChange}
+          title="El DNI debe contener números positivos"
+          pattern="^\d+$"
         />
         <input
-          // className={style.inputPassword}
           type="text"
           name ="cellPhone"
           value={input.cellPhone}
           placeholder="Celular"
           onChange={handleChange}
+          title=""
+          pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
         />
          <input
-          // className={style.inputEmail}
           type="text"
           name ="country"
           value={input.country}
           placeholder="pais"
           onChange={handleChange}
+          title="El país solo acepta letras y espacios en blanco"
+          pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
         />
          <input
-          // className={style.inputEmail}
           type="date"
           name ="birthDate"
           value={input.birthDate}
@@ -143,7 +165,6 @@ export default function FormUser() {
           onChange={handleChange}
         />
         <input
-          // className={style.inputPassword}
           type="file"
           name ="picture"
           value={input.picture}
@@ -152,13 +173,10 @@ export default function FormUser() {
         />
       </div>
       <button className={style.button} type="submit">
-        Iniciar Sesion
+        Registrarme
       </button>
   </form>
     </div>
   );
-
-
-
 }
 
