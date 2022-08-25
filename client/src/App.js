@@ -22,7 +22,7 @@ function App() {
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
-          <Route path='/:guestId/form' component={FormHost}/>
+          <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:guestId' component={LodgingReview}/>
         </Switch>
