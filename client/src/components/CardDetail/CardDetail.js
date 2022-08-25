@@ -15,12 +15,17 @@ import { FaSwimmingPool } from 'react-icons/fa';
 export default function CardDetail(props){ 
   
   const dispatch = useDispatch();
+  let guestId = localStorage.getItem("userInfo");
+
+  if (!guestId) {
+  } else {
+    var userToken = JSON.parse(guestId)._id;
+  }
   useEffect(() => {
     dispatch(getDetail(props.match.params._id))
 }, [dispatch])
 
   const myLodging = useSelector((state) => state.detail)
-  console.log(myLodging)
 
   // const servicios = useSelector((state) => state.detail.services)
   
@@ -225,6 +230,9 @@ export default function CardDetail(props){
       <div>
         <Link to= '/'>
           <button className={styles.button}>Volver</button>
+        </Link>
+        <Link to={userToken ? `/lodgingreview/${userToken}/${props.match.params._id}` : "/login"} className="nav-link py-2 px-0 px-lg-2">
+          <button className={styles.button}>Califica este hospedaje!</button>
         </Link>
                     
       </div>
