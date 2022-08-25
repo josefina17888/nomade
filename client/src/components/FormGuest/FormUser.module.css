@@ -83,3 +83,9 @@
 .inputEmail{
     border-color: green;
 }
+.password{
+    background-color: transparent;
+    border: none;
+    font-size: 1.1rem;
+    padding-left: 0;
+}

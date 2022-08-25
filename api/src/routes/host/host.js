@@ -17,8 +17,6 @@ cloudinary.config({
 
 /// postea el host 
 
-
-
 router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
   const filename = req.file
