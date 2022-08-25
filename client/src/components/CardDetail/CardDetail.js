@@ -26,12 +26,17 @@ export default function CardDetail(props){
   
 
   const servicios = myLodging.services
+<<<<<<< HEAD
   console.log(servicios)
+=======
+  // console.log(servicios)
+>>>>>>> dc388fbd866f69d720cb5e0934ccc8911140215e
 
   const lodgingServices = []
   const lodgingNoServices = []
 
   for (const property in servicios) {
+<<<<<<< HEAD
     if (property === true) {
       lodgingServices.push(property)
       console.log(property)
@@ -56,6 +61,17 @@ export default function CardDetail(props){
   // const pool = services.pool
   // const dining = services.dining
   // const pets = services.pets
+=======
+    if (servicios[property] === true) {
+      lodgingServices.push(property)
+    }
+    else {
+      lodgingNoServices.push(property)
+    }
+  }
+  console.log(lodgingServices)
+  console.log(lodgingNoServices)
+>>>>>>> dc388fbd866f69d720cb5e0934ccc8911140215e
 
   //variables necesarias para carrusel de imagenes
   const picture = myLodging.picture;
@@ -116,8 +132,8 @@ export default function CardDetail(props){
             <h3 className={styles.titles}>Alojamiento</h3>
             <hr className={styles.hr}></hr>
             <div>
-              <h4>{myLodging.lodgingType}</h4>
-              <h4>{myLodging.name}</h4>
+            <h4>{myLodging.title}</h4>
+            <h4>{myLodging.lodgingType}</h4>
             </div>
           </div>
             
@@ -131,6 +147,7 @@ export default function CardDetail(props){
             <h3 className={styles.titles}>Servicios Incluidos</h3>
             <hr className={styles.hr}></hr>
 
+<<<<<<< HEAD
           <div>
             {
               lodgingServices.map((e) => {
@@ -147,41 +164,87 @@ export default function CardDetail(props){
             {wifi ? <p className={styles.p1}>Wifi</p> : <p className={styles.p2}>Wifi</p>}
             </div> */}
         {/*
+=======
+          {/* <div>
+            {
+              lodgingServices.map((e) => {
+                return(
+                  <p className={styles.p1}>{e}</p>
+                )
+              })
+            }
+          </div> */}
+           <div className={styles.flexcontainer2}>
+
+            <div className={styles.flexcontainer4}>
+           <div><AiOutlineWifi /></div>
+           <div>{lodgingServices.includes("wifi") ? <p className={styles.p1}>Wifi</p> : <p className={styles.p2}>Wifi</p>}</div>
+            </div>
+
+            <div className={styles.flexcontainer4}>
+>>>>>>> dc388fbd866f69d720cb5e0934ccc8911140215e
            <div><GiThermometerCold /></div>
-           <div>ac === true ? <p className={styles.p1}>Aire Acondicionado</p> : <p className={styles.p2}>Aire Acondicionado</p></div>
+           <div>{lodgingServices.includes("ac") === true ? <p className={styles.p1}>Aire Acondicionado</p> : <p className={styles.p2}>Aire Acondicionado</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><GiShower /></div>
-           <div>hotWater === true ? <p className={styles.p1}>Agua Caliente</p> : <p className={styles.p2}>Agua Caliente</p></div>
-        
+           <div>{lodgingServices.includes("hotWater") === true ? <p className={styles.p1}>Agua Caliente</p> : <p className={styles.p2}>Agua Caliente</p>}</div>
+           </div>
+
+            <div className={styles.flexcontainer4}>
            <div><MdOndemandVideo /></div>
-           <div>tv === true ? <p className={styles.p1}>Televisión</p> : <p className={styles.p2}>Televisión</p></div>
-        
+           <div>{lodgingServices.includes("tv") === true ? <p className={styles.p1}>Televisión</p> : <p className={styles.p2}>Televisión</p>}</div>
+            </div>
+           
+            <div className={styles.flexcontainer4}>
            <div><MdSecurity /></div>
-           <div>security === true ? <p className={styles.p1}>Seguridad</p> : <p className={styles.p2}>Seguridad</p></div>
+           <div>{lodgingServices.includes("security") === true ? <p className={styles.p1}>Seguridad</p> : <p className={styles.p2}>Seguridad</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><AiFillCar /></div>
-           <div>parking === true ? <p className={styles.p1}>Estacionamiento</p> : <p className={styles.p2}>Estacionamiento</p></div>
+           <div>{lodgingServices.includes("parking") === true ? <p className={styles.p1}>Estacionamiento</p> : <p className={styles.p2}>Estacionamiento</p>}</div>
+            </div>
 
+            <div className={styles.flexcontainer4}>
            <div><MdCleaningServices /></div>
-           <div>cleaning === true ? <p className={styles.p1}>Limpieza</p> : <p className={styles.p2}>Limpieza</p></div>
+           <div>{lodgingServices.includes("cleaning") === true ? <p className={styles.p1}>Limpieza</p> : <p className={styles.p2}>Limpieza</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><GiWashingMachine /></div>
-           <div>laundry === true ? <p className={styles.p1}>Lavanderia</p> : <p className={styles.p2}>Lavadero</p></div>
+           <div>{lodgingServices.includes("laundry") === true ? <p className={styles.p1}>Lavandería</p> : <p className={styles.p2}>Lavandería</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
            <div><GiCookingPot /></div>
-           <div>kitchen === true ? <p className={styles.p1}>Cocina</p> : <p className={styles.p2}>Cocina</p></div>
-        
-           <div><MdLocalDining /></div>
-           <div>dining === true ? <p className={styles.p1}>Comedor</p> : <p className={styles.p2}>Comedor</p></div>
-        
-           <div><FaSwimmingPool /></div>
-           <div>pool === true ? <p className={styles.p1}>Piscina</p> : <p className={styles.p2}>Piscina</p></div>
+           <div>{lodgingServices.includes("kitchen") === true ? <p className={styles.p1}>Cocina</p> : <p className={styles.p2}>Cocina</p>}</div>
+           </div>
 
+            <div className={styles.flexcontainer4}>
+           <div><MdLocalDining /></div>
+           <div>{lodgingServices.includes("dining") === true ? <p className={styles.p1}>Comedor</p> : <p className={styles.p2}>Comedor</p>}</div>
+           </div>
+
+            <div className={styles.flexcontainer4}>
+           <div><FaSwimmingPool /></div>
+           <div>{lodgingServices.includes("pool") === true ? <p className={styles.p1}>Piscina</p> : <p className={styles.p2}>Piscina</p>}</div>
+           </div>
+
+            <div className={styles.flexcontainer4}>
            <div><MdOutlinePets /></div>
+<<<<<<< HEAD
            <div>pets === true ? <p className={styles.p1}>Mascotas</p> : <p className={styles.p2}>Mascotas</p></div>
 
         */}
           {/* </div> */}
+=======
+           <div>{lodgingServices.includes("pets") === true ? <p className={styles.p1}>Mascotas</p> : <p className={styles.p2}>Mascotas</p>}</div>
+           </div>
+
+>>>>>>> dc388fbd866f69d720cb5e0934ccc8911140215e
+          </div>
           </div>
         </div>
 

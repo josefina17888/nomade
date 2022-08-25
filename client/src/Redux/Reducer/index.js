@@ -8,7 +8,9 @@ const initialState = {
   user: null,
   userFavs:[],
   favNumber:0,
-  guest: {}
+  guest: {},
+  allGuests: {},
+  duplicate: [],
 
 };
 
@@ -104,6 +106,19 @@ function rootReducer(state = initialState, action) {
         ...state,
         guest: action.payload
       }
+
+    case "GET_ALL_GUESTS":
+      return {
+        ...state,
+        allGuests: action.payload
+      }
+    case "GET_GUEST_BY_EMAIL":
+      return{
+        ...state,
+        duplicate: action.payload
+      }
+
+      
     case "GET_FAVORITES":
       return {
         ...state,
@@ -128,6 +143,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         favNumber: action.payload
       } */
+
 
     default:
       return state;

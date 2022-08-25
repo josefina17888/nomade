@@ -15,7 +15,10 @@ import { getLodgings } from "../../Redux/Actions/index";
 export default function NavBar() {
   const dispatch = useDispatch();
   let guestId = localStorage.getItem("userInfo");
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc388fbd866f69d720cb5e0934ccc8911140215e
 
   if (!guestId) {
   } else {
@@ -89,8 +92,10 @@ export default function NavBar() {
                               <GrFavorite /> Favoritos
                             </Link>
                           </li>
-                          <li>
-                            <Link to="/login" className="dropdown-item">
+                          <li onClick={() => {
+                                localStorage.removeItem('userInfo')
+                              }}>
+                            <Link to="/" className="dropdown-item">
                               <RiLogoutCircleLine /> Cerrar sesión
                             </Link>
                           </li>

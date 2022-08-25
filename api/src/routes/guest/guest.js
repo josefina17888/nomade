@@ -19,8 +19,11 @@ cloudinary.config({
 router.post("/", upload.single("picture") ,async (req, res) => {
   const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
     try{
+      const userExist = await Guest.findOne({ email });
+      if(userExist) {
+        res.send('Usuario ya existe')
+      }
       const result = await cloudinary.uploader.upload(req.file.path)
-      console.log(result)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
       await newGuest.save()
       res.redirect("http://localhost:3000/");
@@ -30,7 +33,22 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       }
 });
 
-
+//Filtra por email
+router.get("/", async (req, res) => {
+  const emailSearch = req.query.email;
+  allGuest = await Guest.find();
+  try {
+    if (emailSearch) {
+      Guest.find({ email: emailSearch }, (err, email) => {
+        res.send(email);
+      });
+    } else {
+      res.json(allGuest);
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
  
 ////TRAE TODOS LOS GUEST (FUNCIONA)////
 router.get("/", async (req, res) => {
@@ -44,6 +62,8 @@ router.get("/", async (req, res) => {
         console.log(error)
   }
 });
+
+
 
 //Trae un guest en particular
 router.get("/:_id", async(req,res) => {

@@ -16,23 +16,23 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
 
 
 
-export default function AllCards() {
+export default function AllCards({setCurrentPage, paging, lodgingPerPage, currentLodging}) {
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
-  const [lodgingPerPage, setLodgingPerPage] = useState(20); // setear en 20 la cantidad de hospedajes por página
-  const indexLastLodging = currentPage * lodgingPerPage;
-  const indexFirstLodging = indexLastLodging - lodgingPerPage;
-  const currentLodging = stateLodgings.slice(
-    indexFirstLodging,
-    indexLastLodging
-  );
+  // const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
+  // const [lodgingPerPage, setLodgingPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página
+  // const indexLastLodging = currentPage * lodgingPerPage;
+  // const indexFirstLodging = indexLastLodging - lodgingPerPage;
+  // const currentLodging = stateLodgings.slice(
+  //   indexFirstLodging,
+  //   indexLastLodging
+  // );
   const loader = useSelector((state) => state.loader);
   const [order, setOrder] = useState("");
 
-  const paging = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  // const paging = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
 
   useEffect(() => {
     dispatch(getLodgings());
