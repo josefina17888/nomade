@@ -168,7 +168,7 @@ export function createNewBooking(payload) {
   return async function (dispatch) {
     console.log(payload);
     var json = await axios.post(
-      "/api/lodging/62fe7ea0b2a41b94d94fd0f2",
+      '/api/booking/:guestId:lodgingId',
       payload
     );
 

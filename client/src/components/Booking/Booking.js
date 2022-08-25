@@ -29,13 +29,11 @@ export default function Booking(props) {
   const alldates = getDatesInRange(checkIn, checkOut);
 
   const [input, setInput] = useState({
-    alldates: alldates,
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
-    guestAdults: 2,
-    guestMinors:1,
-    pets: 0
+    guest: 2,
+    allDates: alldates
   });
 
   const handleChangeInput = (e)=>{
@@ -45,7 +43,8 @@ export default function Booking(props) {
     })
   }
   function handleBooking() {
-    dispatch(createNewBooking(alldates));
+    console.log(input, 'EN EL HANDLE BOOKING')
+    dispatch(createNewBooking(input));
   }
   return (
     <div>
