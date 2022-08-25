@@ -11,6 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
+import Booking from './components/Booking/Booking'
+
+
 function App() {
   return (
    <div>
@@ -25,6 +28,7 @@ function App() {
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:guestId' component={LodgingReview}/>
+          <Route exact path= '/:guestId/:_id' component={Booking}/>
         </Switch>
       </BrowserRouter>
    </div>

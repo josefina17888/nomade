@@ -15,9 +15,8 @@ router.post("/:guestId/:lodgingId", async (req, res) => {
     newBooking.guestId = toId(req.params.guestId)
     const lodging = await Lodging.findById(req.params.lodgingId)
     newBooking.costNight = lodging.price
-    newBooking.totalPrice = (lodging.price * newBooking.night)
+    newBooking.totalPrice = (newBooking.costNight * newBooking.night)
     newBooking.save();
-    
     res.status(200).json(newBooking);
   } catch (error) {
     res.status(400).send("Booking not created");

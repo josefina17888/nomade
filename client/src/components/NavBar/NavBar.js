@@ -73,19 +73,18 @@ export default function NavBar() {
                         <div>
                           <li>
                             <Link
-                              to="/registerguest"
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil
                             </Link>
                           </li>
                           <li>
-                            <Link to="/login" className="dropdown-item">
+                            <Link className="dropdown-item">
                               <TbMessageCircle /> Mensajes
                             </Link>
                           </li>
                           <li>
-                            <Link to="/login" className="dropdown-item">
+                            <Link className="dropdown-item">
                               <GrFavorite /> Favoritos
                             </Link>
                           </li>

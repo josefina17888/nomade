@@ -52,15 +52,7 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
 router.get("/all", async (req, res) => { 
   const host = await Host.find({}).populate({path:"guestId", model: "Guest"})
   res.send(host) 
- }); 
-
-/// trae todos los lodgings de un host
-router.get("/:hostId", async (req, res) => {
-  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
-
-      res.send(docs)
-  })
-})
+ });
 
 //TRAE TODOS LOS HOSTS///
   router.get("/", async (req, res) => {
