@@ -9,8 +9,10 @@ import CardDetail from './components/CardDetail/CardDetail';
 import FormLodging from './components/FormLodging/FormLodging.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
+import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
+
 function App() {
   return (
    <div>
@@ -22,9 +24,11 @@ function App() {
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
+          <Route path='/profile/:_id' component={Profile}></Route>
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route path='/lodgingreview/:hostId/:guestId' component={LodgingReview}/>
+          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+
         </Switch>
       </BrowserRouter>
    </div>
