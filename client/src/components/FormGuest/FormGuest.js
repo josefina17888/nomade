@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link,useHistory } from "react-router-dom";
 import {getGuestByEmail} from '../../Redux/Actions'
-import {IoCheckmarkCircleOutline, IoCloseCircleOutline} from 'react-icons/io5'
+import {IoCheckmarkCircleOutline, IoCloseCircleOutline,IoEyeOutline,IoEyeOffOutline} from 'react-icons/io5'
 import style from "./FormUser.module.css";
 
 export default function FormUser() {
   const dispatch= useDispatch()
-  const history = useHistory()
   const [errors,setErrors] =useState({})
-  const [errorButton, setErrorButton]= useState(true)
+  const [shown, setShown] = useState(false);
   const [input, setInput] = useState({
     username: "",
     name: "",
@@ -25,36 +24,8 @@ export default function FormUser() {
     birthDate:""
 })    
 const guestByEmail = useSelector((state)=>state.duplicate)
+const switchShown = () => setShown(!shown);
 
-  //   function handleSubmit(e){
-  //     e.preventDefault()
-  //     // dispatch(postGuest(input))  
-  //     console.log(e.target.file)
-  //     alert("Usuario creado correctamente!!")
-  
-  
-  //     setInput({
-  //       username: "",
-  //       name: "",
-  //       lastname: "",
-  //       email:"",
-  //       password:"",
-  //       cellPhone:"",
-  //       dni:"",
-  //       country:"",
-  //       picture: "",
-  //       birthDate:""
-  //     })    
-  //     history.push("/login")
-  // }
-
-// let emailRegistrado = true
-// for(var i in guests){
-//   if (i[email] === input.email){
-//     emailRegistrado = false
-//   }
-//   console.log(i[email])
-// }
 function handleChange(e){
   setInput({
     ...input,
@@ -85,8 +56,8 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      {/* <form action= {`${process.env.REACT_APP_API}/api/guest`}  method="POST" encType="multipart/form-data" > */}
-      <form action= "http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data" > 
+      <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data" >
+    {/* <form action= {`${process.env.REACT_APP_API}/api/guest`}  method="POST" encType="multipart/form-data" > */}
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
@@ -120,9 +91,11 @@ function handleChange(e){
           required
           />
           {guestByEmail.length === 0 ? <IoCheckmarkCircleOutline/>: <IoCloseCircleOutline/>}
+          <div>
          <input
-          type="password"
+          type={shown? 'text':'password'}
           name ="password"
+          id = "password"
           value={input.password}
           placeholder="contraseña"
           onChange={handleChange}
@@ -130,6 +103,8 @@ function handleChange(e){
           pattern="^[a-z0-9\.@#\$%&]+$"
           required
         />
+        <button className={style.password} type="button" onClick={switchShown}>{shown? <IoEyeOffOutline/>: <IoEyeOutline/>}</button>
+          </div>
         <input
           type="text"
           name ="dni"
@@ -167,6 +142,7 @@ function handleChange(e){
         <input
           type="file"
           name ="picture"
+          required
           value={input.picture}
           placeholder="Foto de perfil"
           onChange={handleChange}
