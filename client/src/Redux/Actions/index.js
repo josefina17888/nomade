@@ -104,7 +104,7 @@ export function getGuest(payload){
 export function getGuestByEmail(email){
   return async function(dispatch){
     try{
-      let json= await axios.get(`http://localhost:3001/api/guest?email=${email}`)
+      let json= await axios.get(`/api/guest?email=${email}`)
       return dispatch({
         type: 'GET_GUEST_BY_EMAIL',
         payload: json.data
@@ -121,7 +121,7 @@ export function getGuestByEmail(email){
 export function allGuests(){
   return async function(dispatch){
     try {
-      const res = await axios.get("http://localhost:3001/api/guest")
+      const res = await axios.get("/api/guest")
       return dispatch({
         type: "GET_ALL_GUESTS",
         payload: res.data

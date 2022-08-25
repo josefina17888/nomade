@@ -21,10 +21,10 @@ export default function Card({ city, country, guests, price, picture, currency }
       </div>
       </div>
         <div className={styles.text}>
-          </div>
           <h3 className={styles.city}>{`${city}, ${country}`}</h3>
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
+          </div>
     </div>
   );
 }

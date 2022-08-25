@@ -12,12 +12,17 @@ export default function LoginUser() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+
+  let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
+  console.log(guestId)
+  console.log(user)
+  //let userToken = guestId._id;
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-    if (userInfo) {
-      history.push("/");
+    if(userInfo){
+      history.push(`/`);
     }
   }, [history]);
 
@@ -33,7 +38,8 @@ export default function LoginUser() {
         },
       };
       const { data } = await axios.post(
-        "/api/login",
+        //`${process.env.REACT_APP_API}/api/login`,
+        "http://localhost:3001/api/login",
         {
           email,
           password,
@@ -46,7 +52,7 @@ export default function LoginUser() {
       history.push("/");
     } catch (error) {
       alert("Usuario o contraseña incorrectos");
-      setError(error.response.data.message);
+      console.log(error)
     }
   };
 
@@ -60,6 +66,7 @@ export default function LoginUser() {
             value={email}
             type="text"
             placeholder="Correo Electrónico"
+            required = {true}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
@@ -67,6 +74,7 @@ export default function LoginUser() {
             value={password}
             type="password"
             placeholder="Contraseña"
+            required = {true}
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
@@ -76,8 +84,9 @@ export default function LoginUser() {
           ></input>
         </form>
         <span className={style.line}>O</span>
-        <GoogleOAuthProvider clientId="907533456062-vgg23gdc62dqm1875s1nblgf66qe471c.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin
+            className={style.buttonGoogle}
             onSuccess={(response) => {
               createOrGetUserGoogle(response);
               history.push("/");
@@ -86,7 +95,6 @@ export default function LoginUser() {
               console.log("Login Failed");
             }}
           />
-          ;
         </GoogleOAuthProvider>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>

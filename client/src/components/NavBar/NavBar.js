@@ -18,7 +18,7 @@ export default function NavBar() {
 
   if (!guestId) {
   } else {
-    var userToken = JSON.parse(guestId)._id;
+    var userToken = JSON.parse(guestId).email;
   }
   function handleClearState(e) {
     e.preventDefault();
