@@ -10,6 +10,7 @@ export default function FormLodging() {
   const dispatch= useDispatch()
   const params = useParams();
   let hostId = params;
+  console.log(hostId)
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
