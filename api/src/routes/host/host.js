@@ -39,7 +39,7 @@ router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
     await myHost.save()
 
     let hostId = myHost._id
-        res.json(myHost).redirect(`/${hostId}/registerlodging`)
+        res.json(myHost).redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {

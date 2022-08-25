@@ -30,7 +30,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.picture= fotosSubidas
     newLodging.hostId = toId(req.params.hostId);
     newLodging.save();
-    res.redirect("/")
+    res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.json(err);
   }
