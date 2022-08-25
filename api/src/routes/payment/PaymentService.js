@@ -29,3 +29,5 @@ class PaymentService{
         return payment.data;
     }
 }
+
+module.exports = PaymentService
