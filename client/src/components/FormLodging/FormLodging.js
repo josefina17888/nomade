@@ -1,13 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
 import { postGuest, postLodging} from "../../Redux/Actions";
 import validate from "./validation";   
 
 export default function FormLodging() {
   const dispatch= useDispatch()
+  const params = useParams();
+  let hostId = params;
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
