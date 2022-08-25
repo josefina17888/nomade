@@ -13,7 +13,7 @@ export default function AllCardsPaging ({lodgingPerPage, stateLodgings, paging})
            <div>
                 {pageNumbers.map((number) => {
                     return(
-                    <button 
+                    <button key = {number}
                    className={styles.pag} onClick = { ()=> paging(number) } > {number} </button>
                     )})
                 }
