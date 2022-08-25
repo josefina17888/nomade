@@ -86,6 +86,6 @@ function handlePhoto(e){
     <button type='submit'>Registrarme</button>
     </form>
   }
-    </div>
+  </div>
   )
 }
