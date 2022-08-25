@@ -12,8 +12,6 @@ const toId = mongoose.Types.ObjectId;
   router.post("/", async (req, res) => {
     console.log("soy post")
     const infoGuest= await Guest.find({email: req.body.userEmail})
-
-
     let userId = ( infoGuest[0]._id)
       try{
         const newFav= await Favorite.create(req.body)
@@ -40,8 +38,8 @@ const toId = mongoose.Types.ObjectId;
     router.post("/fav", async (req, res) => { 
       try{
       const infoGuest= await Guest.find({email: req.body.userEmail})
-      let userId = ( infoGuest[0]._id)
-      let favs = await Favorite.find({ guestId: userId}).populate({path:"lodgingId", model:"Lodging"})
+      let guestId = ( infoGuest[0]._id)
+      let favs = await Favorite.find({ guestId}).populate({path:"lodgingId", model:"Lodging"})
             res.send(favs);
       }catch(err){
         res.send(err)
@@ -49,10 +47,10 @@ const toId = mongoose.Types.ObjectId;
       
     }) 
 
-
+///numero de favoritos de un lodging
 
   router.post("/favoriteNumber", async (req, res) => {
-    console.log("soy delete")
+    console.log("soy favNumber")
     try{
       const fav= await Favorite.find({"lodgindId": req.body.lodgindId})
       const favNumber= fav.length
@@ -65,27 +63,13 @@ const toId = mongoose.Types.ObjectId;
 
 
   router.post("/delete", async (req, res) => {
-    console.log("you")
-    
-   
+
     try{
       const infoGuest= await Guest.find({email: req.body.userEmail})
-    console.log("infoGuest", infoGuest)
-      let userId = ( infoGuest[0]._id)
-      console.log("userId", userId)
-      let lodgingI= toId(req.body.lodgingId) 
-      console.log("LI",lodgingI)
-      allFavs= Favorite.find({})
-      console.log("all",allFavs)
-      let user= await allFavs.find({guestId: userId})
-      console.log("user", user)
-      let deleted= await user.deleteOne({lodgingId: lodgingI})
-      await user.remove()
-      console.log("aqui elimino")
-      console.log("deleted", deleted)
-      
-   
-          res.send({data:true});
+      let guestId = ( infoGuest[0]._id)
+      let lodgingId= toId(req.body.lodgingId) 
+      await Favorite.deleteOne({lodgingId, guestId})
+      res.send({data:true});
       
     }catch(err){
      res.json(err)

@@ -14,18 +14,10 @@ export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
-  let guestId = localStorage.getItem("userInfo");
-  let userToken = JSON.parse(guestId)._id;
-
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-<<<<<<< HEAD
-    if(userInfo){
-      history.push(`/${userToken}`);
-=======
     if (userInfo) {
       history.push("/");
->>>>>>> dc388fbd866f69d720cb5e0934ccc8911140215e
     }
   }, [history]);
 
