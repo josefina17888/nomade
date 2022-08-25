@@ -11,10 +11,7 @@ export default function FormHost() {
 
   let guestId = localStorage.getItem("userInfo")
   guestId = JSON.parse(guestId)._id
-  const [input,setInput] = useState({
-    dni: '',
-    hostDniPicture:'',
-})
+  
 const guestInfo = useSelector((state)=>state.guest)
 useEffect(() => {
   dispatch(getGuest(guestId))

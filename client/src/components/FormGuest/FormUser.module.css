@@ -7,10 +7,14 @@
     height: 100vh;
     width: 50%;
 }
+.containerForm>input{
+    margin-top: 0.5rem;
 
+}
 .title {
     margin-top: 80px;
     font-size: 30px;
+    align-content: center;
 }
 
 .containerForm {
@@ -19,7 +23,7 @@
 }
 
 .inputEmail {
-    width: 100%;
+    width: 12em;
     height: 25px;
 }
 
@@ -71,4 +75,11 @@
     font-size: 18px;
     color: #069A8E;
     text-align: center;
+}
+
+.inputEmailReg{
+    border-color: red;
+}
+.inputEmail{
+    border-color: green;
 }
