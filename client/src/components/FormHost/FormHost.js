@@ -53,8 +53,8 @@ function handlePhoto(e){
   return (
     <div className={estilos.formulario}>
     { tieneDni ?
-      <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
-      {/* <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">  */}
+      // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
+      <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">  
         <label>DNI:</label>
         <input 
         type="number" 
@@ -74,8 +74,8 @@ function handlePhoto(e){
         <button type='submit'>Registrarme</button>
       </form>
         :
-    <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
-    {/* <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> */}
+    //<form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
+    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> 
     <label>Foto:</label>
     <input 
     name="hostDniPicture"

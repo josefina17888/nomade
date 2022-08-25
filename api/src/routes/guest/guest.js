@@ -26,7 +26,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
       await newGuest.save()
-      res.redirect("https://nomade-khaki.vercel.app/");
+      res.redirect("http://localhost:3000/");
     }
       catch (error){
           res.status(404).send(error)
