@@ -226,6 +226,7 @@ export default function CardDetail(props){
         <Link to= '/'>
           <button className={styles.button}>Volver</button>
         </Link>
+                    
       </div>
         
     </div>
