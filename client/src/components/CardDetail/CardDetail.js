@@ -24,17 +24,10 @@ import {
 import { FaSwimmingPool } from "react-icons/fa";
 
 export default function CardDetail(props) {
-  let guestId = localStorage.getItem("userInfo");
-  console.log(guestId);
-
-  if (!guestId) {
-  } else {
-    var userToken = JSON.parse(guestId)._id;
-  }
-  const lodgingId = props.match.params._id;
   const dispatch = useDispatch();
+  const lodgingId = props.match.params._id;
   useEffect(() => {
-    dispatch(getDetail(props.match.params._id));
+    dispatch(getDetail(lodgingId));
   }, [dispatch]);
 
   const myLodging = useSelector((state) => state.detail);
@@ -302,38 +295,8 @@ export default function CardDetail(props) {
               </div>
             </div>
           </div>
-
           <div>
-            <div className={styles.flexcontainer1}>
-              <Card className={styles.card}>
-                <div className={styles.flexcontainer1}>
-                  <h3 className={styles.padding}>
-                    ${myLodging.currency} {myLodging.price} por noche
-                  </h3>
-
-                  <div>
-                    <DatePickerOk />
-                  </div>
-
-                  <div className={styles.flexcontainer3}>
-                    <h6 className={styles.select}>Huéspedes</h6>
-                    <form>
-                      <input type="text"></input>
-                    </form>
-                  </div>
-
-                  <div>
-                    {
-                      <Link to={`/${userToken}/${lodgingId}`}>
-                        <button className={styles.button1}>
-                          Reservá ahora
-                        </button>
-                      </Link>
-                    }
-                  </div>
-                </div>
-              </Card>
-            </div>
+            <DatePickerOk lodgingId={lodgingId}/>
           </div>
         </div>
       )}
