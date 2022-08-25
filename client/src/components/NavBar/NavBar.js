@@ -15,7 +15,7 @@ import { getLodgings } from "../../Redux/Actions/index";
 export default function NavBar() {
   const dispatch = useDispatch();
   let guestId = localStorage.getItem("userInfo");
-  console.log(guestId);
+
 
   if (!guestId) {
   } else {

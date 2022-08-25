@@ -3,10 +3,11 @@ import styles from "./Card.module.css";
 import { VscPerson } from "react-icons/vsc";
 import { IoIosStar } from "react-icons/io";
 import { GrFavorite } from "react-icons/gr";
-import Favorite from "../Favorite/Favorite";
 
 
-export default function Card({ city, country, guests, price, picture, currency, lodgingInfo }) {
+
+export default function Card({ city, country, guests, price, picture, currency,}) {
+
   return (
 
     <div className={styles.card}>
@@ -15,7 +16,7 @@ export default function Card({ city, country, guests, price, picture, currency, 
         <img src={picture} alt="img not found" width="200px" height="250px" />
         </div>
         <div>
-          <Favorite userFrom={localStorage.getItem("userInfo")} lodgingInfo={lodgingInfo}/>
+          
           </div>
           <div className={ styles.icons }>
           <div className={ styles.guests }><VscPerson className={ styles.guestsIcon }/> { guests }</div>

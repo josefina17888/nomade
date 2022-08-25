@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
+   
 }
 .pag{
     height: 20px;
@@ -30,6 +31,9 @@
     align-items: center;
     border-radius: 10px;
     transition: 0.5s;
+   position: relative;
+   
+
 }
 .card:hover {
     box-shadow: 3px 3px 40px 0 rgba(0,0,0,0.2);
@@ -42,8 +46,10 @@
     cursor: pointer;
     
 }
+
 .a{
     text-decoration: none;
     color: black;
     height: 100%;
 }
+ 

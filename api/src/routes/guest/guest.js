@@ -36,6 +36,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     Guest.find({}, function (err, guest) {
+      console.log(guest)
       res.status(200).send(guest);
     });
   } catch (error) {

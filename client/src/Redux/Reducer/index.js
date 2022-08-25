@@ -6,6 +6,7 @@ const initialState = {
   loader: true,
   detail: {},
   user: null,
+  userFavs:[],
   favNumber:0,
   guest: {}
 
@@ -103,6 +104,30 @@ function rootReducer(state = initialState, action) {
         ...state,
         guest: action.payload
       }
+    case "GET_FAVORITES":
+      return {
+        ...state,
+        userFavs: action.payload
+      }
+    /* case "DELETE_FAVORITE":
+      console.log(action.payload, "soy action")
+      let favoritos = state.userFavs
+      favoritos.filter(e=>e.lodgingId !== action.payload.lodgingId._id  )
+      return {
+      
+        ...state,
+        userFavs: favoritos
+
+      }
+     */
+
+
+    /*
+    case "FAVORITE_NUMBER":
+      return {
+        ...state,
+        favNumber: action.payload
+      } */
 
     default:
       return state;

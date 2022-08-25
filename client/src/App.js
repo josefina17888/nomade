@@ -9,6 +9,8 @@ import CardDetail from './components/CardDetail/CardDetail';
 import FormLodging from './components/FormLodging/FormLodging.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
+import Favorites from './components/Favorites/Favorites' 
+
 
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:guestId/form' component={FormHost}/>
+          <Route exact path='/favorites' component={Favorites}/> 
         </Switch>
       </BrowserRouter>
    </div>
