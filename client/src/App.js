@@ -24,7 +24,7 @@ function App() {
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:guestId/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route path='/lodgingreview/:hostId/:guestId' component={LodgingReview}/>
+          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
         </Switch>
       </BrowserRouter>
    </div>

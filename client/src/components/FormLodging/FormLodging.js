@@ -8,6 +8,9 @@ import validate from "./validation";
 
 export default function FormLodging() {
   const dispatch= useDispatch()
+  let guestId = localStorage.getItem("userInfo")
+  guestId = JSON.parse(guestId)._id
+  console.log( localStorage)
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
