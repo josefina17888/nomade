@@ -22,7 +22,7 @@ const LodgingReviewSchema = new Schema({
     },
     dated: {
         type: Date,
-        required: true
+  
     }
 })
 
