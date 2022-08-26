@@ -7,9 +7,8 @@ import { postGuest, postLodging} from "../../Redux/Actions";
 import validate from "./validation";   
 
 export default function FormLodging() {
+  const params = useParams()
   const dispatch= useDispatch()
-  const params = useParams();
-  let hostId = params.hostId;
   console.log(hostId)
   const history = useHistory()
   const [errors, setErrors] = useState({})
@@ -103,7 +102,7 @@ setErrors(validate({
 }))
 }
 }
-
+let hostId = params.hostId
   return (
 
     <div className={style.containerUser}>

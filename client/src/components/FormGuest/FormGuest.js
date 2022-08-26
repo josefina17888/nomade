@@ -23,6 +23,7 @@ export default function FormUser() {
     picture: "",
     birthDate:""
 })    
+
 const guestByEmail = useSelector((state)=>state.duplicate)
 const switchShown = () => setShown(!shown);
 
@@ -53,6 +54,7 @@ function handleChange(e){
     // }
     dispatch(getGuestByEmail(e.target.value))
 }
+
 
   return (
     <div className={style.containerUser}>

@@ -16,11 +16,13 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
   const allLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
 
+
   //Ordernar por Lodging tipo: Casa
   function handleFilterTypeHouse(e) {
     e.preventDefault();
     dispatch(filterTypeHouse(e.target.value));
     paging(1)
+
   }
   function handleFilterByPets(e) {
     e.preventDefault();

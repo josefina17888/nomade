@@ -48,7 +48,8 @@ const LodgingSchema = new mongoose.Schema({
   LodgingReviewId: {
     type: Schema.ObjectId,
     ref: "LodgingReview",
-  }, 
+  },
+  unavailableDate: [{type: Date}] 
   
 });
 
