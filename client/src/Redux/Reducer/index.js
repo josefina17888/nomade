@@ -7,6 +7,9 @@ const initialState = {
   detail: {},
   user: null,
   guest: {},
+  checkIn: {},
+  checkOut: {},
+  dates:[],
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
@@ -113,6 +116,12 @@ function rootReducer(state = initialState, action) {
       return{
         ...state,
         duplicate: action.payload
+      }
+      case "SET_DATE":
+      return{
+        ...state,
+        checkIn: action.payload.startDate,
+        checkOut: action.payload.endDate
       }
     case "GET_ALL_LODGINGREVIEWS":
       

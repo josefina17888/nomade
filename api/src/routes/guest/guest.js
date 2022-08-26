@@ -37,6 +37,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       console.log(result)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
       await newGuest.save()
+      
       console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,
@@ -50,6 +51,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       await sendEmail(newGuest.email,"Verify Email", url)
       // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
       res.status(201).redirect("http://localhost:3000/login")
+      //res.redirect("https://nomade-khaki.vercel.app/");
+      //res.redirect("http://localhost:3000/");
     }
       catch (error){
           res.status(404).send(error)

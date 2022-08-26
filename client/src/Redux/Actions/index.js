@@ -1,3 +1,4 @@
+
 import axios from "axios";
 
 export const GET_BY_CITY = " GET_BY_CITY";
@@ -156,6 +157,11 @@ export function postLodging(payload){
       return json
 }
 }
+export function settingDate(payload){
+  return{
+    type: "SET_DATE",
+    payload }
+  }
 
 export function lodgingReviews(){
   return async function(dispatch){
@@ -171,4 +177,17 @@ export function lodgingReviews(){
     }
   }
 }
+ 
 
+// BOOKING
+export function createNewBooking(payload) {
+  return async function (dispatch) {
+    console.log(payload, 'soy yo');
+    var json = await axios.post(
+      'http://localhost:3001/api/booking/',
+      payload
+    );
+
+    return json;
+  };
+}

@@ -150,7 +150,7 @@ function handleChange(e){
           onChange={handleChange}
         />
       </div>
-      <button className={style.button} type="submit">
+      <button className={style.button} type="submit" disabled={guestByEmail.length !== 0 ? true : false}>
         Registrarme
       </button>
   </form>
