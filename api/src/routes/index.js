@@ -1,5 +1,13 @@
 const { Router } = require('express');
 const router = Router();
+
+// SDK de Mercado Pago
+const mercadopago = require("mercadopago");
+// Agrega credenciales
+mercadopago.configure({
+  access_token: "APP_USR-4486395292185362-082416-e2f22c3627f37e6072a5bf9caaf72e09-1185632790",
+});
+
 var bodyParser = require('body-parser')
 router.use(bodyParser.json()) 
 router.use(bodyParser.urlencoded({ extended: true }))
@@ -14,8 +22,8 @@ const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
 const favoriteRoute = require ('../routes/favorite/favorite.js') 
 
-
 const guestReview = require('../routes/guestReview/guestReview')
+const paymentRoute = require('../routes/payment/payment')
 
 router.use("/api/host", hostRoute);
 router.use("/api/booking", bookingRoute); 
@@ -25,6 +33,7 @@ router.use("/api/login/google", loginGoogle);
 router.use("/api/lodging", lodgingRoute); 
 router.use("/api/lodgingReview", lodgingReviewRoute); 
 router.use("/api/guestReview", guestReviewRoute); 
+router.use("/api/payment", paymentRoute)
 router.use("/api/favorite", favoriteRoute);  
 
 

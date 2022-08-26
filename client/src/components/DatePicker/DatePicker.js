@@ -8,6 +8,7 @@ import { getDetail, settingDate } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 
 export default function DatePickerOk() {
+
   console.log("aqui");
   const lodging = useSelector((state) => state.detail);
   const lodgingId = lodging._id;
@@ -26,6 +27,7 @@ export default function DatePickerOk() {
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
+
 
   function handleClickBooking(e) {
     dispatch(settingDate(date));
@@ -86,6 +88,7 @@ export default function DatePickerOk() {
           </div>
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import DatePickerOk from "../DatePicker/DatePicker";
 import styles from "./CardDetail.module.css";
 import { AiOutlineWifi, AiFillCar } from "react-icons/ai";
 import NavBar from "../NavBar/NavBar";
+
 import {
   GiThermometerCold,
   GiCookingPot,
@@ -27,12 +28,14 @@ import { FaSwimmingPool } from "react-icons/fa";
 export default function CardDetail(props) {
   const dispatch = useDispatch();
   const lodgingId = props.match.params._id;
+
   let guestId = localStorage.getItem("userInfo");
 
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId)._id;
   }
+
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
@@ -307,11 +310,13 @@ export default function CardDetail(props) {
             </div>
           </div>
           <div>
+
             <DatePickerOk lodgingId={lodgingId} />
           </div>
           </div>
         </div>
       )}
+
       <div>
         <Link to="/">
           <button className={styles.button}>Volver</button>
@@ -329,4 +334,5 @@ export default function CardDetail(props) {
       </div>
     </div>
   );
+
 }
