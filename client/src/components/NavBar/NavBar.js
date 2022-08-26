@@ -73,6 +73,7 @@ export default function NavBar(props) {
                         <div>
                           <li>
                             <Link
+
                               to= {`/profile/${props.email}`}
                               className="dropdown-item current"
                             >
@@ -85,6 +86,7 @@ export default function NavBar(props) {
                             </Link>
                           </li>
                           <li>
+
                             <Link to="/favorites" className="dropdown-item">
                               <GrFavorite /> Favoritos
                             </Link>

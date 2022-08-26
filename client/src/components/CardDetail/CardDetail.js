@@ -10,6 +10,7 @@ import styles from "./CardDetail.module.css";
 import { AiOutlineWifi, AiFillCar } from "react-icons/ai";
 import {lodgingReviews} from "../../Redux/Actions/index";
 import NavBar from "../NavBar/NavBar";
+
 import {
   GiThermometerCold,
   GiCookingPot,
@@ -28,12 +29,14 @@ import { FaSwimmingPool } from "react-icons/fa";
 export default function CardDetail(props) {
   const dispatch = useDispatch();
   const lodgingId = props.match.params._id;
+
   let guestId = localStorage.getItem("userInfo");
 
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId)._id;
   }
+
   useEffect(() => {
     dispatch(getDetail(lodgingId));
     dispatch(lodgingReviews());
@@ -317,6 +320,7 @@ export default function CardDetail(props) {
             </div>
           </div>
           <div>
+
             <DatePickerOk lodgingId={lodgingId} />
             <h3 className={styles.h3}>Reseñas</h3>
             <div className={styles.modal}>
@@ -337,8 +341,7 @@ export default function CardDetail(props) {
           </div>
         </div>
       )}
-      {console.log(filtrado)}
-    
+
       <div>
         <Link to="/">
           <button className={styles.button}>Volver</button>
@@ -358,4 +361,5 @@ export default function CardDetail(props) {
       
     </div>
   );
+
 }

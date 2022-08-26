@@ -1,12 +1,17 @@
 import { start } from "@popperjs/core";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { createNewBooking } from "../../Redux/Actions/index";
 import DatePickerOk from "../DatePicker/DatePicker";
+import MercadoPago from "../MercadoPago/MercadoPago";
 
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
+  const lodging = useSelector((state) => state.detail);
+  const costNight = lodging.price
+  console.log(costNight)
   const lodgingId = props.match.params._id
 console.log(lodgingId)
   const guestInfo = localStorage.getItem("userInfo");
@@ -16,6 +21,7 @@ console.log(lodgingId)
   var noGuest = false;
   if (lodgingId === undefined) noGuest = false;
   noGuest = true;
+
 
   const getDatesInRange = (checkIn, checkOut) => {
     const start = new Date(checkIn);
@@ -27,12 +33,15 @@ console.log(lodgingId)
       dates.push(new Date(nights).getTime());
       nights.setDate(nights.getDate() + 1);
     }
+
     console.log(typeof(dates))
+
     return dates;
   };
   const alldates = getDatesInRange(checkIn, checkOut);
 
   const [input, setInput] = useState({
+
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
@@ -40,6 +49,7 @@ console.log(lodgingId)
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId
+
   });
 
   const handleChangeInput = (e)=>{
@@ -49,8 +59,10 @@ console.log(lodgingId)
     })
   }
   function handleBooking() {
+    
     dispatch(createNewBooking(input));
   }
+
   return (
     <div>
       {!noGuest ? (
@@ -83,7 +95,12 @@ console.log(lodgingId)
           </div>
           <div>
             AQUI VA LA CARD
-            <button onClick={handleBooking}>Rerservar</button>
+            <Link to= {"/mercadopago"}>
+            <button onClick={handleBooking}>
+              Reservar
+              <MercadoPago bookingId={lodgingId} night={input.night} costNight={input.costNight}/>
+            </button>
+            </Link>
           </div>
         </div>
       )}

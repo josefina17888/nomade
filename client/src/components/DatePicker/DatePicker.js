@@ -8,6 +8,7 @@ import { getDetail, settingDate } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 
 export default function DatePickerOk() {
+
   console.log("aqui");
   const lodging = useSelector((state) => state.detail);
   const lodgingId = lodging._id;
@@ -27,6 +28,7 @@ export default function DatePickerOk() {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
 
+
   function handleClickBooking(e) {
     dispatch(settingDate(date));
   }
@@ -35,57 +37,68 @@ export default function DatePickerOk() {
       <div className="sticky-top">
         <div className="c1yo0219 dir dir-ltr">
           <div className={styles.card}>
-            <div>
-          <div>
-            <h3>
-              ${lodging.currency} {lodging.price} por noche
-            </h3>
-          </div>
-          <div>
-            <h6>Llegada</h6>
-            <DatePicker
-              dateFormat="yyyy/MM/dd"
-              selected={date.startDate}
-              onChange={(currentDate) =>
-                setDate({ ...date, startDate: currentDate })
-              }
-              startDate={date.startDate}
-              endDate={date.endDate}
-            />
-            {console.log(date.startDate, "soy start")}
-          </div>
-          <div>
-            <h6>Salida</h6>
-            <DatePicker
-              dateFormat="yyyy/MM/dd"
-              selected={date.endDate}
-              onChange={(currentDate) =>
-                setDate({ ...date, endDate: currentDate })
-              }
-              selectsEnd
-              startDate={date.startDate}
-              minDate={date.startDate}
-            />
-            {console.log(date.endDate, "soy END")}
-          </div>
-          <div>
-            <h6>Huéspedes</h6>
-            <form>
-              <input type="text"></input>
-            </form>
-          </div>
-          <div>
-            {
-              <Link to={`/${lodgingId}`}>
-                <button onClick={(e) => handleClickBooking(e)}>
-                  Reserva ahora
-                </button>
-              </Link>
-            }
-          </div>
-          </div>
+            <div className="_ud8a1c">
+              <div className={styles._c7v1se}>
+                <span className={styles._14y1gc}>
+                  ${lodging.currency}
+                  {lodging.price} noche
+                </span>
+                <div className={styles.review}>Ver reseñas</div>
+                <div className={styles.review}>Tarifa de limpieza</div>
+                <div className={styles.review}>Comisión por servicio</div>
+              </div>
+              <div>
+                <div className={styles._p03egf}>
+                  <div className={styles._jro6t0}>
+                    <div className={styles._19y8o0j}>
+                      <div className={styles._7eq2v2}>Llegada</div>
+                      <DatePicker
+                        dateFormat="yyyy/MM/dd"
+                        selected={date.startDate}
+                        onChange={(currentDate) =>
+                          setDate({ ...date, startDate: currentDate })
+                        }
+                        startDate={date.startDate}
+                        endDate={date.endDate}
+                      />
+                      {console.log(date.startDate, "soy start")}
+                    </div>
+                    <div className={styles._19y8o0j}>
+                      <div className={styles._7eq2v2}>Salida</div>
+                      <DatePicker
+                        dateFormat="yyyy/MM/dd"
+                        selected={date.endDate}
+                        onChange={(currentDate) =>
+                          setDate({ ...date, endDate: currentDate })
+                        }
+                        selectsEnd
+                        startDate={date.startDate}
+                        minDate={date.startDate}
+                      />
+                      {console.log(date.endDate, "soy END")}
+                    </div>
+                  </div>
+                  <div className={styles._jro6t1}>
+                    <div className={styles._7eq2v2}>Huéspedes</div>
+                    <form>
+                      <input type="text"></input>
+                    </form>
+                  </div>
+                </div>
+                <div>
+                  {
+                    <Link to={`/${lodgingId}`}>
+                      <button onClick={(e) => handleClickBooking(e)}>
+                        Reserva ahora
+                      </button>
+                    </Link>
+                  }
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   );
