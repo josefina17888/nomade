@@ -17,8 +17,7 @@ const BookingSchema = new mongoose.Schema({
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
-  },
-  roomNumbers:[{number: Number, unavailableDates: {type: [Date]}}]
+  }
 });
 
 const model = mongoose.model("Booking", BookingSchema);

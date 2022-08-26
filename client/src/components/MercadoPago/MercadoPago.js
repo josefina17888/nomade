@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { payBooking } from "../../Redux/Actions/index";
 
+
 // async function pay() {
 //   try{
 //       const preference = await (await fetch("/api/payment",{
@@ -30,7 +31,8 @@ import { payBooking } from "../../Redux/Actions/index";
 //   document.getElementById("checkout").innerHTML = "Pagar"
 // }
 
-const FORM_ID = 'payment-form';
+//const FORM_ID = 'payment-form';
+
 
 export default function MercadoPago({lodId, night, costNight}) {
  
@@ -70,10 +72,12 @@ export default function MercadoPago({lodId, night, costNight}) {
     
 
     <div>
+
     <form id={FORM_ID} method="GET" />
       {/* <button onClick={(e)=>pay(e)}>
         Pagar
       </button> */}
+
     </div>
     
   );

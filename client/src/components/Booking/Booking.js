@@ -1,5 +1,4 @@
-import { start } from "@popperjs/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createNewBooking } from "../../Redux/Actions/index";
@@ -13,15 +12,16 @@ export default function Booking(props) {
   const costNight = lodging.price
   console.log(costNight)
   const lodgingId = props.match.params._id
-console.log(lodgingId)
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
   
+  const bookingInfo = localStorage.getItem("bookingInfo");
+  var preCheckIn= JSON.parse(bookingInfo).startDate;
+  var preCheckOut= JSON.parse(bookingInfo).endDate;
+  var preGuest =JSON.parse(bookingInfo).guest;
+  console.log(preCheckIn, preCheckOut, preGuest)
   const dispatch = useDispatch();
-  var noGuest = false;
-  if (lodgingId === undefined) noGuest = false;
-  noGuest = true;
-
+  var noGuest = true;
 
   const getDatesInRange = (checkIn, checkOut) => {
     const start = new Date(checkIn);
@@ -33,35 +33,29 @@ console.log(lodgingId)
       dates.push(new Date(nights).getTime());
       nights.setDate(nights.getDate() + 1);
     }
-
-    console.log(typeof(dates))
-
     return dates;
-  };
-  const alldates = getDatesInRange(checkIn, checkOut);
-
+  }; 
+  const alldates = getDatesInRange(preCheckIn, preCheckOut);
   const [input, setInput] = useState({
-
-    checkIn: checkIn,
-    checkOut: checkOut,
+    checkIn: preCheckIn,
+    checkOut: preCheckOut,
     night: alldates.length,
-    guests: 2,
+    guests: preGuest,
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId
 
   });
-
-  const handleChangeInput = (e)=>{
+  /* const handleChangeInput = (e)=>{
     setInput({
       ...input,
       [e.target.name]: e.target.value
     })
-  }
+  }*/
   function handleBooking() {
-    
+
     dispatch(createNewBooking(input));
-  }
+  } 
 
   return (
     <div>
@@ -71,7 +65,7 @@ console.log(lodgingId)
         <div>
           <div>
             <div>Fechas de tu reservacion</div>
-            <div>{`${checkIn} - ${checkOut}`}</div>
+            <div>{`${preCheckIn} - ${preCheckOut}`}</div>
             <button>Editar fechas</button>
             <div>Nómadas</div>
             <div>
@@ -95,10 +89,13 @@ console.log(lodgingId)
           </div>
           <div>
             AQUI VA LA CARD
+
             <Link to= {`/${lodgingId}`}>
+
             <button onClick={handleBooking}>
               Reservar
             </button>
+
             </Link>
             <MercadoPago lodId={lodgingId} night={input.night} costNight={costNight}/>
           </div>
