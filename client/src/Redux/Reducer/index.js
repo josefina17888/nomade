@@ -9,6 +9,7 @@ const initialState = {
   guest: {},
   allGuests: {},
   duplicate: [],
+  allLodgingsReviews: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -112,6 +113,13 @@ function rootReducer(state = initialState, action) {
       return{
         ...state,
         duplicate: action.payload
+      }
+    case "GET_ALL_LODGINGREVIEWS":
+      
+      return {
+        ...state,
+        allLodgingsReviews: action.payload
+        
       }
     default:
       return state;
