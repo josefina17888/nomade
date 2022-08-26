@@ -29,9 +29,9 @@ function App() {
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
+          <Route path='/profile/:email' component={Profile}></Route>
           <Route path='/:guestId/form' component={FormHost}/>
           <Route exact path='/favorites' component={Favorites}/> 
-          <Route path='/profile/:id' component={Profile}></Route>
           <Route exact path= '/:_id' component={Booking}/>
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
           <Route path='/:email/form' component={FormHost}/>

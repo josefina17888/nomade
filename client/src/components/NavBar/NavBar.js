@@ -73,7 +73,7 @@ export default function NavBar(props) {
                         <div>
                           <li>
                             <Link
-                              to= {`/profile/${props.id}`}
+                              to= {`/profile/${props.email}`}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil

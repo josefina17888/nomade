@@ -4,17 +4,19 @@ import { getGuest } from "../../Redux/Actions";
 import Logo from "../../assets/nomadeLogo.svg";
 import style from './profile.module.css'
 import { Link } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar.js'
 
 let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
 
-export default function Profile({id}) {
+export default function Profile({email}) {
   const dispatch = useDispatch()
   const guestDet = useSelector((state) => state.guest)
   const detalles = guestDet[0]
   useEffect(() => {
-    dispatch(getGuest(user._id))
+    dispatch(getGuest(user.email))
   }, [dispatch])
+  console.log(guestDet)
 
   return (
     <div>
