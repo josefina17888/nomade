@@ -8,6 +8,9 @@ const jwt = require('jsonwebtoken')
 const upload = require("../../../libs/storage")
 const Model = require("../../models/Guest");
 const cloudinary = require("cloudinary").v2;
+const Token = require("../../models/Token")
+const sendEmail = require("../../../libs/sendEmail");
+const generateToken = require("../../utils/generateToken")
 
 cloudinary.config({ 
   cloud_name: 'dbq85fwfz', 
@@ -26,7 +29,15 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
       await newGuest.save()
-      res.redirect("http://localhost:3000/");
+      const token = new Token({
+        userId: newGuest._id,
+        token: generateToken(newGuest._id)
+      })
+      token.save()
+      const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
+      await sendEmail(newGuest.email,"Verify Email", url)
+      res.status(201).send({message: "Revisa tu email creado"})
+      // res.redirect("http://localhost:3000/");
     }
       catch (error){
           res.status(404).send(error)

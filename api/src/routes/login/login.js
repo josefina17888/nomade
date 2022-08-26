@@ -6,11 +6,9 @@ const generateToken = require("../../utils/generateToken");
 
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
-console.log(req.body)
+
   const user = await Guest.findOne({ email });
-  console.log(user)
-  const prueba = await user.matchPassword(password)
-  console.log(prueba)
+  
   if(user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
