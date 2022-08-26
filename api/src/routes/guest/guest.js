@@ -57,6 +57,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 });
 
 
+
 router.get("/:idGuest/verify/:token", async (req, res) => {
   console.log(req.params.token)
   console.log(req.params.idGuest)
@@ -85,6 +86,24 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
 })
 
 
+
+//Filtra por email
+router.get("/", async (req, res) => {
+  const emailSearch = req.query.email;
+  allGuest = await Guest.find();
+  try {
+    if (emailSearch) {
+      Guest.find({ email: emailSearch }, (err, email) => {
+        res.send(email);
+      });
+    } else {
+      res.json(allGuest);
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
+
  
 ////TRAE TODOS LOS GUEST (FUNCIONA)////
 router.get("/", async (req, res) => {
@@ -98,10 +117,12 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+
 //Trae un guest en particular
-router.get("/:_id", async(req,res) => {
+router.get("/:email", async(req,res) => {
   try {
-    Guest.find({_id: req.params._id},(error, guest)=>{
+    Guest.find({email: req.params.email},(error, guest)=>{
           res.json(guest)
       })
   }

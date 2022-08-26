@@ -5,7 +5,7 @@ export const GET_BY_CITY = " GET_BY_CITY";
 export function getLodgings (lodgingId){
     return async function(dispatch){
         try{
-        const json = await axios.get("http://localhost:3001/api/lodging")
+        const json = await axios.get("/api/lodging")
         console.log(json)
         
         dispatch({
@@ -62,7 +62,7 @@ export function setLoaderTrue() {
 export function getByCity(city){
   return async function(dispatch){
     try{
-      let json= await axios.get(`http://localhost:3001/api/lodging?city=${city}`)
+      let json= await axios.get(`/api/lodging?city=${city}`)
       console.log(json.data)
       return dispatch({
         type: 'GET_BY_CITY',
@@ -79,17 +79,18 @@ export function getByCity(city){
 export function postGuest(payload){
     return async function(dispatch){
       
-        var json = await axios.post("http://localhost:3001/api/guest", payload)
+        var json = await axios.post("/api/guest", payload)
         return json
     }
 }
 
 
 
+//Trae un guest por Id
 export function getGuest(payload){
   return async function (dispatch){
     try{
-        const res = await axios.get("http://localhost:3001/api/guest/" + payload)
+        const res = await axios.get("/api/guest/" + payload)
         return dispatch({
             type: "GET_GUEST",
             payload: res.data
@@ -100,11 +101,43 @@ export function getGuest(payload){
 }
 }
 
+//Filtra el guest por email
+export function getGuestByEmail(email){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/guest?email=${email}`)
+      return dispatch({
+        type: 'GET_GUEST_BY_EMAIL',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
+// Trae todos los Guests
+export function allGuests(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/guest")
+      return dispatch({
+        type: "GET_ALL_GUESTS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 
   export function getDetail (lodgingId){
     return async function (dispatch){
         try{
-            const res = await axios.get("http://localhost:3001/api/lodging/detail/" + lodgingId)
+            const res = await axios.get("/api/lodging/detail/" + lodgingId)
             return dispatch({
                 type: "GET_LODGING_DETAIL",
                 payload: res.data
@@ -118,10 +151,24 @@ export function getGuest(payload){
 export function postLodging(payload){
   return async function(dispatch){
     console.log(payload)
-      var json = await axios.post("http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2" , payload)
+      var json = await axios.post("/api/lodging/62fe7ea0b2a41b94d94fd0f2" , payload)
      
       return json
 }
 }
 
+export function lodgingReviews(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("http://localhost:3001/api/lodgingReview")
+      console.log(res)
+      return dispatch({
+        type: "GET_ALL_LODGINGREVIEWS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
