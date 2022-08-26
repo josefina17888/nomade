@@ -37,17 +37,18 @@ export default function Card({ city, country, guests, price, picture, currency, 
         </div>
 
         <div><IoHeartOutline className={styles.fav}/></div>
-          <div className={styles.icons}>
+        <div className={styles.icons}>
           <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
           <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> { promedio > 0 && promedio < 6 ? promedio === 1.0 || promedio === 2.0 ||promedio ===3.0 ||promedio === 4.0 ||promedio === 5.0 ? promedio.toFixed(0):promedio.toFixed(1): "n/c"}</div>
       </div>
-      </div>
-        <div className={styles.text}>
+      <div className={styles.text}>
           <h3 className={styles.city}>{`${city}, ${country}`}</h3>
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
+
           </div>
 
+    </div>
     </div>
   );
 }

@@ -159,6 +159,7 @@ function rootReducer(state = initialState, action) {
         checkIn: action.payload.startDate,
         checkOut: action.payload.endDate
       }
+
     case "GET_ALL_LODGINGREVIEWS":
       
       return {

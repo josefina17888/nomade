@@ -17,7 +17,6 @@ import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
 
 
-
 function App() {
   return (
    <div>

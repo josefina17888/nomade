@@ -76,6 +76,7 @@ function handlePhoto(e){
         :
     // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
     <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+
     <label>Foto:</label>
     <input 
     name="hostDniPicture"
