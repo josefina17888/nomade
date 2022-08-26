@@ -165,7 +165,6 @@ setErrors(validate({
                     <option>+5</option>
           </select>
           <p >{errors.beds}</p>
-          
           <select   onChange={handleChange}  name ="currency" >
                     <option disabled selected>moneda:</option>
                     <option>USD</option>

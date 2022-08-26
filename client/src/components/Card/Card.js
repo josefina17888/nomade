@@ -12,7 +12,6 @@ export default function Card({ city, country, guests, price, picture, currency, 
   useEffect(() => {
     dispatch(lodgingReviews());
   }, [dispatch]);
-
   let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
   let cantidad = stateLodgings.map(e=> e.lodgingId)
   let iguales = cantidad.map(e=> e === id)
@@ -27,12 +26,8 @@ export default function Card({ city, country, guests, price, picture, currency, 
         cuantos = cuantos + arrCuantos[i]
     }
   }
-
  var promedio = cuantos/iguales
- console.log(promedio)
-
   return (
-
     <div className={styles.card}>
       <div className={styles.img}>
         <div>
@@ -41,7 +36,7 @@ export default function Card({ city, country, guests, price, picture, currency, 
         <div><IoHeartOutline className={styles.fav}/></div>
           <div className={styles.icons}>
           <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
-          <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> { promedio > 0 && promedio < 6 ? promedio.toFixed(1): "n/c"}</div>
+          <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> { promedio > 0 && promedio < 6 ? promedio === 1.0 || promedio === 2.0 ||promedio ===3.0 ||promedio === 4.0 ||promedio === 5.0 ? promedio.toFixed(0):promedio.toFixed(1): "n/c"}</div>
       </div>
       </div>
         <div className={styles.text}>
