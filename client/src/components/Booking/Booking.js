@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createNewBooking } from "../../Redux/Actions/index";
+import DatePickerOk from "../DatePicker/DatePicker";
+import MercadoPago from "../MercadoPago/MercadoPago";
 
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
+  const lodging = useSelector((state) => state.detail);
+  const costNight = lodging.price
+  console.log(costNight)
   const lodgingId = props.match.params._id
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
@@ -48,6 +53,7 @@ export default function Booking(props) {
     })
   }*/
   function handleBooking() {
+
     dispatch(createNewBooking(input));
   } 
 
@@ -83,8 +89,13 @@ export default function Booking(props) {
           </div>
           <div>
             AQUI VA LA CARD
-          <Link to='/MercadoPago'>
-            <button onClick={handleBooking}>Reservar</button>
+
+            <Link to= {"/mercadopago"}>
+            <button onClick={handleBooking}>
+              Reservar
+              <MercadoPago bookingId={lodgingId} night={input.night} costNight={input.costNight}/>
+            </button>
+
             </Link>
           </div>
         </div>
