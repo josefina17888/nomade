@@ -85,7 +85,7 @@ export default function NavBar(props) {
                             </Link>
                           </li>
                           <li>
-                            <Link className="dropdown-item">
+                            <Link to="/favorites" className="dropdown-item">
                               <GrFavorite /> Favoritos
                             </Link>
                           </li>

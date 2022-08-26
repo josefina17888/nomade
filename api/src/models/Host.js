@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const hostSchema = new Schema({
   
   name: {
-    type: String,
+    type: String, 
   },
   lastName: {
     type: String,
