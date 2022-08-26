@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
+import axios from 'axios';
 
 
 // async function pay() {
@@ -29,10 +30,10 @@ import { useParams } from "react-router-dom";
 //   document.getElementById("checkout").innerHTML = "Pagar"
 // }
 
-const FORM_ID = 'payment-form';
+//const FORM_ID = 'payment-form';
 
 export default function MercadoPago() {
-  const { id } = useParams(); 
+  /* const { id } = useParams(); 
   const [preferenceId, setPreferenceId] = useState(null);
 
   useEffect(() => {
@@ -54,8 +55,10 @@ export default function MercadoPago() {
       form.appendChild(script);
     }
   }, [preferenceId]);
-
+ */
   return (
-    <form id={FORM_ID} method="GET" />
+    <div>
+    <div>Hola</div>
+    </div>
   );
 }

@@ -16,6 +16,7 @@ export default function DatePickerOk() {
   const [date, setDate] = useState({
     startDate: new Date(),
     endDate: new Date(),
+    guest: 2
   });
   console.log(date, "SOY DATE DEL PICKER");
 
@@ -30,7 +31,11 @@ export default function DatePickerOk() {
 
 
   function handleClickBooking(e) {
-    dispatch(settingDate(date));
+  localStorage.setItem("bookingInfo", JSON.stringify(date));
+  let bookingInfo = localStorage.getItem("bookingInfo");
+  let datesLocal = JSON.parse(bookingInfo)
+  console.log(datesLocal, 'dates')
+    //dispatch(settingDate(date));
   }
   return (
     <div className={styles._1s21a6e2}>
