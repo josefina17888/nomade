@@ -312,7 +312,6 @@ export default function CardDetail(props) {
           </div>
         </div>
       )}
-
       <div>
         <Link to="/">
           <button className={styles.button}>Volver</button>

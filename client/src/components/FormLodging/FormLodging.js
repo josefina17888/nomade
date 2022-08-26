@@ -7,12 +7,9 @@ import { postGuest, postLodging} from "../../Redux/Actions";
 import validate from "./validation";   
 
 export default function FormLodging() {
+  const params = useParams()
   const dispatch= useDispatch()
-
-  const params = useParams();
-  let hostId = params.hostId;
   console.log(hostId)
-
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
@@ -105,7 +102,7 @@ setErrors(validate({
 }))
 }
 }
-
+let hostId = params.hostId
   return (
 
     <div className={style.containerUser}>
@@ -167,7 +164,6 @@ setErrors(validate({
                     <option>+5</option>
           </select>
           <p >{errors.beds}</p>
-          
           <select   onChange={handleChange}  name ="currency" >
                     <option disabled selected>moneda:</option>
                     <option>USD</option>

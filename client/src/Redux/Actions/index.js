@@ -19,7 +19,7 @@ export function getLodgings (lodgingId){
 }
 }
 
-//MENU
+//MENUcd cli
 export function filterTypeHouse(payload){
   return{
     type: "FILTER_TYPE_HOUSE",
@@ -77,13 +77,15 @@ export function getByCity(city){
   }
 }
 
-  export function postGuest(payload){
+export function postGuest(payload){
     return async function(dispatch){
       
         var json = await axios.post("/api/guest", payload)
         return json
+    }
 }
-}
+
+
 
 //Trae un guest por Id
 export function getGuest(payload){
@@ -132,6 +134,7 @@ export function allGuests(){
   }
 }
 
+
   export function getDetail (lodgingId){
     return async function (dispatch){
         try{
@@ -154,13 +157,27 @@ export function postLodging(payload){
       return json
 }
 }
-
 export function settingDate(payload){
   return{
     type: "SET_DATE",
-    payload
+    payload }
+  }
+
+export function lodgingReviews(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("http://localhost:3001/api/lodgingReview")
+      console.log(res)
+      return dispatch({
+        type: "GET_ALL_LODGINGREVIEWS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
+ 
 
 // BOOKING
 export function createNewBooking(payload) {

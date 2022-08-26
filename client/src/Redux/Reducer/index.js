@@ -12,6 +12,7 @@ const initialState = {
   dates:[],
   allGuests: {},
   duplicate: [],
+  allLodgingsReviews: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -121,6 +122,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         checkIn: action.payload.startDate,
         checkOut: action.payload.endDate
+      }
+    case "GET_ALL_LODGINGREVIEWS":
+      
+      return {
+        ...state,
+        allLodgingsReviews: action.payload
+        
       }
     default:
       return state;

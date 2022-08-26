@@ -12,6 +12,34 @@ const toId = mongoose.Types.ObjectId;
 router.post("/", async (req, res) => {
   console.log('HOLA ENTRAMOS')
   try {
+    
+    const dates = []
+    let getDateInRange = (checkIn, checkOut) => {
+      
+      let start = new Date(checkIn)
+      let end = new Date(checkOut)
+      console.log(start ,end)
+      let date = new Date(start.getTime())
+      console.log(date)
+      
+      console.log(dates)
+      while(date <= end) {
+        dates.push(new Date(date).getTime());
+        console.log(dates)
+        console.log(date)
+        date.setDate(date.getDate() + 1)
+        console.log(date)
+      }
+      console.log(dates)
+      return dates
+    }
+    getDateInRange(checkIn, checkOut)
+
+    if(dates) {
+      let lodging = await Lodging.findById(req.params.lodgingId)
+      lodging.unavailableDate = dates
+      lodging.save()
+    }
     const newBooking = await Booking.create(req.body)
     newBooking.lodgingId = toId(req.body.lodgingId)
     const infoGuest= await Guest.find({email: req.body.email})
