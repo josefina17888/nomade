@@ -26,7 +26,7 @@ function App() {
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route exact path= '/:_id' component={Booking}/>
-          <Route path='/profile/:_id' component={Profile}></Route>
+          <Route path='/profile/:email' component={Profile}></Route>
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>

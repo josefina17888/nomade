@@ -73,6 +73,7 @@ export default function NavBar() {
                         <div>
                           <li>
                             <Link
+                              to="/profile/:email"
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil
