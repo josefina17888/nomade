@@ -27,12 +27,8 @@ export default function Card({ city, country, guests, price, picture, currency, 
         cuantos = cuantos + arrCuantos[i]
     }
   }
-
  var promedio = cuantos/iguales
- console.log(promedio)
-
   return (
-
     <div className={styles.card}>
       <div className={styles.img}>
         <div>
