@@ -1,0 +1,99 @@
+.flexcontainer3 {
+  border-color: rgb(176, 171, 171);
+  border-width: 2px;
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+}
+
+.flexcontainer2 {
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+  justify-content: center;
+  white-space: nowrap;
+  border-color: rgb(176, 171, 171);
+  border-width: 2px;
+}
+._1s21a6e2 {
+  position: relative !important;
+  width: auto !important;
+  margin-left: 8.333333333333332% !important;
+  margin-right: 0% !important;
+}
+.card {
+  border: 1px solid #069a8e;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  width: auto;
+}
+
+.review {
+  display: flex-start;
+  flex-wrap: wrap;
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #717171;
+}
+._c7v1se {
+  display: flex !important;
+  flex-flow: column wrap !important;
+  margin-bottom: 24px !important;
+}
+
+._14y1gc {
+  font-size: 1.5em;
+}
+
+._p03egf {
+  margin-bottom: 16px !important;
+}
+._jro6t0 {
+  display: flex !important;
+  flex-direction: row;
+  border: 1px solid #069a8e;
+  min-height: 56px !important;
+  width: 100% !important;
+  border: none !important;
+  outline: none !important;
+  margin: 0px !important;
+  padding: 0px 12px 10px !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: 0.8em !important;
+  font-weight: inherit !important;
+  line-height: 18px !important;
+  appearance: none !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+._7eq2v2{
+  font-size: 0.9em;
+  text-transform: uppercase;
+}
+._jro6t1 {
+  display: flex !important;
+  flex-direction: column;
+  border: 1px solid #069a8e;
+  min-height: 56px !important;
+  width: 100% !important;
+  border: none !important;
+  outline: none !important;
+  margin: 0px !important;
+  padding: 0px 12px 10px !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: 0.8em !important;
+  font-weight: inherit !important;
+  line-height: 18px !important;
+  appearance: none !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+

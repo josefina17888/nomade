@@ -10,14 +10,14 @@ export default function FormHost() {
   const dispatch = useDispatch()
 
   let guestId = localStorage.getItem("userInfo")
-  guestId = JSON.parse(guestId)._id
+  guestId = JSON.parse(guestId).email
   const [input,setInput] = useState({
     dni: '',
     hostDniPicture:'',
 })
 const guestInfo = useSelector((state)=>state.guest)
 useEffect(() => {
-  dispatch(getGuest(guestId))
+  dispatch(getGuest(guestId.email))
   
 },[dispatch])
 
@@ -53,9 +53,8 @@ function handlePhoto(e){
   return (
     <div className={estilos.formulario}>
     { tieneDni ?
-
-    
-      <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+      // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
+    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
         <label>DNI:</label>
         <input 
         type="number" 
@@ -73,9 +72,11 @@ function handlePhoto(e){
         required
         />
         <button type='submit'>Registrarme</button>
-        </form>
+      </form>
         :
-        <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+    // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
+    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+
     <label>Foto:</label>
     <input 
     name="hostDniPicture"
@@ -86,6 +87,6 @@ function handlePhoto(e){
     <button type='submit'>Registrarme</button>
     </form>
   }
-    </div>
+  </div>
   )
 }

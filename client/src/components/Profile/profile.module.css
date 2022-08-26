@@ -1,0 +1,68 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    margin: 80px auto 32px !important;
+    justify-content: center;
+}
+.div_logo{
+    width: 150px;
+}
+.foto{
+    width: 30vw;
+    height: 50vh;
+    display: flex;
+}
+.button {
+    transition-duration: 0.4s;
+    background-color: #069a8e;
+    color: rgb(248, 247, 246);
+    font-weight: bold;
+    border: 0mm;
+    border-radius: 4px;
+    padding: 8px 28px;
+  }
+  .container_card_profile{
+    color: rgb(34, 34, 34) !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    max-width: 1064px !important;
+  }
+
+  .card_profile{
+    display: none !important;
+    margin-left: 0px !important;
+    margin-right: auto !important;
+    border: 1px solid rgb(221, 221, 221) !important;
+    border-radius: 12px !important;
+    max-width: 308px !important;
+    padding: 24px !important;
+  }
+
+  .foto{
+    width: 128px !important;
+    height: 100% !important;
+    width: 100% !important;
+    position: static !important;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  ._fvp3r0u {
+    height: 128px !important;
+    width: 128px !important;
+}
+._9ofhsl{
+    height: 100% !important;
+    width: 100% !important;
+    position: static !important;
+}
+._1h6n1zu {
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat !important;
+}
+
+  @media screen and (min-width: 1128px){
+    .card_profile{
+        display: block !important;
+      }
+  }

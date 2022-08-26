@@ -3,12 +3,13 @@ const Schema = mongoose.Schema;
 
 
 const BookingSchema = new mongoose.Schema({
-  checkIn: { type:String, required: true },
-  checkOut: { type: String, required: true },
+  allDates: [{type: Date, required:true}],
+  checkIn: { type:Date, required: true },
+  checkOut: { type: Date, required: true },
   night: { type: Number, required: true },
-  guests: { type: Number, required: true },
+  guests: { type: Number},
   costNight: { type: Number },
-  totalCost: { type: Number },
+  totalPrice: { type: Number },
   lodgingId: {
     type: Schema.ObjectId,
     ref: "Lodging",
@@ -16,7 +17,8 @@ const BookingSchema = new mongoose.Schema({
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
-  }
+  },
+  roomNumbers:[{number: Number, unavailableDates: {type: [Date]}}]
 });
 
 const model = mongoose.model("Booking", BookingSchema);

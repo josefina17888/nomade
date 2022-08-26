@@ -12,10 +12,16 @@ export default function LoginUser() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
+  console.log(guestId)
+  console.log(user)
+  //let userToken = guestId._id;
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-    if (userInfo) {
-      history.push("/");
+    if(userInfo){
+      history.push(`/`);
     }
   }, [history]);
 
@@ -31,6 +37,7 @@ export default function LoginUser() {
         },
       };
       const { data } = await axios.post(
+        // `${process.env.REACT_APP_API}/api/login`,
         "http://localhost:3001/api/login",
         {
           email,
@@ -44,7 +51,7 @@ export default function LoginUser() {
       history.push("/");
     } catch (error) {
       alert("Usuario o contraseña incorrectos");
-      console.log(error);
+      console.log(error)
     }
   };
 
@@ -58,16 +65,16 @@ export default function LoginUser() {
             value={email}
             type="text"
             placeholder="Correo Electrónico"
+            required = {true}
             onChange={(e) => setEmail(e.target.value)}
-            required={true}
           />
           <input
             className={style.inputPassword}
             value={password}
             type="password"
             placeholder="Contraseña"
+            required = {true}
             onChange={(e) => setPassword(e.target.value)}
-            required={true}
           />
           <input
             value="Iniciar Sesión"
