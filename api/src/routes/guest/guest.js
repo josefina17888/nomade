@@ -48,8 +48,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}, este token expira en una hora`;
       console.log(url)
       await sendEmail(newGuest.email,"Verify Email", url)
-      res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
-      // res.redirect("http://localhost:3000/");
+      // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
+      res.status(201).redirect("http://localhost:3000/login")
     }
       catch (error){
           res.status(404).send(error)
@@ -75,7 +75,8 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
     await guest.updateOne({_id: guest._id, verified: true})
     console.log("hola3")
     await token.remove()
-    res.status(200).send({message: "Email verificado"})
+    // res.status(200).send({message: "Email verificado"})
+    res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
   }
   catch(error) {
     res.status(404).send(error)
