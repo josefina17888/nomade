@@ -4,18 +4,22 @@ const axios = require("axios");
 const Booking = require("../../models/Booking")
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
+const Guest = require('../../models/Guest')
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 
 //POST del nuevo booking de Guest
-router.post("/:guestId/:lodgingId", async (req, res) => {
+router.post("/:email/:lodgingId", async (req, res) => {
+  console.log('HOLA ENTRAMOS')
   try {
     const newBooking = await Booking.create(req.body)
     newBooking.lodgingId = toId(req.params.lodgingId)
-    newBooking.guestId = toId(req.params.guestId)
+    const infoGuest= await Guest.find({email: req.params.email})
+    let userId = ( infoGuest[0]._id)
     const lodging = await Lodging.findById(req.params.lodgingId)
     newBooking.costNight = lodging.price
     newBooking.totalPrice = (newBooking.costNight * newBooking.night)
+    newBooking.guestId = userId
     newBooking.save();
     res.status(200).json(newBooking);
   } catch (error) {

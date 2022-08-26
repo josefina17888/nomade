@@ -156,7 +156,6 @@ export function postLodging(payload){
 }
 
 export function settingDate(payload){
-  console.log(payload, 'SOY PAYLOAD')
   return{
     type: "SET_DATE",
     payload
@@ -166,9 +165,9 @@ export function settingDate(payload){
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
-    console.log(payload);
+    console.log(payload, 'soy yo');
     var json = await axios.post(
-      '/api/booking/:guestId:lodgingId',
+      '/api/booking',
       payload
     );
 

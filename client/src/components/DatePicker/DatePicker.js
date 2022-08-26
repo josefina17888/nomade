@@ -11,6 +11,7 @@ export default function DatePickerOk() {
   console.log('aqui')
   const lodging = useSelector((state) => state.detail);
   const lodgingId = lodging._id
+  console.log(lodgingId)
   const [date, setDate] =useState({
     startDate: new Date(),
     endDate:new Date()
@@ -19,7 +20,7 @@ export default function DatePickerOk() {
   
   let guestId = localStorage.getItem("userInfo");
   if (guestId) {
-    var userToken = JSON.parse(guestId)._id;
+    var userToken = JSON.parse(guestId).email;
   }
   const dispatch = useDispatch();
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function DatePickerOk() {
       </div>
       <div>
         {
-          <Link to={`/${userToken}/${lodgingId}`}>
+          <Link to={`/${lodgingId}`}>
             <button onClick={(e)=>handleClickBooking(e)}>Reserva ahora</button>
           </Link>
         }
