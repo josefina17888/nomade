@@ -252,15 +252,12 @@ export function lodgingReviews(){
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
-    console.log(payload, 'soy yo');
+    console.log(payload);
     var json = await axios.post(
-      'http://localhost:3001/api/booking/',
+      "/api/booking",
       payload
     );
-
-    return json;
-  };
-}
+  }}
 
 export function payBooking(payload) {
   return async function (dispatch) {
