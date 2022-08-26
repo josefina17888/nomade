@@ -3,14 +3,14 @@ import {useState,useEffect} from 'react'
 import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch, useSelector} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
-import estilos from './FormHost.module.css'
+//import estilos from './FormHost.module.css'
 import {getGuest} from '../../Redux/Actions'
 
 export default function FormHost() {
   const dispatch = useDispatch()
 
   let guestId = localStorage.getItem("userInfo")
-  guestId = JSON.parse(guestId).email
+  guestId = JSON.parse(guestId)._id
   const [input,setInput] = useState({
     dni: '',
     hostDniPicture:'',
@@ -51,41 +51,27 @@ function handlePhoto(e){
 
 
   return (
-    <div className={estilos.formulario}>
-    { tieneDni ?
-      <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
-   
-        <label>DNI:</label>
+    <div >
+      <form action={`http://localhost:3001/api/guestReview/62fe7e5f63af87bd0c2a035b/${guestId}`} method="POST" encType="multipart/form-data">
+        <label>rating</label>
+         <select   onChange={handleDni}  name ="rating" >
+                    <option disabled selected>puntuacion</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+          </select>
+        <label>Descripcion</label>
         <input 
-        type="number" 
-        name="dni"
-        value={input.dni}
-        onChange={handleDni}
-        placeholder="DNI"
-        required
-        />
-        <label>Foto de tu DNI:</label>
-        <input 
-        name="hostDniPicture"
-        type="file"
+        name ="comments"
+        type="text"
         onChange={handlePhoto}
         required
         />
-        <button type='submit'>Registrarme</button>
-      </form>
-        :
-    <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
- 
-    <label>Foto:</label>
-    <input 
-    name="hostDniPicture"
-    type="file"
-    onChange={handlePhoto}
-    required
-    />
-    <button type='submit'>Registrarme</button>
-    </form>
-  }
-  </div>
+        
+        <button type='submit'>Enviar reseña</button>
+        </form> 
+    </div>
   )
 }

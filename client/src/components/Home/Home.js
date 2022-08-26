@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import AllCards from '../AllCards/AllCards';
 import Menu from '../Menu/Menu';
 import NavBar from '../NavBar/NavBar';
-import styles from './Home.module.css'
+
+
 
 export default function Home() {
-
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual

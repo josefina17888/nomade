@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
-
-
+const Guest = require("../../models/Guest")
 const upload = require('../../../libs/storage.js')
 
 const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
+const Model = require("../../models/Guest");
 
 cloudinary.config({ 
   cloud_name: 'dbq85fwfz', 
@@ -22,24 +22,23 @@ cloudinary.config({
 
 
 
-router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
+
+router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
   const filename = req.file
   const result = await cloudinary.v2.uploader.upload(req.file.path)
   console.log(result)
   try {
+    const guest = await Guest.findOne({email: req.params.email})
     const myHost = new Host()
     myHost.dni= req.body.dni
     myHost.hostDniPicture= result.url
-    myHost.guestId = toId(req.params.guestId);
-    // if(filename) {
-    //   myHost.setImgUrl(req.file.filename)
-  // }
-
+    myHost.guestId = guest._id
     await myHost.save()
 
     let hostId = myHost._id
-        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        //res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {
@@ -52,15 +51,7 @@ router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
 router.get("/all", async (req, res) => { 
   const host = await Host.find({}).populate({path:"guestId", model: "Guest"})
   res.send(host) 
- }); 
-
-/// trae todos los lodgings de un host
-router.get("/:hostId", async (req, res) => {
-  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
-
-      res.send(docs)
-  })
-})
+ });
 
 //TRAE TODOS LOS HOSTS///
   router.get("/", async (req, res) => {

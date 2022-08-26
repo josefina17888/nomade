@@ -3,12 +3,6 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
 const GuestSchema = new Schema({
-
-  username: { type: String,  },
-  name: { type: String,  },
-  lastname: { type: String, },
-  email: { type: String, },
-  password: { type: String, },
   name: { type: String, required: true },
   lastname: { type: String, required: true },
   email: { type: String, required: true },
@@ -20,6 +14,7 @@ const GuestSchema = new Schema({
   booking: [{ type: Schema.ObjectId, ref: "Booking" }, ],
   reviews: [{ type: Schema.ObjectId, ref: "GuestReview", }, ],
   birthDate: { type: Date },
+  verified: {type: Boolean, default: false}
   // public_id: {
   //   type: String
   // }

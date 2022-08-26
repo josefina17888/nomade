@@ -30,9 +30,10 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.picture= fotosSubidas
     newLodging.hostId = toId(req.params.hostId);
     newLodging.save();
-    res.redirect("http://localhost:3000/")
+    //res.redirect("http://localhost:3000/")
+    res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
-    res.json(err);
+    res.send("No se pudo crear el alojamiento");
   }
 });
 
@@ -80,6 +81,14 @@ router.get("/detail/:lodgingId", async (req, res) => {
     res.json(err);
   }
 });
+
+/// trae todos los lodgings de un host
+router.get("/:hostId", async (req, res) => {
+  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+    console.log(docs)
+      res.send(docs)
+  })
+})
 
 // esto crea una relacion al hacer get (FUNCIONA)
 /* router.get("/relacionado/:lodgingId/:hostId", async (req, res) => {

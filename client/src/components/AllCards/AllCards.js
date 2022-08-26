@@ -69,7 +69,6 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       guests={e.guests}
                       picture={e.picture[0]}
                       currency={e.currency}
-                      
                     />
                   </Link>
                 </div>

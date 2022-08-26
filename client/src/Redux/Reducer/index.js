@@ -9,8 +9,12 @@ const initialState = {
   userFavorites:[],
   favNumber:0,
   guest: {},
+  checkIn: {},
+  checkOut: {},
+  dates:[],
   allGuests: {},
   duplicate: [],
+  allLodgingsReviews: [],
 
 };
 
@@ -118,7 +122,6 @@ function rootReducer(state = initialState, action) {
         duplicate: action.payload
       }
 
-
     case "GET_FAVORITES":
       
       return {
@@ -152,6 +155,19 @@ function rootReducer(state = initialState, action) {
         favNumber: action.payload
       } */
 
+      case "SET_DATE":
+      return{
+        ...state,
+        checkIn: action.payload.startDate,
+        checkOut: action.payload.endDate
+      }
+    case "GET_ALL_LODGINGREVIEWS":
+      
+      return {
+        ...state,
+        allLodgingsReviews: action.payload
+        
+      }
 
     default:
       return {...state} ;
