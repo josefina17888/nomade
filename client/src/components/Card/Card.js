@@ -12,7 +12,6 @@ export default function Card({ city, country, guests, price, picture, currency, 
   useEffect(() => {
     dispatch(lodgingReviews());
   }, [dispatch]);
-
   let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
   let cantidad = stateLodgings.map(e=> e.lodgingId)
   let iguales = cantidad.map(e=> e === id)
