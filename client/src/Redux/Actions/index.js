@@ -18,7 +18,7 @@ export function getLodgings (lodgingId){
 }
 }
 
-//MENU
+//MENUcd cli
 export function filterTypeHouse(payload){
   return{
     type: "FILTER_TYPE_HOUSE",
@@ -84,13 +84,22 @@ export function postGuest(payload){
     }
 }
 
-export function getBooking(payload){
-  return async function(dispatch){
-    
-      var json = await axios.post("http://localhost:3001/api/booking/:guestId/:lodgingId", payload)
-      return json
-  }
-} 
+
+
+export function getGuest(payload){
+  return async function (dispatch){
+    try{
+        const res = await axios.get("http://localhost:3001/api/guest/" + payload)
+        return dispatch({
+            type: "GET_GUEST",
+            payload: res.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+}
+
 
   export function getDetail (lodgingId){
     return async function (dispatch){

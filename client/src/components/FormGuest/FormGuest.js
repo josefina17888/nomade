@@ -21,36 +21,8 @@ export default function FormUser() {
     picture: "",
     birthDate:""
 })    
-  useEffect(() => {
-  }, []);
-
-
-//   function handleSubmit(e){
-//     e.preventDefault()
-//     // dispatch(postGuest(input))  
-//     console.log(e.target.file)
-//     alert("Usuario creado correctamente!!")
-
-
-//     setInput({
-//       username: "",
-//       name: "",
-//       lastname: "",
-//       email:"",
-//       password:"",
-//       cellPhone:"",
-//       dni:"",
-//       country:"",
-//       picture: "",
-//       birthDate:""
-//     })    
-//     history.push("/login")
-// }
-
-
-
-
-  function handleChange(e){
+  
+function handleChange(e){
     console.log(e.target.files)
     setInput({
         ...input,
@@ -60,6 +32,7 @@ export default function FormUser() {
     })
    
 }
+
 
 
   return (
