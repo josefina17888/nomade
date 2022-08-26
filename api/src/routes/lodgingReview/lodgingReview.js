@@ -28,6 +28,15 @@ router.post("/:guestId/:lodgingId" ,upload.single(), async (req, res) => {
         } catch (error){console.log(error)}
     }
   });
-
+  router.get("/", async (req, res) => {
+    const citySearching = await req.query.city;
+    reviewLodgings = await lodgingReview.find();
+    console.log(reviewLodgings)
+    try {
+          res.send(reviewLodgings);  
+    } catch (err) {
+      res.json(err);
+    }
+  });
   
  module.exports = router;
