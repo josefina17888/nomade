@@ -1,7 +1,7 @@
 .searchInput{
     border-radius: 15px 0px 0px 15px;
     height: 48px;
-    width: 300px;
+    width: 83%;
     font-size: 18px;
     border:0px;
     background-color: #d9d9d95d;
@@ -14,7 +14,7 @@
 .searchInput:hover{
     
     background-color: #d9d9d99c;
-    color: hsl(0, 0%, 100%);
+    color: black;
 
 
   }

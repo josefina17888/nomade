@@ -7,16 +7,20 @@ import DatePickerOk from "../DatePicker/DatePicker";
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
-  const lodgingId = props.match.params.guestId;
+  const lodgingId = props.match.params._id
+console.log(lodgingId)
+  const guestInfo = localStorage.getItem("userInfo");
+  let userEmail = JSON.parse(guestInfo).email;
   
   const dispatch = useDispatch();
   var noGuest = false;
   if (lodgingId === undefined) noGuest = false;
   noGuest = true;
 
-  const getDatesInRange = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+
+  const getDatesInRange = (checkIn, checkOut) => {
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
     const nights = new Date(start.getTime());
     const dates = [];
 
@@ -24,18 +28,23 @@ export default function Booking(props) {
       dates.push(new Date(nights).getTime());
       nights.setDate(nights.getDate() + 1);
     }
+
+    console.log(typeof(dates))
+
     return dates;
   };
   const alldates = getDatesInRange(checkIn, checkOut);
 
   const [input, setInput] = useState({
-    alldates: alldates,
+
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
-    guestAdults: 2,
-    guestMinors:1,
-    pets: 0
+    guests: 2,
+    allDates: alldates,
+    email: userEmail,
+    lodgingId: lodgingId
+
   });
 
   const handleChangeInput = (e)=>{
@@ -45,7 +54,8 @@ export default function Booking(props) {
     })
   }
   function handleBooking() {
-    dispatch(createNewBooking(alldates));
+
+    dispatch(createNewBooking(input));
   }
 
   return (
@@ -80,8 +90,9 @@ export default function Booking(props) {
           </div>
           <div>
             AQUI VA LA CARD
+
             <button onClick={handleBooking}>Reservar</button>
-            
+
           </div>
         </div>
       )}

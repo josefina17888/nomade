@@ -8,6 +8,8 @@ import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
 import styles from "./CardDetail.module.css";
 import { AiOutlineWifi, AiFillCar } from "react-icons/ai";
+import NavBar from "../NavBar/NavBar";
+
 import {
   GiThermometerCold,
   GiCookingPot,
@@ -26,12 +28,19 @@ import { FaSwimmingPool } from "react-icons/fa";
 export default function CardDetail(props) {
   const dispatch = useDispatch();
   const lodgingId = props.match.params._id;
+
+  let guestId = localStorage.getItem("userInfo");
+
+  if (!guestId) {
+  } else {
+    var userToken = JSON.parse(guestId)._id;
+  }
+
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
 
   const myLodging = useSelector((state) => state.detail);
-  console.log(myLodging);
 
   // const servicios = useSelector((state) => state.detail.services)
 
@@ -70,38 +79,43 @@ export default function CardDetail(props) {
   //renderizado
 
   return (
-    <div className={styles.text}>
+    <div className="_16grqhk">
+      <NavBar />
       {myLodging === undefined ? (
         <p>Loading...</p>
       ) : (
-        <div className={styles.gral}>
-          <div>
-            <div className={styles.padding}>
-              <Carousel activeIndex={index} onSelect={handleSelect}>
-                <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src={picture1}
-                    alt="First slide"
-                  />
-                </Carousel.Item>
-
-                <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src={picture2}
-                    alt="Second slide"
-                  />
-                </Carousel.Item>
-
-                <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src={picture3}
-                    alt="Third slide"
-                  />
-                </Carousel.Item>
-              </Carousel>
+        <div className={styles._le6wlg}>
+          <div className={styles.container}>
+          <div className="_88xxct">
+            <div className="plmw1e5 mq5rv0q dir dir-ltr">
+              <div className={styles.carousel}>
+                <div className="_168ht2w">
+                <Carousel activeIndex={index} onSelect={handleSelect}
+                className="_168ht2w">
+                  <Carousel.Item className="_168ht2w">
+                    <img
+                      className="d-block w-100"
+                      src={picture1}
+                      alt="First slide"
+                    />
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={picture2}
+                      alt="Second slide"
+                    />
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="d-block w-100"
+                      src={picture3}
+                      alt="Third slide"
+                    />
+                  </Carousel.Item>
+                </Carousel>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -296,7 +310,9 @@ export default function CardDetail(props) {
             </div>
           </div>
           <div>
-            <DatePickerOk lodgingId={lodgingId}/>
+
+            <DatePickerOk lodgingId={lodgingId} />
+          </div>
           </div>
         </div>
       )}
@@ -305,8 +321,18 @@ export default function CardDetail(props) {
         <Link to="/">
           <button className={styles.button}>Volver</button>
         </Link>
-                    
+        <Link
+          to={
+            userToken
+              ? `/lodgingreview/${userToken}/${props.match.params._id}`
+              : "/login"
+          }
+          className="nav-link py-2 px-0 px-lg-2"
+        >
+          <button className={styles.button}>Califica este hospedaje!</button>
+        </Link>
       </div>
     </div>
   );
+
 }

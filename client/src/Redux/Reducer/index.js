@@ -6,12 +6,16 @@ const initialState = {
   loader: true,
   detail: {},
   user: null,
+  userFavorites:[],
+  favNumber:0,
   guest: {},
   checkIn: {},
   checkOut: {},
   dates:[],
   allGuests: {},
   duplicate: [],
+  allLodgingsReviews: [],
+
 };
 
 function rootReducer(state = initialState, action) {
@@ -99,6 +103,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
+
     
     case "GET_GUEST":
       return {
@@ -116,14 +121,55 @@ function rootReducer(state = initialState, action) {
         ...state,
         duplicate: action.payload
       }
+
+    case "GET_FAVORITES":
+      
+      return {
+        ...state,
+        userFavorites: action.payload
+      }
+
+      case "ADD_FAVORITE":
+        console.log("reducer", action.payload)
+        return{
+        ...state,
+        userFavorites: action.payload
+        }
+
+    case "DELETE_FAVORITE":
+      console.log(action.payload, "soy action")
+      /* let favoritos = state.userFavs
+      favoritos.filter(e=>e.lodgingId !== action.payload.lodgingId._id  ) */
+      return {
+      
+        ...state,
+        userFavorites: action.payload
+
+      }
+    /*
+    case "FAVORITE_NUMBER":
+      return {
+        ...state,
+        favNumber: action.payload
+      } */
+
       case "SET_DATE":
       return{
         ...state,
         checkIn: action.payload.startDate,
         checkOut: action.payload.endDate
       }
+
+    case "GET_ALL_LODGINGREVIEWS":
+      
+      return {
+        ...state,
+        allLodgingsReviews: action.payload
+        
+      }
+
     default:
-      return state;
+      return {...state} ;
   }
 }
 

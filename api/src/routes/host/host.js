@@ -7,7 +7,8 @@ const Host = require("../../models/Host");
 const Lodging = require("../../models/Lodging");
 const mongoose = require ("mongoose")
 const toId = mongoose.Types.ObjectId
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
+const Model = require("../../models/Guest");
 
 cloudinary.config({ 
   cloud_name: 'dbq85fwfz', 
@@ -18,6 +19,7 @@ cloudinary.config({
 
 
 /// postea el host 
+
 
 
 
@@ -32,14 +34,11 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     myHost.dni= req.body.dni
     myHost.hostDniPicture= result.url
     myHost.guestId = guest._id
-    // if(filename) {
-    //   myHost.setImgUrl(req.file.filename)
-  // }
-
     await myHost.save()
 
     let hostId = myHost._id
         res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        // res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {

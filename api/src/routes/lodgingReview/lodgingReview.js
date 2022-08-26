@@ -23,10 +23,20 @@ router.post("/:guestId/:lodgingId" ,upload.single(), async (req, res) => {
             lodgingRevs.guestId = toId(req.params.guestId);
             lodgingRevs.lodgingId = toId(req.params.lodgingId);
             lodgingRevs.save();
-            return res.status(200).json(lodgingRevs);
+            //res.redirect("http://localhost:3000/detail/" + req.params.lodgingId)
+            res.redirect("https://nomade-khaki.vercel.app/detail/" + req.params.lodgingId)
         } catch (error){console.log(error)}
     }
   });
-
+  router.get("/", async (req, res) => {
+    const citySearching = await req.query.city;
+    reviewLodgings = await lodgingReview.find();
+    console.log(reviewLodgings)
+    try {
+          res.send(reviewLodgings);  
+    } catch (err) {
+      res.json(err);
+    }
+  });
   
  module.exports = router;
