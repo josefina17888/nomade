@@ -3,16 +3,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
-import jwt_decode from "jwt-decode";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { createOrGetUserGoogle } from "../../utils/userGoogle";
 
 export default function LoginUser() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
@@ -46,7 +44,7 @@ export default function LoginUser() {
       history.push("/");
     } catch (error) {
       alert("Usuario o contraseña incorrectos");
-      setError(error.response.data.message);
+      console.log(error);
     }
   };
 
@@ -61,6 +59,7 @@ export default function LoginUser() {
             type="text"
             placeholder="Correo Electrónico"
             onChange={(e) => setEmail(e.target.value)}
+            required={true}
           />
           <input
             className={style.inputPassword}
@@ -68,6 +67,7 @@ export default function LoginUser() {
             type="password"
             placeholder="Contraseña"
             onChange={(e) => setPassword(e.target.value)}
+            required={true}
           />
           <input
             value="Iniciar Sesión"
