@@ -5,15 +5,16 @@ import Logo from "../../assets/nomadeLogo.svg";
 import style from './profile.module.css'
 import { Link } from 'react-router-dom';
 
+let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
 
-export default function Profile(props) {
+export default function Profile({id}) {
   const dispatch = useDispatch()
   const guestDet = useSelector((state) => state.guest)
   const detalles = guestDet[0]
   useEffect(() => {
-    dispatch(getGuest(props.match.params.email))
-  }, [])
-  console.log(detalles)
+    dispatch(getGuest(user._id))
+  }, [dispatch])
 
 
   return (
