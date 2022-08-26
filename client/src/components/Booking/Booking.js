@@ -7,8 +7,8 @@ import DatePickerOk from "../DatePicker/DatePicker";
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
-  const lodgingId = props.match.params.guestId
-
+  const lodgingId = props.match.params._id
+console.log(lodgingId)
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
   
@@ -36,9 +36,9 @@ export default function Booking(props) {
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
-    guest: 2,
+    guests: 2,
     allDates: alldates,
-    userEmail: userEmail,
+    email: userEmail,
     lodgingId: lodgingId
   });
 

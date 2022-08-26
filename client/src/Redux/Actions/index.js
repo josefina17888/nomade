@@ -167,7 +167,7 @@ export function createNewBooking(payload) {
   return async function (dispatch) {
     console.log(payload, 'soy yo');
     var json = await axios.post(
-      '/api/booking',
+      'http://localhost:3001/api/booking/',
       payload
     );
 

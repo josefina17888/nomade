@@ -9,14 +9,15 @@ const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 
 //POST del nuevo booking de Guest
-router.post("/:email/:lodgingId", async (req, res) => {
+router.post("/", async (req, res) => {
   console.log('HOLA ENTRAMOS')
   try {
     const newBooking = await Booking.create(req.body)
-    newBooking.lodgingId = toId(req.params.lodgingId)
-    const infoGuest= await Guest.find({email: req.params.email})
+    newBooking.lodgingId = toId(req.body.lodgingId)
+    const infoGuest= await Guest.find({email: req.body.email})
+    console.log(infoGuest)
     let userId = ( infoGuest[0]._id)
-    const lodging = await Lodging.findById(req.params.lodgingId)
+    const lodging = await Lodging.findById(req.body.lodgingId)
     newBooking.costNight = lodging.price
     newBooking.totalPrice = (newBooking.costNight * newBooking.night)
     newBooking.guestId = userId
