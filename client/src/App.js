@@ -10,12 +10,12 @@ import FormLodging from './components/FormLodging/FormLodging.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
 import Favorites from './components/Favorites/Favorites' 
-import Booking from './components/Booking/Booking'
 //import Verify from './components/EmailVerify/Verify'
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
 import Booking from './components/Booking/Booking'
+import MercadoPago from './components/MercadoPago/MercadoPago'
 
 
 function App() {
@@ -37,6 +37,7 @@ function App() {
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route path= "/mercadopago" component={MercadoPago}/>
         </Switch>
       </BrowserRouter>
    </div>

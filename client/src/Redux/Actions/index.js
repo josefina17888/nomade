@@ -247,24 +247,6 @@ export function lodgingReviews(){
     }
   }
 }
- 
-
-export function settingDate(payload){
-  console.log(payload, 'SOY PAYLOAD')
-  return{
-    type: "SET_DATE",
-    payload
-  }
-}
-
-// BOOKING
-export function createNewBooking(payload) {
-  return async function (dispatch) {
-    console.log(payload);
-    var json = await axios.post(
-      "/api/lodging/62fe7ea0b2a41b94d94fd0f2",
-      payload
-    );
 
 
 // BOOKING
@@ -279,5 +261,20 @@ export function createNewBooking(payload) {
     return json;
   };
 }
+
+export function payBooking(payload) {
+  return async function (dispatch) {
+    try{
+    const res = await axios.post('api/payment/:bookingId')
+    return dispatch({
+      type: "PAY_BOOKING",
+      payload: res.data
+    })
+  } catch(error){
+    console.log(error)
+  }}
+}
+
+
 
 

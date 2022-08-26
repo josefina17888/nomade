@@ -15,6 +15,7 @@ const initialState = {
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
+  payment: {}
 
 };
 
@@ -60,17 +61,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         lodgings: highest.map(e=>e),
       };
-    case "LOADER_TRUE":
-      return {
-        ...state,
-        pokeLoader: true,
-      };
-
-    case "LOADER_FALSE":
-      return {
-        ...state,
-        pokeLoader: false,
-      };
 
     case "LOADER_TRUE":
       return {
@@ -103,7 +93,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-
     
     case "GET_GUEST":
       return {
@@ -166,6 +155,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         allLodgingsReviews: action.payload
         
+      }
+
+    case "PAY_BOOKING":
+      return{
+        ...state,
+        payment: action.payload
       }
 
     default:
