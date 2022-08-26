@@ -11,21 +11,23 @@ mercadopago.configure({
 });
 
 
-router.post("/:lodgingId/:night", async function (req, res, next) {
-    //recibe un lodgingId
-    const searchLodging = req.params.id;
-    //recibe Q de nights
-    const bookingData = req.params.night;
-    //busca el lodging
-    const lodgingPayed = await Lodging.findById (searchLodging);
-
+router.post("/:bookingId", async function (req, res, next) {
+    
+    const searchBooking = req.params.id;
+    const bookingData = req.body
+    //busca el booking
+    // const bookingPayed = await Booking.findOne({_id: req.params.bookingId});
+    // console.log(bookingPayed)
+    // const title = bookingPayed.lodgingId
+    // const quantity = bookingPayed.night
+    // const price = bookingPayed.costNight
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
     // Toma del lodging el title y el unit price y toma del body la cantidad de noches
         let preference = {
             items: [{
-                title: lodgingPayed.title,
-                quantity: bookingData,
-                unit_price: lodgingPayed.price,
+                title: "6303a73bd591a8362a0c7f02",
+                quantity: 5,
+                unit_price: 200,
             }],
             back_urls: {
                 success: "http://localhost:3001/api/payment/feedback",
@@ -38,6 +40,7 @@ router.post("/:lodgingId/:night", async function (req, res, next) {
     try {
     const response = await mercadopago.preferences.create(preference)
     const preferenceId = response.body.id
+    console.log(response)
     res.send({ preferenceId });
     } catch (error) {
         console.log(error)
