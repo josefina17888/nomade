@@ -15,7 +15,7 @@ import Booking from './components/Booking/Booking'
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
-
+import Booking from './components/Booking/Booking'
 
 
 function App() {

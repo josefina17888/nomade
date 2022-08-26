@@ -17,6 +17,7 @@ console.log(lodgingId)
   if (lodgingId === undefined) noGuest = false;
   noGuest = true;
 
+
   const getDatesInRange = (checkIn, checkOut) => {
     const start = new Date(checkIn);
     const end = new Date(checkOut);
@@ -27,12 +28,15 @@ console.log(lodgingId)
       dates.push(new Date(nights).getTime());
       nights.setDate(nights.getDate() + 1);
     }
+
     console.log(typeof(dates))
+
     return dates;
   };
   const alldates = getDatesInRange(checkIn, checkOut);
 
   const [input, setInput] = useState({
+
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
@@ -40,6 +44,7 @@ console.log(lodgingId)
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId
+
   });
 
   const handleChangeInput = (e)=>{
@@ -49,8 +54,10 @@ console.log(lodgingId)
     })
   }
   function handleBooking() {
+
     dispatch(createNewBooking(input));
   }
+
   return (
     <div>
       {!noGuest ? (
@@ -83,7 +90,9 @@ console.log(lodgingId)
           </div>
           <div>
             AQUI VA LA CARD
-            <button onClick={handleBooking}>Rerservar</button>
+
+            <button onClick={handleBooking}>Reservar</button>
+
           </div>
         </div>
       )}
