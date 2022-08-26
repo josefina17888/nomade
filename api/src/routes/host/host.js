@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
-
+const Guest = require("../../models/Guest")
 const upload = require('../../../libs/storage.js')
 
 const Host = require("../../models/Host");
@@ -21,17 +20,17 @@ cloudinary.config({
 /// postea el host 
 
 
-
-router.post("/:guestId", upload.single("hostDniPicture"), async (req, res) => {
+router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
   const filename = req.file
   const result = await cloudinary.v2.uploader.upload(req.file.path)
   console.log(result)
   try {
+    const guest = await Guest.findOne({email: req.params.email})
     const myHost = new Host()
     myHost.dni= req.body.dni
     myHost.hostDniPicture= result.url
-    myHost.guestId = toId(req.params.guestId);
+    myHost.guestId = guest._id
     // if(filename) {
     //   myHost.setImgUrl(req.file.filename)
   // }

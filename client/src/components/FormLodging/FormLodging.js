@@ -1,13 +1,16 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
 import { postGuest, postLodging} from "../../Redux/Actions";
 import validate from "./validation";   
 
 export default function FormLodging() {
   const dispatch= useDispatch()
+  const params = useParams();
+  let hostId = params.hostId;
+  console.log(hostId)
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
@@ -104,6 +107,7 @@ setErrors(validate({
   return (
 
     <div className={style.containerUser}>
+      {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
       <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
