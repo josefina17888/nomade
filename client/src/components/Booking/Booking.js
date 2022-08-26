@@ -47,6 +47,7 @@ export default function Booking(props) {
   function handleBooking() {
     dispatch(createNewBooking(alldates));
   }
+
   return (
     <div>
       {!noGuest ? (
@@ -79,7 +80,8 @@ export default function Booking(props) {
           </div>
           <div>
             AQUI VA LA CARD
-            <button onClick={handleBooking}>Rerservar</button>
+            <button onClick={handleBooking}>Reservar</button>
+            
           </div>
         </div>
       )}
