@@ -136,7 +136,6 @@ function rootReducer(state = initialState, action) {
         userFavorites: action.payload
         }
 
-
     case "DELETE_FAVORITE":
       console.log(action.payload, "soy action")
       /* let favoritos = state.userFavs
@@ -147,7 +146,6 @@ function rootReducer(state = initialState, action) {
         userFavorites: action.payload
 
       }
-
     /*
     case "FAVORITE_NUMBER":
       return {
