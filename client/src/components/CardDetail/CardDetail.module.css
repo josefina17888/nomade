@@ -1,25 +1,22 @@
-.gral{
-    margin-top: 20%;
+.container{
     display: flex;
     flex-direction: row;
+    position: relative;
+    margin-top: 2%;
 }
 
 .text{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.padding{
-    padding: 10px
+._le6wlg{
+  padding-left: var(--gp-padding-largeAndAbove, 80px) !important;
+  padding-right: var(--gp-padding-largeAndAbove, 80px) !important;
 }
 
-.city {
-    color: rgb(114, 113, 113);
-    margin-left: 50%
-}
-
-.titles {
-    color: #069A8E;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.carousel{
+  padding-left: var(--gp-padding-largeAndAbove, 30px) !important;
+  padding-right: var(--gp-padding-largeAndAbove, 30px) !important;
 }
 
 .hr {
