@@ -47,7 +47,6 @@ export default function Card({ city, country, guests, price, picture, currency, 
           <p className={styles.noche}> noche </p>
 
           </div>
-
     </div>
     </div>
   );

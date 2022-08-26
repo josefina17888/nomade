@@ -247,6 +247,7 @@ export function lodgingReviews(){
     }
   }
 }
+
  
 
 // export function settingDate(payload){
@@ -267,6 +268,7 @@ export function lodgingReviews(){
 //     );
 //     }}
 
+
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
@@ -279,3 +281,22 @@ export function createNewBooking(payload) {
     return json;
   };
 }
+
+export function payBooking(payload) {
+  console.log("payload",payload)
+  return async function (dispatch) {
+    try{
+    const res = await axios.post(`api/payment/`,payload)
+    return dispatch({
+      type: "PAY_BOOKING",
+      payload: res.data
+    })
+  } catch(error){
+    console.log(error)
+  }}
+}
+
+
+
+
+

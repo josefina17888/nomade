@@ -1,12 +1,17 @@
 import { start } from "@popperjs/core";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { createNewBooking } from "../../Redux/Actions/index";
 import DatePickerOk from "../DatePicker/DatePicker";
+import MercadoPago from "../MercadoPago/MercadoPago";
 
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
+  const lodging = useSelector((state) => state.detail);
+  const costNight = lodging.price
+  console.log(costNight)
   const lodgingId = props.match.params._id
 console.log(lodgingId)
   const guestInfo = localStorage.getItem("userInfo");
@@ -54,7 +59,7 @@ console.log(lodgingId)
     })
   }
   function handleBooking() {
-
+    
     dispatch(createNewBooking(input));
   }
 
@@ -90,9 +95,12 @@ console.log(lodgingId)
           </div>
           <div>
             AQUI VA LA CARD
-
-            <button onClick={handleBooking}>Reservar</button>
-
+            <Link to= {`/${lodgingId}`}>
+            <button onClick={handleBooking}>
+              Reservar
+            </button>
+            </Link>
+            <MercadoPago lodId={lodgingId} night={input.night} costNight={costNight}/>
           </div>
         </div>
       )}

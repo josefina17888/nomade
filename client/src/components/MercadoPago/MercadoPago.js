@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-
+import { payBooking } from "../../Redux/Actions/index";
 
 // async function pay() {
 //   try{
@@ -31,18 +32,25 @@ import { useParams } from "react-router-dom";
 
 const FORM_ID = 'payment-form';
 
-export default function MercadoPago() {
-  const { id } = useParams(); 
-  const [preferenceId, setPreferenceId] = useState(null);
+export default function MercadoPago({lodId, night, costNight}) {
+ 
+  const dispatch = useDispatch();
+  const props = {
+    lodId,
+    night,
+    costNight
+  }
 
-  useEffect(() => {
-    // luego de montarse el componente, le pedimos al backend el preferenceId
-    axios.post('/api/payment/:lodgingId/:night', { lodgingId: id }).then((payment) => {
-      setPreferenceId(payment.preferenceId);
-    });
-  }, [id]);
+  // useEffect(()=>{dispatch(payBooking(props))}, [dispatch])
 
+  const preferenceId = useSelector(state => state.payment)
+  console.log(preferenceId.preferenceId)
+  // SDK MercadoPago.js V2
+
+  
   useEffect(() => {
+  dispatch(payBooking(props))
+
     if (preferenceId) {
       // con el preferenceId en mano, inyectamos el script de mercadoPago
       const script = document.createElement('script');
@@ -53,9 +61,20 @@ export default function MercadoPago() {
       const form = document.getElementById(FORM_ID);
       form.appendChild(script);
     }
-  }, [preferenceId]);
-
+  }, []);
+// function pay(e){
+//   // e.preventDefault()
+//   dispatch(payBooking(props))
+// }
   return (
+    
+
+    <div>
     <form id={FORM_ID} method="GET" />
+      {/* <button onClick={(e)=>pay(e)}>
+        Pagar
+      </button> */}
+    </div>
+    
   );
 }
