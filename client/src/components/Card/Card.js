@@ -7,6 +7,7 @@ import { IoHeartOutline } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {lodgingReviews} from "../../Redux/Actions/index";
+
 export default function Card({ city, country, guests, price, picture, currency, id }) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,12 +28,14 @@ export default function Card({ city, country, guests, price, picture, currency, 
     }
   }
  var promedio = cuantos/iguales
+
   return (
     <div className={styles.card}>
       <div className={styles.img}>
         <div>
           <img src={picture} alt="img not found" width="200px" height="250px" />
         </div>
+
         <div><IoHeartOutline className={styles.fav}/></div>
           <div className={styles.icons}>
           <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
@@ -44,6 +47,7 @@ export default function Card({ city, country, guests, price, picture, currency, 
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
           </div>
+
     </div>
   );
 }

@@ -1,0 +1,52 @@
+
+.favcard{
+    display: flex;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+    width: 50%;
+}
+.fpicture{
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-right: 20px;
+    height: 100px;
+    width: 100px;
+  
+}
+.ftext{
+    padding: 10px;
+}
+
+.fprice{
+    font-size: 1em;
+    display: inline;
+    font-weight: bold;
+    text-transform: uppercase;
+  
+  }
+  .fnoche{
+    display: inline;
+    font-weight: lighter;
+  } 
+  .fguests{
+    display: inline;
+    
+  } 
+  
+  .favcard button{
+    border:none;
+    background: none;
+    position: relative;
+    top:10px;
+    left:650px;
+    height: 30px;
+    width: 30px;
+    display:flex ;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    
+    }
+    .favcard button:hover{
+        background-color: rgb(233, 230, 230);
+    }

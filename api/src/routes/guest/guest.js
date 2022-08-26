@@ -26,7 +26,7 @@ cloudinary.config({
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
-  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
+  
     try{
       const userExist = await Guest.findOne({ email });
       if(userExist) {
@@ -34,8 +34,12 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       }
       console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
+<<<<<<< HEAD
+      const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+=======
       console.log(result)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+>>>>>>> eecce40bce662afe5f427a4291d558b820410526
       await newGuest.save()
       
       console.log(newGuest)
@@ -112,6 +116,7 @@ router.get("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     Guest.find({}, function (err, guest) {
+      console.log(guest)
       res.status(200).send(guest);
     });
   } catch (error) {
