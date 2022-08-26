@@ -1,6 +1,6 @@
 
 
-.favButton{
+.favButtonF{
     margin-top:10px;
     position: absolute;
     top: 0px;
@@ -12,16 +12,29 @@
     justify-items: center;
     outline: none;
     border: 0px;
+    background: none;
 
   }
+
  
 
-  .fav{
+  .favT{
     font-weight: bold;
-    font-size: 1em;
+    font-size: 2em;
+    background: none;
+    color: rgba(251, 0, 0, 0.848);
+    
+  } 
+  .favF{
+    font-weight: bold;
+    font-size: 2em;
+    background: none;
     color: rgba(255, 255, 255, 0.848);
     
   } 
+
+
+
 
   
   

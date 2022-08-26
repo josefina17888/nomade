@@ -13,6 +13,7 @@ const toId = mongoose.Types.ObjectId;
     console.log("soy post")
     const infoGuest= await Guest.find({email: req.body.userEmail})
     let userId = ( infoGuest[0]._id)
+    console.log(userId)
       try{
         const newFav= await Favorite.create(req.body)
         newFav.lodgingId = toId(req.body.lodgingId)  
@@ -39,7 +40,8 @@ const toId = mongoose.Types.ObjectId;
       try{
       const infoGuest= await Guest.find({email: req.body.userEmail})
       let guestId = ( infoGuest[0]._id)
-      let favs = await Favorite.find({ guestId}).populate({path:"lodgingId", model:"Lodging"})
+      let favs = await Favorite.find({ guestId})
+      console.log("favs",typeof favs)
             res.send(favs);
       }catch(err){
         res.send(err)

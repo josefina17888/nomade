@@ -163,10 +163,10 @@ export function addFavorite(payload){
      let response = await axios.post('http://localhost:3001/api/favorite/', payload)
 
      console.log("res.data",response.data)
-      return{
+      return dispatch({
         type: "ADD_FAVORITE",
         payload: response.data
-      }
+      })
    
     }catch(err){
       console.log(err)

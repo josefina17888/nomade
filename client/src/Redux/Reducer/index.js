@@ -144,8 +144,6 @@ function rootReducer(state = initialState, action) {
         userFavorites: action.payload
 
       }
-    
-
 
     /*
     case "FAVORITE_NUMBER":

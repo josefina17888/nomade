@@ -49,7 +49,16 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
           currentLodging.map((e) => {
             return (
               <div className={styles.card}>
-                  <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} />
+
+                
+                  <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
+                      country={e.country}
+                      price={e.price}
+                      guests={e.guests}
+                      picture={e.picture[0]}
+                      currency={e.currency}/>
+
+
                 <div className={styles.link} key={e._id}>
                   <Link to={`/detail/${e._id}`} className={styles.a}>
                     <Card
