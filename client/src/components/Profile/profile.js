@@ -11,15 +11,16 @@ export default function Profile(props) {
   const guestDet = useSelector((state) => state.guest)
   const detalles = guestDet[0]
   useEffect(() => {
-    dispatch(getGuest(props.match.params._id))
+    dispatch(getGuest(props.match.params.email))
   }, [])
   console.log(detalles)
 
 
   return (
-    <div>
+    <div >
+
     { detalles === undefined ? <p>Loading...</p> :
-        <div>
+        <div className="n1p4yt3r dir dir-ltr">
             <img src={Logo} alt='image' width="150"height="60"/>
             <hr></hr>
             <h2>Detalle del Perfil</h2>
