@@ -36,7 +36,6 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path)
 
       const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
-      console.log(result)
 
       await newGuest.save()
       

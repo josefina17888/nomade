@@ -34,48 +34,51 @@ import { payBooking } from "../../Redux/Actions/index";
 //const FORM_ID = 'payment-form';
 
 
-export default function MercadoPago({lodgingId, night, costNight}) {
+export default function MercadoPago({lodId, night, costNight}) {
  
   const dispatch = useDispatch();
   const props = {
-    lodgingId,
+    lodId,
     night,
     costNight
   }
-  console.log(props)
 
-  useEffect(()=>{dispatch(payBooking(props))}, [dispatch])
+  // useEffect(()=>{dispatch(payBooking(props))}, [dispatch])
 
   const preferenceId = useSelector(state => state.payment)
-  console.log(preferenceId)
-  // const { id } = useParams(); 
-  // const [preferenceId, setPreferenceId] = useState(null);
+  console.log(preferenceId.preferenceId)
+  // SDK MercadoPago.js V2
 
-  // useEffect(() => {
-  //   // luego de montarse el componente, le pedimos al backend el preferenceId
-  //   axios.post('/api/payment/:lodgingId/:night', { lodgingId: id }).then((payment) => {
-  //     setPreferenceId(payment.preferenceId);
-  //   });
-  // }, [id]);
+  
+  useEffect(() => {
+  dispatch(payBooking(props))
 
-  // useEffect(() => {
-  //   if (preferenceId) {
-  //     // con el preferenceId en mano, inyectamos el script de mercadoPago
-  //     const script = document.createElement('script');
-  //     script.type = 'text/javascript';
-  //     script.src =
-  //     "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-  //     script.setAttribute('data-preference-id', preferenceId);
-  //     const form = document.getElementById(FORM_ID);
-  //     form.appendChild(script);
-  //   }
-  // }, [preferenceId]);
-
+    if (preferenceId) {
+      // con el preferenceId en mano, inyectamos el script de mercadoPago
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src =
+      "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.setAttribute('data-preference-id', preferenceId);
+      const form = document.getElementById(FORM_ID);
+      form.appendChild(script);
+    }
+  }, []);
+// function pay(e){
+//   // e.preventDefault()
+//   dispatch(payBooking(props))
+// }
   return (
+    
+
     <div>
-    {/* <form id={FORM_ID} method="GET" /> */}
-      <p>Probando</p>
+
+    <form id={FORM_ID} method="GET" />
+      {/* <button onClick={(e)=>pay(e)}>
+        Pagar
+      </button> */}
 
     </div>
+    
   );
 }

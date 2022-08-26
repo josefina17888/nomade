@@ -90,13 +90,14 @@ export default function Booking(props) {
           <div>
             AQUI VA LA CARD
 
-            <Link to= {"/mercadopago"}>
+            <Link to= {`/${lodgingId}`}>
+
             <button onClick={handleBooking}>
               Reservar
-              <MercadoPago bookingId={lodgingId} night={input.night} costNight={input.costNight}/>
             </button>
 
             </Link>
+            <MercadoPago lodId={lodgingId} night={input.night} costNight={costNight}/>
           </div>
         </div>
       )}

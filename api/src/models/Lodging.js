@@ -52,6 +52,7 @@ const LodgingSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Favorite",
   }, 
+
   unavailableDate: [{type: Date}] 
 
   
