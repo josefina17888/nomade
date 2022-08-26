@@ -2,18 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGuest } from "../../Redux/Actions";
 import Logo from "../../assets/nomadeLogo.svg";
-import style from "./profile.module.css";
-import { Link } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
+import style from './profile.module.css'
+import { Link } from 'react-router-dom';
 
-export default function Profile(props) {
-  const dispatch = useDispatch();
-  const guestDet = useSelector((state) => state.guest);
-  const detalles = guestDet[0];
+let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
+
+export default function Profile({id}) {
+  const dispatch = useDispatch()
+  const guestDet = useSelector((state) => state.guest)
+  const detalles = guestDet[0]
   useEffect(() => {
-    dispatch(getGuest(props.match.params.email));
-  }, []);
-  console.log(detalles);
+    dispatch(getGuest(user._id))
+  }, [dispatch])
 
   return (
     <div>
