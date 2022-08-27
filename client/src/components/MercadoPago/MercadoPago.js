@@ -31,7 +31,7 @@ import { payBooking } from "../../Redux/Actions/index";
 //   document.getElementById("checkout").innerHTML = "Pagar"
 // }
 
-//const FORM_ID = 'payment-form';
+const FORM_ID = 'payment-form';
 
 
 export default function MercadoPago({lodId, night, costNight}) {

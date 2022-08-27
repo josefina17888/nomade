@@ -10,11 +10,13 @@ import styles from "./DatePicker.module.css";
 export default function DatePickerOk() {
   console.log("aqui");
   const lodging = useSelector((state) => state.detail);
+  console.log(lodging)
   const lodgingId = lodging._id;
   console.log(lodgingId);
   const [info, setInfo] = useState({
     startDate: new Date(),
     endDate: new Date(),
+    price: lodging.price,
     guest: 3,
     pets: 0
   });
