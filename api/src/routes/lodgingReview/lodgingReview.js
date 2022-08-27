@@ -24,6 +24,7 @@ router.post("/:guestId/:lodgingId" ,upload.single(), async (req, res) => {
             lodgingRevs.lodgingId = toId(req.params.lodgingId);
             lodgingRevs.save();
             res.redirect("http://localhost:3000/detail/" + req.params.lodgingId)
+            // res.redirect("https://nomade-khaki.vercel.app/detail/" + req.params.lodgingId)
         } catch (error){console.log(error)}
     }
   });

@@ -7,6 +7,7 @@ import { IoHeartOutline } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {lodgingReviews} from "../../Redux/Actions/index";
+
 export default function Card({ city, country, guests, price, picture, currency, id }) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,23 +28,27 @@ export default function Card({ city, country, guests, price, picture, currency, 
     }
   }
  var promedio = cuantos/iguales
+
   return (
     <div className={styles.card}>
       <div className={styles.img}>
         <div>
           <img src={picture} alt="img not found" width="200px" height="250px" />
         </div>
+
         <div><IoHeartOutline className={styles.fav}/></div>
-          <div className={styles.icons}>
+        <div className={styles.icons}>
           <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
           <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> { promedio > 0 && promedio < 6 ? promedio === 1.0 || promedio === 2.0 ||promedio ===3.0 ||promedio === 4.0 ||promedio === 5.0 ? promedio.toFixed(0):promedio.toFixed(1): "n/c"}</div>
       </div>
-      </div>
-        <div className={styles.text}>
+      <div className={styles.text}>
           <h3 className={styles.city}>{`${city}, ${country}`}</h3>
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
+
           </div>
+    </div>
+
     </div>
   );
 }

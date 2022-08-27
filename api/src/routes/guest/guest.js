@@ -22,7 +22,7 @@ cloudinary.config({
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
-  const {username, name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
+  
     try{
       const userExist = await Guest.findOne({ email });
       if(userExist) {
@@ -30,9 +30,11 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       }
       console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
-      console.log(result)
-      const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+
+      const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+
       await newGuest.save()
+      
       console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,
@@ -48,6 +50,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
       // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
       res.status(201).redirect("http://localhost:3000/login")
+      //res.redirect("https://nomade-khaki.vercel.app/");
+      //res.redirect("http://localhost:3000/");
     }
       catch (error){
           res.status(404).send(error)
@@ -107,6 +111,7 @@ router.get("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     Guest.find({}, function (err, guest) {
+      console.log(guest)
       res.status(200).send(guest);
     });
   } catch (error) {

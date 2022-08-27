@@ -1,25 +1,30 @@
-.gral{
-    margin-top: 20%;
+.container{
     display: flex;
     flex-direction: row;
+    position: relative;
+    margin-top: 2%;
+}
+.city {
+  color: rgb(114, 113, 113);
+  margin-left: 50%
 }
 
 .text{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-
-.padding{
-    padding: 10px
-}
-
-.city {
-    color: rgb(114, 113, 113);
-    margin-left: 50%
-}
-
 .titles {
-    color: #069A8E;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  color: #069A8E;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+._le6wlg{
+  padding-left: var(--gp-padding-largeAndAbove, 80px) !important;
+  padding-right: var(--gp-padding-largeAndAbove, 80px) !important;
+}
+
+.carousel{
+  padding-left: var(--gp-padding-largeAndAbove, 30px) !important;
+  padding-right: var(--gp-padding-largeAndAbove, 30px) !important;
 }
 
 .hr {
@@ -117,4 +122,50 @@
 .p2{
     color: rgb(120, 119, 119);
     text-decoration:line-through;
+}
+
+.modal {
+	height: 300px;
+	width: 260px;
+  border-radius: 8px;
+	border: 1px solid #ddd;
+	background:white;
+	overflow-y: scroll;
+  margin-top: 15px;
+  margin-left: 25px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  scrollbar-color: rgba(0, 0, 0, .5) rgba(0, 0, 0, 0);
+}
+.modal::-webkit-scrollbar {
+  width: 12px;            
+}
+
+.modal::-webkit-scrollbar-track {
+  background: white;       
+}
+
+.modal::-webkit-scrollbar-thumb {
+  background-color: #069A8E;   
+  border-radius: 20px;      
+  border: 3px solid #069A8E;  
+}
+
+.reviews {
+	height: auto;
+}
+.texto {
+	padding:4px;
+	background:#fff;
+}
+.estrellas{
+  color: orange;
+}
+.h3{
+  margin-top: 20px;
+  margin-left: 28px;
+}
+.aun{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }

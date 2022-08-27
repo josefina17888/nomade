@@ -21,7 +21,6 @@ const LodgingSchema = new mongoose.Schema({
   address: { type: String, required:true },
   checkInHour: { type: String },
   checkOutHour: { type: String },
-  
   services: {
     wifi: { type: Boolean },
     ac: { type: Boolean },
@@ -46,10 +45,16 @@ const LodgingSchema = new mongoose.Schema({
     ref: "Booking"},
   
   LodgingReviewId: {
-    type: Schema.ObjectId,
+    type: mongoose.Types.ObjectId,
     ref: "LodgingReview",
-  },
+  }, 
+  Favorite: {
+    type: mongoose.Types.ObjectId,
+    ref: "Favorite",
+  }, 
+
   unavailableDate: [{type: Date}] 
+
   
 });
 
