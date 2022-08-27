@@ -82,7 +82,10 @@ export default function LoginUser() {
             className={style.button}
             type="submit"
           ></input>
+            <Link to="/forgot-password/"><p>¿Olvidaste tu contraseña?</p></Link>
         </form>
+        
+      
         <span className={style.line}>O</span>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin

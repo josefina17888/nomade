@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
     const password = email + process.env.SECURE_TOKEN
 
     if(!user) {
-        const newUser = await Guest.create({ email, username, lastname, name, password, picture });
+        const newUser = await Guest.create({ email, username, lastname, name, password, picture , verified: true});
         res.json({
             username: newUser.username,
             email: newUser.email,
@@ -19,7 +19,8 @@ router.post("/", async (req, res) => {
             username: newUser.username,
             password: newUser.password,
             picture: newUser.picture,
-            token: generateToken(newUser._id)
+            token: generateToken(newUser._id),
+            verified: true
         })
     } else {
         if(user) {

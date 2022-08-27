@@ -12,6 +12,7 @@ const loginRoute = require ('../routes/login/login');
 const loginGoogle = require ('../routes/loginGoogle/loginGoogle');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
+const passwordResetRoute = require ('../routes/passwordReset/passwordReset.js')
 
 
 const guestReview = require('../routes/guestReview/guestReview')
@@ -24,6 +25,7 @@ router.use("/api/login/google", loginGoogle);
 router.use("/api/lodging", lodgingRoute); 
 router.use("/api/lodgingReview", lodgingReviewRoute); 
 router.use("/api/guestReview", guestReviewRoute); 
+router.use("/api/passwordReset", passwordResetRoute); 
 
 
 
