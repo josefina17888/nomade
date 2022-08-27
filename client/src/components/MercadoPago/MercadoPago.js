@@ -7,6 +7,7 @@ import MercadoPagoFinal from './MercadoPagoFinal';
 
 // const FORM_ID = 'payment-form';
 
+
 export default function MercadoPago({lodId, night, costNight}) {
  
   const dispatch = useDispatch();

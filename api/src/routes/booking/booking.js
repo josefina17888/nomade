@@ -31,13 +31,16 @@ router.post("/", async (req, res) => {
 
 //trae las reservas de un guest
 router.get("/:guestId", async (req, res)=>{
-
    Booking.find({guestId: req.params.guestId}, (error,docs)=>{
-
     res.send(docs)
    })
+})
 
-  
+router.get('/:lodgingId', async(req, res) =>{
+  console.log(req.params.lodgingId)
+  Booking.find({lodgingId: req.params.lodgingId}, (error,docs)=>{
+    res.send(docs)
+   })
 })
 
 module.exports = router;

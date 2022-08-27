@@ -8,34 +8,48 @@ import { getDetail, settingDate } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 
 export default function DatePickerOk() {
-
   console.log("aqui");
   const lodging = useSelector((state) => state.detail);
+  console.log(lodging)
   const lodgingId = lodging._id;
   console.log(lodgingId);
-  const [date, setDate] = useState({
+  const [info, setInfo] = useState({
     startDate: new Date(),
     endDate: new Date(),
-    guest: 2
+    price: lodging.price,
+    guest: 3,
+    pets: 0
   });
-  console.log(date, "SOY DATE DEL PICKER");
-
-  let guestId = localStorage.getItem("userInfo");
-  if (guestId) {
-    var userToken = JSON.parse(guestId).email;
-  }
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
 
+  function handleDecrement(e){
+    e.preventDefault();
+   if(info.guest>0){
+     setInfo({...info,
+      guest: info.guest--})
+      console.log(info.guest, 'decremento')
+   }
+   setInfo({...info,
+    guest: info.guest})
+  }
+  function handleIncrement(e){
+    e.preventDefault();
+   if(info.guest<5){
+     setInfo({...info,
+      guest: info.guest++})
+      console.log(info.guest, 'Incremento')
+   }
+   setInfo({...info,
+    guest: info.guest})
+  }
 
-  function handleClickBooking(e) {
-  localStorage.setItem("bookingInfo", JSON.stringify(date));
-  let bookingInfo = localStorage.getItem("bookingInfo");
-  let datesLocal = JSON.parse(bookingInfo)
-  console.log(datesLocal, 'dates')
-    //dispatch(settingDate(date));
+  
+  function handleClick(e) {
+    localStorage.setItem("bookingInfo", JSON.stringify(info));
   }
   return (
     <div className={styles._1s21a6e2}>
@@ -59,43 +73,67 @@ export default function DatePickerOk() {
                       <div className={styles._7eq2v2}>Llegada</div>
                       <DatePicker
                         dateFormat="yyyy/MM/dd"
-                        selected={date.startDate}
+                        selected={info.startDate}
                         onChange={(currentDate) =>
-                          setDate({ ...date, startDate: currentDate })
+                          setInfo({ ...info, startDate: currentDate })
                         }
-                        startDate={date.startDate}
-                        endDate={date.endDate}
+                        startDate={info.startDate}
+                        endDate={info.endDate}
                       />
-                      {console.log(date.startDate, "soy start")}
+                      {console.log(info.startDate, "soy start")}
                     </div>
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Salida</div>
                       <DatePicker
                         dateFormat="yyyy/MM/dd"
-                        selected={date.endDate}
+                        selected={info.endDate}
                         onChange={(currentDate) =>
-                          setDate({ ...date, endDate: currentDate })
+                          setInfo({ ...info, endDate: currentDate })
                         }
                         selectsEnd
-                        startDate={date.startDate}
-                        minDate={date.startDate}
+                        startDate={info.startDate}
+                        minDate={info.startDate}
                       />
-                      {console.log(date.endDate, "soy END")}
+                      {console.log(info.endDate, "soy END")}
                     </div>
                   </div>
-                  <div className={styles._jro6t1}>
-                    <div className={styles._7eq2v2}>Huéspedes</div>
-                    <form>
-                      <input type="text"></input>
-                    </form>
+                  <div className="dropdown w-100">
+                    <button
+                      className={styles.dropdown}
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <label className={styles._7eq2v2}>Huespedes</label>
+                      <div>{`${info.guest}`}</div>
+                    </button>
+                    <div className="dropdown-menu w-100 p-3">
+                      <div className="d-flex flex-row">
+                        <div className={styles.div_Guest_Description}>
+                          <div>Huespedes</div>
+                        </div>
+                        <div className={styles.container_btn}>
+                          <button onClick={handleDecrement}>-</button>
+                          <div>{`${info.guest}`}</div>
+                          <button onClick={handleIncrement}>+</button>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-row">
+                        <div className={styles.div_Guest_Description}>
+                          <div>Mascota</div>
+                        </div>
+                        <div className={styles.container_btn}>
+                          <button>Sí</button>
+                          <button>No</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div>
                   {
                     <Link to={`/${lodgingId}`}>
-                      <button onClick={(e) => handleClickBooking(e)}>
-                        Reserva ahora
-                      </button>
+                      <button onClick={handleClick}>Reserva ahora</button>
                     </Link>
                   }
                 </div>
@@ -103,7 +141,6 @@ export default function DatePickerOk() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
