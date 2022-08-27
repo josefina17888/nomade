@@ -48,7 +48,7 @@ export default function Card({ city, country, guests, price, picture, currency, 
 
           </div>
     </div>
-    </div>
+   
     </div>
   );
 }
