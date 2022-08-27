@@ -20,6 +20,7 @@ export default function DatePickerOk() {
     guest: 3,
     pets: 0
   });
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDetail(lodgingId));
