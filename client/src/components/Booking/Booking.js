@@ -19,6 +19,7 @@ export default function Booking(props) {
   var preCheckIn= JSON.parse(bookingInfo).startDate;
   var preCheckOut= JSON.parse(bookingInfo).endDate;
   var preGuest =JSON.parse(bookingInfo).guest;
+  var preCostNight = JSON.parse(bookingInfo).costNight;
   console.log(preCheckIn, preCheckOut, preGuest)
   const dispatch = useDispatch();
   var noGuest = true;
