@@ -34,12 +34,9 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       }
       console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
-<<<<<<< HEAD
-      const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
-=======
       console.log(result)
       const newGuest = new Model({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
->>>>>>> eecce40bce662afe5f427a4291d558b820410526
+
       await newGuest.save()
       
       console.log(newGuest)

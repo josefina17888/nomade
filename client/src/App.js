@@ -15,6 +15,7 @@ import Booking from './components/Booking/Booking'
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
+import AdminDash from './components/Admin/AdminDash';
 
 
 
@@ -31,12 +32,13 @@ function App() {
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:guestId/form' component={FormHost}/>
           <Route exact path='/favorites' component={Favorites}/> 
-          <Route exact path= '/:_id' component={Booking}/>
+          <Route exact path= '/booking/:_id' component={Booking}/>
           <Route path='/profile/:email' component={Profile}></Route>
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route exact path='/admindashboard' component={AdminDash}/>
         </Switch>
       </BrowserRouter>
    </div>

@@ -133,17 +133,16 @@ function rootReducer(state = initialState, action) {
         console.log("reducer", action.payload)
         return{
         ...state,
-        userFavorites: action.payload
+        userFavorites: [...state.userFavorites, action.payload]
         }
 
     case "DELETE_FAVORITE":
       console.log(action.payload, "soy action")
-      /* let favoritos = state.userFavs
-      favoritos.filter(e=>e.lodgingId !== action.payload.lodgingId._id  ) */
+   
       return {
       
         ...state,
-        userFavorites: action.payload
+        userFavorites: state.userFavorites.filter(e=>e.lodgingId !== action.payload.lodgingId) 
 
       }
     /*
