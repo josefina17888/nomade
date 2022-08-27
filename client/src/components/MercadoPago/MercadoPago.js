@@ -8,22 +8,27 @@ import MercadoPagoFinal from './MercadoPagoFinal';
 // const FORM_ID = 'payment-form';
 
 
-export default function MercadoPago({lodId, night, costNight}) {
+export default function MercadoPago({lodId, night, price}) {
  
   const dispatch = useDispatch();
   const props = {
     lodId,
     night,
-    costNight
+    price
   }
 
-  useEffect(() => {
-    dispatch(payBooking(props))}, [dispatch])
+  function handlePayment() {
+
+    dispatch(payBooking(props));
+  }
+
+  // useEffect(() => {
+  //   dispatch(payBooking(props))}, [dispatch])
 
   const preferenceId = useSelector(state => state.payment)
 
   const preference = preferenceId.preferenceId
-
+  
 // if (preference) {
 //       // con el preferenceId en mano, inyectamos el script de mercadoPago
 //       const script = document.createElement('script');
@@ -36,7 +41,10 @@ export default function MercadoPago({lodId, night, costNight}) {
 //     }
 
   return (
+    <div>
+    <button button onClick={handlePayment}>Confirmar</button>
     <MercadoPagoFinal preferenceId={preference}/>
+    </div>
   );
 
 }

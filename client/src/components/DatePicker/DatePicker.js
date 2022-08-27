@@ -12,11 +12,12 @@ export default function DatePickerOk() {
   const lodging = useSelector((state) => state.detail);
   console.log(lodging)
   const lodgingId = lodging._id;
+  const price = lodging.price;
   console.log(lodgingId);
   const [info, setInfo] = useState({
     startDate: new Date(),
     endDate: new Date(),
-    price: lodging.price,
+    price: price,
     guest: 3,
     pets: 0
   });
@@ -50,6 +51,7 @@ export default function DatePickerOk() {
   
   function handleClick(e) {
     localStorage.setItem("bookingInfo", JSON.stringify(info));
+    localStorage.setItem('priceBooking', JSON.stringify(price));
   }
   return (
     <div className={styles._1s21a6e2}>

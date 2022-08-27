@@ -280,7 +280,6 @@ export function createNewBooking(payload) {
   }}
 
 export function payBooking(payload) {
-  console.log("payload",payload)
   return async function (dispatch) {
     try{
     const res = await axios.post(`api/payment/`,payload)
