@@ -10,12 +10,13 @@ import FormLodging from './components/FormLodging/FormLodging.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormHost from './components/FormHost/FormHost'
 import Favorites from './components/Favorites/Favorites' 
-import Booking from './components/Booking/Booking'
 //import Verify from './components/EmailVerify/Verify'
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
 import AdminDash from './components/Admin/AdminDash';
+import Booking from './components/Booking/Booking'
+import MercadoPago from './components/MercadoPago/MercadoPago'
 
 
 
@@ -30,6 +31,7 @@ function App() {
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
+          <Route path='/profile/:email' component={Profile}></Route>
           <Route path='/:guestId/form' component={FormHost}/>
           <Route exact path='/favorites' component={Favorites}/> 
           <Route exact path= '/booking/:_id' component={Booking}/>
@@ -39,6 +41,12 @@ function App() {
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route exact path='/admindashboard' component={AdminDash}/>
+          <Route exact path= '/:_id' component={Booking}/>
+          {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
+          <Route path='/:email/form' component={FormHost}/>
+          <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
+          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route path= "/mercadopago" component={MercadoPago}/>
         </Switch>
       </BrowserRouter>
    </div>
