@@ -6,12 +6,12 @@ const Lodging = require("../../models/Lodging")
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
 // Agrega credenciales
-mercadopago.configure({
-  access_token: "APP_USR-4486395292185362-082416-e2f22c3627f37e6072a5bf9caaf72e09-1185632790",
-});
 
 
 router.post("/", async function (req, res, next) {
+    mercadopago.configure({
+      access_token: "APP_USR-4486395292185362-082416-e2f22c3627f37e6072a5bf9caaf72e09-1185632790",
+    });
     
     // const searchBooking = req.params.id;
     const bookingData = req.body
@@ -41,6 +41,7 @@ router.post("/", async function (req, res, next) {
     try {
     const response = await mercadopago.preferences.create(preference)
     const preferenceId = response.body.id
+    console.log(preferenceId)
     res.send({ preferenceId });
     
     } catch (error) {
@@ -48,6 +49,7 @@ router.post("/", async function (req, res, next) {
     }
 
 })
+
 
 
 router.get('/feedback', function(req, res) {
