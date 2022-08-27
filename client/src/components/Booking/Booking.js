@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import { createNewBooking } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
+import DatePickerOk from "../DatePicker/DatePicker";
+import MercadoPago from "../MercadoPago/MercadoPago";
 
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
-  const lodgingId = props.match.params._id;
+  const lodging = useSelector((state) => state.detail);
+  const costNight = lodging.price
+  console.log(costNight)
+  const lodgingId = props.match.params._id
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
 
@@ -49,6 +54,7 @@ export default function Booking(props) {
     })
   }*/
   function handleBooking() {
+
     dispatch(createNewBooking(input));
   }
 
@@ -96,7 +102,15 @@ export default function Booking(props) {
             AQUI VA LA CARD
             <Link to="/MercadoPago">
               <button onClick={handleBooking}>Reservar</button>
+              </Link>
+            <Link to= {`/${lodgingId}`}>
+
+            <button onClick={handleBooking}>
+              Reservar
+            </button>
+
             </Link>
+            <MercadoPago lodId={lodgingId} night={input.night} costNight={costNight}/>
           </div>
         </div>
       )}

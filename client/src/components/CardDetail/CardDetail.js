@@ -8,6 +8,7 @@ import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
 import styles from "./CardDetail.module.css";
 import { AiOutlineWifi, AiFillCar } from "react-icons/ai";
+import {lodgingReviews} from "../../Redux/Actions/index";
 import NavBar from "../NavBar/NavBar";
 
 import {
@@ -38,9 +39,18 @@ export default function CardDetail(props) {
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
+    dispatch(lodgingReviews());
   }, [dispatch]);
 
   const myLodging = useSelector((state) => state.detail);
+  let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
+  console.log(stateLodgings)
+  let detailReview = stateLodgings.map(e => e.lodgingId ===lodgingId ? [e.comments, e.rating]: false)
+  let filtrado =detailReview.filter(e=> e!== false)
+
+
+
+
 
   // const servicios = useSelector((state) => state.detail.services)
 
@@ -312,13 +322,28 @@ export default function CardDetail(props) {
           <div>
 
             <DatePickerOk lodgingId={lodgingId} />
+            <h3 className={styles.h3}>Reseñas</h3>
+            <div className={styles.modal}>
+            <div className={styles.reviews}>
+              {filtrado[0]!==undefined ?<div>
+                { filtrado.map((e) => (            
+                      <div className={styles.texto}>
+                      <label className={styles.estrellas} value = {e[1]}>{e[1] === 5 ? "★★★★★ " : e[1] === 4? "★★★★ ": e[1] === 3? "★★★ ": e[1] === 2? "★★ ": e[1] === 1? "★ ": false}</label>
+                      <label value = {e[0]}>{e[0]}</label>
+                      <hr></hr>   
+                            </div>
+                        ) )
+                }
+              </div>: <div className={styles.aun}><h5>{"Aún no hay reseñas"}</h5></div>}
+          </div>
+          </div>
           </div>
           </div>
         </div>
       )}
 
       <div>
-        <Link to="/">
+        <Link to="http://localhost:3000/">
           <button className={styles.button}>Volver</button>
         </Link>
         <Link
@@ -331,7 +356,9 @@ export default function CardDetail(props) {
         >
           <button className={styles.button}>Califica este hospedaje!</button>
         </Link>
+        
       </div>
+      
     </div>
   );
 
