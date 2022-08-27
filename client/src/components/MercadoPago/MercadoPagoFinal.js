@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 
 const FORM_ID = 'payment-form';
 
 export default function MercadoPagoFinal({preferenceId}) {
-
+useEffect (() =>{
 if (preferenceId) {
     // con el preferenceId en mano, inyectamos el script de mercadoPago
     const script = document.createElement('script');
@@ -13,7 +13,7 @@ if (preferenceId) {
     script.setAttribute('data-preference-id', preferenceId);
     const form = document.getElementById(FORM_ID);
     form.appendChild(script);
-  }
+  }}, [preferenceId])
 
 return (
   <div>

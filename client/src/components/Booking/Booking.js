@@ -10,17 +10,18 @@ import MercadoPago from "../MercadoPago/MercadoPago";
 export default function Booking(props) {
   const checkIn = useSelector((state) => state.checkIn);
   const checkOut = useSelector((state) => state.checkOut);
-  const lodging = useSelector((state) => state.detail);
-  const costNight = lodging.price
-  console.log(costNight)
+  //const lodging = useSelector((state) => state.detail);
   const lodgingId = props.match.params._id
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
 
   const bookingInfo = localStorage.getItem("bookingInfo");
+  const priceBooking = localStorage.getItem("priceBooking");
   var preCheckIn = JSON.parse(bookingInfo).startDate;
   var preCheckOut = JSON.parse(bookingInfo).endDate;
   var preGuest = JSON.parse(bookingInfo).guest;
+  var costNight = JSON.parse(priceBooking);
+  
   console.log(preCheckIn, preCheckOut, preGuest);
   const dispatch = useDispatch();
   var noGuest = true;
@@ -100,17 +101,17 @@ export default function Booking(props) {
           </div>
           <div>
             AQUI VA LA CARD
-            <Link to="/MercadoPago">
+            {/* <Link to="/MercadoPago">
               <button onClick={handleBooking}>Reservar</button>
               </Link>
-            <Link to= {`/${lodgingId}`}>
+            <Link to= {`/${lodgingId}`}> */}
 
             <button onClick={handleBooking}>
               Reservar
             </button>
 
-            </Link>
-            <MercadoPago lodId={lodgingId} night={input.night} costNight={costNight}/>
+            {/* </Link> */}
+            <MercadoPago lodId={lodgingId} night={input.night} price={costNight}/>
           </div>
         </div>
       )}
