@@ -45,7 +45,6 @@ export default function Booking(props) {
     lodgingId: lodgingId,
   });
 
-  //const arrayDemo = []
   //CONDITIONAL FOUND AVALABILITY
   if (availibity && availibity.length) {
     console.log(alldates.toString(), 'CONVIRTIENTO A STRIGN')
@@ -104,17 +103,17 @@ export default function Booking(props) {
           </div>
           <div>
             AQUI VA LA CARD
-            <Link to="/MercadoPago">
+            {/* <Link to="/MercadoPago">
               <button onClick={handleBooking}>Reservar</button>
-            </Link>
-            <Link to={`/${lodgingId}`}>
-              <button onClick={handleBooking}>Reservar</button>
-            </Link>
-            <MercadoPago
-              lodId={lodgingId}
-              night={input.night}
-              costNight={costNight}
-            />
+              </Link>
+            <Link to= {`/${lodgingId}`}> */}
+
+            <button onClick={handleBooking}>
+              Reservar
+            </button>
+
+            {/* </Link> */}
+            <MercadoPago lodId={lodgingId} night={input.night} price={costNight}/>
           </div>
         </div>
       )}

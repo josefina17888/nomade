@@ -21,7 +21,7 @@ router.post("/", async function (req, res, next) {
     // console.log(bookingPayed)
     const title = req.body.lodId
     const quantity = req.body.night
-    const price = req.body.costNight
+    const price = req.body.price
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
     // Toma del lodging el title y el unit price y toma del body la cantidad de noches
         let preference = {
@@ -43,6 +43,10 @@ router.post("/", async function (req, res, next) {
     const preferenceId = response.body.id
     res.send({ preferenceId });
     
+    // const initPoint = response.body.init_point
+    // console.log(initPoint)
+    // res.send(initPoint)
+
     } catch (error) {
         console.log(error)
     }

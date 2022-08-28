@@ -14,7 +14,6 @@ import styles from "./DatePicker.module.css";
 export default function DatePickerOk({ lodId }) {
   const lodging = useSelector((state) => state.detail);
   const lodgingId = lodging._id;
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDetail(lodgingId));
