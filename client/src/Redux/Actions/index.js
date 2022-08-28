@@ -26,6 +26,12 @@ export function filterTypeHouse(payload){
     payload
   }
 }
+export function orderByRating(payload){
+  return{
+    type: "ORDER_BY_RATING",
+    payload
+  }
+}
 export function filterByPets(payload){
   return{
     type: "FILTER_BY_PETS",

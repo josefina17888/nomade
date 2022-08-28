@@ -12,6 +12,7 @@ export default function Card({ city, country, guests, price, picture, currency, 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(lodgingReviews());
+
   }, [dispatch]);
   let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
   let cantidad = stateLodgings.map(e=> e.lodgingId)
@@ -28,6 +29,10 @@ export default function Card({ city, country, guests, price, picture, currency, 
     }
   }
  var promedio = cuantos/iguales
+ var arrpromedio =[]
+ arrpromedio = arrpromedio.map(e=>e = promedio)
+
+
 
   return (
     <div className={styles.card}>
