@@ -8,9 +8,10 @@ const bcrypt = require('bcrypt')
 const upload = require("../../../libs/storage")
 const Model = require("../../models/Guest");;
 const cloudinary = require("cloudinary").v2;
+
 const Token = require("../../models/Token")
 const sendEmail = require("../../../libs/sendEmail");
-const generateToken = require("../../utils/generateToken")
+const generateToken = require("../../utils/generateToken");
 
 
 
@@ -26,36 +27,35 @@ cloudinary.config({
 
 router.post("/", upload.single("picture") ,async (req, res) => {
   
-  try{
-    const userExist = await Guest.findOne({ email });
-    if(userExist) {
-      res.send('Usuario ya existe')
+    try{
+      const userExist = await Guest.findOne({ email });
+      if(userExist) {
+        res.send('Usuario ya existe')
+      }
+      console.log("hola")
+      const result = await cloudinary.uploader.upload(req.file.path)
+      const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+      await newGuest.save()
+      
+      console.log(newGuest)
+      const token = new Token({
+        userId: newGuest._id,
+        token: generateToken(newGuest._id)
+      })
+      console.log(token)
+      token.save()
+      console.log(token)
+      const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}, este token expira en una hora`;
+      console.log(url)
+      await sendEmail(newGuest.email,"Verify Email", url)
+      // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
+      res.status(201).redirect("http://localhost:3000/login")
+      //res.redirect("https://nomade-khaki.vercel.app/");
+      //res.redirect("http://localhost:3000/");
     }
-    console.log("hola")
-    const result = await cloudinary.uploader.upload(req.file.path)
-    const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
-    console.log(result)
-    await newGuest.save()
-    
-    console.log(newGuest)
-    const token = new Token({
-      userId: newGuest._id,
-      token: generateToken(newGuest._id)
-    })
-    console.log(token)
-    token.save()
-    console.log(token)
-    const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}, este token expira en una hora`;
-    console.log(url)
-    await sendEmail(newGuest.email,"Verify Email", url)
-    // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
-    res.status(201).redirect("http://localhost:3000/login")
-    //res.redirect("https://nomade-khaki.vercel.app/");
-    //res.redirect("http://localhost:3000/");
-  }
-    catch (error){
-        res.status(404).send(error)
-    }
+      catch (error){
+          res.status(404).send(error)
+      }
 });
 
 

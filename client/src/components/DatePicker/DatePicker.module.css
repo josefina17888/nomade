@@ -48,7 +48,14 @@
 ._14y1gc {
   font-size: 1.5em;
 }
-
+._1gpyw79 {
+  position: relative !important;
+  display: flex !important;
+  width: 100% !important;
+  margin: 0px !important; 
+  border: none transparent !important;
+  background-color: transparent !important;
+}
 ._p03egf {
   margin-bottom: 16px !important;
 }
@@ -75,25 +82,31 @@
 ._7eq2v2{
   font-size: 0.9em;
   text-transform: uppercase;
-}
-._jro6t1 {
-  display: flex !important;
-  flex-direction: column;
-  border: 1px solid #069a8e;
-  min-height: 56px !important;
-  width: 100% !important;
-  border: none !important;
-  outline: none !important;
-  margin: 0px !important;
-  padding: 0px 12px 10px !important;
-  color: inherit !important;
-  font-family: inherit !important;
-  font-size: 0.8em !important;
-  font-weight: inherit !important;
-  line-height: 18px !important;
-  appearance: none !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
+  align-items: flex-start;
 }
 
+.dropdown{
+  white-space: nowrap;
+  width: 100% !important;
+  border: 1px solid #069a8e;
+  background-color: transparent;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-left: 0.8em;
+  border-radius: 10px;
+}
+._r2ourjn {
+  margin-bottom: 16px !important;
+  padding: 16px !important;
+}
+
+.container_btn{
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+}
+.div_Guest_Description{
+  padding: 1em;
+  width: 10em;
+}

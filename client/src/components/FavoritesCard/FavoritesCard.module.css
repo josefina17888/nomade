@@ -1,20 +1,39 @@
 
+.fcontGral{
+
+
+padding-left: 30px;
+margin-left: 50px;
+
+
+
+
+}
+
 .favcard{
-    display: flex;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #000;
-    width: 50%;
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #000;
+  width: 50%;
+
 }
-.fpicture{
-    border: 1px solid black;
-    margin-top: 10px;
-    margin-right: 20px;
-    height: 100px;
-    width: 100px;
+
+.fimg{
+    
+  border-radius: 5px;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  box-shadow: 0px 1px 5px  #180c0c;
+  margin-bottom:10px ;
+
+  }
   
-}
 .ftext{
-    padding: 10px;
+    margin-left: 30px;
+    
+    
 }
 
 .fprice{
@@ -32,21 +51,31 @@
     display: inline;
     
   } 
+  .fguestsIcon{
+    font-size:1.5em;
   
-  .favcard button{
+  
+  }
+  
+  .fcontGral button{
     border:none;
     background: none;
     position: relative;
-    top:10px;
-    left:650px;
+    top:35px;
+    left:45%;
     height: 30px;
     width: 30px;
-    display:flex ;
+
     align-items: center;
     justify-content: center;
     border-radius: 5px;
     
+    
     }
-    .favcard button:hover{
+    .fcontGral button{
         background-color: rgb(233, 230, 230);
     }
+
+ 
+ 
+    

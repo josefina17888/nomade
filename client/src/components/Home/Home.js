@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <div className="c1kae56o dir dir-ltr">
     <NavBar
-    email={user.email}/>
+    email={user?user.email: ""} />
     <Menu setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     <AllCards setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     </div>

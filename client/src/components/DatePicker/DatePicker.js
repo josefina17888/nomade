@@ -4,33 +4,57 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getDetail, settingDate } from "../../Redux/Actions";
+import {
+  getBookingByLodgingId,
+  getDetail,
+  settingDate,
+} from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 
-export default function DatePickerOk() {
-
-  console.log("aqui");
+export default function DatePickerOk({ lodId }) {
   const lodging = useSelector((state) => state.detail);
   const lodgingId = lodging._id;
-  console.log(lodgingId);
-  const [date, setDate] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-  });
-  console.log(date, "SOY DATE DEL PICKER");
-
-  let guestId = localStorage.getItem("userInfo");
-  if (guestId) {
-    var userToken = JSON.parse(guestId).email;
-  }
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
 
+  const price = lodging.price;
+  const [info, setInfo] = useState({
+    lodgingId: lodId,
+    checkIn: new Date(),
+    checkOut: new Date(),
+    guests: 3,
+    pets: 0,
+  });
 
-  function handleClickBooking(e) {
-    dispatch(settingDate(date));
+  //FUNCTION DECREMENT
+  function handleDecrement(e) {
+    e.preventDefault();
+    if (info.guests > 0) {
+      setInfo({ ...info, guests: info.guests-- });
+    }
+    setInfo({ ...info, guests: info.guests });
+  }
+
+  //FUNCTION INCREMENT
+  function handleIncrement(e) {
+    e.preventDefault();
+    if (info.guests < 5) {
+      setInfo({ ...info, guests: info.guests++ });
+    }
+    setInfo({ ...info, guests: info.guests });
+  }
+
+  async function handleClick(e) {
+    setInfo({
+      ...info,
+      checkIn: info.checkIn.toDateString(),
+      checkOut: info.checkOut.toDateString(),
+    });
+    localStorage.setItem("bookingInfo", JSON.stringify(info));
+    localStorage.setItem("priceBooking", JSON.stringify(price));
+    await dispatch(getBookingByLodgingId(info));
   }
   return (
     <div className={styles._1s21a6e2}>
@@ -48,49 +72,72 @@ export default function DatePickerOk() {
                 <div className={styles.review}>Comisión por servicio</div>
               </div>
               <div>
+                <div>Elige la fecha</div>
                 <div className={styles._p03egf}>
                   <div className={styles._jro6t0}>
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Llegada</div>
                       <DatePicker
                         dateFormat="yyyy/MM/dd"
-                        selected={date.startDate}
+                        selected={info.checkIn}
                         onChange={(currentDate) =>
-                          setDate({ ...date, startDate: currentDate })
+                          setInfo({ ...info, checkIn: currentDate })
                         }
-                        startDate={date.startDate}
-                        endDate={date.endDate}
+                        checkIn={info.checkIn}
+                        checkOut={info.checkOut}
                       />
-                      {console.log(date.startDate, "soy start")}
                     </div>
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Salida</div>
                       <DatePicker
                         dateFormat="yyyy/MM/dd"
-                        selected={date.endDate}
+                        selected={info.checkOut}
                         onChange={(currentDate) =>
-                          setDate({ ...date, endDate: currentDate })
+                          setInfo({ ...info, checkOut: currentDate })
                         }
                         selectsEnd
-                        startDate={date.startDate}
-                        minDate={date.startDate}
+                        checkIn={info.checkIn}
+                        minDate={info.checkIn}
                       />
-                      {console.log(date.endDate, "soy END")}
                     </div>
                   </div>
-                  <div className={styles._jro6t1}>
-                    <div className={styles._7eq2v2}>Huéspedes</div>
-                    <form>
-                      <input type="text"></input>
-                    </form>
+                  <div className="dropdown w-100">
+                    <button
+                      className={styles.dropdown}
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <label className={styles._7eq2v2}>Huespedes</label>
+                      <div>{`${info.guests}`}</div>
+                    </button>
+                    <div className="dropdown-menu w-100 p-3">
+                      <div className="d-flex flex-row">
+                        <div className={styles.div_guests_Description}>
+                          <div>Huespedes</div>
+                        </div>
+                        <div className={styles.container_btn}>
+                          <button onClick={handleDecrement}>-</button>
+                          <div>{`${info.guests}`}</div>
+                          <button onClick={handleIncrement}>+</button>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-row">
+                        <div className={styles.div_guests_Description}>
+                          <div>Mascota</div>
+                        </div>
+                        <div className={styles.container_btn}>
+                          <button>Sí</button>
+                          <button>No</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div>
                   {
-                    <Link to={`/${lodgingId}`}>
-                      <button onClick={(e) => handleClickBooking(e)}>
-                        Reserva ahora
-                      </button>
+                    <Link to={`/booking/${lodgingId}`}>
+                      <button onClick={handleClick}>Disponibilidad</button>
                     </Link>
                   }
                 </div>
@@ -98,7 +145,6 @@ export default function DatePickerOk() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
