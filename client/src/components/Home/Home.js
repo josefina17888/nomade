@@ -10,7 +10,6 @@ export default function Home() {
 
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
-  console.log("user",user)
 
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ export default function Home() {
   return (
     <div className="c1kae56o dir dir-ltr">
     <NavBar
-    email={user.email}/>
+    email={user?user.email: ""} />
     <Menu setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     <AllCards setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     </div>

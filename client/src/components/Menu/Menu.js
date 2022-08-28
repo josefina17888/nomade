@@ -41,6 +41,12 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
     e.preventDefault();
     dispatch(orderByHigherCost(e.target.value));
   }
+
+  // function handleSortByRating(e) {
+  //   e.preventDefault()
+  //   dispatch(orderByRating(e.target.value))
+  // }
+
   return (
     <div className="n1p4yt3r dir dir-ltr">
       <div className={s.container}>
@@ -64,7 +70,6 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
             </button>
           </div>
           <div>
-          
             <button className={s.button_icon} onClick={handleSortByRating}>
               <span>
                 <TbTrendingUp className={s.icons} />
@@ -74,7 +79,6 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
               </span>
             </button>
           </div>
-          <div></div>
           <div>
             <button className={s.button_icon} onClick={handleFilterByPets}>
               <span>

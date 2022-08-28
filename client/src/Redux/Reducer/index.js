@@ -1,22 +1,25 @@
-import { LOGIN_USER, GET_BY_CITY } from "../Actions/index";
-
 const initialState = {
   lodgings: [],
   allLodgings: [],
   loader: true,
   detail: {},
   user: null,
-  userFavorites:[],
-  favNumber:0,
+  userFavorites: [],
+  favNumber: 0,
   guest: {},
   checkIn: {},
   checkOut: {},
-  dates:[],
+  dates: [],
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
-  rating : []
+  rating : [],
+  payment: {},
+  rating: [],
+  bookings:[]
+
 };
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -79,9 +82,9 @@ function rootReducer(state = initialState, action) {
       };
 
     case "FILTER_BY_PETS":
-      const filtering = state.lodgings
-      const pets = filtering.filter(e => e.services.pets === true)
-      console.log(pets)
+      const filtering = state.lodgings;
+      const pets = filtering.filter((e) => e.services.pets === true);
+      console.log(pets);
       return {
         ...state,
         lodgings: pets,
@@ -93,9 +96,8 @@ function rootReducer(state = initialState, action) {
       });
       return {
         ...state,
-        lodgings: lowest.map(e=>e),
+        lodgings: lowest.map((e) => e),
       };
-
     case "ORDER_BY_HIGHEST":
       const highest = state.lodgings.sort(function (a, b) {
         return b.price - a.price;
@@ -113,7 +115,7 @@ function rootReducer(state = initialState, action) {
       console.log(highest);
       return {
         ...state,
-        lodgings: highest.map(e=>e),
+        lodgings: highest.map((e) => e),
       };
 
 
@@ -162,48 +164,52 @@ function rootReducer(state = initialState, action) {
         detail: action.payload,
       };
 
-    
     case "GET_GUEST":
       return {
         ...state,
-        guest: action.payload
-      }
+        guest: action.payload,
+      };
 
     case "GET_ALL_GUESTS":
       return {
         ...state,
-        allGuests: action.payload
-      }
+        allGuests: action.payload,
+      };
     case "GET_GUEST_BY_EMAIL":
-      return{
+      return {
         ...state,
-        duplicate: action.payload
-      }
+        duplicate: action.payload,
+      };
 
     case "GET_FAVORITES":
-      
       return {
         ...state,
-        userFavorites: action.payload
-      }
+        userFavorites: action.payload,
+      };
 
-      case "ADD_FAVORITE":
-        
-        return{
+    case "ADD_FAVORITE":
+      console.log("reducer", action.payload);
+      return {
         ...state,
-        userFavorites: action.payload
-        }
+        userFavorites: [...state.userFavorites, action.payload],
+      };
+
+        case "GET_BOOKING_LODGING_ID":
+          console.log(action.payload, 'SOY ACTION PAYLOAD REDUCER')
+          return{
+            ...state,
+            bookings: action.payload
+          }
 
     case "DELETE_FAVORITE":
-      console.log(action.payload, "soy action")
-      /* let favoritos = state.userFavs
-      favoritos.filter(e=>e.lodgingId !== action.payload.lodgingId._id  ) */
-      return {
-      
-        ...state,
-        userFavorites: action.payload
+      console.log(action.payload, "soy action");
 
-      }
+      return {
+        ...state,
+        userFavorites: state.userFavorites.filter(
+          (e) => e.lodgingId !== action.payload.lodgingId
+        ),
+      };
     /*
     case "FAVORITE_NUMBER":
       return {
@@ -211,22 +217,20 @@ function rootReducer(state = initialState, action) {
         favNumber: action.payload
       } */
 
-      case "SET_DATE":
-      return{
-        ...state,
-        checkIn: action.payload.startDate,
-        checkOut: action.payload.endDate
-      }
-    case "GET_ALL_LODGINGREVIEWS":
-      
+    case "SET_DATE":
       return {
         ...state,
-        allLodgingsReviews: action.payload
-        
-      }
+        checkIn: action.payload.startDate,
+        checkOut: action.payload.endDate,
+      };
+    case "GET_ALL_LODGINGREVIEWS":
+      return {
+        ...state,
+        allLodgingsReviews: action.payload,
+      };
 
     default:
-      return {...state} ;
+      return { ...state };
   }
 }
 
