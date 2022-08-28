@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from '../../NavBar/NavBar';
 import ResDetail from "../ResDetail/ResDetail";
 import s from "./Chat.module.css";
 import Conversation from '../Conversation/Conversation'
 import Message from "../Message/Message";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 export default function Chat() {
+  const dispatch = useDispatch()
+  const [conversations, setConversations]=useState([]);
+  const user=JSON.parse(localStorage.getItem("userInfo"))
+  console.log(user.email)
+
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const res = await axios.get("/conversation/" + user.email);
+        console.log("RES",res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, [user._id]);
   return (
     <>
       <NavBar />

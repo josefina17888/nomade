@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
             username: newUser.username,
             password: newUser.password,
             picture: newUser.picture,
+            _id:newUser._id,
             token: generateToken(newUser._id)
         })
     } else {

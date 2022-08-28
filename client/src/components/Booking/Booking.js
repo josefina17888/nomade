@@ -71,8 +71,7 @@ export default function Booking(props) {
     console.log(filtradosPrueba, 'POR FAVOR TRUE')
   }
 
-  //HANDLE POST NEW BOOKING
-  function handleBooking() {
+  
     dispatch(createNewBooking(input));
     dispatch(payBooking(info));
   }
@@ -134,11 +133,10 @@ export default function Booking(props) {
 
             {/* </Link> */}
             {/* <MercadoPago lodId={lodgingId} night={input.night} price={costNight}/> */}
-            <MercadoPagoFinal preferenceId={preference}/>
+           {/*  <MercadoPagoFinal preferenceId={preference}/> */}
           </div>
         </div>
       )}
     </div>
   );
-}
 }
