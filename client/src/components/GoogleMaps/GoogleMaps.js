@@ -17,7 +17,6 @@ export default function GoogleMaps() {
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({});
-  console.log(coordinates);
 
   const onChange = (e) => {
     setAddress(e.target.value);
@@ -44,9 +43,21 @@ export default function GoogleMaps() {
     }
   }
 
+  
+
   const locations = [
-    { lat: -31.56391, lng: -71.0229 },
+    { lat: 11.9473632, lng: -66.6781427 },
     { lat: -32.9398988, lng: -71.5482386 },
+    { lat: -13.5168599, lng: -71.9841378 },
+    { lat: -34.9547682, lng: -54.938577 },
+    { lat: -32.9415184, lng: -71.5479584 },
+    { lat: -31.8960751, lng: -64.7799006 },
+    { lat: -31.2955709, lng: -58.0055963 },
+    { lat: -38.0083016, lng: -57.5475263 },
+    { lat: -5.1852349, lng: -80.6199183 },
+    { lat: -5.1903382, lng: -80.6231898 },
+    { lat: -12.1214739, lng: -77.0462931 },
+    { lat: -34.8567735, lng: -56.2238914 },
   ];
 
   function createKey(location) {
@@ -55,8 +66,8 @@ export default function GoogleMaps() {
 
   const center = useMemo(
     () => ({
-      lat: -32.933738,
-      lng: -71.5480715,
+      lat: -32.497260,
+      lng: -66.108828,
     }),
     []
   );
@@ -74,12 +85,13 @@ export default function GoogleMaps() {
     []
   );
 
+
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <div className={style.containerMap}>
       <GoogleMap
-        zoom={15}
+        zoom={6}
         center={center}
         mapContainerStyle={{
           height: "100vh",
@@ -87,18 +99,26 @@ export default function GoogleMaps() {
         }}
         options={options}
       >
-        <MarkerF position={centerTest} draggable={true} />
-        {/* <MarkerClusterer>
+        <MarkerF position={centerTest}/>
+        <MarkerClusterer>
           {(clusters) =>
             locations.map((location) => (
               <MarkerF
                 key={createKey(location)}
                 position={location}
                 clusterer={clusters}
+                icon={{
+                  url: 'https://i.postimg.cc/YGjZ4HX0/Nomade.png',
+                  scaledSize: new window.google.maps.Size(18, 18),
+                }}
+                onClick={() => {
+                  console.log(location);
+                } }
               />
             ))
           }
-        </MarkerClusterer> */}
+          
+        </MarkerClusterer>
       </GoogleMap>
       <Autocomplete>
         <input
