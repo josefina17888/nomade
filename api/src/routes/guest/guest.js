@@ -12,10 +12,6 @@ const Token = require("../../models/Token")
 const sendEmail = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken")
 
-const Token = require("../../models/Token")
-const sendEmail = require("../../../libs/sendEmail");
-const generateToken = require("../../utils/generateToken");
-
 
 
 

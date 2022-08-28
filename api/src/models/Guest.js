@@ -14,11 +14,7 @@ const GuestSchema = new Schema({
   booking: [{ type: Schema.ObjectId, ref: "Booking" }, ],
   reviews: [{ type: Schema.ObjectId, ref: "GuestReview", }, ],
   birthDate: { type: Date },
-<<<<<<< HEAD
   verified: { type: Boolean, default: false },
-=======
-  verified: {type: Boolean, default: false}
->>>>>>> 63139ecc0b2e5aadd7d113f7d546699f40b32d44
   // public_id: {
   //   type: String
   // }
