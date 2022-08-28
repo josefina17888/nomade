@@ -26,6 +26,12 @@ export function filterTypeHouse(payload){
     payload
   }
 }
+export function orderByRating(payload){
+  return{
+    type: "ORDER_BY_RATING",
+    payload
+  }
+}
 export function filterByPets(payload){
   return{
     type: "FILTER_BY_PETS",
@@ -237,7 +243,7 @@ export function lodgingReviews(){
   return async function(dispatch){
     try {
       const res = await axios.get("http://localhost:3001/api/lodgingReview")
-      console.log(res)
+    
       return dispatch({
         type: "GET_ALL_LODGINGREVIEWS",
         payload: res.data
