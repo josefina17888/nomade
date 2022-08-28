@@ -10,7 +10,7 @@ export default function Home() {
 
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
-  console.log("user",user)
+
 
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();

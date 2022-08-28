@@ -1,9 +1,9 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBar from '../../NavBar/NavBar';
 import ResDetail from "../ResDetail/ResDetail";
 import s from "./Chat.module.css";
-import Conversation from "./Conversation/Conversation";
-import Message from "./Message/Message";
+import Conversation from '../Conversation/Conversation'
+import Message from "../Message/Message";
 
 export default function Chat() {
   return (

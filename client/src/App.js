@@ -17,7 +17,7 @@ import LodgingReview from './components/LodgingReview/LodgingReview'
 /* import AdminDash from './components/Admin/AdminDash'; */
 import Booking from './components/Booking/Booking'
 import MercadoPago from './components/MercadoPago/MercadoPago'
-import Chat from './components/Chat/Chat'
+import Chat from './components/Messenger/Chat/Chat'
 
 
 

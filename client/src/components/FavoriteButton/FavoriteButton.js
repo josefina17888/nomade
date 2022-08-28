@@ -7,21 +7,27 @@ import Favorites from "../Favorites/Favorites";
 
 export default function Favorite(props) {
   const dispatch = useDispatch();
-  let userEmail = JSON.parse(props.guestInfo).email;
   const favorites = useSelector((state) => state.userFavorites);
-  console.log("favorites", favorites);
   let stateLodgings = useSelector((state) => state.lodgings);
   const [sButton, setSButton] = useState(false);
+
+
+if(!props.guestInfo){
+  var demo= false
+}else{ var userEmail = JSON.parse(props.guestInfo).email;
+ 
+  var favData = {
+    userEmail: userEmail,
+    lodgingId: props.id,
+  };
 
   useEffect(() => {
     dispatch(getFavorites(favData));
   }, [dispatch]);
 
-  let favData = {
-    userEmail: userEmail,
-    lodgingId: props.id,
-  };
-  let userFavs = {
+
+  
+  var userFavs = {
     userEmail: userEmail,
     lodgingId: props.id,
     city: props.city,
@@ -31,7 +37,7 @@ export default function Favorite(props) {
     picture: props.picture[0],
     currency: props.currency,
   };
-  let ids = [];
+  var ids = [];
 
   for (let e in favorites) {
     for (let i in stateLodgings) {
@@ -41,14 +47,14 @@ export default function Favorite(props) {
     }
   }
 
-  let stateIds = stateLodgings.map((e) => e._id);
+  var stateIds = stateLodgings.map((e) => e._id);
 
   if (favorites !== undefined) {
     console.log("favorites", favorites);
     var favoritesId = favorites.map((e) => e.lodgingId);
   }
 
-  let isfaved = favoritesId.some((favid) => favid === props.id);
+  var isfaved = favoritesId.some((favid) => favid === props.id);}
 
   async function handleClick(e) {
     if (isfaved) {
