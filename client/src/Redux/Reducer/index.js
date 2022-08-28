@@ -1,5 +1,3 @@
-import { LOGIN_USER, GET_BY_CITY } from "../Actions/index";
-
 const initialState = {
   lodgings: [],
   allLodgings: [],
@@ -15,6 +13,9 @@ const initialState = {
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
+  payment: {},
+  bookings:[]
+
 };
 
 function rootReducer(state = initialState, action) {
@@ -132,6 +133,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         userFavorites: [...state.userFavorites, action.payload],
       };
+
+        case "GET_BOOKING_LODGING_ID":
+          console.log(action.payload, 'SOY ACTION PAYLOAD REDUCER')
+          return{
+            ...state,
+            bookings: action.payload
+          }
 
     case "DELETE_FAVORITE":
       console.log(action.payload, "soy action");
