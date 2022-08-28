@@ -237,7 +237,6 @@ export function lodgingReviews(){
   return async function(dispatch){
     try {
       const res = await axios.get("http://localhost:3001/api/lodgingReview")
-      console.log(res)
       return dispatch({
         type: "GET_ALL_LODGINGREVIEWS",
         payload: res.data
@@ -254,6 +253,9 @@ export function lodgingReviews(){
 //   console.log(payload, 'SOY PAYLOAD')
 //   return{
 //     type: "SET_DATE",
+// export function orderByRating(payload){
+//   return{
+//     type: "ORDER_BY_RATING",
 //     payload
 //   }
 // }

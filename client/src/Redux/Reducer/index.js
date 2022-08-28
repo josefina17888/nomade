@@ -15,9 +15,10 @@ const initialState = {
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
-  payment: {}
-
+  payment: {},
+  rating: [],
 };
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -51,6 +52,40 @@ function rootReducer(state = initialState, action) {
         ...state,
         lodgings: lowest.map(e=>e),
       };
+
+    // case "ORDER_BY_RATING":
+    //   const allLodgingsReviewsMap = state.allLodgingsReviews.map(e => {
+    //     return {
+    //       lodgingId: e.lodgingId,
+    //       rating: e.rating,
+    //     };
+    //   }).filter(e => e.rating !== 0);
+    //   const sumRating = allLodgingsReviewsMap.reduce((acc, curr) => {
+    //     if (acc[curr.lodgingId]) {
+    //       acc[curr.lodgingId] += curr.rating;
+    //     } else {
+    //       acc[curr.lodgingId] = curr.rating;
+    //     }
+    //     return acc;
+    //   }, {});
+    //   const averageRating = Object.keys(sumRating).map(e => {
+    //     return {
+    //       lodgingId: e,
+    //       rating: sumRating[e] / allLodgingsReviewsMap.filter(f => f.lodgingId === e).length,
+    //     };
+    //   }).sort((a, b) => b.rating - a.rating);
+
+    //   for(let i = 0; i < state.lodgings.length; i++) {
+    //     state.lodgings[i]["rating"] = state.rating[i]
+    //   }
+    //   console.log(averageRating, 'averageRating')
+    //   state.rating.push(averageRating)
+    //   console.log(state.rating, 'Hola')
+    //   console.log(state.lodgings)
+    //   return {
+    //     ...state,
+    //     lodgings: averageRating,
+    //   };
 
     case "ORDER_BY_HIGHEST":
       const highest = state.lodgings.sort(function (a, b) {

@@ -8,7 +8,6 @@ export default function Favorite(props) {
 const dispatch= useDispatch()
 let userEmail= JSON.parse(props.guestInfo).email;
 const favorites = useSelector((state) => state.userFavorites);
-console.log("favorites",favorites)
 let stateLodgings = useSelector((state) => state.lodgings);
 const [sButton, setSButton]=useState(false)
 
