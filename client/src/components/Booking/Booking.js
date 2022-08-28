@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  createNewBooking,
-  getBookingByLodgingId,
-} from "../../Redux/Actions/index";
+import { createNewBooking, getBookingByLodgingId, payBooking } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
 import MercadoPago from "../MercadoPago/MercadoPago";
 import getDatesInRange from "../Booking/controller";
+import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
+
 
 export default function Booking(props) {
   //SELECT STATES FROM REDUX
@@ -45,6 +44,22 @@ export default function Booking(props) {
     lodgingId: lodgingId,
   });
 
+  /* const handleChangeInput = (e)=>{
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    })
+  }*/
+
+  const night = input.night; 
+  const info = {
+    lodgingId,
+     night,
+     costNight
+  }
+
+  function handleBooking() {
+
   //CONDITIONAL FOUND AVALABILITY
   if (availibity && availibity.length) {
     console.log(alldates.toString(), 'CONVIRTIENTO A STRIGN')
@@ -59,7 +74,12 @@ export default function Booking(props) {
   //HANDLE POST NEW BOOKING
   function handleBooking() {
     dispatch(createNewBooking(input));
+    dispatch(payBooking(info));
   }
+
+  const preferenceId = useSelector(state => state.payment)
+
+  const preference = preferenceId.preferenceId
 
   return (
     <div>
@@ -113,7 +133,8 @@ export default function Booking(props) {
             </button>
 
             {/* </Link> */}
-            <MercadoPago lodId={lodgingId} night={input.night} price={costNight}/>
+            {/* <MercadoPago lodId={lodgingId} night={input.night} price={costNight}/> */}
+            <MercadoPagoFinal preferenceId={preference}/>
           </div>
         </div>
       )}
