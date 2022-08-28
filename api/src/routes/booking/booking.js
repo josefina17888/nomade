@@ -10,18 +10,21 @@ const toId = mongoose.Types.ObjectId;
 
 //POST del nuevo booking de Guest
 router.post("/", async (req, res) => {
-  console.log('HOLA ENTRAMOS')
   try {
     const newBooking = await Booking.create(req.body)
+    console.log(newBooking, 'NUEVO BOOKING')
     newBooking.lodgingId = toId(req.body.lodgingId)
     const infoGuest= await Guest.find({email: req.body.email})
     let userId = ( infoGuest[0]._id)
     const lodging = await Lodging.findById(req.body.lodgingId)
+    console.log(lodging, 'SOY LODGING')
     newBooking.costNight = lodging.price
+    console.log(newBooking.costNight, 'SOY COST POR NIGHT')
+    console.log(newBooking.night, 'SOY NIGHT')
     newBooking.totalPrice = (newBooking.costNight * newBooking.night)
+    console.log(newBooking.totalPrice, 'SOY TOTAL PRICE')
     newBooking.guestId = userId
     newBooking.save();
-    console.log(newBooking)
     res.status(200).json(newBooking);
   } catch (error) {
     res.status(400).send("Booking not created");
@@ -36,10 +39,14 @@ router.get("/:guestId", async (req, res)=>{
    })
 })
 
-router.get('/:lodgingId', async(req, res) =>{
-  console.log(req.params.lodgingId)
-  Booking.find({lodgingId: req.params.lodgingId}, (error,docs)=>{
-    res.send(docs)
+//RUTA GET PERO NO FUNCIONABA ASÍ QUE ES POST-GET
+router.post('/booking', async(req, res) =>{
+  console.log(req.body, 'aqui BOOKING BODY')
+  const lodgingId = toId(req.body.lodgingId) 
+  console.log(lodgingId, 'soy lodging') 
+  Booking.find({lodgingId: lodgingId}, (error,docs)=>{
+    console.log(docs, 'DOCS')
+    res.json(docs)
    })
 })
 

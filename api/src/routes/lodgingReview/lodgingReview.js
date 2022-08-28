@@ -7,8 +7,6 @@ const toId = mongoose.Types.ObjectId;
 const upload = require("../../../libs/storage")
 router.post("/:guestId/:lodgingId" ,upload.single(), async (req, res) => {
     let {rating, comments} = req.body;
-    console.log(req.body)
-    console.log(comments)
     if (!rating || !comments){
         return res.status(400).send({message: 'Rating and comments are required'})
     }
@@ -31,7 +29,6 @@ router.post("/:guestId/:lodgingId" ,upload.single(), async (req, res) => {
   router.get("/", async (req, res) => {
     const citySearching = await req.query.city;
     reviewLodgings = await lodgingReview.find();
-    console.log(reviewLodgings)
     try {
           res.send(reviewLodgings);  
     } catch (err) {
