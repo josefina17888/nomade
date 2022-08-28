@@ -3,7 +3,6 @@ const router = express.Router();
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
 const upload = require("../../../libs/storage")
-const Model = require("../../models/Guest");;
 const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
@@ -20,24 +19,18 @@ cloudinary.config({
 
 
 
-
 router.post("/", upload.single("picture") ,async (req, res) => {
-  console.log("abel")
-  console.log(req.body.email)
-  const { name , lastname , email , cellPhone , dni , country,  birthDate,password} = req.body
+  const { name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
     try{
-      const userExist = await Guest.findOne({ email: req.body.email });
-      console.log(userExist)
+      const userExist = await Guest.findOne({ email });
       if(userExist) {
         res.send('Usuario ya existe')
       }
       console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
-      console.log("hola")
-      const newGuest = Guest.create({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
-      console.log("hola")
+      console.log(result)
+      const newGuest = new Guest({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
       await newGuest.save()
-      console.log("hola")
       console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,
@@ -53,8 +46,6 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
       // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
       res.status(201).redirect("http://localhost:3000/login")
-      //res.redirect("https://nomade-khaki.vercel.app/");
-      //res.redirect("http://localhost:3000/");
     }
       catch (error){
           res.status(404).send(error)
@@ -67,7 +58,7 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
   console.log(req.params.token)
   console.log(req.params.idGuest)
   try {
-    const guest = await Model.findOne({_id: req.params.idGuest})
+    const guest = await Guest.findOne({_id: req.params.idGuest})
     console.log(guest)
     if(!guest) return(400).send({message:"Invalid link"});
     console.log("hola")

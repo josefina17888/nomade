@@ -6,7 +6,10 @@ import style from "./ResetPassword.module.css";
 
 export default function ResetPassword() {
     const [validUrl , setValidUrl] = useState(false)
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState({
+      password1: "",
+      password2: ""
+    });
     const params = useParams()
     const history = useHistory()
     useEffect( () => {
@@ -28,20 +31,27 @@ export default function ResetPassword() {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-          if (password === "") {
-            alert("Por favor ingrese todos los campos");
+
+          if (password.password1 !== password.password2) {
+            return alert("La contraseñas deben ser iguales");
           }
+           let passwordOne = password.password1
+          // if(password !== password2) {
+          //   alert("diferentes")
+          // }
           const config = {
             headers: {
               "Content-Type": "application/json",
             },
           };
           console.log("hola")
+          console.log(params.idGuest)
+          console.log("hola")
           const { data } = await axios.patch(
             //`${process.env.REACT_APP_API}/api/login`,
             `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
             {
-              password,
+              passwordOne,
             },
             config
           );
@@ -65,12 +75,20 @@ export default function ResetPassword() {
                 <form onSubmit={submitHandler} className={style.containerForm}>
                 <input
                     className={style.inputPassword}
-                    value={password}
+                    value={password.password1}
                     type="password"
                     placeholder="Contraseña"
                     required = {true}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    onChange={(e) => setPassword({...password , password1: e.target.value })}
+                />  
+                <input
+                className={style.inputPassword}
+                value={password.password2}
+                type="password"
+                placeholder="Contraseña"
+                required = {true}
+                onChange={(e) => setPassword({...password , password2: e.target.value })}
+            />
                 <input
                     value="Cambiar contraseña"
                     className={style.button}

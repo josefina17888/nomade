@@ -74,7 +74,7 @@ export default function NavBar(props) {
                           <li>
                             <Link
 
-                              to= {`/profile/${props.email}`}
+                              to= {`/profile/${userToken}`}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil
