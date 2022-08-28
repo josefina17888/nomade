@@ -14,9 +14,10 @@ const initialState = {
   duplicate: [],
   allLodgingsReviews: [],
   payment: {},
+  rating: [],
   bookings:[]
-
 };
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -50,7 +51,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         lodgings: lowest.map((e) => e),
       };
-
     case "ORDER_BY_HIGHEST":
       const highest = state.lodgings.sort(function (a, b) {
         return b.price - a.price;
