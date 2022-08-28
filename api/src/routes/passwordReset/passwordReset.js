@@ -54,13 +54,10 @@ router.get("/:_id/:token", async (req, res) => {
 
 
   router.patch("/newPassord/:_id/:token", async(req,res) => {
-    console.log(req.params._id)
-    console.log(req.body.password)
     const guest = await Guest.findById(req.params._id)
     guest.password = req.body.password
-    console.log(guest)
     guest.save()
-    res.send("contraseña cambiada")
+    res.redirect("http://localhost:3000/")
   })
 
 module.exports = router

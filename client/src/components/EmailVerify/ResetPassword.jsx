@@ -36,6 +36,7 @@ export default function ResetPassword() {
               "Content-Type": "application/json",
             },
           };
+          console.log("hola")
           const { data } = await axios.patch(
             //`${process.env.REACT_APP_API}/api/login`,
             `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
@@ -44,6 +45,7 @@ export default function ResetPassword() {
             },
             config
           );
+          console.log(data)
           setPassword("");
           history.push("/login");
         } catch (error) {

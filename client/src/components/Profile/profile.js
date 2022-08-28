@@ -8,8 +8,9 @@ import NavBar from '../NavBar/NavBar.js'
 
 let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
+  console.log(user)
 
-export default function Profile({email}) {
+export default function Profile() {
   const dispatch = useDispatch()
   const guestDet = useSelector((state) => state.guest)
   const detalles = guestDet[0]
@@ -40,7 +41,7 @@ export default function Profile({email}) {
                 {detalles.birthDate ? (
                   <div>
                     <h4>Fecha de Nacimiento</h4>
-                    <h6>{detalles.birthDate}</h6>
+                    <h6>{(detalles.birthDate).slice(0, -14)}</h6>
                     <hr width="700"></hr>
                   </div>
                 ) : (
@@ -50,7 +51,7 @@ export default function Profile({email}) {
                 <h6>{detalles.email}</h6>
                 <hr width="700"></hr>
                 <h4>Contraseña</h4>
-                <h6>{detalles.password}</h6>
+                <Link to="/:idGuest/resetPassword/:token" ><button>Actualizar Contraseña</button></Link>
                 <hr width="700"></hr>
                 {detalles.cellPhone ? (
                   <div>

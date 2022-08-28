@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
-import jwt_decode from "jwt-decode";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { createOrGetUserGoogle } from "../../utils/userGoogle";
 
 export default function LoginUser() {

@@ -248,27 +248,6 @@ export function lodgingReviews(){
   }
 }
 
- 
-
-// export function settingDate(payload){
-//   console.log(payload, 'SOY PAYLOAD')
-//   return{
-//     type: "SET_DATE",
-//     payload
-//   }
-// }
-
-// BOOKING
-// export function createNewBooking(payload) {
-//   return async function (dispatch) {
-//     console.log(payload);
-//     var json = await axios.post(
-//       "/api/lodging/62fe7ea0b2a41b94d94fd0f2",
-//       payload
-//     );
-//     }}
-
-
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
@@ -291,6 +270,21 @@ export function payBooking(payload) {
     console.log(error)
   }}
 }
+
+export function getBookingByLodgingId(payload){
+  return async function(dispatch){
+    try{
+    var response = await axios.post('/api/booking/booking', payload)
+      return dispatch({
+        type: "GET_BOOKING_LODGING_ID",
+        payload: response.data
+       
+    }) 
+    }catch(err){
+      console.log(err)
+    }
+  }
+} 
 
 
 

@@ -22,19 +22,22 @@ cloudinary.config({
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
-  
+  console.log("abel")
+  console.log(req.body.email)
+  const { name , lastname , email , cellPhone , dni , country,  birthDate,password} = req.body
     try{
-      const userExist = await Guest.findOne({ email });
+      const userExist = await Guest.findOne({ email: req.body.email });
+      console.log(userExist)
       if(userExist) {
         res.send('Usuario ya existe')
       }
       console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
-
-      const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
-
+      console.log("hola")
+      const newGuest = Guest.create({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+      console.log("hola")
       await newGuest.save()
-      
+      console.log("hola")
       console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,

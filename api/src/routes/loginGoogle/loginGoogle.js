@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
             password: newUser.password,
             picture: newUser.picture,
             token: generateToken(newUser._id),
-            verified: true
+            verified: true,
         })
     } else {
         if(user) {

@@ -51,12 +51,12 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
               <div className={styles.card}>
 
                 
-                  <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
+                  {/* <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
                       country={e.country}
                       price={e.price}
                       guests={e.guests}
                       picture={e.picture[0]}
-                      currency={e.currency}/>
+                      currency={e.currency}/> */}
 
 
                 <div className={styles.link} key={e._id}>
