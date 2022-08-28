@@ -47,19 +47,12 @@ const LodgingSchema = new mongoose.Schema({
   LodgingReviewId: {
     type: mongoose.Types.ObjectId,
     ref: "LodgingReview",
-<<<<<<< HEAD
-
-=======
->>>>>>> 09d8e57a87cc1f3c37ea10e61daa1e83ab5465eb
   }, 
   Favorite: {
     type: mongoose.Types.ObjectId,
     ref: "Favorite",
   }, 
-<<<<<<< HEAD
-=======
 
->>>>>>> 09d8e57a87cc1f3c37ea10e61daa1e83ab5465eb
   unavailableDate: [{type: Date}] 
 
   

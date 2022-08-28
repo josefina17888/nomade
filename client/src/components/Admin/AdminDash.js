@@ -8,10 +8,10 @@ import Footer from './Footer'
 export default function AdminDash() {
   return (
     <div>
-        <Header/>
+        {/* <Header/>
         <Aside/>
         <Content/>
-        <Footer/>
+        <Footer/> */}
     </div>
   )
 }
