@@ -8,11 +8,11 @@ import FormUser from './components/FormGuest/FormGuest.js';
 import CardDetail from './components/CardDetail/CardDetail';
 import FormLodging from './components/FormLodging/FormLodging.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FormHost from './components/FormHost/FormHost'AD
+import FormHost from './components/FormHost/FormHost'
 import Verify from './components/EmailVerify/Verify'
 import ResetPassword from './components/EmailVerify/ResetPassword'
 import ForgotPassword from './components/EmailVerify/ForgotPassword'
-import Favorites from './components/Favorites/Favorites' 
+// import Favorites from './components/Favorites/Favorites' 
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
@@ -33,9 +33,9 @@ function App() {
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/profile/:email' component={Profile}></Route>
           <Route path='/:guestId/form' component={FormHost}/>
-          <Route exact path='/favorites' component={Favorites}/> 
+          {/* <Route exact path='/favorites' component={Favorites}/>  */}
           <Route exact path= '/:_id' component={Booking}/>
-          {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
+          <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
