@@ -15,35 +15,38 @@ router.post("/", async function (req, res, next) {
     
     // const searchBooking = req.params.id;
     const bookingData = req.body
-    console.log(bookingData)
     //busca el booking
     // const bookingPayed = await Booking.findOne({_id: req.params.bookingId});
     // console.log(bookingPayed)
-    const title = req.body.lodId
-    const quantity = req.body.night
-    const price = req.body.costNight
+    // const title = req.body.lodId
+    // const quantity = req.body.night
+    // const price = 100
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
-    // Toma del lodging el title y el unit price y toma del body la cantidad de noches
+    try {
         let preference = {
             items: [{
-                title: title,
-                quantity: quantity,
-                unit_price: price,
+                title: req.body.lodId,
+                quantity: req.body.night,
+                unit_price: req.body.costNight,
             }],
             back_urls: {
-                success: "http://localhost:3001/api/payment/feedback",
+                success: "http://localhost:3001/api/payment/",
                 failure: "http://localhost:3001/api/payment/feedback",
                 pending: "http://localhost:3001/api/payment/feedback"
             },
         }
     console.log(preference.items)
 
-    try {
-    const response = await mercadopago.preferences.create(preference)
-    const preferenceId = response.body.id
-    console.log(preferenceId)
-    res.send({ preferenceId });
-    
+     mercadopago.preferences.create(preference)
+    .then(function (response){
+        res.json({
+            preferenceId: response.body.id,
+        })
+    })
+    // const preferenceId = response.body.id
+    // console.log(preferenceId)
+    // res.send({ preferenceId });
+
     } catch (error) {
         console.log(error)
     }
@@ -52,7 +55,7 @@ router.post("/", async function (req, res, next) {
 
 
 
-router.get('/feedback', function(req, res) {
+router.get('/', function(req, res) {
 	res.json({
 		Payment: req.query.payment_id,
 		Status: req.query.status,

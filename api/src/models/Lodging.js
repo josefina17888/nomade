@@ -54,6 +54,7 @@ const LodgingSchema = new mongoose.Schema({
   }, 
 
   unavailableDate: [{type: Date}] 
+
   
 });
 
