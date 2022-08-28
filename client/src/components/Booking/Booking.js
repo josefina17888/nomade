@@ -1,43 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createNewBooking } from "../../Redux/Actions/index";
+import {
+  createNewBooking,
+  getBookingByLodgingId,
+} from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
-import DatePickerOk from "../DatePicker/DatePicker";
 import MercadoPago from "../MercadoPago/MercadoPago";
+import getDatesInRange from "../Booking/controller";
 
 export default function Booking(props) {
-  const checkIn = useSelector((state) => state.checkIn);
-  const checkOut = useSelector((state) => state.checkOut);
+  //SELECT STATES FROM REDUX
+  const dispatch = useDispatch();
   const lodging = useSelector((state) => state.detail);
-  const costNight = lodging.price
-  console.log(costNight)
-  const lodgingId = props.match.params._id
+  const availibity = useSelector((state) => state.bookings);
+  //DECLARATION CONST FOR USE DATES
+  const costNight = lodging.price;
+  const lodgingId = props.match.params._id;
+  const avalaibleDates = availibity.map((e) =>
+    e.allDates.map((d) => new Date(d).toDateString())
+  );
+
+  // PARSE INFO LOCAL STORAGE BOOKING INFO
+  const bookingInfo = localStorage.getItem("bookingInfo");
+  var preCheckIn = JSON.parse(bookingInfo).checkIn;
+  var preCheckOut = JSON.parse(bookingInfo).checkOut;
+  var preGuest = JSON.parse(bookingInfo).guests;
+
+  //PARSE INFO LOCAL STORAGE USER INFO
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
-
-  const bookingInfo = localStorage.getItem("bookingInfo");
-  var preCheckIn = JSON.parse(bookingInfo).startDate;
-  var preCheckOut = JSON.parse(bookingInfo).endDate;
-  var preGuest = JSON.parse(bookingInfo).guest;
-  console.log(preCheckIn, preCheckOut, preGuest);
-  const dispatch = useDispatch();
-  var noGuest = true;
-
-  const getDatesInRange = (checkIn, checkOut) => {
-    const start = new Date(checkIn);
-    const end = new Date(checkOut);
-    const nights = new Date(start.getTime());
-    const dates = [];
-
-    while (nights < end) {
-      dates.push(new Date(nights).getTime());
-      nights.setDate(nights.getDate() + 1);
-    }
-    return dates;
-  };
+  //GET RANGES OF DATES
   const alldates = getDatesInRange(preCheckIn, preCheckOut);
+
+  //NEW STATE WITH PROPERTIES FOR LOCAL STORAGE
   const [input, setInput] = useState({
     checkIn: preCheckIn,
     checkOut: preCheckOut,
@@ -47,14 +44,21 @@ export default function Booking(props) {
     email: userEmail,
     lodgingId: lodgingId,
   });
-  /* const handleChangeInput = (e)=>{
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value
-    })
-  }*/
-  function handleBooking() {
 
+  //const arrayDemo = []
+  //CONDITIONAL FOUND AVALABILITY
+  if (availibity && availibity.length) {
+    console.log(alldates.toString(), 'CONVIRTIENTO A STRIGN')
+    const availibityMap = avalaibleDates.map(e=> e.toString())
+    const datesString= alldates.toString();
+    console.log(availibityMap, 'vengo del REDUX soy dates de los bokings')
+    /*const allDatesMap = alldates.map( d => new Date( d ).getDate() );*/
+    const filtradosPrueba = availibityMap.some(e=>e.includes(datesString));
+    console.log(filtradosPrueba, 'POR FAVOR TRUE')
+  }
+
+  //HANDLE POST NEW BOOKING
+  function handleBooking() {
     dispatch(createNewBooking(input));
   }
 
@@ -75,13 +79,13 @@ export default function Booking(props) {
           </Link>
         </div>
       </div>
-      {!noGuest ? (
+      {!userEmail ? (
         <div> Debes registrarte</div>
       ) : (
         <div className={s.container}>
           <div>
             <div>Fechas de tu reservacion</div>
-            <div>{`${preCheckIn} - ${preCheckOut}`}</div>
+            <div>{`${input.checkIn} - ${input.checkOut}`}</div>
             <button>Editar fechas</button>
             <div>Nómadas</div>
             <div>
@@ -102,15 +106,15 @@ export default function Booking(props) {
             AQUI VA LA CARD
             <Link to="/MercadoPago">
               <button onClick={handleBooking}>Reservar</button>
-              </Link>
-            <Link to= {`/${lodgingId}`}>
-
-            <button onClick={handleBooking}>
-              Reservar
-            </button>
-
             </Link>
-            <MercadoPago lodId={lodgingId} night={input.night} costNight={costNight}/>
+            <Link to={`/${lodgingId}`}>
+              <button onClick={handleBooking}>Reservar</button>
+            </Link>
+            <MercadoPago
+              lodId={lodgingId}
+              night={input.night}
+              costNight={costNight}
+            />
           </div>
         </div>
       )}
