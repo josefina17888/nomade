@@ -15,5 +15,5 @@ export const createOrGetUserGoogle = async (user) => {
     picture
   }
    localStorage.setItem("userInfo", JSON.stringify(userObject));
-   await axios.post("http://localhost:3001/api/login/google", userObject);
+   await axios.post(`${process.env.REACT_APP_API}/api/login/google`, userObject);
 };
