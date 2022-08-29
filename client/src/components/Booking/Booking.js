@@ -7,16 +7,17 @@ import s from "../Booking/Booking.module.css";
 import MercadoPago from "../MercadoPago/MercadoPago";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
-
+import ReactDatePicker from "react-datepicker";
 
 export default function Booking(props) {
   //SELECT STATES FROM REDUX
   const dispatch = useDispatch();
 
   const availibity = useSelector((state) => state.bookings);
+
   //DECLARATION CONST FOR USE DATES
   const lodgingId = props.match.params._id;
-  const avalaibleDates = availibity.map((e) =>
+  const unavalaibleDates = availibity.map((e) =>
     e.allDates.map((d) => new Date(d).toDateString())
   );
 
@@ -35,33 +36,40 @@ export default function Booking(props) {
 
   // PARSE INFO LOCAL STORAGE BOOKING INFO
   const bookingInfo = localStorage.getItem("bookingInfo");
-  var preCheckIn = JSON.parse(bookingInfo).checkIn;
-  var preCheckOut = JSON.parse(bookingInfo).checkOut;
+  var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
+  var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
   var preGuest = JSON.parse(bookingInfo).guests;
+
+  //PRICE FROM LOCAL STORAGE
+  const priceBooking = localStorage.getItem("priceBooking");
+  const costNight = JSON.parse(priceBooking);
 
   //PARSE INFO LOCAL STORAGE USER INFO
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
+  //let userEmail = true;
+
   //GET RANGES OF DATES
-  const alldates = getDatesInRange(preCheckIn, preCheckOut);
+  const alldates = getDatesInRange(checkIn, checkOut);
 
   //NEW STATE WITH PROPERTIES FOR LOCAL STORAGE
   const [input, setInput] = useState({
-    checkIn: preCheckIn,
-    checkOut: preCheckOut,
+    checkIn: checkIn,
+    checkOut: checkOut,
     night: alldates.length,
     guests: preGuest,
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
+    costNight: costNight
   });
 
-  /* const handleChangeInput = (e)=>{
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value
-    })
-  }*/
+
+  if (availibity.length) {
+    var unavailable = alldates.some((e) => e.includes(unavailable[0]));
+    
+    console.log(unavailable, "POR FAVOR TRUE");
+    }
 
   const night = input.night; 
   const info = {
@@ -72,26 +80,31 @@ export default function Booking(props) {
 
   const total = costNight * night;
 
-  //CONDITIONAL FOUND AVALABILITY
-  if (availibity && availibity.length) {
-    console.log(alldates.toString(), 'CONVIRTIENTO A STRIGN')
-    const availibityMap = avalaibleDates.map(e=> e.toString())
-    const datesString= alldates.toString();
-    console.log(availibityMap, 'vengo del REDUX soy dates de los bokings')
-    /*const allDatesMap = alldates.map( d => new Date( d ).getDate() );*/
-    const filtradosPrueba = availibityMap.some(e=>e.includes(datesString));
-    console.log(filtradosPrueba, 'POR FAVOR TRUE')
-  }
 
-  //HANDLE POST NEW BOOKING
+  //FUNCTION HANDLE BOOKING
   function handleBooking() {
+    unavailable? alert('NO DISPONIBLE'):
     dispatch(createNewBooking(input));
     dispatch(payBooking(info));
   }
 
-  const preferenceId = useSelector(state => state.payment)
+  function handleEditDates() {}
 
-  const preference = preferenceId.preferenceId
+  const preferenceId = useSelector((state) => state.payment);
+  const preference = preferenceId.preferenceId;
+
+  //LEER BOOKINGS DE LOS LODGNING Y COMPARARLOS
+  //const demo = unavailable.map(e=>e.map)
+  /* for(let i=0; i<alldates.length; i++){
+    for(let j=0;j<unavalaibleDates.length;j++){
+      console.log(unavalaibleDates[j], 'DENTRO DE FOR UNAVAILABLE')
+    } 
+    console.log(alldates[i], 'ALL DATES')
+  } */
+  console.log(unavalaibleDates, 'SOY EL ARRAY DE ARRAYS')
+  for(let j=0;j<unavalaibleDates.length;j++){
+    console.log(unavalaibleDates[j], 'DENTRO DE FOR UNAVAILABLE')
+  } 
 
   return (
     <div>
@@ -117,8 +130,49 @@ export default function Booking(props) {
           <div className={s.margin}>
             <div className={s.titles}>Fechas de tu reservacion</div>
             <hr className={s.hr}></hr>
-            <div>{`${input.checkIn} - ${input.checkOut}`}</div>
-            <button className={s.button}>Editar fechas</button>
+            <div>{`${new Date(input.checkIn).toLocaleDateString()} - ${new Date(
+              input.checkOut
+            ).toLocaleDateString()}`}</div>
+            <div>
+              <div>Edita tus fechas</div>
+              <div>
+                <div>
+                  <div>Llegada</div>
+                  <ReactDatePicker
+                    dateFormat="dd/MM/yyyy"
+                    selected={new Date(input.checkIn)}
+                    onChange={(currentDate) =>
+                      setInput({
+                        ...input,
+                        checkIn: new Date(currentDate).toDateString(),
+                      })
+                    }
+                    selectsEnd
+                    minDate={new Date()}
+                    checkIn={input.checkIn}
+                    /*checkOut={info.checkOut} */
+                  />
+                </div>
+                <div>
+                  <div>Salida</div>
+                  <ReactDatePicker
+                    dateFormat="dd/MM/yyyy"
+                    selected={new Date(input.checkOut)}
+                    onChange={(currentDate) =>
+                      setInput({
+                        ...input,
+                        checkOut: new Date(currentDate).toDateString(),
+                      })
+                    }
+                    /*checkIn={info.checkIn}*/
+                    checkIn={input.checkIn}
+                    selectsEnd
+                    checkOut={input.checkOut}
+                    minDate={new Date(input.checkIn)}
+                  />
+                </div>
+              </div>
+            </div>
             <div className={s.titles}>Nómadas</div>
             <hr className={s.hr}></hr>
             <div className={s.selection}>
@@ -167,14 +221,9 @@ export default function Booking(props) {
             <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
-
-            {/* </Link> */}
-            {/* <MercadoPago lodId={lodgingId} night={input.night} price={costNight}/> */}
-            <MercadoPagoFinal preferenceId={preference}/>
           </div>
         </div>
       )}
     </div>
   );
-}
 }

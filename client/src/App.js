@@ -34,19 +34,13 @@ function App() {
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/profile/:email' component={Profile}></Route>
-          <Route path='/:guestId/form' component={FormHost}/>
           <Route exact path='/favorites' component={Favorites}/> 
-          <Route exact path= '/booking/:_id' component={Booking}/>
-          <Route path='/profile/:email' component={Profile}></Route>
-          {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
           <Route path='/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route exact path= '/booking/:_id' component={Booking}/>
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
-          <Route path='/:email/form' component={FormHost}/>
-          <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route path= "/status" component={Status}/>
           <Route path= "/mercadopago" component={MercadoPago}/>
