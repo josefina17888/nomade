@@ -215,6 +215,7 @@ export default function Booking(props) {
             <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
+            <MercadoPagoFinal preferenceId={preference}/>
             </div>
           </div>
         </div>
