@@ -72,7 +72,6 @@ export default function Profile() {
                       <div>Actualizar foto</div>
                     </div>
                   </div>
-                  <div>RESEÑAS BRUNO ahora estoy probando</div>
                 </div>
               </div>
             </div>
