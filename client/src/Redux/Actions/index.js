@@ -7,7 +7,7 @@ export function getLodgings (lodgingId){
     return async function(dispatch){
         try{
 
-        const json = await axios.get("http://localhost:3001/api/lodging")
+        const json = await axios.get("/api/lodging")
         
         dispatch({
             type:"GET_LODGINGS",
@@ -170,7 +170,7 @@ export function addFavorite(payload){
     console.log("actions")
 
     try{
-     let response = await axios.post('http://localhost:3001/api/favorite/', payload)
+     let response = await axios.post('/api/favorite/', payload)
      console.log("response",response)
       return dispatch({
         type: "ADD_FAVORITE",
@@ -186,7 +186,7 @@ export function getFavorites(payload){
  
   return async function(dispatch){
     try{
-    var response = await axios.post('http://localhost:3001/api/favorite/fav', payload)
+    var response = await axios.post('/api/favorite/fav', payload)
       return dispatch({
         type: "GET_FAVORITES",
         payload: response.data
@@ -201,7 +201,7 @@ export function deleteFavorite(payload){
   console.log(payload, "soy delete")
   return async function(dispatch){
     try{
-    let response = await axios.post('http://localhost:3001/api/favorite/delete', payload)
+    let response = await axios.post('/api/favorite/delete', payload)
 
       console.log(response,"okkkk")
       return dispatch({
@@ -221,7 +221,7 @@ export function deleteFavorite(payload){
 export function favoriteNumber(payload){
   return async function(dispatch){
     try{
-     /*  var response = await axios.post('http://localhost:3001/api/favorite/favoriteNumber', payload)
+     /*  var response = await axios.post('/api/favorite/favoriteNumber', payload)
       console.log(response, payload)
       return dispatch({
         type: "FAVORITE_NUMBER",
@@ -241,7 +241,7 @@ export function settingDate(payload){
 export function lodgingReviews(){
   return async function(dispatch){
     try {
-      const res = await axios.get("http://localhost:3001/api/lodgingReview")
+      const res = await axios.get("/api/lodgingReview")
       return dispatch({
         type: "GET_ALL_LODGINGREVIEWS",
         payload: res.data
@@ -293,7 +293,7 @@ export function getBookingByLodgingId(payload){
 export function getFeedback(){
   return async function(dispatch){
     try {
-      const res = await axios.get("http://localhost:3001/api/payment?status=")
+      const res = await axios.get("/api/payment?status=")
       console.log(res)
       return dispatch({
         type: "GET_FEEDBACK",
