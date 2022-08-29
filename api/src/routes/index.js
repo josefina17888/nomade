@@ -23,6 +23,7 @@ const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
 const favoriteRoute = require ('../routes/favorite/favorite.js') 
 const conversationRoute = require ('./chat/Conversation.js') 
 const messageRoute = require ('./chat/message.js') 
+const country = require ('../routes/countries/index') 
 
 const guestReview = require('../routes/guestReview/guestReview')
 const paymentRoute = require('../routes/payment/payment')
@@ -39,6 +40,7 @@ router.use("/api/payment", paymentRoute)
 router.use("/api/favorite", favoriteRoute);
 router.use("/api/conversation", conversationRoute);
 router.use("/api/message", messageRoute);
+router.use("/api/country", country);
 
 
 

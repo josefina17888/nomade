@@ -29,6 +29,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.services = service
     newLodging.ownBathroom= req.body.ownBathroom === "on" ? true : false
     newLodging.picture= fotosSubidas
+    newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
     newLodging.save();
     //res.redirect("http://localhost:3000/")
