@@ -13,19 +13,16 @@ const initialState = {
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
-  rating : [],
+  rating: [],
   payment: {},
-  bookings:[],
+  bookings: [],
   feedback: [],
   rating: [],
-
 };
-
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_LODGINGS":
-      
       return {
         ...state,
         lodgings: action.payload,
@@ -33,13 +30,15 @@ function rootReducer(state = initialState, action) {
         loader: false,
       };
 
-      case "ORDER_BY_RATING":
-      const allLodgingsReviewsMap = state.allLodgingsReviews.map(e => {
-        return {
-          lodgingId: e.lodgingId,
-          rating: e.rating,
-        };
-      }).filter(e => e.rating !== 0);
+    case "ORDER_BY_RATING":
+      const allLodgingsReviewsMap = state.allLodgingsReviews
+        .map((e) => {
+          return {
+            lodgingId: e.lodgingId,
+            rating: e.rating,
+          };
+        })
+        .filter((e) => e.rating !== 0);
       const sumRating = allLodgingsReviewsMap.reduce((acc, curr) => {
         if (acc[curr.lodgingId]) {
           acc[curr.lodgingId] += curr.rating;
@@ -48,19 +47,21 @@ function rootReducer(state = initialState, action) {
         }
         return acc;
       }, {});
-      const averageRating = Object.keys(sumRating).map(e => {
-        return {
-          lodgingId: e,
-          rating: sumRating[e] / allLodgingsReviewsMap.filter(f => f.lodgingId === e).length,
-        };
-      }).sort((a, b) => b.rating - a.rating);
-      state.rating.push(averageRating)   
-      for(let i = 0 ; i<averageRating.length; i++)
-      {
-        for(let j = 0 ; j<state.lodgings.length; j++)
-        {
-          if(state.lodgings[j]._id ===averageRating[i].lodgingId){
-            state.lodgings[j]["rating"] = averageRating[i].rating
+      const averageRating = Object.keys(sumRating)
+        .map((e) => {
+          return {
+            lodgingId: e,
+            rating:
+              sumRating[e] /
+              allLodgingsReviewsMap.filter((f) => f.lodgingId === e).length,
+          };
+        })
+        .sort((a, b) => b.rating - a.rating);
+      state.rating.push(averageRating);
+      for (let i = 0; i < averageRating.length; i++) {
+        for (let j = 0; j < state.lodgings.length; j++) {
+          if (state.lodgings[j]._id === averageRating[i].lodgingId) {
+            state.lodgings[j]["rating"] = averageRating[i].rating;
           }
         }
       }
@@ -70,12 +71,10 @@ function rootReducer(state = initialState, action) {
 
       return {
         ...state,
-        lodgings:ratingMax.map(e=>e),
+        lodgings: ratingMax.map((e) => e),
       };
 
-
     case "FILTER_TYPE_HOUSE":
-     
       const house = state.lodgings.filter((e) => e.lodgingType === "Casa");
       return {
         ...state,
@@ -91,7 +90,6 @@ function rootReducer(state = initialState, action) {
         lodgings: pets,
       };
     case "ORDER_BY_LOWEST":
-     
       const lowest = state.lodgings.sort(function (a, b) {
         return a.price - b.price;
       });
@@ -105,11 +103,10 @@ function rootReducer(state = initialState, action) {
       });
       return {
         ...state,
-        lodgings: highest.map(e=>e),
+        lodgings: highest.map((e) => e),
       };
 
-      case "ORDER_BY_REVIEW":
-     
+    case "ORDER_BY_REVIEW":
       const highesSt = state.lodgings.sort(function (a, b) {
         return b.price - a.price;
       });
@@ -118,8 +115,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         lodgings: highest.map((e) => e),
       };
-
-
 
     case "LOADER_TRUE":
       return {
@@ -195,12 +190,12 @@ function rootReducer(state = initialState, action) {
         userFavorites: [...state.userFavorites, action.payload],
       };
 
-        case "GET_BOOKING_LODGING_ID":
-          console.log(action.payload, 'SOY ACTION PAYLOAD REDUCER')
-          return{
-            ...state,
-            bookings: action.payload
-          }
+    case "GET_BOOKING_LODGING_ID":
+      console.log(action.payload, "SOY ACTION PAYLOAD REDUCER");
+      return {
+        ...state,
+        bookings: action.payload,
+      };
 
     case "DELETE_FAVORITE":
       console.log(action.payload, "soy action");
@@ -231,12 +226,10 @@ function rootReducer(state = initialState, action) {
       };
 
     case "GET_FEEDBACK":
-      
       return {
         ...state,
-        feedback: action.payload
-          
-      }
+        feedback: action.payload,
+      };
 
     default:
       return { ...state };

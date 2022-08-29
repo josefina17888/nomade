@@ -17,7 +17,7 @@ import LodgingReview from './components/LodgingReview/LodgingReview'
 /* import AdminDash from './components/Admin/AdminDash'; */
 import Booking from './components/Booking/Booking'
 import MercadoPago from './components/MercadoPago/MercadoPago'
-import Status from './components/MercadoPago/Status';
+//import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 
 
@@ -42,7 +42,7 @@ function App() {
           <Route exact path= '/booking/:_id' component={Booking}/>
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          <Route path= "/status" component={Status}/>
+          {/* <Route path= "/status" component={Status}/> */}
           <Route path= "/mercadopago" component={MercadoPago}/>
           <Route path= '/chat' component={Chat}/>
         </Switch>
