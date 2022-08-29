@@ -75,7 +75,6 @@ console.log("por aca", guestId)
                         <div>
                           <li>
                             <Link
-
                               to= {`/profile/${userToken}`}
                               className="dropdown-item current"
                             >

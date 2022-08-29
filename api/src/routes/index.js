@@ -20,10 +20,13 @@ const loginRoute = require ('../routes/login/login');
 const loginGoogle = require ('../routes/loginGoogle/loginGoogle');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
-const passwordResetRoute = require ('../routes/passwordReset/passwordReset.js')
 const favoriteRoute = require ('../routes/favorite/favorite.js') 
+const conversationRoute = require ('./chat/conversation') 
+const messageRoute = require ('./chat/message.js') 
+const passwordReset = require("./passwordReset/passwordReset")
 const guestReview = require('../routes/guestReview/guestReview')
 const paymentRoute = require('../routes/payment/payment')
+
 router.use("/api/host", hostRoute);
 router.use("/api/booking", bookingRoute); 
 router.use("/api/guest", guestRoute); 
@@ -32,9 +35,13 @@ router.use("/api/login/google", loginGoogle);
 router.use("/api/lodging", lodgingRoute); 
 router.use("/api/lodgingReview", lodgingReviewRoute); 
 router.use("/api/guestReview", guestReviewRoute); 
-router.use("/api/passwordReset", passwordResetRoute); 
 router.use("/api/payment", paymentRoute)
-router.use("/api/favorite", favoriteRoute);  
+router.use("/api/favorite", favoriteRoute);
+router.use("/api/conversation", conversationRoute);
+router.use("/api/message", messageRoute);
+router.use("/api/passwordReset", passwordReset);
+
+
 
 
 

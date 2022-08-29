@@ -54,7 +54,9 @@ router.get("/:_id/:token", async (req, res) => {
   })
 
   router.patch("/newPassordLogIn/:email", async(req,res) => {
+    console.log("hola")
     const guest = await Guest.findOne({email: req.params.email})
+    console.log(guest)
     guest.password = req.body.passwordOne
     guest.save()
     res.send("Contraseña actualizada")

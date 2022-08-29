@@ -1,7 +1,7 @@
 import React ,  {useState , useEffect} from 'react'
 import { Link , useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
-import style from "./ResetPasswordLogIn.module.css";
+import style from "./ResetPassword.module.css";
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 
@@ -45,6 +45,10 @@ export default function ResetPassword() {
               "Content-Type": "application/json",
             },
           };
+          console.log("hola")
+          console.log(params.email)
+          console.log(passwordOne)
+          console.log("hola")
           const { data } = await axios.patch(
             //`${process.env.REACT_APP_API}/api/login`,
             `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
@@ -53,6 +57,7 @@ export default function ResetPassword() {
             },
             config
           );
+          console.log(data)
           setPassword("");
           history.push("/login");
         } catch (error) {
