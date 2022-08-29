@@ -7,7 +7,7 @@ export function getLodgings (lodgingId){
     return async function(dispatch){
         try{
 
-        const json = await axios.get("http://localhost:3001/api/lodging")
+        const json = await axios.get("/api/lodging")
         
         dispatch({
             type:"GET_LODGINGS",
@@ -23,6 +23,12 @@ export function getLodgings (lodgingId){
 export function filterTypeHouse(payload){
   return{
     type: "FILTER_TYPE_HOUSE",
+    payload
+  }
+}
+export function orderByRating(payload){
+  return{
+    type: "ORDER_BY_RATING",
     payload
   }
 }
@@ -170,44 +176,44 @@ export function addFavorite(payload){
         type: "ADD_FAVORITE",
         payload
       })
-   
+
     }catch(err){
       console.log(err)
     }}
   }
 
-export function getFavorites(payload){
+  export function getFavorites(payload){
  
-  return async function(dispatch){
-    try{
-    var response = await axios.post('http://localhost:3001/api/favorite/fav', payload)
-      return dispatch({
-        type: "GET_FAVORITES",
-        payload: response.data
-       
-    }) 
-    }catch(err){
-      console.log(err)
+    return async function(dispatch){
+      try{
+      var response = await axios.post('http://localhost:3001/api/favorite/fav', payload)
+        return dispatch({
+          type: "GET_FAVORITES",
+          payload: response.data
+  
+      }) 
+      }catch(err){
+        console.log(err)
+      }
+    }
+  } 
+  export function deleteFavorite(payload){
+    console.log(payload, "soy delete")
+    return async function(dispatch){
+      try{
+      let response = await axios.post('http://localhost:3001/api/favorite/delete', payload)
+  
+        console.log(response,"okkkk")
+        return dispatch({
+          type: "DELETE_FAVORITE",
+          payload
+  
+      })
+      }catch(err){
+        console.log("hay un error")
+      }
     }
   }
-} 
-export function deleteFavorite(payload){
-  console.log(payload, "soy delete")
-  return async function(dispatch){
-    try{
-    let response = await axios.post('http://localhost:3001/api/favorite/delete', payload)
-
-      console.log(response,"okkkk")
-      return dispatch({
-        type: "DELETE_FAVORITE",
-        payload
-       
-    })  
-    }catch(err){
-      console.log("hay un error")
-    }
-  }
-} 
 
 
 
@@ -215,7 +221,7 @@ export function deleteFavorite(payload){
 export function favoriteNumber(payload){
   return async function(dispatch){
     try{
-     /*  var response = await axios.post('http://localhost:3001/api/favorite/favoriteNumber', payload)
+     /*  var response = await axios.post('/api/favorite/favoriteNumber', payload)
       console.log(response, payload)
       return dispatch({
         type: "FAVORITE_NUMBER",
@@ -235,8 +241,7 @@ export function settingDate(payload){
 export function lodgingReviews(){
   return async function(dispatch){
     try {
-      const res = await axios.get("http://localhost:3001/api/lodgingReview")
-      console.log(res)
+      const res = await axios.get("/api/lodgingReview")
       return dispatch({
         type: "GET_ALL_LODGINGREVIEWS",
         payload: res.data
@@ -285,7 +290,20 @@ export function getBookingByLodgingId(payload){
   }
 } 
 
-
+export function getFeedback(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/payment?status=")
+      console.log(res)
+      return dispatch({
+        type: "GET_FEEDBACK",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 
 

@@ -25,8 +25,6 @@ if(!props.guestInfo){
     dispatch(getFavorites(favData));
   }, [dispatch]);
 
-
-  
   var userFavs = {
     userEmail: userEmail,
     lodgingId: props.id,
@@ -50,7 +48,6 @@ if(!props.guestInfo){
   var stateIds = stateLodgings.map((e) => e._id);
 
   if (favorites !== undefined) {
-    console.log("favorites", favorites);
     var favoritesId = favorites.map((e) => e.lodgingId);
   }
 

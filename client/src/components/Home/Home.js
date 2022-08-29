@@ -11,7 +11,6 @@ export default function Home() {
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
 
-
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
