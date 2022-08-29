@@ -340,7 +340,7 @@ export default function CardDetail(props) {
       )}
 
       <div>
-        <Link to="http://localhost:3000/">
+        <Link to="/">
           <button className={styles.button}>Volver</button>
         </Link>
         <Link
