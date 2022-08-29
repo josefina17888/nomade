@@ -14,7 +14,8 @@ const initialState = {
   duplicate: [],
   allLodgingsReviews: [],
   payment: {},
-  bookings:[]
+  bookings:[],
+  feedback: []
 
 };
 
@@ -167,6 +168,14 @@ function rootReducer(state = initialState, action) {
       return{
         ...state,
         payment: action.payload
+      }
+
+    case "GET_FEEDBACK":
+      
+      return {
+        ...state,
+        feedback: action.payload
+          
       }
 
     default:

@@ -31,12 +31,11 @@ export default function Card({ city, country, guests, price, picture, currency, 
 
   return (
     <div className={styles.card}>
-      <div className={styles.img}>
+      <div>
         <div>
-          <img src={picture} alt="img not found" width="200px" height="250px" />
+          <img className={styles.img} src={picture} alt="img not found" width="200px" height="250px" />
         </div>
 
-        <div><IoHeartOutline className={styles.fav}/></div>
         <div className={styles.icons}>
           <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
           <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> { promedio > 0 && promedio < 6 ? promedio === 1.0 || promedio === 2.0 ||promedio ===3.0 ||promedio === 4.0 ||promedio === 5.0 ? promedio.toFixed(0):promedio.toFixed(1): "n/c"}</div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createNewBooking, getBookingByLodgingId, payBooking } from "../../Redux/Actions/index";
+import { getDetail, createNewBooking, getBookingByLodgingId, payBooking } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
 import MercadoPago from "../MercadoPago/MercadoPago";
@@ -12,14 +12,26 @@ import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 export default function Booking(props) {
   //SELECT STATES FROM REDUX
   const dispatch = useDispatch();
-  const lodging = useSelector((state) => state.detail);
+
   const availibity = useSelector((state) => state.bookings);
   //DECLARATION CONST FOR USE DATES
-  const costNight = lodging.price;
   const lodgingId = props.match.params._id;
   const avalaibleDates = availibity.map((e) =>
     e.allDates.map((d) => new Date(d).toDateString())
   );
+
+  useEffect(() => {
+    dispatch(getDetail(lodgingId));
+  }, [dispatch]);
+
+  const lodging = useSelector((state) => state.detail);
+  console.log(lodging)
+  const costNight = lodging.price;
+  const picture = lodging.picture;
+  const obj = Object.assign({}, picture);
+  const picture1 = obj["0"];
+  const city = lodging.city
+  const country = lodging.country
 
   // PARSE INFO LOCAL STORAGE BOOKING INFO
   const bookingInfo = localStorage.getItem("bookingInfo");
@@ -58,7 +70,7 @@ export default function Booking(props) {
      costNight
   }
 
-  function handleBooking() {
+  const total = costNight * night;
 
   //CONDITIONAL FOUND AVALABILITY
   if (availibity && availibity.length) {
@@ -102,13 +114,15 @@ export default function Booking(props) {
         <div> Debes registrarte</div>
       ) : (
         <div className={s.container}>
-          <div>
-            <div>Fechas de tu reservacion</div>
+          <div className={s.margin}>
+            <div className={s.titles}>Fechas de tu reservacion</div>
+            <hr className={s.hr}></hr>
             <div>{`${input.checkIn} - ${input.checkOut}`}</div>
-            <button>Editar fechas</button>
-            <div>Nómadas</div>
-            <div>
-              <span>Total</span>
+            <button className={s.button}>Editar fechas</button>
+            <div className={s.titles}>Nómadas</div>
+            <hr className={s.hr}></hr>
+            <div className={s.selection}>
+              <span>Total </span>
               <input
                 type="number"
                 name="adults"
@@ -116,19 +130,41 @@ export default function Booking(props) {
                 defaultValue={preGuest}
               ></input>
             </div>
-            <div>
-              <span>Mascotas</span>
+            <div className={s.selection}>
+              <span>Mascotas </span>
               <input type="checkbox" name="pets" value={input.pets}></input>
             </div>
           </div>
-          <div>
-            AQUI VA LA CARD
-            {/* <Link to="/MercadoPago">
-              <button onClick={handleBooking}>Reservar</button>
-              </Link>
-            <Link to= {`/${lodgingId}`}> */}
-
-            <button onClick={handleBooking}>
+          <div className={s.card}>
+            <div>
+            <img src={picture1} className={s.img} alt="img not found"/>
+            </div>
+            <div>
+              <h6 className={s.city}>{city}, {country}</h6>
+            </div>
+          <div className={s.container1}>
+            <div className={s.container2}>
+            <div>
+              <h6 className={s.sub2}>Costo Total</h6>
+              <h6 className={s.h1}>${total} por {night} noches</h6>
+            </div>
+            <div>
+              <h6 className={s.sub1}>Comisión por servicio</h6>
+              <h6 className={s.h}>$0</h6>
+            </div>
+            </div>
+            <div className={s.container3}>
+            <div>
+              <h6 className={s.sub}>Fecha arribo</h6>
+              <h6 className={s.h1}>{input.checkIn}</h6>
+            </div>
+            <div>
+              <h6 className={s.sub1}>Fecha salida</h6>
+              <h6 className={s.h}>{input.checkOut}</h6>
+            </div>
+            </div>
+          </div>
+            <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
 
