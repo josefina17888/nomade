@@ -67,10 +67,8 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                     guests={e.guests}
                     picture={e.picture[0]}
                     currency={e.currency}/> 
-                    :
-                    <Link to='/login'>
-                    <FavoriteButton />
-                    </Link>
+                    : 
+                    <div></div>
                   }
                   <Link to={`/detail/${e._id}`} className={styles.link}>
 
