@@ -18,7 +18,8 @@ export default function ResetPassword() {
           if (email === "") {
             alert("Por favor ingrese todos los campos");
           }
-          const guest = `http://localhost:3001/api/guest/${email}`
+          const guest = `${process.env.REACT_APP_API}/api/guest/${email}`
+          // `http://localhost:3001/api/guest/${email}`
           const {data} = await axios.get(guest);
           if(!data.length) {
             return setMsg({
@@ -33,7 +34,7 @@ export default function ResetPassword() {
             error: ""
         })   
         
-         await axios.post("http://localhost:3001/api/passwordReset/",{email})
+         await axios.post("/api/passwordReset/",{email})
 
 
 
