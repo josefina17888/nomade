@@ -231,6 +231,12 @@ function rootReducer(state = initialState, action) {
         allLodgingsReviews: action.payload,
       };
 
+    case "PAY_BOOKING":
+      return {
+        ...state,
+        payment: action.payload,
+        };
+
     case "GET_FEEDBACK":
       return {
         ...state,
