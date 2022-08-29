@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import {
   getLodgings,
@@ -20,7 +19,6 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
 export default function AllCards({setCurrentPage, paging, lodgingPerPage, currentLodging}) {
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
-  const history = useHistory()
   // const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
   // const [lodgingPerPage, setLodgingPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página
   // const indexLastLodging = currentPage * lodgingPerPage;

@@ -32,8 +32,8 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
     newLodging.save();
-    res.redirect("http://localhost:3000/")
-    // res.redirect("https://nomade-khaki.vercel.app/")
+    // res.redirect("http://localhost:3000/")
+    res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.send("No se pudo crear el alojamiento");
   }
