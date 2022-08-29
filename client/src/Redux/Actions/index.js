@@ -22,7 +22,7 @@ export function getLodgings (lodgingId){
 export function getCountry (){
     return async function(dispatch){
         try{
-        const json = await axios.get("http://localhost:3001/api/country")
+        const json = await axios.get("/api/country")
         dispatch({
             type:"GET_COUNTRY",
             payload: json.data
@@ -184,7 +184,7 @@ export function addFavorite(payload){
     console.log("actions")
 
     try{
-     let response = await axios.post('http://localhost:3001/api/favorite/', payload)
+     let response = await axios.post('/api/favorite/', payload)
      console.log("response",response)
       return dispatch({
         type: "ADD_FAVORITE",
@@ -200,7 +200,7 @@ export function addFavorite(payload){
  
     return async function(dispatch){
       try{
-      var response = await axios.post('http://localhost:3001/api/favorite/fav', payload)
+      var response = await axios.post('/api/favorite/fav', payload)
         return dispatch({
           type: "GET_FAVORITES",
           payload: response.data
@@ -215,7 +215,7 @@ export function addFavorite(payload){
     console.log(payload, "soy delete")
     return async function(dispatch){
       try{
-      let response = await axios.post('http://localhost:3001/api/favorite/delete', payload)
+      let response = await axios.post('/api/favorite/delete', payload)
   
         console.log(response,"okkkk")
         return dispatch({
