@@ -41,7 +41,6 @@ export default function Booking(props) {
   var preGuest = JSON.parse(bookingInfo).guests;
 
   //PRICE FROM LOCAL STORAGE
-  const priceBooking = localStorage.getItem("priceBooking");
   //const costNight = JSON.parse(priceBooking);
 
   //PARSE INFO LOCAL STORAGE USER INFO
