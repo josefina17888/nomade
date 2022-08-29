@@ -44,7 +44,6 @@ export default function CardDetail(props) {
 
   const myLodging = useSelector((state) => state.detail);
   let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
-  console.log(stateLodgings)
   let detailReview = stateLodgings.map(e => e.lodgingId ===lodgingId ? [e.comments, e.rating]: false)
   let filtrado =detailReview.filter(e=> e!== false)
 
@@ -67,8 +66,6 @@ export default function CardDetail(props) {
       lodgingNoServices.push(property);
     }
   }
-  console.log(lodgingServices);
-  console.log(lodgingNoServices);
 
   //variables necesarias para carrusel de imagenes
   const picture = myLodging.picture;
@@ -321,7 +318,7 @@ export default function CardDetail(props) {
           </div>
           <div>
 
-            <DatePickerOk lodgingId={lodgingId} />
+            <DatePickerOk lodId={lodgingId} />
             <h3 className={styles.h3}>Reseñas</h3>
             <div className={styles.modal}>
             <div className={styles.reviews}>
@@ -343,7 +340,7 @@ export default function CardDetail(props) {
       )}
 
       <div>
-        <Link to="http://localhost:3000/">
+        <Link to="/">
           <button className={styles.button}>Volver</button>
         </Link>
         <Link

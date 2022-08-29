@@ -6,10 +6,12 @@ import style from './profile.module.css'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
 
-let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId)
+
 
 export default function Profile({email}) {
+  let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
+
   const dispatch = useDispatch()
   const guestDet = useSelector((state) => state.guest)
   const detalles = guestDet[0]

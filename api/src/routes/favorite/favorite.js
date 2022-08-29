@@ -10,10 +10,14 @@ const toId = mongoose.Types.ObjectId;
   ///POSTEA FAVORITOS//
 
   router.post("/", async (req, res) => {
-    console.log("soy post")
-    const infoGuest= await Guest.find({email: req.body.userEmail})
-    let userId = ( infoGuest[0]._id)
-    console.log(userId)
+   
+if(req.body.userEmail){
+  console.log("soy post")
+  const infoGuest= await Guest.find({email:req.body.userEmail})
+  let userId = ( infoGuest[0]._id)
+  console.log(req.body.userEmail)
+  
+
       try{
         const newFav= await Favorite.create(req.body)
         newFav.lodgingId = toId(req.body.lodgingId)  
@@ -24,7 +28,7 @@ const toId = mongoose.Types.ObjectId;
           res.status(400).send("No se pudo crear");
         console.log(err);
       }
-    
+}
   }) 
 //TRAE TODOS LOS FAVORITOS DE UN LODGING 
 /*   router.post("/allFavs", async (req, res) => { 

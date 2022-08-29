@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
+const Booking = require('../booking/booking');
 const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")

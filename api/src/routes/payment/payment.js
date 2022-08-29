@@ -18,9 +18,9 @@ router.post("/", async function (req, res, next) {
     //busca el booking
     // const bookingPayed = await Booking.findOne({_id: req.params.bookingId});
     // console.log(bookingPayed)
-    // const title = req.body.lodId
-    // const quantity = req.body.night
-    // const price = 100
+    const title = req.body.lodgingId
+    const quantity = req.body.night
+    const price = req.body.costNight
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
     try {
         let preference = {
@@ -31,9 +31,11 @@ router.post("/", async function (req, res, next) {
             }],
             back_urls: {
                 success: "http://localhost:3001/api/payment/",
+
                 failure: "http://localhost:3001/api/payment/feedback",
                 pending: "http://localhost:3001/api/payment/feedback"
             },
+            installments: 1
         }
     console.log(preference.items)
 

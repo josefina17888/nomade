@@ -165,11 +165,10 @@ export function addFavorite(payload){
 
     try{
      let response = await axios.post('http://localhost:3001/api/favorite/', payload)
-
-     console.log("res.data",response.data)
+     console.log("response",response)
       return dispatch({
         type: "ADD_FAVORITE",
-        payload: response.data
+        payload
       })
    
     }catch(err){
@@ -201,7 +200,7 @@ export function deleteFavorite(payload){
       console.log(response,"okkkk")
       return dispatch({
         type: "DELETE_FAVORITE",
-        payload: response.data
+        payload
        
     })  
     }catch(err){
@@ -282,7 +281,6 @@ export function createNewBooking(payload) {
   }}
 
 export function payBooking(payload) {
-  console.log("payload",payload)
   return async function (dispatch) {
     try{
     const res = await axios.post(`api/payment/`,payload)
@@ -294,6 +292,21 @@ export function payBooking(payload) {
     console.log(error)
   }}
 }
+
+export function getBookingByLodgingId(payload){
+  return async function(dispatch){
+    try{
+    var response = await axios.post('/api/booking/booking', payload)
+      return dispatch({
+        type: "GET_BOOKING_LODGING_ID",
+        payload: response.data
+       
+    }) 
+    }catch(err){
+      console.log(err)
+    }
+  }
+} 
 
 
 

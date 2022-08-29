@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+
+import React, { useEffect, useState }  from 'react';
 
 const FORM_ID = 'payment-form';
 
@@ -28,6 +29,7 @@ export default function MercadoPagoFinal({preferenceId}) {
 //     const form = document.getElementById(FORM_ID);
 //     form.appendChild(script);
 //   }
+
 
 return (
   <div>
