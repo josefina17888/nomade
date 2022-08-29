@@ -43,15 +43,7 @@ export default function FormLodging() {
     document.getElementById("file").click()
   }
 
-  function handleCountries(e) {
-      setInput({
-        ...input,
-        country: e.target.value,
-      });
-    }
-
   function handleChange(e){
-   console.log(input.picture)
     if(e.target.name!== "picture")
     {  
     setInput({
@@ -201,7 +193,7 @@ let hostId = params.hostId
                  
           </select>
           <p >{errors.bathrooms}</p>
-        <select onChange={handleCountries}>
+        <select onChange={handleChange} name="country">
           <option value="" disabled selected>País</option>
         {
           countries.map(e=>(
