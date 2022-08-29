@@ -19,9 +19,7 @@ export default function ResetPassword() {
             alert("Por favor ingrese todos los campos");
           }
           const guest = `http://localhost:3001/api/guest/${email}`
-          console.log(guest)
           const {data} = await axios.get(guest);
-          console.log("probando")
           if(!data.length) {
             return setMsg({
                 ...msg,

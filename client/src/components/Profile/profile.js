@@ -44,7 +44,7 @@ export default function Profile() {
                 <h6>{user.email}</h6>
                 <hr width="700"></hr>
                 <h4>Contraseña</h4>
-                <Link to={`/${user._id}/resetPassword/:token`} ><button>Actualizar Contraseña</button></Link>
+                <Link to={`/${user.email}/resetPassword`} ><button>Actualizar Contraseña</button></Link>
                 <hr width="700"></hr>
                 {user.cellPhone ? (
                   <div>

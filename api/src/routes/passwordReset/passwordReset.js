@@ -18,7 +18,6 @@ router.post("/" , async (req, res) => {
         }).save()
     }
     const url = `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
-    console.log(url)
     const title = "Tranquilo Nómade, todo esto por tu seguridad"
     const msg = "Estas a unos pasos de ingresar tu nueva contraseña. Sólo da click al boton de abajo."
     await verifyEmail(guest.email,"Password Reset", title , msg , url)
@@ -28,19 +27,13 @@ router.post("/" , async (req, res) => {
 })
 
 router.get("/:_id/:token", async (req, res) => {
-  console.log("hola")
-    console.log(req.params.token)
-    console.log(req.params._id)
     try {
       const guest = await Guest.findOne({_id: req.params._id})
-      console.log(guest)
       if(!guest) return(400).send({message:"Invalid link"});
-      console.log("hola")
       const token = await Token.findOne({
         userId: guest._id,
         token: req.params.token
       });
-      console.log(token)
       if(!token) return res.status(400).send({message: "invalid link"})
       await token.remove()
       // res.status(200).send({message: "Email verificado"})
@@ -55,8 +48,14 @@ router.get("/:_id/:token", async (req, res) => {
 
   router.patch("/newPassord/:_id/:token", async(req,res) => {
     const guest = await Guest.findById(req.params._id)
-    console.log(guest)
-    guest.password = req.body.password
+    guest.password = req.body.passwordOne
+    guest.save()
+    res.send("Contraseña actualizada")
+  })
+
+  router.patch("/newPassordLogIn/:email", async(req,res) => {
+    const guest = await Guest.findOne({email: req.params.email})
+    guest.password = req.body.passwordOne
     guest.save()
     res.send("Contraseña actualizada")
   })

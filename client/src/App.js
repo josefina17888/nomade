@@ -3,7 +3,7 @@ import './App.css';
 import { Route, BrowserRouter, Switch } from 'react-router-dom'; 
 import GoogleMaps from './components/GoogleMaps/GoogleMaps.js';
 import Home from './components/Home/Home.js';
-import LoginUser from './components/LoginUser/LoginUser.js';
+import LoginUser from './components/LoginUser/LoginUser.jsx';
 import FormUser from './components/FormGuest/FormGuest.js';
 import CardDetail from './components/CardDetail/CardDetail';
 import FormLodging from './components/FormLodging/FormLodging.js';
@@ -18,6 +18,7 @@ import GuestReview from './components/GuestReview/GuestReview'
 import LodgingReview from './components/LodgingReview/LodgingReview'
 // import Booking from './components/Booking/Booking'
 import MercadoPago from './components/MercadoPago/MercadoPago'
+import ResetPasswordLogIn from "./components/EmailVerify/ResetPasswordLogIn"
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
+          <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
           <Route path='/forgot-password/' component={ForgotPassword}/>
           <Route path= "/mercadopago" component={MercadoPago}/>
         </Switch>

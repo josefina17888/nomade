@@ -11,7 +11,6 @@ router.post("/", async (req, res) => {
 
     if(!user) {
         const newUser = await Guest.create({ email, lastname, name, password, picture , verified: true});
-        console.log(newUser)
         res.json({
             email: newUser.email,
             name: newUser.given_name,
@@ -27,6 +26,7 @@ router.post("/", async (req, res) => {
             res.send('Usuario logueado')
         }
     }
+    
 });
 
 
