@@ -38,6 +38,13 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
     dispatch(getLodgings());
   }, [dispatch]);
 
+
+  let userId = localStorage.getItem("userInfo");
+  
+  if(userId) {
+    var user = JSON.parse(userId);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.container}>
@@ -53,13 +60,18 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                 <div key={e._id} className={styles.card}>
 
                 <div>
-                <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
-                      country={e.country}
-                      price={e.price}
-                      guests={e.guests}
-                      picture={e.picture[0]}
-                      currency={e.currency}/> 
-
+                  {
+                    user ? <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
+                    country={e.country}
+                    price={e.price}
+                    guests={e.guests}
+                    picture={e.picture[0]}
+                    currency={e.currency}/> 
+                    :
+                    <Link to='/login'>
+                    <FavoriteButton />
+                    </Link>
+                  }
                   <Link to={`/detail/${e._id}`} className={styles.link}>
 
                     <Card

@@ -43,15 +43,7 @@ export default function FormLodging() {
     document.getElementById("file").click()
   }
 
-  function handleCountries(e) {
-      setInput({
-        ...input,
-        country: e.target.value,
-      });
-    }
-
   function handleChange(e){
-   console.log(input.picture)
     if(e.target.name!== "picture")
     {  
     setInput({
@@ -115,8 +107,8 @@ let hostId = params.hostId
   return (
 
     <div className={style.containerUser}>
-      {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
-      <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
+      <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" >
+      {/* <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST"> */}
       <script src="./preview.js"></script>
       <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>
@@ -201,7 +193,7 @@ let hostId = params.hostId
                  
           </select>
           <p >{errors.bathrooms}</p>
-        <select onChange={handleCountries}>
+        <select onChange={handleChange} name="country">
           <option value="" disabled selected>País</option>
         {
           countries.map(e=>(

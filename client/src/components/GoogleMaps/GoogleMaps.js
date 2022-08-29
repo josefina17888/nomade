@@ -84,6 +84,7 @@ export default function GoogleMaps() {
     }),
     []
   );
+  
 
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -108,8 +109,8 @@ export default function GoogleMaps() {
                 position={location}
                 clusterer={clusters}
                 icon={{
-                  url: 'https://i.postimg.cc/YGjZ4HX0/Nomade.png',
-                  scaledSize: new window.google.maps.Size(18, 18),
+                  url: 'https://i.postimg.cc/MXpXtBZL/Nomade.png',
+                  scaledSize: new window.google.maps.Size(22, 22),
                 }}
                 onClick={() => {
                   console.log(location);
