@@ -48,7 +48,7 @@ if(!props.guestInfo){
   var stateIds = stateLodgings.map((e) => e._id);
 
 
-  if (favorites !== undefined) {
+  if (favorites[0] !== undefined) {
     var favoritesId = favorites.map((e) => e.lodgingId);
   }
 
