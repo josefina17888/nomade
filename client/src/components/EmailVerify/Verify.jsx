@@ -10,7 +10,7 @@ export default function Verify() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url = `/api/guest/${params.idGuest}`
+                const url = `${process.env.REACT_APP_API}/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)
