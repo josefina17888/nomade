@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "../Menu/Menu.module.css";
 import { TbMap2 } from "react-icons/tb";
 import { GiSpookyHouse } from "react-icons/gi";
+import {IoIosStar} from "react-icons/io";
 import { MdOutlinePets } from "react-icons/md";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLodging}) {
@@ -72,7 +73,7 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
           <div>
             <button className={s.button_icon} onClick={handleSortByRating}>
               <span>
-                <TbTrendingUp className={s.icons} />
+                <IoIosStar className={s.icons} />
                 <div>
                   <span className={s.text_desc_icon}>Rating</span>
                 </div>
