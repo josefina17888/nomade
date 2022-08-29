@@ -40,7 +40,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
 
   return (
     <div className={styles.container}>
-      <div className={styles.cards}>
+      <div className={styles.container}>
         {loader ? (
           <h2>Loading...</h2>
         ) : currentLodging.length < 1 ? (
@@ -48,9 +48,14 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
         ) : (
           currentLodging.map((e) => {
             return (
-              <div className={styles.card}>
+              <div className={styles.cards}>
 
+                <div key={e._id} className={styles.card}>
                 
+                <div>
+
+                  <Link to={`/detail/${e._id}`} className={styles.link}>
+                  
                   <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
                       country={e.country}
                       price={e.price}
@@ -58,9 +63,6 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       picture={e.picture[0]}
                       currency={e.currency}/>
 
-
-                <div className={styles.link} key={e._id}>
-                  <Link to={`/detail/${e._id}`} className={styles.a}>
                     <Card
                       id={e._id}
                       city={e.city}
@@ -70,7 +72,11 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       picture={e.picture[0]}
                       currency={e.currency}
                     />
-                  </Link>
+
+                    </Link>
+
+                    </div>
+                  
                 </div>
               </div>
             );
