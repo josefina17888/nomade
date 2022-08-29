@@ -2,7 +2,7 @@ import React ,  {useState , useEffect} from 'react'
 import { Link , useParams } from 'react-router-dom'
 import axios from 'axios'
 
-
+// Esta es la ventana de cuando tu correo ya esta verificado con boton para ir a login!
 
 export default function Verify() {
     const [validUrl , setValidUrl] = useState(false)
@@ -10,7 +10,7 @@ export default function Verify() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url = `http://localhost:3001/api/guest/${params.idGuest}`
+                const url = `/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)

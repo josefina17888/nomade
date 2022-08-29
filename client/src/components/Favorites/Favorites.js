@@ -16,7 +16,6 @@ export default function Favorites() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.userFavorites);
   let stateLodgings = useSelector((state) => state.lodgings);
-
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
   let userFavs = {
