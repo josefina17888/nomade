@@ -209,7 +209,7 @@ export default function LoginUser() {
             type="submit"
           ></input>
         </form>
-        <Link className={style.link} to="/">¿Olvidaste tu contraseña?</Link>
+        <Link className={style.link} to="/forgot-password/">¿Olvidaste tu contraseña?</Link>
         <span className={style.line}>O</span>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin
