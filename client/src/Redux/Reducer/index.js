@@ -16,7 +16,7 @@ const initialState = {
   rating : [],
   payment: {},
   bookings:[],
-  feedback: []
+  feedback: [],
   rating: [],
 
 };
