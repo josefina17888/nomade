@@ -26,7 +26,6 @@ router.post("/", async (req, res) => {
     .status(401)
     .send({message: "Revisa tu email para verificar tu cuenta"})
   }
-  console.log("hola")
   if(user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,

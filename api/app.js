@@ -9,6 +9,25 @@ require('./db.js');
 
 
 
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+
+const ioServer = createServer(server);
+const io = new Server(ioServer);
+
+io.on("connection", (socket) => {
+ 
+  socket.ok('conectado',()=>{
+    console.log('usuario conectado')
+  })
+});
+
+ioServer.listen(3002);
+
+
+
+
 server.options('*', cors())
 
 server.name = 'API';

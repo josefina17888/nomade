@@ -1,23 +1,15 @@
-.fcontGral{
-    padding: 30px;
-    width: 100vw;
-    height: 100vh;
-    margin-left: 60px;
-  
-   
+
+.fgral{
+    margin-top:100px ;
 }
-.favcard{
-    position: absolute;
-   
-}
+
 .ftitle{
-margin-left: 60px;
+margin-left:200px;
 margin-bottom: 30px;
 text-transform: uppercase;
 
 }
 .ftitle h3{
-font-size: 1.3em;
+font-size: 2em;
 }
-
 

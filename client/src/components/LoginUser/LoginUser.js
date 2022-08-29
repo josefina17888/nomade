@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import style from "./LoginUser.module.css";
-import jwt_decode from "jwt-decode";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { createOrGetUserGoogle } from "../../utils/userGoogle";
+import logoImage from '../../assets/nomadeLogo.svg';
 
 export default function LoginUser() {
   const history = useHistory();
@@ -14,14 +14,14 @@ export default function LoginUser() {
   const [password, setPassword] = useState("");
 
   let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId)
-  console.log(guestId)
-  console.log(user)
+  let user = JSON.parse(guestId);
+  console.log(guestId);
+  console.log(user);
   //let userToken = guestId._id;
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-    if(userInfo){
+    if (userInfo) {
       history.push(`/`);
     }
   }, [history]);
@@ -52,37 +52,47 @@ export default function LoginUser() {
       history.push("/");
     } catch (error) {
       alert("Usuario o contraseña incorrectos");
-      console.log(error)
+      console.log(error);
     }
   };
 
   return (
     <div>
       <div className={style.containerUser}>
+        <img src={logoImage} alt='Nomade Logo' className={style.logo}></img>
         <h1 className={style.title}>Iniciar Sesión</h1>
         <form onSubmit={submitHandler} className={style.containerForm}>
-          <input
-            className={style.inputEmail}
-            value={email}
-            type="text"
-            placeholder="Correo Electrónico"
-            required = {true}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            className={style.inputPassword}
-            value={password}
-            type="password"
-            placeholder="Contraseña"
-            required = {true}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className={style.group}>
+            <input
+              type="text"
+              className={style.input}
+              required={true}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <span className={style.highlight}></span>
+            <span className={style.bar}></span>
+            <label className={style.labelA}>Correo Electrónico</label>
+          </div>
+          <div className={style.group2}>
+            <input
+              type="password"
+              className={style.input}
+              required={true}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className={style.highlight}></span>
+            <span className={style.bar}></span>
+            <label className={style.labelA}>Contraseña</label>
+          </div>
           <input
             value="Iniciar Sesión"
             className={style.button}
             type="submit"
           ></input>
         </form>
+        <Link className={style.link} to="/">¿Olvidaste tu contraseña?</Link>
         <span className={style.line}>O</span>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin
@@ -98,7 +108,7 @@ export default function LoginUser() {
         </GoogleOAuthProvider>
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
-          <Link to="/registerguest">¡Crea tu cuenta aqui!</Link>
+          <Link className={style.link2} to="/registerguest">¡Crea tu cuenta aqui!</Link>
         </div>
       </div>
     </div>

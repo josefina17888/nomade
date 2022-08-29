@@ -5,6 +5,7 @@ import {
   filterTypeHouse,
   orderByHigherCost,
   orderByLowerCost,
+  orderByRating
 } from "../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import s from "../Menu/Menu.module.css";
@@ -15,7 +16,10 @@ import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLodging}) {
   const allLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
-
+  function handleSortByRating(e) {
+    e.preventDefault()
+    dispatch(orderByRating(e.target.value))
+  }
 
   //Ordernar por Lodging tipo: Casa
   function handleFilterTypeHouse(e) {
@@ -37,6 +41,12 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
     e.preventDefault();
     dispatch(orderByHigherCost(e.target.value));
   }
+
+  // function handleSortByRating(e) {
+  //   e.preventDefault()
+  //   dispatch(orderByRating(e.target.value))
+  // }
+
   return (
     <div className="n1p4yt3r dir dir-ltr">
       <div className={s.container}>
@@ -60,6 +70,16 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
             </button>
           </div>
           <div>
+            <button className={s.button_icon} onClick={handleSortByRating}>
+              <span>
+                <TbTrendingUp className={s.icons} />
+                <div>
+                  <span className={s.text_desc_icon}>Rating</span>
+                </div>
+              </span>
+            </button>
+          </div>
+          <div>
             <button className={s.button_icon} onClick={handleFilterByPets}>
               <span>
                 <MdOutlinePets className={s.icons} />
@@ -70,6 +90,7 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
             </button>
           </div>
           <div>
+          
             <button className={s.button_icon} onClick={handleOrderByLowest}>
               <span>
                 <TbTrendingUp className={s.icons} />
