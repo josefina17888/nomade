@@ -11,6 +11,7 @@ export default function Verify() {
         const verifyEmailUrl = async () => {
             try {
                 const url = `${process.env.REACT_APP_API}/api/guest/${params.idGuest}`
+                // `http://localhost:3001/api/guest/${params.idGuest}`,
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)
