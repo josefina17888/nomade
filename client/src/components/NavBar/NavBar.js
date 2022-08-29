@@ -12,14 +12,16 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { getLodgings } from "../../Redux/Actions/index";
 
-export default function NavBar() {
+export default function NavBar(props) {
   const dispatch = useDispatch();
   let guestId = localStorage.getItem("userInfo");
-
+console.log("por aca", guestId)
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId).email;
   }
+  console.log(userToken)
+
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
@@ -73,19 +75,20 @@ export default function NavBar() {
                         <div>
                           <li>
                             <Link
-                              to="/profile/:email"
+                              to= {`/profile/${userToken}`}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil
                             </Link>
                           </li>
                           <li>
-                            <Link to="/login" className="dropdown-item">
+                            <Link className="dropdown-item">
                               <TbMessageCircle /> Mensajes
                             </Link>
                           </li>
                           <li>
-                            <Link to="/login" className="dropdown-item">
+
+                            <Link to="/favorites" className="dropdown-item">
                               <GrFavorite /> Favoritos
                             </Link>
                           </li>

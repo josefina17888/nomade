@@ -1,66 +1,84 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getGuest } from '../../Redux/Actions'
-import Logo from "../../assets/nomadeLogo.svg";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import style from './profile.module.css'
 import { Link } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar.js'
 
 
-export default function Profile(props) {
+
+export default function Profile() {
   const dispatch = useDispatch()
   const guestDet = useSelector((state) => state.guest)
-  const detalles = guestDet[0]
-  useEffect(() => {
-    dispatch(getGuest(props.match.params._id))
-  }, [])
-  console.log(detalles)
-
+  let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
 
   return (
     <div>
-    { detalles === undefined ? <p>Loading...</p> :
-        <div>
-            <img src={Logo} alt='image' width="150"height="60"/>
-            <hr></hr>
-            <h2>Detalle del Perfil</h2>
-            <div className={style.foto}>
-                <img src={detalles.picture} alt='Sin foto..' ></img>
-                
+      <div>
+        {user === undefined ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="_16grqhk">
+            <NavBar />
+            <div className={style.container}>
+              <div>
+                <h2>Detalle del Perfil</h2>
+                <h4>Nombre</h4>
+                <h6>
+                  {user.name.charAt(0).toUpperCase() +
+                    user.name.slice(1)}{" "}
+                  {user.lastname.charAt(0).toUpperCase() +
+                    user.lastname.slice(1)}
+                </h6>
+                <hr width="700"></hr>
+                {user.birthDate ? (
+                  <div>
+                    <h4>Fecha de Nacimiento</h4>
+                    <h6>{(user.birthDate).slice(0, -14)}</h6>
+                    <hr width="700"></hr>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <h4>Correo Electronico</h4>
+                <h6>{user.email}</h6>
+                <hr width="700"></hr>
+                <h4>Contraseña</h4>
+                <Link to={`/${user.email}/resetPassword`} ><button>Actualizar Contraseña</button></Link>
+                <hr width="700"></hr>
+                {user.cellPhone ? (
+                  <div>
+                    <h4>Telefono</h4>
+                    <h6>{user.cellPhone}</h6>
+                    <hr width="700"></hr>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className={style.container_card_profile}>
+                <div className={style.card_profile}>
+                  <div className={style.foto}>
+                    <div className={style._fvp3r0u}>
+                      <div>
+                        <div className={style._1h6n1zu}>
+                          <img
+                            src={user.picture}
+                            alt="Sin foto.."
+                            className={style._9ofhsl}
+                          ></img>
+                        </div>
+                      </div>
+                      <div>Actualizar foto</div>
+                    </div>
+                  </div>
+                  <div>RESEÑAS BRUNO ahora estoy probando</div>
+                </div>
+              </div>
             </div>
-          <h4>Nombre</h4>
-          <h6>{detalles.name.charAt(0).toUpperCase() + detalles.name.slice(1)}  {detalles.lastname.charAt(0).toUpperCase() + detalles.lastname.slice(1)}</h6>
-          <hr width="700"></hr>
-          {detalles.birthDate ? 
-        <div>
-            <h4>Fecha de Nacimiento</h4> 
-            <h6>{detalles.birthDate}</h6>
-            <hr width="700"></hr>
-        </div>
-          :
-          ""
-          }
-          <h4>Correo Electronico</h4>
-          <h6>{detalles.email}</h6>
-          <hr width="700"></hr>
-          <h4>Contraseña</h4>
-          <h6>{detalles.password}</h6>
-          <hr width="700"></hr>
-          {detalles.cellPhone ? 
-        <div>
-            <h4>Telefono</h4> 
-            <h6>{detalles.cellPhone}</h6>
-            <hr width="700"></hr>
-        </div>
-          :
-          ""
-          }
-        </div>
-    }
-    <div>
-        <Link to= '/'>
-          <button className={style.button}>Volver</button>
-        </Link>
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }

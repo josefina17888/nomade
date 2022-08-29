@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   getLodgings,
   orderPrice,
@@ -11,6 +12,9 @@ import AllCardsPaging from "../AllCardsPaging/AllCardsPaging";
 import Card from "../Card/Card";
 import { Link } from "react-router-dom";
 import styles from "./AllCards.module.css";
+import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
+
+
 
 export default function AllCards({setCurrentPage, paging, lodgingPerPage, currentLodging}) {
   let stateLodgings = useSelector((state) => state.lodgings);
@@ -36,18 +40,30 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
 
   return (
     <div className={styles.container}>
-        <div className={styles.cards}>
-          {loader ? (
-            <h2>Loading...</h2>
-          ) : currentLodging.length < 1 ? (
-            <h2>No se encontraron alojamientos</h2>
-          ) : (
-            currentLodging.map((e) => {
-              return (
-                <div className={styles.card}>
-                <div className={styles.link} key={e._id} >
-                  <Link to={`/detail/${e._id}` } className={styles.a} >
+      <div className={styles.container}>
+        {loader ? (
+          <h2>Loading...</h2>
+        ) : currentLodging.length < 1 ? (
+          <h2>No se encontraron alojamientos</h2>
+        ) : (
+          currentLodging.map((e) => {
+            return (
+              <div className={styles.cards}>
+
+                <div key={e._id} className={styles.card}>
+
+                <div>
+                <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
+                      country={e.country}
+                      price={e.price}
+                      guests={e.guests}
+                      picture={e.picture[0]}
+                      currency={e.currency}/> 
+
+                  <Link to={`/detail/${e._id}`} className={styles.link}>
+
                     <Card
+                      id={e._id}
                       city={e.city}
                       country={e.country}
                       price={e.price}
@@ -55,15 +71,19 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       picture={e.picture[0]}
                       currency={e.currency}
                     />
-                  </Link>
-                </div>
-                </div>
-              );
-            })
-          )}
-        </div>
 
-        <div className={styles.pag}>
+                    </Link>
+
+                    </div>
+                  
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      <div className={styles.pag}>
         <div>
           {!loader ? (
             <AllCardsPaging
@@ -73,7 +93,12 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
             />
           ) : null}
         </div>
-        </div>
+      </div>
+      <div className={styles.overlay}>
+        <div className={styles.containerModal}>
+          
+       </div>
+      </div>
     </div>
   );
 }

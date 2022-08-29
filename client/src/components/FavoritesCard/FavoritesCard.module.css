@@ -1,0 +1,81 @@
+
+.fcontGral{
+
+
+padding-left: 30px;
+margin-left: 50px;
+
+
+
+
+}
+
+.favcard{
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #000;
+  width: 50%;
+
+}
+
+.fimg{
+    
+  border-radius: 5px;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  box-shadow: 0px 1px 5px  #180c0c;
+  margin-bottom:10px ;
+
+  }
+  
+.ftext{
+    margin-left: 30px;
+    
+    
+}
+
+.fprice{
+    font-size: 1em;
+    display: inline;
+    font-weight: bold;
+    text-transform: uppercase;
+  
+  }
+  .fnoche{
+    display: inline;
+    font-weight: lighter;
+  } 
+  .fguests{
+    display: inline;
+    
+  } 
+  .fguestsIcon{
+    font-size:1.5em;
+  
+  
+  }
+  
+  .fcontGral button{
+    border:none;
+    background: none;
+    position: relative;
+    top:35px;
+    left:45%;
+    height: 30px;
+    width: 30px;
+
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    
+    
+    }
+    .fcontGral button{
+        background-color: rgb(233, 230, 230);
+    }
+
+ 
+ 
+    

@@ -3,16 +3,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
-import { postGuest, postLodging} from "../../Redux/Actions";
-import validate from "./validation";   
+import { postGuest, postLodging, getCountry} from "../../Redux/Actions";
+import validate from "./validation";
+
 
 export default function FormLodging() {
+  const params = useParams()
   const dispatch= useDispatch()
-
-  const params = useParams();
-  let hostId = params.hostId;
-  console.log(hostId)
-
+  const countries = useSelector((state) => state.country)
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
@@ -36,6 +34,7 @@ export default function FormLodging() {
     picture:""
 })    
   useEffect(() => {
+    dispatch(getCountry())
   }, []);
 
 
@@ -44,6 +43,13 @@ export default function FormLodging() {
     document.getElementById("file").click()
   }
 
+  function handleCountries(e) {
+      setInput({
+        ...input,
+        country: e.target.value,
+      });
+    }
+
   function handleChange(e){
    console.log(input.picture)
     if(e.target.name!== "picture")
@@ -51,8 +57,8 @@ export default function FormLodging() {
     setInput({
         ...input,
         [e.target.name] : e.target.value,
-       
     })
+    console.log(input)
     setErrors(validate({
       ...input,
       [e.target.name] : e.target.value
@@ -105,12 +111,12 @@ setErrors(validate({
 }))
 }
 }
-
+let hostId = params.hostId
   return (
 
     <div className={style.containerUser}>
-      <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" >
-      {/* <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST"> */}
+      {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
+      <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>
@@ -136,7 +142,7 @@ setErrors(validate({
           </select>
           <p>{errors.lodgingType}</p>
           <select   onChange={handleChange}  name ="guests" >
-                    <option disabled selected>Huespeds</option>
+                    <option disabled selected>Huespedes</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -167,7 +173,6 @@ setErrors(validate({
                     <option>+5</option>
           </select>
           <p >{errors.beds}</p>
-          
           <select   onChange={handleChange}  name ="currency" >
                     <option disabled selected>moneda:</option>
                     <option>USD</option>
@@ -196,6 +201,15 @@ setErrors(validate({
                  
           </select>
           <p >{errors.bathrooms}</p>
+        <select onChange={handleCountries}>
+          <option value="" disabled selected>País</option>
+        {
+          countries.map(e=>(
+              <option key={e.name} value={e.name}>{e.name}</option>
+              ))
+        }
+        </select>
+        <p >{errors.country}</p>
         <input
           type="text"
           name ="city"
@@ -204,14 +218,6 @@ setErrors(validate({
           onChange={handleChange}
         />
         <p >{errors.city}</p>
-         <input
-          type="text"
-          name ="country"
-          value={input.country}
-          placeholder="Pais"
-          onChange={handleChange}
-        />
-        <p >{errors.country}</p>
          <input
           type="text"
           name ="address"

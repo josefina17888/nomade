@@ -23,6 +23,7 @@ export default function FormUser() {
     picture: "",
     birthDate:""
 })    
+
 const guestByEmail = useSelector((state)=>state.duplicate)
 const switchShown = () => setShown(!shown);
 
@@ -54,9 +55,11 @@ function handleChange(e){
     dispatch(getGuestByEmail(e.target.value))
 }
 
+
+
   return (
     <div className={style.containerUser}>
-      <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data" >
+      <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data">
     {/* <form action= {`${process.env.REACT_APP_API}/api/guest`}  method="POST" encType="multipart/form-data" > */}
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
@@ -148,7 +151,7 @@ function handleChange(e){
           onChange={handleChange}
         />
       </div>
-      <button className={style.button} type="submit">
+      <button className={style.button} type="submit" disabled={guestByEmail.length !== 0 ? true : false}>
         Registrarme
       </button>
   </form>

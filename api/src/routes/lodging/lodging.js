@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
+const Booking = require('../booking/booking');
 const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
@@ -28,6 +29,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.services = service
     newLodging.ownBathroom= req.body.ownBathroom === "on" ? true : false
     newLodging.picture= fotosSubidas
+    newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
     newLodging.save();
     //res.redirect("http://localhost:3000/")
@@ -54,7 +56,6 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 router.get("/", async (req, res) => {
   const citySearching = await req.query.city;
   allLodgings = await Lodging.find();
-  console.log(allLodgings)
   try {
     if (citySearching) {
       Lodging.find({ city: citySearching }, (err, lodging) => {
@@ -81,6 +82,13 @@ router.get("/detail/:lodgingId", async (req, res) => {
     res.json(err);
   }
 });
+
+/// trae todos los lodgings de un host
+router.get("/:hostId", async (req, res) => {
+  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+      res.send(docs)
+  })
+})
 
 // esto crea una relacion al hacer get (FUNCIONA)
 /* router.get("/relacionado/:lodgingId/:hostId", async (req, res) => {

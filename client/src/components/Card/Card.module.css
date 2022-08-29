@@ -1,23 +1,13 @@
 .img{
-  width: 100%;
-position: relative;
-
+  box-sizing: border-box;
+  border-radius: 5%;
+  width: 270px;
+  height: 230px;
+  margin-left: 4%;
+  margin-right: 4%;
 }
-img{
-  width: 100%;
-  border-radius: 10px;
-}
-.fav{
-  margin-top:10px;
-  position: absolute;
-  top: 0px;
-  right: 15px;
-  font-weight: bold;
-  font-size: 1.5em;
-  color: rgba(255, 255, 255, 0.585);
 
 
-}
 .text{
 
   padding-left: 5px;
@@ -63,13 +53,19 @@ img{
 .icons{
   margin-top:7px;
   font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.779);
   width: 100%;
-  height: 30px;
+  height: 100%;
   padding-left: 5px;
   padding-right: 10px;
  
 
+}
+
+.card{
+  border-radius: 5%;
+  width: 300px;
+  height: 70%;
+  padding: 2%;
 }
 
 

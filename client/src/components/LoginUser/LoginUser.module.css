@@ -1,78 +1,211 @@
 .containerUser {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: auto;
-    flex-wrap: wrap;
-    height: 100vh;
-    width: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 50%;
 }
 
 .title {
-    margin-top: 80px;
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .containerForm {
-    margin-top: 50px;
-    width: 250px;
+  margin-top: 50px;
+  width: 250px;
 }
 
-.inputEmail {
-    width: 100%;
-    height: 25px;
-}
-
-.inputPassword {
-    width: 100%;
-    margin-top: 40px;
-    height: 25px;
-}
+  
 
 .button {
-    width: 220px;
-    margin-top: 50px;
-    margin-left: 17px;
-    background-color: #069A8E;
-    height: 35px;
-    font-size: 18px;
-    color: #f0f0f0;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid rgb(0, 0, 0);
+  width: 220px;
+  margin-top: 50px;
+  margin-left: 17px;
+  background-color: #069a8e;
+  height: 35px;
+  font-size: 18px;
+  color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid rgb(0, 0, 0);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.486);
+}
+
+.button:hover {
+  background-color: #f0f0f0;
+  color: #069a8e;
+  transition: all 0.5s;
 }
 
 .line {
-    display: inline-block;
-    position: relative;
-    margin-top: 30px;
-    margin-bottom: 30px;
+  display: inline-block;
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
-.line::after, .line::before {
-    content: "";
-    position: absolute;
-    width: 200px;
-    height: 1px;
-    background-color: #069A8E;
-    top: 0.6em;
+.line::after,
+.line::before {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 1px;
+  background-color: #069a8e;
+  top: 0.6em;
 }
 
 .line::before {
-    left: -220px;
+  left: -220px;
 }
 
 .line::after {
-    right: -220px;
+  right: -220px;
 }
 
 .buttonGoogle {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .textFinal {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #069A8E;
-    text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #069a8e;
+  text-align: center;
+}
+
+.group {
+  position: relative;
+  margin-top: -30px;
+}
+
+.group2 {
+  position: relative;
+  margin-top: 25px;
+}
+
+.input {
+  font-size: 16px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #515151;
+  background: transparent;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.labelA {
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.input:focus ~ .labelA,
+.input:valid ~ .labelA {
+  top: -10px;
+  font-size: 14px;
+  color: #000000;
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.bar:before,
+.bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #069A8E;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+  left: 50%;
+}
+
+.bar:after {
+  right: 50%;
+}
+
+.input:focus ~ .bar:before,
+.input:focus ~ .bar:after {
+  width: 50%;
+}
+
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.input:focus ~ .highlight {
+  animation: inputHighlighter 0.3s ease;
+}
+
+@keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+
+.link {
+  margin-top: 20px;
+  color: #069A8E;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.link:hover,
+.link2:hover {
+  color: #0fd6c6;
+}
+
+.link2 {
+  color: #069A8E;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.logo{
+  width: 160px;
+  height: 100px;
+}
+.password{
+  background-color: transparent;
+  position: relative;
+  border: none;
+  font-size: 1.2rem;
+  left: 16rem;
+  bottom:2.5rem;
 }
