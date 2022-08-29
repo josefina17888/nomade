@@ -15,11 +15,13 @@ import { getLodgings } from "../../Redux/Actions/index";
 export default function NavBar(props) {
   const dispatch = useDispatch();
   let guestId = localStorage.getItem("userInfo");
-
+console.log("por aca", guestId)
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId).email;
   }
+  console.log(userToken)
+
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
@@ -73,7 +75,7 @@ export default function NavBar(props) {
                         <div>
                           <li>
                             <Link
-                              to= {`/profile/${props.email}`}
+                              to= {`/profile/${userToken}`}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil

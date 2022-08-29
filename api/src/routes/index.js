@@ -21,9 +21,9 @@ const loginGoogle = require ('../routes/loginGoogle/loginGoogle');
 const guestReviewRoute = require ('../routes/guestReview/guestReview.js')
 const lodgingReviewRoute = require ('../routes/lodgingReview/lodgingReview.js')
 const favoriteRoute = require ('../routes/favorite/favorite.js') 
-const conversationRoute = require ('./chat/Conversation.js') 
+const conversationRoute = require ('./chat/conversation') 
 const messageRoute = require ('./chat/message.js') 
-
+const passwordReset = require("./passwordReset/passwordReset")
 const guestReview = require('../routes/guestReview/guestReview')
 const paymentRoute = require('../routes/payment/payment')
 
@@ -39,6 +39,8 @@ router.use("/api/payment", paymentRoute)
 router.use("/api/favorite", favoriteRoute);
 router.use("/api/conversation", conversationRoute);
 router.use("/api/message", messageRoute);
+router.use("/api/passwordReset", passwordReset);
+
 
 
 
