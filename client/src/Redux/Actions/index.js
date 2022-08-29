@@ -279,7 +279,8 @@ export function createNewBooking(payload) {
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
-    const res = await axios.post(`api/payment/`,payload)
+    const res = await axios.post("/api/payment/", payload)
+    console.log(res)
     return dispatch({
       type: "PAY_BOOKING",
       payload: res.data

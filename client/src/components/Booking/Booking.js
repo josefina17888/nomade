@@ -78,6 +78,7 @@ export default function Booking(props) {
      costNight
   }
 
+  console.log(info)
 
   const total = costNight * night;
 
@@ -85,14 +86,15 @@ export default function Booking(props) {
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
     isFound? alert('NO DISPONIBLE'):
-    dispatch(createNewBooking(input));
     dispatch(payBooking(info));
+    dispatch(createNewBooking(input));
   }
 
   function handleEditDates() {}
 
   const preferenceId = useSelector((state) => state.payment);
   const preference = preferenceId.preferenceId;
+  console.log(preference)
 
   return (
     <div>

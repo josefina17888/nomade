@@ -22,6 +22,7 @@ router.post("/", async function (req, res, next) {
     const title = req.body.lodgingId
     const quantity = req.body.night
     const price = req.body.costNight
+    console.log(price)
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
     // Toma del lodging el title y el unit price y toma del body la cantidad de noches
         let preference = {
@@ -46,6 +47,7 @@ router.post("/", async function (req, res, next) {
     try {
     const response = await mercadopago.preferences.create(preference)
     const preferenceId = response.body.id
+    console.log(preferenceId)
     res.send({ preferenceId });
     
     // const initPoint = response.body.init_point
