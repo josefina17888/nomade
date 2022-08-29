@@ -18,7 +18,7 @@ export default function Booking(props) {
 
   //DECLARATION CONST FOR USE DATES
   const lodgingId = props.match.params._id;
-  const unavalaibleDates = availibity.map((e) =>
+  const unavailableDates = availibity.map((e) =>
     e.allDates.map((d) => new Date(d).toDateString())
   );
 
@@ -42,7 +42,6 @@ export default function Booking(props) {
   var preGuest = JSON.parse(bookingInfo).guests;
 
   //PRICE FROM LOCAL STORAGE
-  const priceBooking = localStorage.getItem("priceBooking");
   //const costNight = JSON.parse(priceBooking);
 
   //PARSE INFO LOCAL STORAGE USER INFO
@@ -52,7 +51,7 @@ export default function Booking(props) {
 
   //GET RANGES OF DATES
   const alldates = getDatesInRange(checkIn, checkOut);
-
+  console.log(alldates, 'RANGO DE FECHAS QUE DESEA EL GUEST')
   //NEW STATE WITH PROPERTIES FOR LOCAL STORAGE
   const [input, setInput] = useState({
     checkIn: checkIn,
@@ -65,13 +64,13 @@ export default function Booking(props) {
     costNight: costNight
   });
 
+  
+  //VER DISPONIBILIDAD DE DATES
+  const demo = unavailableDates.flat()
+  const isFound = demo.some((date) =>
+      alldates.includes(new Date(date).toDateString()))
 
-  if (availibity.length) {
-    var unavailable = alldates.some((e) => e.includes(unavailable[0]));
-    
-    console.log(unavailable, "POR FAVOR TRUE");
-    }
-
+  //DATA JOSE
   const night = input.night; 
   const info = {
     lodgingId,
@@ -85,7 +84,7 @@ export default function Booking(props) {
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
-    unavailable? alert('NO DISPONIBLE'):
+    isFound? alert('NO DISPONIBLE'):
     dispatch(createNewBooking(input));
     dispatch(payBooking(info));
   }
@@ -94,19 +93,6 @@ export default function Booking(props) {
 
   const preferenceId = useSelector((state) => state.payment);
   const preference = preferenceId.preferenceId;
-
-  //LEER BOOKINGS DE LOS LODGNING Y COMPARARLOS
-  //const demo = unavailable.map(e=>e.map)
-  /* for(let i=0; i<alldates.length; i++){
-    for(let j=0;j<unavalaibleDates.length;j++){
-      console.log(unavalaibleDates[j], 'DENTRO DE FOR UNAVAILABLE')
-    } 
-    console.log(alldates[i], 'ALL DATES')
-  } */
-  console.log(unavalaibleDates, 'SOY EL ARRAY DE ARRAYS')
-  for(let j=0;j<unavalaibleDates.length;j++){
-    console.log(unavalaibleDates[j], 'DENTRO DE FOR UNAVAILABLE')
-  } 
 
   return (
     <div>
