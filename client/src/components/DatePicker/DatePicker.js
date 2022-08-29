@@ -49,8 +49,8 @@ export default function DatePickerOk({ lodId }) {
   async function handleClick(e) {
     setInfo({
       ...info,
-      checkIn: info.checkIn.toDateString(),
-      checkOut: info.checkOut.toDateString(),
+      checkIn: info.checkIn,
+      checkOut: info.checkOut,
     });
     localStorage.setItem("bookingInfo", JSON.stringify(info));
     localStorage.setItem("priceBooking", JSON.stringify(price));
@@ -78,7 +78,7 @@ export default function DatePickerOk({ lodId }) {
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Llegada</div>
                       <DatePicker
-                        dateFormat="yyyy/MM/dd"
+                        dateFormat="dd/MM/yyyy"
                         selected={info.checkIn}
                         onChange={(currentDate) =>
                           setInfo({ ...info, checkIn: currentDate })
@@ -90,7 +90,7 @@ export default function DatePickerOk({ lodId }) {
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Salida</div>
                       <DatePicker
-                        dateFormat="yyyy/MM/dd"
+                        dateFormat="dd/MM/yyyy"
                         selected={info.checkOut}
                         onChange={(currentDate) =>
                           setInfo({ ...info, checkOut: currentDate })
