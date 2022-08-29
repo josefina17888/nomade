@@ -17,7 +17,9 @@ router.post("/" , async (req, res) => {
             token: generateToken(guest._id)
         }).save()
     }
-    const url = `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
+    const url = 
+    // `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
+    `https://nomade-khaki.vercel.app/api/passwordReset/${guest._id}/${token.token}`;
     const title = "Tranquilo Nómade, todo esto por tu seguridad"
     const msg = "Estas a unos pasos de ingresar tu nueva contraseña. Sólo da click al boton de abajo."
     await verifyEmail(guest.email,"Password Reset", title , msg , url)
