@@ -14,10 +14,12 @@ const initialState = {
   duplicate: [],
   allLodgingsReviews: [],
   rating: [],
+  country: [],
   payment: {},
   bookings: [],
   feedback: [],
   rating: [],
+
 };
 
 function rootReducer(state = initialState, action) {
@@ -80,7 +82,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         lodgings: house,
       };
-
+    case "GET_COUNTRY": 
+      return {
+        ...state,
+        country: action.payload,
+      };
     case "FILTER_BY_PETS":
       const filtering = state.lodgings;
       const pets = filtering.filter((e) => e.services.pets === true);

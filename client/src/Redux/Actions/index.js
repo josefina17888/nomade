@@ -19,6 +19,20 @@ export function getLodgings (lodgingId){
 }
 }
 
+export function getCountry (){
+    return async function(dispatch){
+        try{
+        const json = await axios.get("http://localhost:3001/api/country")
+        dispatch({
+            type:"GET_COUNTRY",
+            payload: json.data
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+}
+
 //MENUcd cli
 export function filterTypeHouse(payload){
   return{
