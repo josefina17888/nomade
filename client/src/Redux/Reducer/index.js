@@ -7,9 +7,6 @@ const initialState = {
   userFavorites: [],
   favNumber: 0,
   guest: {},
-  checkIn: {},
-  checkOut: {},
-  dates: [],
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
@@ -17,8 +14,7 @@ const initialState = {
   country: [],
   payment: {},
   bookings: [],
-  feedback: [],
-  rating: [],
+  postBooking: {},
 
 };
 
@@ -122,17 +118,6 @@ function rootReducer(state = initialState, action) {
         lodgings: highest.map((e) => e),
       };
 
-    case "LOADER_TRUE":
-      return {
-        ...state,
-        pokeLoader: true,
-      };
-
-    case "LOADER_FALSE":
-      return {
-        ...state,
-        pokeLoader: false,
-      };
 
     case "LOADER_TRUE":
       return {
@@ -236,6 +221,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         payment: action.payload,
         };
+
+    case "SET_DATA_POSTBOOKING":
+      return {
+        ...state,
+        postBooking: action.payload,
+      };
 
     default:
       return { ...state };
