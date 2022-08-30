@@ -36,8 +36,8 @@ router.get("/:guestId", async (req, res) => {
 
 //RUTA GET PERO NO FUNCIONABA ASÍ QUE ES POST-GET
 router.post("/booking", async (req, res) => {
-  console.log(req.body, 'FRONT')
   const lodgingId = toId(req.body.lodgingId);
+  console.log(lodgingId, 'FRONT')
   Booking.find({ lodgingId: lodgingId }, (error, docs) => {
     res.json(docs);
   });

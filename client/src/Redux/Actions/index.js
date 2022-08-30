@@ -322,5 +322,12 @@ export function getFeedback(){
   }
 }
 
+//FUNCION QUE ALMACENA DATOS DEL USUARIO
+/* export function getInfoGuest(){
+  return{
+    type: 'GET_INFO_LOCAL_STORAGE'
+  }
+} */
+
 
 

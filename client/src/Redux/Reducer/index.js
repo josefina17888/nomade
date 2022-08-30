@@ -19,7 +19,7 @@ const initialState = {
   bookings: [],
   feedback: [],
   rating: [],
-
+  demoUser: null
 };
 
 function rootReducer(state = initialState, action) {
@@ -242,6 +242,14 @@ function rootReducer(state = initialState, action) {
         ...state,
         feedback: action.payload,
       };
+    
+      /* case 'GET_INFO_LOCAL_STORAGE':
+      const userInfo = localStorage.getItem("userInfo");
+      let user = JSON.parse(userInfo);
+        return{
+          ...state,
+          demoUser: user
+        } */
 
     default:
       return { ...state };
