@@ -276,9 +276,11 @@ export function payBooking(payload) {
 }
 
 export function getBookingByLodgingId(payload){
+  console.log(payload, 'PAYLOAD')
   return async function(dispatch){
     try{
     var response = await axios.post('/api/booking/booking', payload)
+    console.log(response.data, 'SOY RESPONSE')
       return dispatch({
         type: "GET_BOOKING_LODGING_ID",
         payload: response.data

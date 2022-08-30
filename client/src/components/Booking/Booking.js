@@ -26,7 +26,6 @@ export default function Booking(props) {
   }, [dispatch]);
 
   const lodging = useSelector((state) => state.detail);
-  console.log(lodging)
   const costNight = lodging.price;
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
@@ -50,7 +49,6 @@ export default function Booking(props) {
 
   //GET RANGES OF DATES
   const alldates = getDatesInRange(checkIn, checkOut);
-  console.log(alldates, 'RANGO DE FECHAS QUE DESEA EL GUEST')
   //NEW STATE WITH PROPERTIES FOR LOCAL STORAGE
   const [input, setInput] = useState({
     checkIn: checkIn,
@@ -66,6 +64,7 @@ export default function Booking(props) {
   
   //VER DISPONIBILIDAD DE DATES
   const demo = unavailableDates.flat()
+  console.log(demo, 'ALL DATES BOOKING')
   const isFound = demo.some((date) =>
       alldates.includes(new Date(date).toDateString()))
 
@@ -133,6 +132,7 @@ export default function Booking(props) {
                         checkIn: new Date(currentDate).toDateString(),
                       })
                     }
+                    onSelect={demo}
                     selectsEnd
                     minDate={new Date()}
                     checkIn={input.checkIn}
