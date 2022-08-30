@@ -1,29 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGuest } from "../../Redux/Actions";
-import Logo from "../../assets/nomadeLogo.svg";
 import style from './profile.module.css'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
 
-
-
 export default function Profile({email}) {
-  let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId)
-
   const dispatch = useDispatch()
   const guestDet = useSelector((state) => state.guest)
-  const detalles = guestDet[0]
-  useEffect(() => {
-    dispatch(getGuest(user.email))
-  }, [dispatch])
-  console.log(guestDet)
+  let guestId = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestId)
 
   return (
     <div>
       <div>
-        {detalles === undefined ? (
+        {user === undefined ? (
           <p>Loading...</p>
         ) : (
           <div className="_16grqhk">
@@ -33,31 +23,31 @@ export default function Profile({email}) {
                 <h2>Detalle del Perfil</h2>
                 <h4>Nombre</h4>
                 <h6>
-                  {detalles.name.charAt(0).toUpperCase() +
-                    detalles.name.slice(1)}{" "}
-                  {detalles.lastname.charAt(0).toUpperCase() +
-                    detalles.lastname.slice(1)}
+                  {user.name.charAt(0).toUpperCase() +
+                    user.name.slice(1)}{" "}
+                  {user.lastname.charAt(0).toUpperCase() +
+                    user.lastname.slice(1)}
                 </h6>
                 <hr width="700"></hr>
-                {detalles.birthDate ? (
+                {user.birthDate ? (
                   <div>
                     <h4>Fecha de Nacimiento</h4>
-                    <h6>{detalles.birthDate}</h6>
+                    <h6>{(user.birthDate).slice(0, -14)}</h6>
                     <hr width="700"></hr>
                   </div>
                 ) : (
                   ""
                 )}
                 <h4>Correo Electronico</h4>
-                <h6>{detalles.email}</h6>
+                <h6>{user.email}</h6>
                 <hr width="700"></hr>
                 <h4>Contraseña</h4>
-                <h6>{detalles.password}</h6>
+                <Link to={`/${user.email}/resetPassword`} ><button>Actualizar Contraseña</button></Link>
                 <hr width="700"></hr>
-                {detalles.cellPhone ? (
+                {user.cellPhone ? (
                   <div>
                     <h4>Telefono</h4>
-                    <h6>{detalles.cellPhone}</h6>
+                    <h6>{user.cellPhone}</h6>
                     <hr width="700"></hr>
                   </div>
                 ) : (
@@ -71,7 +61,7 @@ export default function Profile({email}) {
                       <div>
                         <div className={style._1h6n1zu}>
                           <img
-                            src={detalles.picture}
+                            src={user.picture}
                             alt="Sin foto.."
                             className={style._9ofhsl}
                           ></img>

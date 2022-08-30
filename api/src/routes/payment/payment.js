@@ -29,13 +29,16 @@ router.post("/", async function (req, res, next) {
                 quantity: req.body.night,
                 unit_price: req.body.costNight,
             }],
-            back_urls: {
-                success: "http://localhost:3001/api/payment/",
-
-                failure: "http://localhost:3001/api/payment/feedback",
-                pending: "http://localhost:3001/api/payment/feedback"
+            payment_methods: {
+                installments: 1
             },
-            installments: 1
+            back_urls: {
+
+                success: "http://localhost:3000/",
+                // res.redirect("https://nomade-khaki.vercel.app/")
+                failure: "http://localhost:3000/",
+                pending: "http://localhost:3000/"
+            },
         }
     console.log(preference.items)
 
@@ -57,7 +60,7 @@ router.post("/", async function (req, res, next) {
 
 
 
-router.get('/', function(req, res) {
+router.get('/', async function(req, res) {
 	res.json({
 		Payment: req.query.payment_id,
 		Status: req.query.status,

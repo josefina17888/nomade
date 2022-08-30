@@ -132,31 +132,22 @@ export default function CardDetail(props) {
             <div className={styles.padding}>
               <h3 className={styles.titles}>Alojamiento</h3>
               <hr className={styles.hr}></hr>
-              <div>
-                <h4>{myLodging.title}</h4>
-                <h4>{myLodging.lodgingType}</h4>
+              <div className={styles.lod}>
+                <h5>{myLodging.title}</h5>
+                <h5> Tipo de alojamiento: {myLodging.lodgingType}</h5>
               </div>
             </div>
 
             <div className={styles.padding}>
               <h3 className={styles.titles}>Descripción</h3>
               <hr className={styles.hr}></hr>
-              <h4>{myLodging.description}</h4>
+              <h5 className={styles.lod}>{myLodging.description}</h5>
             </div>
 
             <div className={styles.padding}>
               <h3 className={styles.titles}>Servicios Incluidos</h3>
               <hr className={styles.hr}></hr>
 
-              {/* <div>
-            {
-              lodgingServices.map((e) => {
-                return(
-                  <p className={styles.p1}>{e}</p>
-                )
-              })
-            }
-          </div> */}
               <div className={styles.flexcontainer2}>
                 <div className={styles.flexcontainer4}>
                   <div>

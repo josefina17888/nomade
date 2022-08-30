@@ -1,16 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {upDate,getGuest,deleteMessage} = require("./controller")
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
-const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
 const upload = require("../../../libs/storage")
-const Model = require("../../models/Guest");;
 const cloudinary = require("cloudinary").v2;
-
 const Token = require("../../models/Token")
-const sendEmail = require("../../../libs/sendEmail");
+const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
 
 
@@ -24,9 +19,7 @@ cloudinary.config({
 
 
 
-
 router.post("/", upload.single("picture") ,async (req, res) => {
-  
     // try{
     //   const userExist = await Guest.findOne({ email });
     //   if(userExist) {
@@ -56,6 +49,7 @@ router.post("/", upload.single("picture") ,async (req, res) => {
     //   //res.redirect("http://localhost:3000/");
 
 
+  const { name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
     try{
       const userExist = await Guest.findOne({ email });
       if(userExist) {
@@ -63,9 +57,10 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       }
       console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
-      const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+      console.log(result)
+      const newGuest = new Guest({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
+
       await newGuest.save()
-      
       console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,
@@ -74,13 +69,13 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       console.log(token)
       token.save()
       console.log(token)
-      const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}, este token expira en una hora`;
+      const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
       console.log(url)
-      await sendEmail(newGuest.email,"Verify Email", url)
+      const title = "Gracias por unirte a la comunidad Nómade"
+      const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
+      await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
       // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
       res.status(201).redirect("http://localhost:3000/login")
-      //res.redirect("https://nomade-khaki.vercel.app/");
-      //res.redirect("http://localhost:3000/");
     }
       catch (error){
           res.status(404).send(error)
@@ -93,7 +88,7 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
   console.log(req.params.token)
   console.log(req.params.idGuest)
   try {
-    const guest = await Model.findOne({_id: req.params.idGuest})
+    const guest = await Guest.findOne({_id: req.params.idGuest})
     console.log(guest)
     if(!guest) return(400).send({message:"Invalid link"});
     console.log("hola")
@@ -204,18 +199,18 @@ router.get("/", async (req, res) => {
     }
   });
 
-router.patch("/:id", async (req, res) => {
-    const{id} = req.params
-    const {username, name , lastname , email , cellPhone , country,picture, birthDate} = req.body  
-    try{
+// router.patch("/:id", async (req, res) => {
+//     const{id} = req.params
+//     const {username, name , lastname , email , cellPhone , country,picture, birthDate} = req.body  
+//     try{
 
-        const updateGuest = await upDate(id , req.body)
-        res.status(201).send("Actualizado con éxito")
-        }
-        catch (error){
-            res.status(404).send(error)
-        }    
-});
+//         const updateGuest = await upDate(id , req.body)
+//         res.status(201).send("Actualizado con éxito")
+//         }
+//         catch (error){
+//             res.status(404).send(error)
+//         }    
+// });
 
 
 ///ACTUALIZA EL GUEST (FUNCIONA)////

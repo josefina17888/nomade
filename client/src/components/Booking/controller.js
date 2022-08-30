@@ -1,4 +1,5 @@
 const getDatesInRange = (checkIn, checkOut) => {
+  console.log(checkIn)
   var start = new Date(checkIn);
   var end = new Date(checkOut);
   var nights = new Date(start);
@@ -12,7 +13,6 @@ const getDatesInRange = (checkIn, checkOut) => {
       dates.push(nights.toDateString());
       nights.setDate(nights.getDate() + 1);
     }
-    console.log(dates, 'ALL RANGE DATES')
     return dates;
   }
 };
