@@ -7,14 +7,15 @@ const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
+require('dotenv').config();
 
 
 
 
 cloudinary.config({ 
-  cloud_name: 'dbq85fwfz', 
-  api_key: '578434861277536', 
-  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 
@@ -26,7 +27,6 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       if(userExist) {
         res.send('Usuario ya existe')
       }
-      console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
       console.log(result)
       const newGuest = new Guest({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
