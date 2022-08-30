@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -76,20 +77,23 @@ export default function Booking(props) {
      costNight
   }
 
+  console.log(info)
+
   const total = costNight * night;
 
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
     isFound? alert('NO DISPONIBLE'):
-    dispatch(createNewBooking(input));
     dispatch(payBooking(info));
+    dispatch(createNewBooking(input));
   }
 
   function handleEditDates() {}
 
   const preferenceId = useSelector((state) => state.payment);
   const preference = preferenceId.preferenceId;
+  console.log(preference)
 
   return (
     <div>
@@ -113,16 +117,17 @@ export default function Booking(props) {
       ) : (
         <div className={s.container}>
           <div className={s.margin}>
-            <div className={s.titles}>Fechas de tu reservacion</div>
+            <div className={s.left}>
+            <div className={s.titles}>Fechas de tu reservación</div>
             <hr className={s.hr}></hr>
             <div>{`${new Date(input.checkIn).toLocaleDateString()} - ${new Date(
               input.checkOut
             ).toLocaleDateString()}`}</div>
             <div>
-              <div>Edita tus fechas</div>
+              <div className={s.margin}>Edita tus fechas</div>
               <div>
-                <div>
-                  <div>Llegada</div>
+                <div className={s.container1}>
+                  <div className={s.input1}>Llegada  </div>
                   <ReactDatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkIn)}
@@ -139,8 +144,8 @@ export default function Booking(props) {
                     /*checkOut={info.checkOut} */
                   />
                 </div>
-                <div>
-                  <div>Salida</div>
+                <div className={s.container1}>
+                  <div className={s.input2}>Salida  </div>
                   <ReactDatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkOut)}
@@ -162,23 +167,28 @@ export default function Booking(props) {
             <div className={s.titles}>Nómadas</div>
             <hr className={s.hr}></hr>
             <div className={s.selection}>
+              <div className={s.total}>
               <span>Total </span>
               <input
+                className={s.input}
                 type="number"
                 name="adults"
                 value={input.guestAdults}
                 defaultValue={preGuest}
               ></input>
-            </div>
-            <div className={s.selection}>
+              </div>
+            <div>
               <span>Mascotas </span>
               <input type="checkbox" name="pets" value={input.pets}></input>
+            </div>
+            </div>
             </div>
           </div>
           <div className={s.card}>
             <div>
             <img src={picture1} className={s.img} alt="img not found"/>
             </div>
+          <div className={s.container4}>
             <div>
               <h6 className={s.city}>{city}, {country}</h6>
             </div>
@@ -207,9 +217,12 @@ export default function Booking(props) {
             <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
+            <MercadoPagoFinal preferenceId={preference}/>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 }
+

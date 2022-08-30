@@ -56,6 +56,10 @@
     background-color: #069A8E;
   }
 
+  .lod{
+    margin-bottom: 5%;
+  }
+
   .button1 {
     transition-duration: 0.4s;
     background-color: #069A8E;

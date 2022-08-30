@@ -78,6 +78,7 @@ export default function DatePickerOk({ lodId }) {
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Llegada</div>
                       <DatePicker
+                        className={styles.input}
                         dateFormat="dd/MM/yyyy"
                         selected={info.checkIn}
                         onChange={(currentDate) =>
@@ -90,6 +91,7 @@ export default function DatePickerOk({ lodId }) {
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Salida</div>
                       <DatePicker
+                        className={styles.input}
                         dateFormat="dd/MM/yyyy"
                         selected={info.checkOut}
                         onChange={(currentDate) =>
