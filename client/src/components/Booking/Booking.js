@@ -89,7 +89,8 @@ export default function Booking(props) {
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
-    isFound ? alert("NO DISPONIBLE") : dispatch(setDataPostBooking(input));
+    localStorage.setItem("booking", JSON.stringify(input));
+    isFound ? alert("NO DISPONIBLE") : dispatch(setDataPostBooking());
     dispatch(payBooking(info));
     //dispatch(setDataPostBooking(input));
   }
@@ -235,6 +236,7 @@ export default function Booking(props) {
             <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
+            <MercadoPagoFinal preferenceId={preference}/>
           </div>
         </div>
       )}

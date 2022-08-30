@@ -243,9 +243,11 @@ function rootReducer(state = initialState, action) {
         } */
 
     case "SET_DATA_POSTBOOKING":
+      const bookingInfo = localStorage.getItem("booking");
+      let bookingFinal = JSON.parse(bookingInfo);
       return {
         ...state,
-        postBooking: action.payload,
+        postBooking: bookingFinal,
       };
 
     default:

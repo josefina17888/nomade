@@ -330,14 +330,6 @@ export function getFeedback(){
   }
 }
 
-//ACTION QUE SETEA LOS DATOS DEL LODGING EN 
-export function setDataPostBooking(payload){
-  return{
-    type: 'SET_DATA_POSTBOOKING',
-    payload
-  }
-}
-
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
   return{
