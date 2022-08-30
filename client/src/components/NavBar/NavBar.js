@@ -26,6 +26,9 @@ export default function NavBar(props) {
     e.preventDefault();
     dispatch(getLodgings());
   }
+
+  /* const demoHistory = window.location.pathname;
+  if(demoHistory === '/' || demoHistory==='/detail/:_id') */
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">

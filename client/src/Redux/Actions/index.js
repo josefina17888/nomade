@@ -299,9 +299,11 @@ export function payBooking(payload) {
 }
 
 export function getBookingByLodgingId(payload){
+  console.log(payload, 'PAYLOAD')
   return async function(dispatch){
     try{
     var response = await axios.post('/api/booking/booking', payload)
+    console.log(response.data, 'SOY RESPONSE')
       return dispatch({
         type: "GET_BOOKING_LODGING_ID",
         payload: response.data
@@ -312,6 +314,30 @@ export function getBookingByLodgingId(payload){
     }
   }
 } 
+
+export function getFeedback(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/payment?status=")
+      console.log(res)
+      return dispatch({
+        type: "GET_FEEDBACK",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+//FUNCION QUE ALMACENA DATOS DEL USUARIO
+/* export function getInfoGuest(){
+  return{
+    type: 'GET_INFO_LOCAL_STORAGE'
+  }
+} */
+
+
 
 
 
