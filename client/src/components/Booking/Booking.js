@@ -9,7 +9,6 @@ import {
 } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
-import MercadoPago from "../MercadoPago/MercadoPago";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import ReactDatePicker from "react-datepicker";
