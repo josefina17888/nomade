@@ -19,8 +19,7 @@ import LodgingReview from './components/LodgingReview/LodgingReview'
 import ResetPasswordLogIn from "./components/EmailVerify/ResetPasswordLogIn"
 /* import AdminDash from './components/Admin/AdminDash'; */
 import Booking from './components/Booking/Booking'
-// import MercadoPago from './components/MercadoPago/MercadoPago'
-// import Status from './components/MercadoPago/Status';
+import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 
 
@@ -47,8 +46,7 @@ function App() {
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
           <Route path='/forgot-password/' component={ForgotPassword}/>
-          {/* <Route path= "/status" component={Status}/> */}
-          {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
+          <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
         </Switch>
       </BrowserRouter>

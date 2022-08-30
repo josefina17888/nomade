@@ -305,20 +305,5 @@ export function getBookingByLodgingId(payload){
   }
 } 
 
-export function getFeedback(){
-  return async function(dispatch){
-    try {
-      const res = await axios.get("/api/payment?status=")
-      console.log(res)
-      return dispatch({
-        type: "GET_FEEDBACK",
-        payload: res.data
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
 
 

@@ -237,12 +237,6 @@ function rootReducer(state = initialState, action) {
         payment: action.payload,
         };
 
-    case "GET_FEEDBACK":
-      return {
-        ...state,
-        feedback: action.payload,
-      };
-
     default:
       return { ...state };
   }
