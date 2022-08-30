@@ -7,9 +7,6 @@ const initialState = {
   userFavorites: [],
   favNumber: 0,
   guest: {},
-  checkIn: {},
-  checkOut: {},
-  dates: [],
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
@@ -17,9 +14,8 @@ const initialState = {
   country: [],
   payment: {},
   bookings: [],
-  feedback: [],
-  rating: [],
-  demoUser: null
+  postBooking: {},
+  demoUser: null,
 };
 
 function rootReducer(state = initialState, action) {
@@ -82,7 +78,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         lodgings: house,
       };
-    case "GET_COUNTRY": 
+    case "GET_COUNTRY":
       return {
         ...state,
         country: action.payload,
@@ -235,15 +231,21 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         payment: action.payload,
-        };
+      };
 
     case "GET_FEEDBACK":
       return {
         ...state,
         feedback: action.payload,
       };
-    
-      /* case 'GET_INFO_LOCAL_STORAGE':
+
+    case "SET_DATA_POSTBOOKING":
+      return {
+        ...state,
+        postBooking: action.payload,
+      };
+
+    /* case 'GET_INFO_LOCAL_STORAGE':
       const userInfo = localStorage.getItem("userInfo");
       let user = JSON.parse(userInfo);
         return{

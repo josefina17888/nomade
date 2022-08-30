@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import {
   getDetail,
   createNewBooking,
-  getBookingByLodgingId,
   payBooking,
+  setDataPostBooking,
 } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
@@ -88,15 +88,14 @@ export default function Booking(props) {
   const info = {
     lodgingId,
     night,
-    costNight,
-    property: false,
+    costNight
   };
 
   const total = costNight * night;
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
-    isFound ? alert("NO DISPONIBLE") : dispatch(createNewBooking(input));
+    isFound ? alert("NO DISPONIBLE") : dispatch(setDataPostBooking(input));
     dispatch(payBooking(info));
   }
 
