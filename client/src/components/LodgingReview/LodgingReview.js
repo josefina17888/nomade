@@ -43,7 +43,8 @@ function handleChange(e){
 
   return (
     <div className={style.contenedor}>
-      <form action={`http://localhost:3001/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data">
+      {/* <form action={`http://localhost:3001/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data"> */}
+      <form action= {`${process.env.REACT_APP_API}/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`}  method="POST" encType="multipart/form-data" >  
         {/* <label>rating</label>
          <select onChange={handleChange}   name ="rating" >
                     <option disabled selected>puntuacion</option>

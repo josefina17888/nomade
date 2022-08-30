@@ -25,8 +25,6 @@ if(!props.guestInfo){
     dispatch(getFavorites(favData));
   }, [dispatch]);
 
-
-  
   var userFavs = {
     userEmail: userEmail,
     lodgingId: props.id,
@@ -49,27 +47,29 @@ if(!props.guestInfo){
 
   var stateIds = stateLodgings.map((e) => e._id);
 
-  if (favorites !== undefined) {
-    console.log("favorites", favorites);
-    var favoritesId = favorites.map((e) => e.lodgingId);
-  }
 
-  var isfaved = favoritesId.some((favid) => favid === props.id);}
+  // if (favorites !== undefined) {
+  //   var favoritesId = favorites.map((e) => e.lodgingId);
+  // }
 
-  async function handleClick(e) {
-    if (isfaved) {
-      await dispatch(deleteFavorite(favData));
-      dispatch(getFavorites(favData));
-    } else {
-      await dispatch(addFavorite(favData));
-      dispatch(getFavorites(favData));
-    }
-  }
+  // var isfaved = favoritesId.some((favid) => favid === props.id);
+}
+
+  // async function handleClick(e) {
+  //   if (isfaved) {
+  //     await dispatch(deleteFavorite(favData));
+  //     dispatch(getFavorites(favData));
+  //   } else {
+  //     await dispatch(addFavorite(favData));
+  //     dispatch(getFavorites(favData));
+  //   }
+  // }
   return (
     <div className={s.favContainer}>
-      <button onClick={handleClick} className={s.favButtonF}>
+      {/* <button onClick={handleClick} className={s.favButtonF}>
         <FaHeart className={isfaved ? s.favT : s.favF} />
-      </button>
+      </button> */}
     </div>
   );
 }
+

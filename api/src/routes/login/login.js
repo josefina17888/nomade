@@ -30,6 +30,10 @@ router.post("/", async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
+      lastname: user.lastname,
+      cellPhone: user.cellPhone,
+      birthDate: user.birthDate,
+      picture: user.picture,
       email: user.email,
       token: generateToken(user._id)
     })

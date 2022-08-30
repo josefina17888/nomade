@@ -17,6 +17,7 @@
   width: 250px;
 }
 
+<<<<<<< HEAD
 /* .inputPassword {
   width: 100%;
   margin-top: 40px;
@@ -26,6 +27,9 @@
 }
 =======
 } */
+=======
+  
+>>>>>>> 09d2aaa13cef731ce363697a90abc44ec8a13225
 
 .button {
   width: 220px;
@@ -217,4 +221,12 @@
 .logo{
   width: 160px;
   height: 100px;
+}
+.password{
+  background-color: transparent;
+  position: relative;
+  border: none;
+  font-size: 1.2rem;
+  left: 16rem;
+  bottom:2.5rem;
 }

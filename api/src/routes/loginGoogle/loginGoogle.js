@@ -12,17 +12,16 @@ router.post("/", async (req, res) => {
 
 
     if(!user) {
-        const newUser = await Guest.create({ email, username, lastname, name, password, picture });
-        console.log(newUser)
+        const newUser = await Guest.create({ email, lastname, name, password, picture , verified: true});
         res.json({
-            username: newUser.username,
             email: newUser.email,
             name: newUser.given_name,
             lastname: newUser.lastname,
-            username: newUser.username,
             password: newUser.password,
             picture: newUser.picture,
-            token: generateToken(newUser._id)
+            token: generateToken(newUser._id),
+            verified: true,
+            _id: newUser._id
         })
 
     } else {
@@ -30,6 +29,7 @@ router.post("/", async (req, res) => {
             res.send('Usuario logueado')
         }
     }
+    
 });
 
 

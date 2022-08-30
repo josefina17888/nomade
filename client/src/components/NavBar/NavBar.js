@@ -20,6 +20,8 @@ export default function NavBar(props) {
   } else {
     var userToken = JSON.parse(guestId).email;
   }
+
+
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
@@ -73,8 +75,7 @@ export default function NavBar(props) {
                         <div>
                           <li>
                             <Link
-
-                              to= {`/profile/${props.email}`}
+                              to= {`/profile/${userToken}`}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil

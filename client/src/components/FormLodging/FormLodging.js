@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
-import { postGuest, postLodging} from "../../Redux/Actions";
-import validate from "./validation";   
+import { postGuest, postLodging, getCountry} from "../../Redux/Actions";
+import validate from "./validation";
+
 
 export default function FormLodging() {
   const params = useParams()
   const dispatch= useDispatch()
-  console.log(hostId)
+  const countries = useSelector((state) => state.country)
   const history = useHistory()
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
@@ -33,6 +34,7 @@ export default function FormLodging() {
     picture:""
 })    
   useEffect(() => {
+    dispatch(getCountry())
   }, []);
 
 
@@ -42,14 +44,13 @@ export default function FormLodging() {
   }
 
   function handleChange(e){
-   console.log(input.picture)
     if(e.target.name!== "picture")
     {  
     setInput({
         ...input,
         [e.target.name] : e.target.value,
-       
     })
+    console.log(input)
     setErrors(validate({
       ...input,
       [e.target.name] : e.target.value
@@ -133,7 +134,7 @@ let hostId = params.hostId
           </select>
           <p>{errors.lodgingType}</p>
           <select   onChange={handleChange}  name ="guests" >
-                    <option disabled selected>Huespeds</option>
+                    <option disabled selected>Huespedes</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -192,6 +193,15 @@ let hostId = params.hostId
                  
           </select>
           <p >{errors.bathrooms}</p>
+        <select onChange={handleChange} name="country">
+          <option value="" disabled selected>País</option>
+        {
+          countries.map(e=>(
+              <option key={e.name} value={e.name}>{e.name}</option>
+              ))
+        }
+        </select>
+        <p >{errors.country}</p>
         <input
           type="text"
           name ="city"
@@ -200,14 +210,6 @@ let hostId = params.hostId
           onChange={handleChange}
         />
         <p >{errors.city}</p>
-         <input
-          type="text"
-          name ="country"
-          value={input.country}
-          placeholder="Pais"
-          onChange={handleChange}
-        />
-        <p >{errors.country}</p>
          <input
           type="text"
           name ="address"
