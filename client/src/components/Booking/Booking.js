@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  getDetail,
-  createNewBooking,
-  payBooking,
-  setDataPostBooking,
-} from "../../Redux/Actions/index";
+import { getDetail, createNewBooking, payBooking, setDataPostBooking } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
 import getDatesInRange from "../Booking/controller";
@@ -96,6 +91,7 @@ export default function Booking(props) {
   function handleBooking() {
     isFound ? alert("NO DISPONIBLE") : dispatch(setDataPostBooking(input));
     dispatch(payBooking(info));
+    //dispatch(setDataPostBooking(input));
   }
 
   function handleEditDates() {}

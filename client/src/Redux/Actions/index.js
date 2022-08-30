@@ -276,6 +276,14 @@ export function createNewBooking(payload) {
     );
   }}
 
+//ACTION QUE SETEA LOS DATOS DEL LODGING EN 
+export function setDataPostBooking(payload){
+  return{
+    type: 'SET_DATA_POSTBOOKING',
+    payload
+  }
+}
+
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
