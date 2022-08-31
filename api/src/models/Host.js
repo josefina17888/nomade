@@ -27,7 +27,7 @@ const hostSchema = new Schema({
     },
   ],
   guestId: {type: mongoose.Types.ObjectId, ref: "Guest"},
- 
+  isAdmin: { type: Boolean, default: false },
   hostDniPicture: { type: String },
   lodgingId: {type: mongoose.Types.ObjectId, ref: "Lodging"}, 
 });

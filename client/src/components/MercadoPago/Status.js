@@ -45,7 +45,6 @@ export default function Status() {
     if(realStatus === "approved"){
         dispatch(createNewBooking(booking))
     }
-
 return (
 <div className="_16grqhk">
       <NavBar />

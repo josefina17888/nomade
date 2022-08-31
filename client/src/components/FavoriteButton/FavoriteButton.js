@@ -53,8 +53,6 @@ if(!props.guestInfo){
     var isfaved = favoritesId.some((favid) => favid === props.id);}
   }
 
-
-
   async function handleClick(e) {
     if (isfaved) {
       await dispatch(deleteFavorite(favData));
