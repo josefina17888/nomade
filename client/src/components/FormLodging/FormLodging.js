@@ -108,6 +108,7 @@ let hostId = params.hostId
 
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
+
       <form  encType='multipart/form-data' action={`http://localhost:3001/api/lodging/${hostId}`}  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
@@ -196,9 +197,10 @@ let hostId = params.hostId
         <select onChange={handleChange} name="country">
           <option value="" disabled selected>País</option>
         {
-          countries.map(e=>(
-              <option key={e.name} value={e.name}>{e.name}</option>
-              ))
+          <option >Argentina</option>
+          // countries.map(e=>(
+          //     <option key={e.name} value={e.name}>{e.name}</option>
+          //     ))
         }
         </select>
         <p >{errors.country}</p>
