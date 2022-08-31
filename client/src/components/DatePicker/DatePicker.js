@@ -16,6 +16,7 @@ export default function DatePickerOk({ lodId }) {
   //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
   const lodging = useSelector((state) => state.detail);
+
   const lodgingId = lodging._id;
   const dispatch = useDispatch();
 
