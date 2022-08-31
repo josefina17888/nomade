@@ -75,7 +75,8 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                   }
 
                   <Link to={`/detail/${e._id}`} className={styles.link}>
-
+                      
+             
                     <Card
                       id={e._id}
                       city={e.city}
@@ -86,7 +87,6 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       picture={e.picture[0]}
                       currency={e.currency}
                     />
-
                     </Link>
 
                     </div>

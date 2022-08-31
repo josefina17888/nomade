@@ -43,9 +43,10 @@ router.patch("/guestadmin/:guestId",upload.single(), async (req, res) => {
             }
             else{
                 console.log("Updated User : ", docs);
-                res.send("actualizado con exito")
+                
             }
         });
+       
         })
 
 module.exports = router;
