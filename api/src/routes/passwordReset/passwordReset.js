@@ -17,7 +17,9 @@ router.post("/" , async (req, res) => {
             token: generateToken(guest._id)
         }).save()
     }
-    const url = `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
+    // const url = `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
+    const url = `https://nomade-henry.herokuapp.com/api/passwordReset/${guest._id}/${token.token}`;
+
     const title = "Tranquilo Nómade, todo esto por tu seguridad"
     const msg = "Estas a unos pasos de ingresar tu nueva contraseña. Sólo da click al boton de abajo."
     await verifyEmail(guest.email,"Password Reset", title , msg , url)
@@ -26,20 +28,16 @@ router.post("/" , async (req, res) => {
 
 router.get("/:_id/:token", async (req, res) => {
     try {
-      console.log("hola")
       const guest = await Guest.findOne({_id: req.params._id})
-      console.log(guest)
       if(!guest) {return(400).send({message:"Invalid link"})}
-      console.log("hola2")
       const token = await Token.findOne({
         userId: guest._id,
         token: req.params.token
       });
-      console.log(token)
       if(!token) return res.status(400).send({message: "invalid link"})
       await token.remove()
-      res.status(200).redirect(`http://localhost:3000/${req.params._id}/resetPassword/${req.params.token}`)
-      // res.status(200).redirect(`https://nomade-khaki.vercel.app/${req.params._id}/resetPassword/${req.params.token}`)
+      // res.status(200).redirect(`http://localhost:3000/${req.params._id}/resetPassword/${req.params.token}`)
+      res.status(200).redirect(`https://nomade-khaki.vercel.app/${req.params._id}/resetPassword/${req.params.token}`)
     }
     catch(error) {
       res.status(404).send(error)
@@ -56,9 +54,7 @@ router.get("/:_id/:token", async (req, res) => {
   })
 
   router.patch("/newPassordLogIn/:email", async(req,res) => {
-    console.log("hola")
     const guest = await Guest.findOne({email: req.params.email})
-    console.log(guest)
     guest.password = req.body.passwordOne
     guest.save()
     res.send("Contraseña actualizada")

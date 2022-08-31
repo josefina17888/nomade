@@ -19,10 +19,7 @@ export default function LoginUser() {
   });
   const [shown, setShown] = useState(false);
       const switchShown = () => setShown(!shown);
-  let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId);
 
-  //let userToken = guestId._id;
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");

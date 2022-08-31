@@ -11,7 +11,7 @@ export default function Verify() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url = `/api/guest/${params.idGuest}`
+                const url = `https://nomade-henry.herokuapp.com/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)

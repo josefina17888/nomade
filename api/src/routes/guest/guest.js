@@ -36,13 +36,13 @@ router.post("/", upload.single("picture") ,async (req, res) => {
         token: generateToken(newGuest._id)
       })
       token.save()
-      const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
+      // const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
+      const url = `https://nomade-henry.herokuapp.com/api/guest/${newGuest._id}/verify/${token.token}`;
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
-      // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
-      res.status(201).redirect("http://localhost:3000/login")
-      // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
+      // res.status(201).redirect("http://localhost:3000/login")
+      res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
       catch (error){
           res.status(404).send(error)
@@ -54,22 +54,19 @@ router.post("/reverified",async (req, res) => {
     try{
       const userExist = await Guest.findOne({ email });
       const tokenExist = await Token.findOne({userId: userExist._id})
-      console.log(tokenExist)
       if(tokenExist) {
          await tokenExist.remove()}
-      console.log("hola")
       const token = new Token({
         userId: userExist._id,
         token: generateToken(userExist._id)
       })
       token.save()
-      console.log("hola")
-      const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
+      // const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
+      const url = `https://nomade-henry.herokuapp.com/api/guest/${userExist._id}/verify/${token.token}`;
+
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(userExist.email,"Verify Email",title , msg , url)
-      // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
-      console.log("hola")
       res.status(201).redirect("Verifica tu correo")
       // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
@@ -82,26 +79,18 @@ router.post("/reverified",async (req, res) => {
 
 
 router.get("/:idGuest/verify/:token", async (req, res) => {
-  console.log(req.params.token)
-  console.log(req.params.idGuest)
   try {
     const guest = await Guest.findOne({_id: req.params.idGuest})
-    console.log(guest)
     if(!guest) return(400).send({message:"Invalid link"});
-    console.log("hola")
     const token = await Token.findOne({
       userId: guest._id,
       token: req.params.token
     });
-    console.log(token)
     if(!token) return res.status(400).send({message: "invalid link"})
-    console.log("hola2")
     await guest.updateOne({_id: guest._id, verified: true})
-    console.log("hola3")
     await token.remove()
-    // res.status(200).send({message: "Email verificado"})
-    res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
-    // res.redirect(`https://nomade-khaki.vercel.app/${req.params.idGuest}/verify/${req.params.token}`)
+    // res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+    res.redirect(`https://nomade-khaki.vercel.app/${req.params.idGuest}/verify/${req.params.token}`)
   }
   catch(error) {
     res.status(404).send(error)

@@ -1,5 +1,5 @@
 import React ,  {useState , useEffect} from 'react'
-import { Link , useParams, useHistory} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
@@ -17,14 +17,12 @@ export default function ResetPassword() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url =`http://localhost:3001/api/guest/${params.idGuest}`
-                // `${process.env.REACT_APP_API}/api/guest/${params.idGuest}`
+                // const url =`http://localhost:3001/api/guest/${params.idGuest}`
+                const url =`https://nomade-henry.herokuapp.com//api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
-                console.log(data)
                 setValidUrl(true)
 
             } catch(error) {
-                console.log(error)
                 setValidUrl(false)
             }
         }
@@ -39,17 +37,14 @@ export default function ResetPassword() {
             return alert("La contraseñas deben ser iguales");
           }
            let passwordOne = password.password1
-          // if(password !== password2) {
-          //   alert("diferentes")
-          // }
           const config = {
             headers: {
               "Content-Type": "application/json",
             },
           };
           const { data } = await axios.patch(
-            // `${process.env.REACT_APP_API}/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
-            `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
+            `${process.env.REACT_APP_API}/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
+            // `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
             {
               passwordOne,
             },
