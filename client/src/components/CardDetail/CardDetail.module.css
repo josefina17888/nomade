@@ -39,14 +39,14 @@
     font-weight: bold;
     border: 0mm;
     border-radius: 4px;
-    padding: 8px 28px;
-    margin-left: 50%;
-    margin-right: 50%;
+    width: 8em;
+    text-decoration: none;
   }
   
   .button:hover {
     background-color: rgb(248, 247, 246); 
     color: rgb(59, 64, 64);
+    
   }
 
   .card{
@@ -54,6 +54,10 @@
     border-radius: 4px;
     border-width: 10px;
     background-color: #069A8E;
+  }
+
+  .lod{
+    margin-bottom: 5%;
   }
 
   .button1 {
@@ -150,6 +154,12 @@
   border: 3px solid #069A8E;  
 }
 
+.container_btn{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .reviews {
 	height: auto;
 }
@@ -169,6 +179,7 @@
   justify-content: center;
   margin-top: 20px;
 }
+
 .buttonDenunciar{
   transition-duration: 0.4s;
   background-color: red;
@@ -184,4 +195,9 @@
 .buttonDenunciar:hover {
   background-color: rgb(248, 247, 246); 
   color: rgb(59, 64, 64);
+
+.link{
+  text-decoration: none;
+  color: white;
+
 }

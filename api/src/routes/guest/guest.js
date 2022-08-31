@@ -52,7 +52,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
       // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
-      res.status(201).redirect("http://localhost:3000/login")
+      // res.status(201).redirect("http://localhost:3000/login")
+      res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
       catch (error){
           res.status(404).send(error)
@@ -80,7 +81,8 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
     console.log("hola3")
     await token.remove()
     // res.status(200).send({message: "Email verificado"})
-    res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+    // res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+    res.redirect(`https://nomade-khaki.vercel.app/${req.params.idGuest}/verify/${req.params.token}`)
   }
   catch(error) {
     res.status(404).send(error)

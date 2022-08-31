@@ -7,9 +7,6 @@ const initialState = {
   userFavorites: [],
   favNumber: 0,
   guest: {},
-  checkIn: {},
-  checkOut: {},
-  dates: [],
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
@@ -20,6 +17,8 @@ const initialState = {
   feedback: [],
   rating: [],
   lodgingsInitial:[]
+  postBooking: {},
+  demoUser: null,
 };
 var count= {
   countRating : 0,
@@ -118,7 +117,8 @@ function rootReducer(state = initialState, action) {
           lodgings: state.lodgingsInitial.map((e) => e),
         }
       }
-    case "GET_COUNTRY": 
+    case "GET_COUNTRY":
+
       return {
         ...state,
         country: action.payload,
@@ -187,17 +187,6 @@ function rootReducer(state = initialState, action) {
         lodgings: highest.map((e) => e),
       };
 
-    case "LOADER_TRUE":
-      return {
-        ...state,
-        pokeLoader: true,
-      };
-
-    case "LOADER_FALSE":
-      return {
-        ...state,
-        pokeLoader: false,
-      };
 
     case "LOADER_TRUE":
       return {
@@ -296,10 +285,38 @@ function rootReducer(state = initialState, action) {
         allLodgingsReviews: action.payload,
       };
 
+    case "PAY_BOOKING":
+      return {
+        ...state,
+        payment: action.payload,
+      };
+
     case "GET_FEEDBACK":
       return {
         ...state,
         feedback: action.payload,
+      };
+
+    case "SET_DATA_POSTBOOKING":
+      return {
+        ...state,
+        postBooking: action.payload,
+      };
+
+    /* case 'GET_INFO_LOCAL_STORAGE':
+      const userInfo = localStorage.getItem("userInfo");
+      let user = JSON.parse(userInfo);
+        return{
+          ...state,
+          demoUser: user
+        } */
+
+    case "SET_DATA_POSTBOOKING":
+      const bookingInfo = localStorage.getItem("booking");
+      let bookingFinal = JSON.parse(bookingInfo);
+      return {
+        ...state,
+        postBooking: bookingFinal,
       };
 
     default:

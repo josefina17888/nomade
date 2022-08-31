@@ -131,8 +131,7 @@ export default function LoginUser() {
       const switchShown = () => setShown(!shown);
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId);
-  console.log(guestId);
-  console.log(user);
+
   //let userToken = guestId._id;
 
   useEffect(() => {
@@ -154,8 +153,8 @@ export default function LoginUser() {
         },
       };
       const { data } = await axios.post(
-        // `${process.env.REACT_APP_API}/api/login`,
-        "http://localhost:3001/api/login",
+        `${process.env.REACT_APP_API}/api/login`,
+        // "http://localhost:3001/api/login",
         {
           email,
           password,
@@ -209,7 +208,7 @@ export default function LoginUser() {
             type="submit"
           ></input>
         </form>
-        <Link className={style.link} to="/">¿Olvidaste tu contraseña?</Link>
+        <Link className={style.link} to="/forgot-password/">¿Olvidaste tu contraseña?</Link>
         <span className={style.line}>O</span>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin

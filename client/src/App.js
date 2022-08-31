@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter, Switch } from 'react-router-dom'; 
+import { Route, BrowserRouter, Switch, Router } from 'react-router-dom'; 
 import GoogleMaps from './components/GoogleMaps/GoogleMaps.js';
 import Home from './components/Home/Home.js';
 import LoginUser from './components/LoginUser/LoginUser.jsx';
@@ -19,13 +19,15 @@ import LodgingReview from './components/LodgingReview/LodgingReview'
 import ResetPasswordLogIn from "./components/EmailVerify/ResetPasswordLogIn"
 /* import AdminDash from './components/Admin/AdminDash'; */
 import Booking from './components/Booking/Booking'
-// import MercadoPago from './components/MercadoPago/MercadoPago'
-// import Status from './components/MercadoPago/Status';
+import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
+import { useSelector } from 'react-redux';
+
 
 function App() {
-
+  const user = useSelector(state=> state.demoUser)
+  console.log(user, 'USER EN APP')
   return (
    <div>
       <BrowserRouter>
@@ -40,7 +42,8 @@ function App() {
           <Route path='/:guestId/form' component={FormHost}/>
           <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route exact path='/favorites' component={Favorites}/> 
-          <Route exact path= '/booking/:_id' component={Booking}/>
+          <Route exact path='/booking/:_id' component={Booking}/> 
+          {/* <Route exact path='/booking/:_id'>  {user ? <LoginUser /> : <Booking />} </Route> */}
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
@@ -50,6 +53,7 @@ function App() {
           {/* <Route path= "/status" component={Status}/> */}
           {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
+          <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
           
         </Switch>

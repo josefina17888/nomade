@@ -22,7 +22,7 @@ export function getLodgings (lodgingId){
 export function getCountry (){
     return async function(dispatch){
         try{
-        const json = await axios.get("http://localhost:3001/api/country")
+        const json = await axios.get("/api/country")
         dispatch({
             type:"GET_COUNTRY",
             payload: json.data
@@ -184,7 +184,7 @@ export function addFavorite(payload){
     console.log("actions")
 
     try{
-     let response = await axios.post('http://localhost:3001/api/favorite/', payload)
+     let response = await axios.post('/api/favorite/', payload)
      console.log("response",response)
       return dispatch({
         type: "ADD_FAVORITE",
@@ -200,7 +200,7 @@ export function addFavorite(payload){
  
     return async function(dispatch){
       try{
-      var response = await axios.post('http://localhost:3001/api/favorite/fav', payload)
+      var response = await axios.post('/api/favorite/fav', payload)
         return dispatch({
           type: "GET_FAVORITES",
           payload: response.data
@@ -215,7 +215,7 @@ export function addFavorite(payload){
     console.log(payload, "soy delete")
     return async function(dispatch){
       try{
-      let response = await axios.post('http://localhost:3001/api/favorite/delete', payload)
+      let response = await axios.post('/api/favorite/delete', payload)
   
         console.log(response,"okkkk")
         return dispatch({
@@ -276,10 +276,19 @@ export function createNewBooking(payload) {
     );
   }}
 
+//ACTION QUE SETEA LOS DATOS DEL LODGING EN 
+export function setDataPostBooking(payload){
+  return{
+    type: 'SET_DATA_POSTBOOKING',
+    payload
+  }
+}
+
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
-    const res = await axios.post(`api/payment/`,payload)
+    const res = await axios.post("/api/payment/", payload)
+    console.log(res)
     return dispatch({
       type: "PAY_BOOKING",
       payload: res.data
@@ -290,9 +299,11 @@ export function payBooking(payload) {
 }
 
 export function getBookingByLodgingId(payload){
+  console.log(payload, 'PAYLOAD')
   return async function(dispatch){
     try{
     var response = await axios.post('/api/booking/booking', payload)
+    console.log(response.data, 'SOY RESPONSE')
       return dispatch({
         type: "GET_BOOKING_LODGING_ID",
         payload: response.data
@@ -318,6 +329,15 @@ export function getFeedback(){
     }
   }
 }
+
+//FUNCION QUE ALMACENA DATOS DEL USUARIO
+/* export function getInfoGuest(){
+  return{
+    type: 'GET_INFO_LOCAL_STORAGE'
+  }
+} */
+
+
 
 
 
