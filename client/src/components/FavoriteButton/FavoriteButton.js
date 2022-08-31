@@ -50,9 +50,10 @@ if(!props.guestInfo){
 
   if (favorites !== undefined) {
     var favoritesId = favorites.map((e) => e.lodgingId);
+    var isfaved = favoritesId.some((favid) => favid === props.id);}
   }
 
-  var isfaved = favoritesId.some((favid) => favid === props.id);}
+ 
 
   async function handleClick(e) {
     if (isfaved) {
