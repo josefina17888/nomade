@@ -1,5 +1,5 @@
 import React ,  {useState , useEffect} from 'react'
-import { Link , useParams, useHistory} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
@@ -17,14 +17,12 @@ export default function ResetPassword() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url = `${process.env.REACT_APP_API}/api/guest/${params.idGuest}`
-                // `http://localhost:3001/api/guest/${params.idGuest}`
+                // const url =`http://localhost:3001/api/guest/${params.idGuest}`
+                const url =`https://nomade-henry.herokuapp.com//api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
-                console.log(data)
                 setValidUrl(true)
 
             } catch(error) {
-                console.log(error)
                 setValidUrl(false)
             }
         }
@@ -39,9 +37,6 @@ export default function ResetPassword() {
             return alert("La contraseñas deben ser iguales");
           }
            let passwordOne = password.password1
-          // if(password !== password2) {
-          //   alert("diferentes")
-          // }
           const config = {
             headers: {
               "Content-Type": "application/json",
@@ -79,7 +74,7 @@ export default function ResetPassword() {
                     placeholder="Contraseña"
                     required = {true}
                     onChange={(e) => setPassword({...password , password1: e.target.value })}
-                />  
+                />
                 <button className={style.password} type="button" onClick={switchShown}>{shown? <IoEyeOffOutline/>: <IoEyeOutline/>}</button>
                 <input
                 className={style.inputPassword}

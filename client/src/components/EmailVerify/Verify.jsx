@@ -1,6 +1,7 @@
 import React ,  {useState , useEffect} from 'react'
 import { Link , useParams } from 'react-router-dom'
 import axios from 'axios'
+import style from "./Verify.module.css"
 
 // Esta es la ventana de cuando tu correo ya esta verificado con boton para ir a login!
 
@@ -10,8 +11,7 @@ export default function Verify() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url = `${process.env.REACT_APP_API}/api/guest/${params.idGuest}`
-                // `http://localhost:3001/api/guest/${params.idGuest}`,
+                const url = `https://nomade-henry.herokuapp.com/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)
@@ -26,11 +26,11 @@ export default function Verify() {
   return (
     <div>
         {validUrl ? (
-            <div>
-                <img src="https://res.cloudinary.com/dbq85fwfz/image/upload/v1661519437/ilgactrbdnm6gwh2kr49.png" alt="succesVerified" width="10px" height="300px"/>
+            <div className={style.main}>
+                <img className={style.img} src="https://res.cloudinary.com/dbq85fwfz/image/upload/v1661519437/ilgactrbdnm6gwh2kr49.png" alt="succesVerified" />
                 <h1> Email verificado satisfactoriamente</h1>
                 <Link to="/login">
-                    <button>Login</button>
+                    <button className={style.login}>Login</button>
                 </Link>
             </div>
         )

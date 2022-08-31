@@ -7,9 +7,6 @@ const initialState = {
   userFavorites: [],
   favNumber: 0,
   guest: {},
-  checkIn: {},
-  checkOut: {},
-  dates: [],
   allGuests: {},
   duplicate: [],
   allLodgingsReviews: [],
@@ -19,21 +16,44 @@ const initialState = {
   bookings: [],
   feedback: [],
   rating: [],
+  lodgingsInitial:[],
+  postBooking: {},
+  demoUser: null,
 
 };
-
+var count= {
+  countRating : 0,
+  countPets : 0,
+  countCasa : 0,
+  countCaro : 0,
+  countBarato : 0,
+}
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_LODGINGS":
+      if(state.lodgingsInitial[0]!== undefined)
+      {
+        return {
+          ...state,
+          lodgings: action.payload,
+          allLodgings: action.payload,
+          loader: false,
+        };
+      }
+      else{
       return {
         ...state,
         lodgings: action.payload,
         allLodgings: action.payload,
+        lodgingsInitial: action.payload,
         loader: false,
-      };
+      };}
 
     case "ORDER_BY_RATING":
+    if(count.countRating%2 == 0){
+      console.log(action.payload)
       const allLodgingsReviewsMap = state.allLodgingsReviews
+      
         .map((e) => {
           return {
             lodgingId: e.lodgingId,
@@ -70,19 +90,36 @@ function rootReducer(state = initialState, action) {
       var ratingMax = state.lodgings.sort(function (a, b) {
         return b.rating - a.rating;
       });
-
+      count.countRating++;
       return {
         ...state,
         lodgings: ratingMax.map((e) => e),
-      };
+      };}
+      else{
+        count.countRating++;
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        };}
+      
 
     case "FILTER_TYPE_HOUSE":
       const house = state.lodgings.filter((e) => e.lodgingType === "Casa");
+      if(count.countCasa%2=== 0){
+        count.countCasa++
       return {
         ...state,
         lodgings: house,
-      };
-    case "GET_COUNTRY": 
+      };}
+      else{
+        count.countCasa++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        }
+      }
+    case "GET_COUNTRY":
+
       return {
         ...state,
         country: action.payload,
@@ -91,26 +128,55 @@ function rootReducer(state = initialState, action) {
       const filtering = state.lodgings;
       const pets = filtering.filter((e) => e.services.pets === true);
       console.log(pets);
+      if(count.countPets%2 === 0)
+      {
+        count.countPets++
       return {
         ...state,
         lodgings: pets,
-      };
+      };}
+      else{
+        count.countPets++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        };
+      }
     case "ORDER_BY_LOWEST":
       const lowest = state.lodgings.sort(function (a, b) {
         return a.price - b.price;
       });
+      if(count.countBarato%2===0)
+      {
+        count.countBarato++
       return {
         ...state,
         lodgings: lowest.map((e) => e),
-      };
+      };}
+      else{
+        count.countBarato++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        }
+      }
     case "ORDER_BY_HIGHEST":
       const highest = state.lodgings.sort(function (a, b) {
         return b.price - a.price;
       });
+      if(count.countCaro%2===0)
+      {
+        count.countCaro++
       return {
         ...state,
         lodgings: highest.map((e) => e),
-      };
+      };}
+      else{
+        count.countCaro++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        };}
 
     case "ORDER_BY_REVIEW":
       const highesSt = state.lodgings.sort(function (a, b) {
@@ -122,17 +188,6 @@ function rootReducer(state = initialState, action) {
         lodgings: highest.map((e) => e),
       };
 
-    case "LOADER_TRUE":
-      return {
-        ...state,
-        pokeLoader: true,
-      };
-
-    case "LOADER_FALSE":
-      return {
-        ...state,
-        pokeLoader: false,
-      };
 
     case "LOADER_TRUE":
       return {
@@ -235,13 +290,36 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         payment: action.payload,
-        };
+      };
 
     case "GET_FEEDBACK":
       return {
         ...state,
         feedback: action.payload,
       };
+
+    case "SET_DATA_POSTBOOKING":
+      return {
+        ...state,
+        postBooking: action.payload,
+      };
+
+    /* case 'GET_INFO_LOCAL_STORAGE':
+      const userInfo = localStorage.getItem("userInfo");
+      let user = JSON.parse(userInfo);
+        return{
+          ...state,
+          demoUser: user
+        } */
+
+    case "SET_DATA_POSTBOOKING":
+      const bookingInfo = localStorage.getItem("booking");
+      let bookingFinal = JSON.parse(bookingInfo);
+      return {
+        ...state,
+        postBooking: bookingFinal,
+      };
+
 
     default:
       return { ...state };

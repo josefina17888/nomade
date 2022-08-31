@@ -38,7 +38,6 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
     dispatch(getLodgings());
   }, [dispatch]);
 
-
   let userId = localStorage.getItem("userInfo");
   
   if(userId) {
@@ -55,12 +54,14 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
         ) : (
           currentLodging.map((e) => {
             return (
-              <div className={styles.cards}>
+              <div key={e._id} className={styles.cards}>
 
-                <div key={e._id} className={styles.card}>
+                <div  className={styles.card}>
 
                 <div>
-                  {
+
+                {
+
                     user ? <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
                     country={e.country}
                     price={e.price}
@@ -68,8 +69,9 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                     picture={e.picture[0]}
                     currency={e.currency}/> 
                     : 
-                    <div></div>
+                    <Link to={`/login`} className={styles.link}><FavoriteButton ></FavoriteButton></Link>
                   }
+
                   <Link to={`/detail/${e._id}`} className={styles.link}>
 
                     <Card
@@ -84,7 +86,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
 
                     </Link>
 
-                    </div>
+                </div>
                   
                 </div>
               </div>
