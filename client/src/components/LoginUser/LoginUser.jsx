@@ -34,7 +34,7 @@ export default function LoginUser() {
       if (email === "" || password === "") {
         alert("Por favor ingrese todos los campos");
       }
-      const guest = await axios.get(`http://localhost:3001/api/guest/${email}`)
+      const guest = await axios.get(`/api/guest/${email}`)
       if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
       if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado" })
       const config = {
