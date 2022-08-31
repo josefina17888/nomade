@@ -4,146 +4,93 @@ import { Link } from "react-router-dom";
 import {
   getDetail,
   createNewBooking,
-  getBookingByLodgingId,
   payBooking,
+  setDataPostBooking,
 } from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
-import MercadoPago from "../MercadoPago/MercadoPago";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
-import ReactDatePicker from "react-datepicker";
-import moment from "moment";
+import DatePicker from "react-datepicker";
+
 import { DateRange } from "react-date-range";
 
-
 export default function Booking(props) {
-  //SELECT STATES FROM REDUX
   const dispatch = useDispatch();
 
+  //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
 
-  //DECLARATION CONST FOR USE DATES
+  //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
-  const unavailableDates = availibity.map((e) =>
-    e.allDates.map((d) => new Date(d).toDateString())
-  );
+  console.log(lodgingId)
 
+  //GET DETALLES DE LODGING
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
+  const lodging = useSelector((state) => state.detail);
+  console.log(lodging)
 
-  // ---------------------------------------------------------------------------
-  let now = new Date();
-  let startt = moment(
-    new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
+  //DECLARATION CONST FOR USE DATA
+  const unavailableDates = availibity.map((e) =>
+  e.allDates.map((d) => new Date(d).toDateString())
   );
 
-  let ends = moment(startt)
-    .add(1, "days")
-    .subtract(1, "seconds");
+  // PARSE INFO LOCAL STORAGE BOOKING INFO
+    const bookingInfo = localStorage.getItem("bookingInfo");
+    var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
+    var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
+    var totalGuest = JSON.parse(bookingInfo).guests;
+  
+  //PARSE INFO LOCAL STORAGE USER INFO
+    const guestInfo = localStorage.getItem("userInfo");
+    let userEmail = JSON.parse(guestInfo).email;
+    //let userEmail = true;
+  
+  //GET RANGES OF DATES
+    const alldates = getDatesInRange(checkIn, checkOut);
+  
+  //VER DISPONIBILIDAD DE DATES
+    const unavailableDatesMap = unavailableDates.flat();
+    const disabledDates = unavailableDatesMap.map((e) => new Date(e));
+    const isFound = unavailableDatesMap.some((date) =>
+      alldates.includes(new Date(date).toDateString())
+    );
 
-  let [start, setstart] = useState(startt);
-  let [end, setend] = useState(ends);
-
-  let ranges = {
-    "Today Only": [moment(start), moment(end)],
-    "Yesterday Only": [
-      moment(start).subtract(1, "days"),
-      moment(end).subtract(1, "days")
-    ],
-    "3 Days": [moment(start).subtract(3, "days"), moment(end)]
-  };
-
-  let local = {
-    format: "DD-MM-YYYY HH:mm",
-    sundayFirst: false
-  };
-  let maxDate = moment(start).add(24, "hour");
-
-  let applyCallback = (startDate, endDate) => {
-    setstart(startDate);
-    setend(endDate);
-  };
-
-  let handleSelect = date => {
-    console.log(date); // Momentjs object
-  };
-
-  // ----------------------------------------------------------------------------
-  const lodging = useSelector((state) => state.detail);
-  console.log(lodging);
+  //LODGING DETAIL
   const costNight = lodging.price;
+  console.log(costNight)
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
   const picture1 = obj["0"];
   const city = lodging.city;
   const country = lodging.country;
 
-  // PARSE INFO LOCAL STORAGE BOOKING INFO
-  const bookingInfo = localStorage.getItem("bookingInfo");
-  var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
-  var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
-  var preGuest = JSON.parse(bookingInfo).guests;
-
-  //PRICE FROM LOCAL STORAGE
-  //const costNight = JSON.parse(priceBooking);
-
-  //PARSE INFO LOCAL STORAGE USER INFO
-  const guestInfo = localStorage.getItem("userInfo");
-  let userEmail = JSON.parse(guestInfo).email;
-  //let userEmail = true;
-
-  //GET RANGES OF DATES
-  const alldates = getDatesInRange(checkIn, checkOut);
-  console.log(alldates, "RANGO DE FECHAS QUE DESEA EL GUEST");
-  //NEW STATE WITH PROPERTIES FOR LOCAL STORAGE
   const [input, setInput] = useState({
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
-    guests: preGuest,
+    guests: totalGuest,
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
-    costNight: costNight,
+    costNight: lodging.price,
   });
-
-  const [objectDemo, setObjectDemo] = useState([
-    {
-      startDate: new Date(checkIn),
-      endDate: new Date(checkOut),
-      key: "selection",
-    },
-  ]);
-
-  //VER DISPONIBILIDAD DE DATES
-  const demo = unavailableDates.flat();
-  const isFound = demo.some((date) =>
-
-    alldates.includes(new Date(date).toDateString())
-  );
+  console.log(input)
 
   //DATA JOSE
-  const night = input.night;
-  const info = {
-    lodgingId,
-    night,
-    costNight,
-    property: false,
-  };
-
-  const total = costNight * night;
-
+  const total = costNight * input.night;
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
-    isFound ? alert("NO DISPONIBLE") : dispatch(createNewBooking(input));
-    dispatch(payBooking(info));
+    localStorage.setItem("booking", JSON.stringify(input));
+    isFound ? alert("NO DISPONIBLE") : 
+    dispatch(payBooking(input));
+    dispatch(setDataPostBooking(input));
   }
 
-  function handleEditDates() {}
-
+  //MERCADO PAGO
   const preferenceId = useSelector((state) => state.payment);
   const preference = preferenceId.preferenceId;
 
@@ -177,9 +124,9 @@ export default function Booking(props) {
             <div>
               <div>Edita tus fechas</div>
               <div>
-                {/* <div>
+                <div>
                   <div>Llegada</div>
-                  <ReactDatePicker
+                  <DatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkIn)}
                     onChange={(currentDate) =>
@@ -188,38 +135,30 @@ export default function Booking(props) {
                         checkIn: new Date(currentDate).toDateString(),
                       })
                     }
-                    onSelect={new Date(input.checkIn)}
-                    selectsRange={newDate()}
+                    selectsStart
+                    startDate={new Date(input.checkIn)}
+                    endDate={new Date(input.checkOut)}
+                    excludeDates={disabledDates}
                     selectsEnd
-                    minDate={new Date()}
-                    checkIn={input.checkIn}
-                    checkOut={info.checkOut} 
+                        minDate={new Date()}
                   />
-                </div> */}
-                {/* <div>
-                  <div>Llegada 2</div>
-                  <DateRange
-                    editableDateInputs={true}
-                    onChange={(item) => setObjectDemo([item.selection])}
-                    moveRangeOnFirstSelection={false}
-                    ranges={objectDemo}
-                    className={s.date}
-                    minDate={new Date()}
-                  />
-                </div> */}
-                <div>
-                  <h1>Type 2</h1>
-                  <DateRange />
                 </div>
-
                 <div>
                   <div>Salida</div>
-                  <DateRange
-                    ranges={ranges}
-                    start={start}
-                    end={end}
-                    local={local}
-                    applyCallback={applyCallback}
+                  <DatePicker
+                    dateFormat="dd/MM/yyyy"
+                    selected={new Date(input.checkOut)}
+                      onChange={(currentDate) =>
+                        setInput({
+                          ...input,
+                          checkOut: new Date(currentDate).toDateString(),
+                        })}
+                      selectsStart
+                      startDate={new Date(input.checkIn)}
+                      endDate={new Date(input.checkOut)}
+                      excludeDates={disabledDates}
+                      selectsEnd
+                      minDate={new Date(input.checkIn)}
                   />
                 </div>
               </div>
@@ -232,7 +171,7 @@ export default function Booking(props) {
                 type="number"
                 name="adults"
                 value={input.guestAdults}
-                defaultValue={preGuest}
+                defaultValue={totalGuest}
               ></input>
             </div>
             <div className={s.selection}>
@@ -254,7 +193,7 @@ export default function Booking(props) {
                 <div>
                   <h6 className={s.sub2}>Costo Total</h6>
                   <h6 className={s.h1}>
-                    ${total} por {night} noches
+                    ${total} por {input.night} noches
                   </h6>
                 </div>
                 <div>
@@ -265,22 +204,21 @@ export default function Booking(props) {
               <div className={s.container3}>
                 <div>
                   <h6 className={s.sub}>Fecha arribo</h6>
-                  <h6 className={s.h1}>{input.checkIn}</h6>
+                  <h6 className={s.h1}>{new Date(input.checkIn).toLocaleDateString()}</h6>
                 </div>
                 <div>
                   <h6 className={s.sub1}>Fecha salida</h6>
-                  <h6 className={s.h}>{input.checkOut}</h6>
+                  <h6 className={s.h}>{new Date(input.checkOut).toLocaleDateString()}</h6>
                 </div>
               </div>
             </div>
             <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
+            <MercadoPagoFinal preferenceId={preference} />
           </div>
         </div>
       )}
     </div>
   );
 }
-
-

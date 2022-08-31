@@ -189,9 +189,3 @@
     justify-content:center;
     justify-items: center;
   }
-
-  .date {
-    position: absolute;
-    top: 50px;
-    z-index: 2;
-  }

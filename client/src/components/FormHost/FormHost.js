@@ -20,6 +20,7 @@ useEffect(() => {
   dispatch(getGuest(guestId.email))
   
 },[dispatch])
+console.log(guestInfo, "guestInfo")
 
 let tieneDni=true
 for (var i in guestInfo[0]){
