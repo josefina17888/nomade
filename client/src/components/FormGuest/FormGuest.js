@@ -7,6 +7,7 @@ import {getGuestByEmail} from '../../Redux/Actions'
 import {IoCheckmarkCircleOutline, IoCloseCircleOutline,IoEyeOutline,IoEyeOffOutline} from 'react-icons/io5'
 import style from "./FormUser.module.css";
 
+
 export default function FormUser() {
   const dispatch= useDispatch()
   const [errors,setErrors] =useState({})
@@ -33,25 +34,7 @@ function handleChange(e){
     [e.target.name]: e.target.files,
     [e.target.name] : e.target.value,
   })
-  // let mensaje = true
-    // setErrors(validate({
-    //   ...input,
-    //   [e.target.name]: e.target.value
-    // }))
-    // if(Object.keys(errors).length !==0){
-    //   setErrorButton(true)
-    // }else{
-    //   setErrorButton(false)
-    // }
-    // setNotRequired(required({
-    //   ...input,
-    //   [e.target.name] : e.target.value,
-    // }))
-    // if(Object.keys(required.length !==0)){
-    //    mensaje = true
-    // }else{
-    //    mensaje = false
-    // }
+  
     dispatch(getGuestByEmail(e.target.value))
 }
 
@@ -59,8 +42,8 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      <form action="http://localhost:3001/api/guest"  method="POST" encType="multipart/form-data">
-    {/* <form action= {`${process.env.REACT_APP_API}/api/guest`}  method="POST" encType="multipart/form-data" > */}
+      {/* <form action={"http://localhost:3001/api/guest/"}  method="POST" encType="multipart/form-data"> */}
+    <form action= {`https://nomade-henry.herokuapp.com/</div>/api/guest`}  method="POST" encType="multipart/form-data" >
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input
@@ -158,4 +141,6 @@ function handleChange(e){
     </div>
   );
 }
+
+
 

@@ -19,7 +19,8 @@ router.post("/", async (req, res) => {
         token: generateToken(user._id)
       })
       token.save()
-      const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${user._id}/verify/${token.token}, este token expira en una hora`;
+      // const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${user._id}/verify/${token.token}, este token expira en una hora`;
+      const url = `Dar click al siguiente enlace para verificar tu correo: https://nomade-henry.herokuapp.com/api/guest/${user._id}/verify/${token.token}, este token expira en una hora`;
       await sendEmail(user.email,"Verify Email", url)
     }
     return res
