@@ -1,15 +1,20 @@
 import React, { useEffect, useState }  from 'react';
 import { useLocation } from "react-router-dom"
-import { getFeedback } from '../../Redux/Actions';
+import { createNewBooking, getFeedback } from '../../Redux/Actions';
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./Status.module.css"
 import NavBar from '../NavBar/NavBar';
 
 export default function Status() {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const bookingData = useSelector((state) => state.postBooking);
     console.log(bookingData)
+    
+    const booking = localStorage.getItem("booking");
+    var bookingFinal = JSON.parse(booking);
+
+    var emailGuest = bookingFinal.email
     
     const status = useLocation();
     const status1 = status.search
@@ -21,7 +26,10 @@ export default function Status() {
     const realStatus1 = status2[3].split("=")
     const realStatus = realStatus1[1]
     console.log(realStatus)
-
+    useEffect(()=>{
+        dispatch(createNewBooking(bookingFinal))
+        //dispatch(createNewConversation(emailGuest))
+    })
 return (
 <div className="_16grqhk">
       <NavBar />

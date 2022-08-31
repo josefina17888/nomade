@@ -16,7 +16,7 @@ export default function DatePickerOk({ lodId }) {
   //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
   const lodging = useSelector((state) => state.detail);
-
+  const services= lodging.services
   const lodgingId = lodging._id;
   const dispatch = useDispatch();
 
@@ -27,8 +27,8 @@ export default function DatePickerOk({ lodId }) {
     lodgingId: lodId,
     checkIn: new Date(),
     checkOut: new Date(),
-    guests: 3,
-    pets: 0,
+    guests: 1,
+    pets: false,
   });
 
   useEffect(() => {
@@ -43,10 +43,20 @@ export default function DatePickerOk({ lodId }) {
   );
   const unavailableDatesMap = unavailableDates.flat();
   const disabledDates = unavailableDatesMap.map((e) => new Date(e));
+
+  //GET Q PETS
+  const lodgingServices = []
+  for (const property in services) {
+    if (services[property] === true) {
+      lodgingServices.push(property);
+    }
+  }
+  const pets = lodgingServices.filter(e=>e=== 'pets')
+
   //FUNCTION DECREMENT
   function handleDecrement(e) {
     e.preventDefault();
-    if (info.guests > 0) {
+    if (info.guests > 1) {
       setInfo({ ...info, guests: info.guests-- });
     }
     setInfo({ ...info, guests: info.guests });
@@ -55,7 +65,7 @@ export default function DatePickerOk({ lodId }) {
   //FUNCTION INCREMENT
   function handleIncrement(e) {
     e.preventDefault();
-    if (info.guests < 5) {
+    if (info.guests < lodging.guests) {
       setInfo({ ...info, guests: info.guests++ });
     }
     setInfo({ ...info, guests: info.guests });
@@ -152,10 +162,7 @@ export default function DatePickerOk({ lodId }) {
                       <div className="d-flex flex-row">
                         <div className={styles.div_guests_Description}>
                           <div>Mascota</div>
-                        </div>
-                        <div className={styles.container_btn}>
-                          <button>Sí</button>
-                          <button>No</button>
+                          <input type="checkbox" name="pets" value={info.pets} disabled={!pets.includes('pets')}></input>
                         </div>
                       </div>
                     </div>
