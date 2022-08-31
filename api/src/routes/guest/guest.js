@@ -11,6 +11,11 @@ require('dotenv').config();
 
 
 
+// cloudinary.config({ 
+//   cloud_name: 'dbq85fwfz', 
+//   api_key: '578434861277536', 
+//   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+// });
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 

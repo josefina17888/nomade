@@ -15,7 +15,7 @@ router.post("/", async function (req, res, next) {
     
     // const searchBooking = req.params.id;
     const bookingData = req.body
-    console.log(bookingData)
+    // console.log(bookingData)
     //busca el booking
     // const bookingPayed = await Booking.findOne({_id: req.params.bookingId});
     // console.log(bookingPayed)
@@ -35,7 +35,7 @@ router.post("/", async function (req, res, next) {
                 installments: 1
             },
             back_urls: {
-                success: "https://nomade-khaki.vercel.app/",
+                success: "http://localhost:3000/status",
                 //"http://localhost:3000/",
                 // res.redirect("https://nomade-khaki.vercel.app/")
                 failure: "https://nomade-khaki.vercel.app/",
@@ -49,25 +49,12 @@ router.post("/", async function (req, res, next) {
     const preferenceId = response.body.id
     console.log(preferenceId)
     res.send({ preferenceId });
-    
-    // const initPoint = response.body.init_point
-    // console.log(initPoint)
-    // res.send(initPoint)
 
     } catch (error) {
         console.log(error)
     }
 
 })
-
-
-router.get('/', async function(req, res) {
-	res.json({
-		Payment: req.query.payment_id,
-		Status: req.query.status,
-		MerchantOrder: req.query.merchant_order_id
-	});
-});
 
 module.exports = router;
   
