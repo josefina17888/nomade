@@ -24,7 +24,6 @@ import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
 import { useSelector } from 'react-redux';
 
-
 function App() {
   const user = useSelector(state=> state.demoUser)
   console.log(user, 'USER EN APP')
@@ -38,19 +37,21 @@ function App() {
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
-          <Route path='/profile/:email' component={Profile}></Route>
           <Route path='/:guestId/form' component={FormHost}/>
           <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route exact path='/favorites' component={Favorites}/> 
+          <Route path='/profile/:email' component={Profile}></Route>
+          {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
+          <Route path='/:email/form' component={FormHost}/>
+         {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
+          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route exact path='/booking/:_id' component={Booking}/> 
           {/* <Route exact path='/booking/:_id'>  {user ? <LoginUser /> : <Booking />} </Route> */}
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-         {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
           <Route path='/forgot-password/' component={ForgotPassword}/>
-          {/* <Route path= "/status" component={Status}/> */}
           {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>

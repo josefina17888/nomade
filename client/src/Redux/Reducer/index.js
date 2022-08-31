@@ -16,9 +16,10 @@ const initialState = {
   bookings: [],
   feedback: [],
   rating: [],
-  lodgingsInitial:[]
+  lodgingsInitial:[],
   postBooking: {},
   demoUser: null,
+
 };
 var count= {
   countRating : 0,
@@ -318,6 +319,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
+
 
     default:
       return { ...state };

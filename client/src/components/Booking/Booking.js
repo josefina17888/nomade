@@ -20,7 +20,7 @@ export default function Booking(props) {
 
   //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
-  console.log(props, 'props')
+
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
   const unavailableDates = availibity.map((e) =>
@@ -32,7 +32,6 @@ export default function Booking(props) {
   }, [dispatch]);
 
   const lodging = useSelector((state) => state.detail);
-  console.log(lodging);
   const costNight = lodging.price;
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
@@ -44,14 +43,7 @@ export default function Booking(props) {
   const bookingInfo = localStorage.getItem("bookingInfo");
   var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
   var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
-  var preGuest = JSON.parse(bookingInfo).guests;
-
-  //DECLARAR ESTADO PARA DATES
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
-  //PRICE FROM LOCAL STORAGE
-  //const costNight = JSON.parse(priceBooking);
+  var totalGuest = JSON.parse(bookingInfo).guests;
 
   //PARSE INFO LOCAL STORAGE USER INFO
   const guestInfo = localStorage.getItem("userInfo");
@@ -72,18 +64,14 @@ export default function Booking(props) {
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
-    guests: preGuest,
+    guests: totalGuest,
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
     costNight: lodging.price,
   });
 
-
-
   //DATA JOSE
-
-  console.log(input,'INPUT')
   const total = costNight * input.night;
 
   //FUNCTION HANDLE BOOKING
@@ -94,11 +82,9 @@ export default function Booking(props) {
     dispatch(setDataPostBooking(input));
   }
 
-  function handleEditDates() {}
-
+  //MERCADO PAGO
   const preferenceId = useSelector((state) => state.payment);
   const preference = preferenceId.preferenceId;
-  function handleDisabled() {}
 
   return (
     <div>
@@ -145,6 +131,8 @@ export default function Booking(props) {
                     startDate={new Date(input.checkIn)}
                     endDate={new Date(input.checkOut)}
                     excludeDates={disabledDates}
+                    selectsEnd
+                        minDate={new Date()}
                   />
                 </div>
                 <div>
@@ -161,6 +149,8 @@ export default function Booking(props) {
                       startDate={new Date(input.checkIn)}
                       endDate={new Date(input.checkOut)}
                       excludeDates={disabledDates}
+                      selectsEnd
+                      minDate={new Date(input.checkIn)}
                   />
                 </div>
               </div>
@@ -173,7 +163,7 @@ export default function Booking(props) {
                 type="number"
                 name="adults"
                 value={input.guestAdults}
-                defaultValue={preGuest}
+                defaultValue={totalGuest}
               ></input>
             </div>
             <div className={s.selection}>

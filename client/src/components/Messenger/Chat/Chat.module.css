@@ -1,20 +1,30 @@
+
 .chat{
-    height: calc(100vh -70px);
+    /* max-height: calc(100vh -200px); */
     padding: 30px;
-   display: grid;
+    display: flex;
+    display: grid;
    grid-template-columns: 1fr 3fr 1.5fr ;
- /*  grid-template-rows: 1fr 18fr; */
+   grid-template-rows: 100px 500px;  
+
+  
 }
+/* .chatMsj{
+    flex:1fr;*/
+
 .chatBox{
-    flex: 5.5;
-}
+    grid-area: 2 / 2/ 3 / 3;
+} 
 .chatBoxWrapper{
 display: flex;
 flex-direction: column;
+justify-content: space-between;
+position: relative;
+grid-area: 2 / 2/ 3 / 3;
 
 }
 .chatBoxTop{
-    height: 100%;
+    height: 700px;
     overflow-y: scroll;
     padding-right: 20px;
 }
@@ -38,16 +48,27 @@ flex-direction: column;
     cursor: pointer;
     margin-right:20px ;
     background-color: #069a8e;
+    color: white;
 }
-.chatDetail{
-
-    background-color: aqua;
-   
-   
-   
-}
+/* .chatDetail{
+        flex: 3fr
+} */
 .chatMsjWrapper, .chatBoxWrapper, .chatDetailWrapper{
     padding: 10px;
     height: calc(100vh -70px);
 
+}
+.noConv{
+position: absolute;
+top: 500%;
+left: 70px;
+font-size: 5em;
+color: gray;
+text-align: center;
+}
+.resDetail{
+    grid-area: 1 / 3/ 2 / 4;
+}
+.chatMsjWrapper{
+    grid-area: 1 / 3/ 2 / 4;
 }
