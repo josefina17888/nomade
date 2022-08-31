@@ -28,30 +28,56 @@ router.post("/", upload.single("picture") ,async (req, res) => {
         res.send('Usuario ya existe')
       }
       const result = await cloudinary.uploader.upload(req.file.path)
-      console.log(result)
       const newGuest = new Guest({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
 
       await newGuest.save()
-      console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,
         token: generateToken(newGuest._id)
       })
-      console.log(token)
       token.save()
-      console.log(token)
       const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
-      console.log(url)
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
       // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
       res.status(201).redirect("http://localhost:3000/login")
+      // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
       catch (error){
           res.status(404).send(error)
       }
 });
+
+router.post("/reverified",async (req, res) => {
+  const {email} = req.body
+    try{
+      const userExist = await Guest.findOne({ email });
+      const tokenExist = await Token.findOne({userId: userExist._id})
+      console.log(tokenExist)
+      if(tokenExist) {
+         await tokenExist.remove()}
+      console.log("hola")
+      const token = new Token({
+        userId: userExist._id,
+        token: generateToken(userExist._id)
+      })
+      token.save()
+      console.log("hola")
+      const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
+      const title = "Gracias por unirte a la comunidad Nómade"
+      const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
+      await verifyEmail(userExist.email,"Verify Email",title , msg , url)
+      // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
+      console.log("hola")
+      res.status(201).redirect("Verifica tu correo")
+      // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
+    }
+      catch (error){
+          res.status(404).send(error)
+      }
+});
+
 
 
 
@@ -75,6 +101,7 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
     await token.remove()
     // res.status(200).send({message: "Email verificado"})
     res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+    // res.redirect(`https://nomade-khaki.vercel.app/${req.params.idGuest}/verify/${req.params.token}`)
   }
   catch(error) {
     res.status(404).send(error)

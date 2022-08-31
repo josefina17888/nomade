@@ -25,9 +25,6 @@ if(!props.guestInfo){
     dispatch(getFavorites(favData));
   }, [dispatch]);
 
-
-
-  
   var userFavs = {
     userEmail: userEmail,
     lodgingId: props.id,
@@ -51,12 +48,12 @@ if(!props.guestInfo){
   var stateIds = stateLodgings.map((e) => e._id);
 
 
-  if (favorites !== undefined) {
-    console.log("favorites", favorites);
+  if (favorites[0] !== undefined) {
     var favoritesId = favorites.map((e) => e.lodgingId);
+    var isfaved = favoritesId.some((favid) => favid === props.id);}
   }
 
-  var isfaved = favoritesId.some((favid) => favid === props.id);}
+
 
   async function handleClick(e) {
     if (isfaved) {

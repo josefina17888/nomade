@@ -6,7 +6,7 @@ import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 
 export default function ResetPassword() {
-    const [validUrl , setValidUrl] = useState(false)
+    // const [validUrl , setValidUrl] = useState(true)
     const [password, setPassword] = useState({
       password1: "",
       password2: ""
@@ -16,21 +16,22 @@ export default function ResetPassword() {
     
     const params = useParams()
     const history = useHistory()
-    useEffect( () => {
-        const verifyEmailUrl = async () => {
-            try {
-                const url = `http://localhost:3001/api/guest/${params.email}`
-                const {data} = await axios.get(url);
-                console.log(data)
-                setValidUrl(true)
+    // useEffect( () => {
+    //     const verifyEmailUrl = async () => {
+    //         try {
+    //             const url = `/api/guest/${params.email}`
+    //             // `http://localhost:3001/api/guest/${params.email}`
+    //             const {data} = await axios.get(url);
+    //             console.log(data)
+    //             setValidUrl(true)
 
-            } catch(error) {
-                console.log(error)
-                setValidUrl(false)
-            }
-        }
-        verifyEmailUrl()
-    }, [params])
+    //         } catch(error) {
+    //             console.log(error)
+    //             setValidUrl(false)
+    //         }
+    //     }
+    //     verifyEmailUrl()
+    // }, [params])
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -50,8 +51,8 @@ export default function ResetPassword() {
           console.log(passwordOne)
           console.log("hola")
           const { data } = await axios.patch(
-            //`${process.env.REACT_APP_API}/api/login`,
-            `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
+            `/api/passwordReset/newPassordLogIn/${params.email}`,
+            // `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
             {
               passwordOne,
             },
@@ -70,7 +71,7 @@ export default function ResetPassword() {
 
   return (
     <div>
-        {validUrl ? (
+        {
 
             <div className={style.containerUser}>
                 <h1 className={style.title}>Cambia tu contraseña</h1>
@@ -100,8 +101,8 @@ export default function ResetPassword() {
                 ></input>
                 </form>
           </div>
-        )
-        : (<h1>404 not found</h1>)}
+        
+        }
     </div>
   )
 }

@@ -21,7 +21,7 @@ export default function Favorites() {
   let userFavs = {
     userEmail,
   };
-console.log("payload", userFavs)
+  
   useEffect(() => {
     dispatch(getLodgings());
     dispatch(getFavorites(userFavs));
@@ -37,7 +37,6 @@ console.log("payload", userFavs)
   let filtrados = favorites.map(f=>stateLodgings.find(l=>l._id ===f.lodgingId));
   
    
-console.log("filtrados", filtrados)
 
   return (
     <div className={s.fgral}>

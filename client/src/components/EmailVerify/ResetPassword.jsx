@@ -17,7 +17,8 @@ export default function ResetPassword() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url = `http://localhost:3001/api/guest/${params.idGuest}`
+                const url =`http://localhost:3001/api/guest/${params.idGuest}`
+                // `${process.env.REACT_APP_API}/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)
@@ -47,7 +48,7 @@ export default function ResetPassword() {
             },
           };
           const { data } = await axios.patch(
-            //`${process.env.REACT_APP_API}/api/login`,
+            // `${process.env.REACT_APP_API}/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
             `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
             {
               passwordOne,
@@ -78,7 +79,7 @@ export default function ResetPassword() {
                     placeholder="Contraseña"
                     required = {true}
                     onChange={(e) => setPassword({...password , password1: e.target.value })}
-                />  
+                />
                 <button className={style.password} type="button" onClick={switchShown}>{shown? <IoEyeOffOutline/>: <IoEyeOutline/>}</button>
                 <input
                 className={style.inputPassword}

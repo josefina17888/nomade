@@ -13,12 +13,15 @@ export default function LoginUser() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState({
+    msgNotRegister: "",
+    msgNotVerify: ""
+  });
   const [shown, setShown] = useState(false);
       const switchShown = () => setShown(!shown);
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId);
-  console.log(guestId);
-  console.log(user);
+
   //let userToken = guestId._id;
 
   useEffect(() => {
@@ -34,14 +37,17 @@ export default function LoginUser() {
       if (email === "" || password === "") {
         alert("Por favor ingrese todos los campos");
       }
+      const guest = await axios.get(`http://localhost:3001/api/guest/${email}`)
+      if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
+      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado" })
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       };
       const { data } = await axios.post(
-        // `${process.env.REACT_APP_API}/api/login`,
-        "http://localhost:3001/api/login",
+        `/api/login`,
+        // "http://localhost:3001/api/login",
         {
           email,
           password,
@@ -55,6 +61,25 @@ export default function LoginUser() {
     } catch (error) {
       alert("Usuario o contraseña incorrectos");
       console.log(error);
+    }
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      setMsg({
+        ...msg,
+        msgNotVerify: "Hemos enviado un link para cambiar tu contraseña a tu correo",
+    })
+    console.log(email)
+    await axios.post("/api/guest/reverified",{email})
+    setMsg({
+      ...msg,
+      msgNotVerify: "",
+  })
+    } catch (error) {
+      alert("Algo sucedió mal");
+      console.log(error)
     }
   };
 
@@ -88,6 +113,14 @@ export default function LoginUser() {
             <span className={style.bar}></span>
             <label className={style.labelA}>Contraseña</label>
           </div>
+          <div>
+          {msg.msgNotRegister && <div>{msg.msgNotRegister}</div>}
+          {msg.msgNotVerify && <div>
+            <p>{msg.msgNotVerify}</p>
+            <button  className={style.button} onClick={handleClick}> Verificar Email</button>
+            </div>}
+          </div>
+          
           <button className={style.password} type="button" onClick={switchShown}>{shown? <IoEyeOffOutline/>: <IoEyeOutline/>}</button>
           <input
             value="Iniciar Sesión"
@@ -95,7 +128,7 @@ export default function LoginUser() {
             type="submit"
           ></input>
         </form>
-        <Link className={style.link} to="/">¿Olvidaste tu contraseña?</Link>
+        <Link className={style.link} to="/forgot-password/">¿Olvidaste tu contraseña?</Link>
         <span className={style.line}>O</span>
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}>
           <GoogleLogin

@@ -19,6 +19,20 @@ export function getLodgings (lodgingId){
 }
 }
 
+export function getCountry (){
+    return async function(dispatch){
+        try{
+        const json = await axios.get("/api/country")
+        dispatch({
+            type:"GET_COUNTRY",
+            payload: json.data
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+}
+
 //MENUcd cli
 export function filterTypeHouse(payload){
   return{
@@ -176,44 +190,44 @@ export function addFavorite(payload){
         type: "ADD_FAVORITE",
         payload
       })
-   
+
     }catch(err){
       console.log(err)
     }}
   }
 
-export function getFavorites(payload){
+  export function getFavorites(payload){
  
-  return async function(dispatch){
-    try{
-    var response = await axios.post('/api/favorite/fav', payload)
-      return dispatch({
-        type: "GET_FAVORITES",
-        payload: response.data
-       
-    }) 
-    }catch(err){
-      console.log(err)
+    return async function(dispatch){
+      try{
+      var response = await axios.post('/api/favorite/fav', payload)
+        return dispatch({
+          type: "GET_FAVORITES",
+          payload: response.data
+  
+      }) 
+      }catch(err){
+        console.log(err)
+      }
+    }
+  } 
+  export function deleteFavorite(payload){
+    console.log(payload, "soy delete")
+    return async function(dispatch){
+      try{
+      let response = await axios.post('/api/favorite/delete', payload)
+  
+        console.log(response,"okkkk")
+        return dispatch({
+          type: "DELETE_FAVORITE",
+          payload
+  
+      })
+      }catch(err){
+        console.log("hay un error")
+      }
     }
   }
-} 
-export function deleteFavorite(payload){
-  console.log(payload, "soy delete")
-  return async function(dispatch){
-    try{
-    let response = await axios.post('/api/favorite/delete', payload)
-
-      console.log(response,"okkkk")
-      return dispatch({
-        type: "DELETE_FAVORITE",
-        payload
-       
-    })  
-    }catch(err){
-      console.log("hay un error")
-    }
-  }
-} 
 
 
 
@@ -265,7 +279,8 @@ export function createNewBooking(payload) {
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
-    const res = await axios.post(`api/payment/`,payload)
+    const res = await axios.post("/api/payment/", payload)
+    console.log(res)
     return dispatch({
       type: "PAY_BOOKING",
       payload: res.data
