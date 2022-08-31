@@ -65,6 +65,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                     user ? <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
                     country={e.country}
                     price={e.price}
+                    
                     guests={e.guests}
                     picture={e.picture[0]}
                     currency={e.currency}/> 
@@ -80,6 +81,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       city={e.city}
                       country={e.country}
                       price={e.price}
+                      visibility={e.Visibility}
                       guests={e.guests}
                       picture={e.picture[0]}
                       currency={e.currency}

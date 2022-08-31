@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {lodgingReviews} from "../../Redux/Actions/index";
 
-export default function Card({ city, country, guests, price, picture, currency, id }) {
+export default function Card({ city, country, guests, price, picture,visibility, currency, id }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(lodgingReviews());
@@ -31,11 +31,13 @@ export default function Card({ city, country, guests, price, picture, currency, 
  var promedio = cuantos/iguales
  var arrpromedio =[]
  arrpromedio = arrpromedio.map(e=>e = promedio)
-
+console.log(visibility)
 
 
   return (
+ 
     <div className={styles.card}>
+      { visibility === undefined ||visibility === true ? 
       <div>
         <div>
           <img className={styles.img} src={picture} alt="img not found" width="200px" height="250px" />
@@ -51,7 +53,8 @@ export default function Card({ city, country, guests, price, picture, currency, 
           <p className={styles.noche}> noche </p>
 
           </div>
-    </div>
+    </div>:<div></div>
+}
 
     </div>
   );
