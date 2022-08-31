@@ -25,8 +25,7 @@ import complaint from './components/complaint/complaint'
 import { useSelector } from 'react-redux';
 
 function App() {
-  const user = useSelector(state=> state.demoUser)
-  console.log(user, 'USER EN APP')
+  /* const user = useSelector(state=> state.demoUser) */
   return (
    <div>
       <BrowserRouter>
