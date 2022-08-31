@@ -54,7 +54,7 @@ export default function DatePickerOk({ lodId }) {
     });
     localStorage.setItem("bookingInfo", JSON.stringify(info));
     localStorage.setItem("priceBooking", JSON.stringify(price));
-    await dispatch(getBookingByLodgingId(info));
+    dispatch(getBookingByLodgingId(info));
   }
   return (
     <div className={styles._1s21a6e2}>
@@ -139,7 +139,7 @@ export default function DatePickerOk({ lodId }) {
                 <div>
                   {
                     <Link to={`/booking/${lodgingId}`}>
-                      <button onClick={handleClick}>Disponibilidad</button>
+                      <button onClick={(e)=>handleClick(e)}>Disponibilidad</button>
                     </Link>
                   }
                 </div>
