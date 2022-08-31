@@ -51,10 +51,12 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 });  */
 
 ///////////trae el lodging con toda la info del host (FUNCIONA)////////////
-/* router.get("/all", async (req, res) => { 
-  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
+router.get("/host/lodging", async (req, res) => {
+  const lodgingId = req.body.lodgingId 
+  const lodging = await Lodging.find({lodgingId}).populate({path:"hostId", model: "Host"})
+  console.log(lodging.hostId, 'GO')
   res.send(lodging) 
- }); */
+ });
 
 ///BUSCA POR CIUDAD O TRAE TODO (FUNCIONA)
 router.get("/", async (req, res) => {
