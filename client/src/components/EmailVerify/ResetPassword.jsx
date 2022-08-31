@@ -18,7 +18,7 @@ export default function ResetPassword() {
         const verifyEmailUrl = async () => {
             try {
                 // const url =`http://localhost:3001/api/guest/${params.idGuest}`
-                const url =`https://nomade-henry.herokuapp.com//api/guest/${params.idGuest}`
+                const url =`https://nomade-henry.herokuapp.com/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 setValidUrl(true)
 
