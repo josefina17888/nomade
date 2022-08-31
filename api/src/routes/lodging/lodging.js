@@ -1,3 +1,4 @@
+
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Booking = require('../booking/booking');
@@ -7,6 +8,9 @@ const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 const cloudinary = require("cloudinary").v2;
 const {addServices} = require("./controller")
+const axios = require('axios')
+const dotenv = require ("dotenv");
+dotenv.config();
 
 cloudinary.config({ 
   cloud_name: 'dtw1cvtdr', 
@@ -15,8 +19,8 @@ cloudinary.config({
 });
 //BUCCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
-
   try {
+    console.log(req.body.latitud)
     let fotos = req.files.map(e=>e.path)
     let result=[]
     for(let i=0; i<fotos.length; i++)
@@ -31,9 +35,10 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.picture= fotosSubidas
     newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
+    newLodging.latitud = req.body.latitud
     newLodging.save();
-    // res.redirect("http://localhost:3000/")
-    res.redirect("https://nomade-khaki.vercel.app/")
+    res.redirect("http://localhost:3000/")
+    // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.send("No se pudo crear el alojamiento");
   }

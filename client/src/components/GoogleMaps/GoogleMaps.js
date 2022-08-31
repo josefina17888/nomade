@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import React from "react";
 import {
   GoogleMap,
@@ -6,10 +6,15 @@ import {
   Autocomplete,
   MarkerF,
   MarkerClusterer,
+  InfoWindow,
 } from "@react-google-maps/api";
 import style from "./GoogleMaps.module.css";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function GoogleMaps() {
+  const selector = useSelector((state) => state.lodgings);
+  console.log(selector);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
@@ -17,6 +22,7 @@ export default function GoogleMaps() {
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({});
+  const [selected, setSelected] = useState(null);
 
   const onChange = (e) => {
     setAddress(e.target.value);
@@ -28,14 +34,13 @@ export default function GoogleMaps() {
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
     );
     const data = await response.json();
-    console.log(data);
     setCoordinates(data.results[0].geometry.location);
-    setAddress("");
   };
 
   const centerTest = useMemo(() => {
     return coordinates;
   } , [coordinates]);
+
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -84,7 +89,6 @@ export default function GoogleMaps() {
     }),
     []
   );
-  
 
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -100,25 +104,34 @@ export default function GoogleMaps() {
         }}
         options={options}
       >
-        <MarkerF position={centerTest}/>
+        <MarkerF position={centerTest}>
+        </MarkerF>
         <MarkerClusterer>
           {(clusters) =>
             locations.map((location) => (
-              <MarkerF
-                key={createKey(location)}
-                position={location}
-                clusterer={clusters}
-                icon={{
-                  url: 'https://i.postimg.cc/MXpXtBZL/Nomade.png',
-                  scaledSize: new window.google.maps.Size(22, 22),
-                }}
-                onClick={() => {
-                  console.log(location);
-                } }
-              />
+              <MarkerF key={createKey(location)}
+              position={location}
+              clusterer={clusters}
+              icon={{
+                url: 'https://i.postimg.cc/MXpXtBZL/Nomade.png',
+                scaledSize: new window.google.maps.Size(22, 22),
+              }}
+              onClick={() => {
+                setSelected(location);
+              } }>
+                {
+                  selected ? (
+                    <InfoWindow position={centerTest} onCloseClick={() => setSelected(null)}>
+                      <div className={style.infoBox}>
+                        <h1 className={style.title}>{selector[0].title}</h1>
+                        <img className={style.img} src={selector[0].picture[0]}></img>
+                      </div>
+                    </InfoWindow>
+                  ) : null
+                }
+              </MarkerF>
             ))
-          }
-          
+          }    
         </MarkerClusterer>
       </GoogleMap>
       <Autocomplete>

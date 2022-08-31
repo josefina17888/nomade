@@ -1,13 +1,20 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
 import { postGuest, postLodging, getCountry} from "../../Redux/Actions";
 import validate from "./validation";
-
+import {
+  GoogleMap,
+  useLoadScript,
+  Autocomplete,
+  MarkerF,
+} from "@react-google-maps/api";
 
 export default function FormLodging() {
+  const [coordinates, setCoordinates] = useState({});
+  const [address, setAddress] = useState("");
   const params = useParams()
   const dispatch= useDispatch()
   const countries = useSelector((state) => state.country)
@@ -31,33 +38,95 @@ export default function FormLodging() {
     checkInHour:"",
     checkOutHour:"",
     description: "",
-    picture:""
-})    
+    picture:"",
+    latitud:"",
+    longitud:""
+  })    
   useEffect(() => {
     dispatch(getCountry())
   }, []);
 
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
+  });
 
+  const options = useMemo(
+    () => ({
+      disableDefaultUI: true,
+      clickableIcons: false,
+      zoomControl: false,
+      streetViewControl: false,
+      mapTypeControl: false,
+      fullscreenControl: false,
+      mapId: "22d661f3188bcd6d",
+    }),
+    []
+  );
+
+  
+  const onChange = (e) => {
+    setAddress(e.target.value);
+    setInput({...input, address: e.target.value})
+  };
+  
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      );
+      const data = await response.json();
+    setCoordinates(data.results[0].geometry.location);
+  };
+  
+  // const handleKeyPress = (e) => {
+  //   if (e.key === "Enter") {
+  //     onSubmit(e);
+  //   }
+  // }
+  
+  const handleClick = (e) => {
+    onSubmit(e);
+    setInput({...input, latitud: coordinates.lat})
+    console.log(coordinates.lat)
+    console.log(coordinates)
+  }
+  
+  const center = useMemo(
+    () => ({
+      lat: -32.497260,
+      lng: -66.108828,
+    }),
+    []
+    );
+    
+    console.log(coordinates)
+    
+    
+    const centerTest = useMemo(() => {
+      return coordinates;
+    } , [coordinates]);
+    
   function handleDelete(){
     
     document.getElementById("file").click()
   }
-
+  
   function handleChange(e){
     if(e.target.name!== "picture")
     {  
-    setInput({
+      setInput({
         ...input,
         [e.target.name] : e.target.value,
-    })
-    console.log(input)
-    setErrors(validate({
-      ...input,
+      })
+      console.log(input)
+      setErrors(validate({
+        ...input,
       [e.target.name] : e.target.value
   }))
 }
 else{
- 
+  
   if(document.getElementById("imgPreview0"))
   {
     for(let i = 0; i<3 ; i++)
@@ -70,17 +139,17 @@ else{
   }
   for(let i= 0; i<e.target.files.length;i++ )
   {
-          let  reader = new FileReader()
-            reader.readAsDataURL(e.target.files[i])
-            reader.onload = function(){
-            let preview = document.getElementById("preview")
-            let imagen=document.createElement("img")
-            imagen.src = reader.result;
-            imagen.style.width = "200px"
-            imagen.id= "imgPreview"+ i
-            preview.append(imagen)
-            console.log(reader)
-        }
+    let  reader = new FileReader()
+    reader.readAsDataURL(e.target.files[i])
+    reader.onload = function(){
+      let preview = document.getElementById("preview")
+      let imagen=document.createElement("img")
+      imagen.src = reader.result;
+      imagen.style.width = "200px"
+      imagen.id= "imgPreview"+ i
+      preview.append(imagen)
+      console.log(reader)
+    }
   }
   if(!document.getElementById("reset"))
   {
@@ -96,19 +165,23 @@ else{
   setInput({
     ...input,
     [e.target.name] : e.target.value
-})
-setErrors(validate({
-  ...input,
-  [e.target.name] : imgs
-}))
+  })
+  setErrors(validate({
+    ...input,
+    [e.target.name] : imgs
+  }))
 }
 }
-let hostId = params.hostId
-  return (
 
-    <div className={style.containerUser}>
-      <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" >
-      {/* <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST"> */}
+
+if (!isLoaded) return <div>Loading...</div>;
+
+let hostId = params.hostId
+return (
+  
+  <div className={style.containerUser}>
+      {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
+      <form  encType='multipart/form-data' action={`http://localhost:3001/api/lodging/${hostId}`}  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>
@@ -210,13 +283,39 @@ let hostId = params.hostId
           onChange={handleChange}
         />
         <p >{errors.city}</p>
-         <input
+         {/* <input
           type="text"
           name ="address"
           value={input.address}
           placeholder="Direccion"
           onChange={handleChange}
+        /> */}
+    <div className={style.containerMap}>
+      <GoogleMap
+        zoom={15}
+        center={centerTest}
+        mapContainerStyle={{
+          height: "20vh",
+          width: "20vw",
+        }}
+        options={options}
+      >
+        <MarkerF position={centerTest}>
+        </MarkerF>
+      </GoogleMap>
+      <Autocomplete>
+        <input
+          // onKeyPress={handleKeyPress}
+          value={input.address}
+          name="address"
+          onChange={(e) => onChange(e)}
+          type="text"
+          placeholder="Search:"
+          className={style.input}
         />
+      </Autocomplete>
+    </div>
+    <button onClick={(e) => handleClick(e)}>VERIFICA AQUI PERRO</button>
         <p >{errors.address}</p>
          <textarea
           type="text"

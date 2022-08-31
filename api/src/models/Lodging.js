@@ -21,6 +21,8 @@ const LodgingSchema = new mongoose.Schema({
   address: { type: String, required:true },
   checkInHour: { type: String },
   checkOutHour: { type: String },
+  latitud: { type: String },
+  longitud: { type: String },
   services: {
     wifi: { type: Boolean },
     ac: { type: Boolean },

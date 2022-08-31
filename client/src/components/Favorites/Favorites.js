@@ -36,7 +36,6 @@ export default function Favorites() {
 
   let filtrados = favorites.map(f=>stateLodgings.find(l=>l._id ===f.lodgingId));
   
-   
 
   return (
     <div className={s.fgral}>
