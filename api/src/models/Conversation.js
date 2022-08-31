@@ -3,9 +3,10 @@ const Schema = mongoose.Schema;
 
 const ConversationSchema = new mongoose.Schema(
   {
-    members: {
-      type: Array
-    },
+    members: [{
+      type: Schema.ObjectId,
+      ref: "Guest",
+    }],
 
   },
   { timestamps: true }
