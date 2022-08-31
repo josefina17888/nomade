@@ -57,9 +57,6 @@ export default function Booking(props) {
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
-    const isFound = unavailableDatesMap.some((date) =>
-      alldates.includes(new Date(date).toDateString())
-    );
 
   //LODGING DETAIL
   const costNight = lodging.price;
@@ -102,6 +99,9 @@ export default function Booking(props) {
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
+    const isFound = unavailableDatesMap.some((date) =>
+      alldates.includes(new Date(date).toDateString())
+    );
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") : 
     dispatch(payBooking(input));

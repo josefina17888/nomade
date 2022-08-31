@@ -4,13 +4,14 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   getBookingByLodgingId,
   getDetail,
   settingDate,
 } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
+import getDatesInRange from "../Booking/controller";
 
 export default function DatePickerOk({ lodId }) {
   //SELECT STATES FROM REDUX
@@ -20,7 +21,7 @@ export default function DatePickerOk({ lodId }) {
   const lodgingId = lodging._id;
   const price = lodging.price;
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const [info, setInfo] = useState({
     lodgingId: lodId,
     checkIn: new Date(),
@@ -40,6 +41,8 @@ export default function DatePickerOk({ lodId }) {
   );
   const unavailableDatesMap = unavailableDates.flat();
   const disabledDates = unavailableDatesMap.map((e) => new Date(e));
+
+  console.log(disabledDates, 'DISABLE DATES')
 
   //GET Q PETS
   const lodgingServices = [];
@@ -73,9 +76,18 @@ export default function DatePickerOk({ lodId }) {
   }
 
   async function handleClick(e) {
-    localStorage.setItem("bookingInfo", JSON.stringify(info));
-    localStorage.setItem("priceBooking", JSON.stringify(price));
-    dispatch(getBookingByLodgingId(info));
+    const alldates = getDatesInRange(info.checkIn, info.checkOut);
+    const isFound = unavailableDatesMap.some((date) =>
+      alldates.includes(new Date(date).toDateString())
+    );
+    if(isFound){
+      return alert('Fecha no disponible')
+    }else{
+      localStorage.setItem("bookingInfo", JSON.stringify(info));
+      localStorage.setItem("priceBooking", JSON.stringify(price));
+      dispatch(getBookingByLodgingId(info));
+      history.push(`/booking/${lodgingId}`)
+    }
   }
 
   return (
@@ -181,9 +193,7 @@ export default function DatePickerOk({ lodId }) {
                 </div>
                 <div>
                   {
-                    <Link to={`/booking/${lodgingId}`}>
                       <button onClick={(e) => handleClick(e)}>Continuar</button>
-                    </Link>
                   }
                 </div>
               </div>
