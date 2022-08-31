@@ -15,7 +15,7 @@ router.post("/", async function (req, res, next) {
     
     // const searchBooking = req.params.id;
     const bookingData = req.body
-    console.log(bookingData)
+    // console.log(bookingData)
     //busca el booking
     // const bookingPayed = await Booking.findOne({_id: req.params.bookingId});
     // console.log(bookingPayed)
