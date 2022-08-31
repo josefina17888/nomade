@@ -19,6 +19,7 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
 export default function AllCards({setCurrentPage, paging, lodgingPerPage, currentLodging}) {
   let stateLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
+  let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
   // const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
   // const [lodgingPerPage, setLodgingPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página
   // const indexLastLodging = currentPage * lodgingPerPage;
@@ -102,7 +103,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
           {!loader ? (
             <AllCardsPaging
               lodgingPerPage={lodgingPerPage}
-              stateLodgings={stateLodgings.length}
+              stateLodgings={lodgingsVisibles.length}
               paging={paging}
             />
           ) : null}
