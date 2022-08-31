@@ -7,14 +7,20 @@ const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
+require('dotenv').config();
 
 
 
+// cloudinary.config({ 
+//   cloud_name: 'dbq85fwfz', 
+//   api_key: '578434861277536', 
+//   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+// });
 
 cloudinary.config({ 
-  cloud_name: 'dbq85fwfz', 
-  api_key: '578434861277536', 
-  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
 });
 
 

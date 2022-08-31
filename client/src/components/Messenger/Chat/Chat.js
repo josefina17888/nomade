@@ -1,37 +1,184 @@
-import React from "react";
-import NavBar from '../../NavBar/NavBar';
+import React, { useEffect, useRef, useState } from "react";
+import NavBar from "../../NavBar/NavBar";
 import ResDetail from "../ResDetail/ResDetail";
 import s from "./Chat.module.css";
-import Conversation from '../Conversation/Conversation'
+import Conversation from "../Conversation/Conversation";
 import Message from "../Message/Message";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import io from "socket.io-client";
+
 
 export default function Chat() {
+  const dispatch = useDispatch();
+  const [conversations, setConversations] = useState([]);
+  const [user, setUser] = useState({});
+  const [currentChat, setCurrentChat] = useState({});
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const scrollRef = useRef();
+  const socket = useRef();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  let userEmail = userInfo.email;
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:3001");
+    socket.current.on("getMessage", data =>{
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      })
+    })
+
+  }, []);
+  console.log("user",user)
+  console.log("socket",socket.current)
+  console.log("arrival",arrivalMessage)
+
+  useEffect(()=>{
+    arrivalMessage && currentChat.members.includes(arrivalMessage.sender) &&
+setMessages(prev=>[...prev, arrivalMessage ])
+  },[arrivalMessage, currentChat])
+  
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        let res = await axios.get(
+          "http://localhost:3001/api/conversation/conv/" + userEmail
+        );
+        setConversations(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, [userEmail]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        let userData = await axios(
+          "http://localhost:3001/api/conversation/users/" + userEmail
+        );
+        setUser(userData.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUser();
+  }, [userEmail]);
+
+  useEffect(() => {
+    const getMessages = async () => {
+      let conversationId = currentChat._id;
+      try {
+        let res = await axios(
+          "http://localhost:3001/api/message/" + conversationId
+        );
+        setMessages(res.data);
+        setNewMessage("");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMessages();
+  }, [currentChat]);
+
+
+  useEffect(() => {
+    /* scrollRef.current?.scrollInToView({behavior:"smooth"}) */
+  }, [messages]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const message = {
+      sender: user._id,
+      text: newMessage,
+      conversationId: currentChat._id,
+    };
+
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/api/message",
+        message
+      );
+      setMessages([...messages, res.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(currentChat.members);
+
   return (
-    <>
+    <div className={s.chatContainer}>
       <NavBar />
       <div className={s.chat}>
         <div className={s.chatMsj}>
           <div className={s.chatMsjWrapper}>Mensajes</div>
-          <Conversation/>
+          {conversations.map((c) => (
+            <div onClick={() => setCurrentChat(c)}>
+              <Conversation key={c._id} conversation={c} currentUser={user} />
+            </div>
+          ))}
         </div>
         <div className={s.chatBox}>
           <div className={s.chatBoxWrapper}>
-
-            <div className={s.chatBoxTop} >
-             <Message/>
-             <Message own= {true}/>
-             <Message/>
-            </div>
-            <div className={s.chatBoxBottom} >
-              <textarea className={s.chatInput} placeholder="Escribe aqui..."></textarea>
-              <button className={s.chatSubmitBtn}>Enviar</button>
-            </div>
+            {currentChat._id ? (
+              <>
+                <div className={s.chatBoxTop}>
+                  {messages.map((e) => (
+                    <div ref={scrollRef}>
+                      <Message
+                        key={e._id}
+                        messages={e.text}
+                        own={e.sender === user._id}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className={s.chatBoxBottom}>
+                  <input
+                    type="text"
+                    className={s.chatInput}
+                    placeholder="Escribe aqui..."
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
+                  />
+                  <button className={s.chatSubmitBtn} onClick={handleSubmit}>
+                    Enviar
+                  </button>
+                </div>
+              </>
+            ) : (
+              <span className={s.noConv}>Selecciona un Chat</span>
+            )}
           </div>
         </div>
         <div className={s.resDetail}>
-          <div className={s.resDetailWrapper}><ResDetail/></div>
+          <div className={s.resDetailWrapper}>
+            <ResDetail />
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

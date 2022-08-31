@@ -372,6 +372,16 @@ export default function CardDetail(props) {
         >
           <button className={styles.button}>Califica este hospedaje!</button>
         </Link>
+        <Link
+          to={
+            userToken
+              ? `/complaint/${userToken}/${props.match.params._id}`
+              : "/login"
+          }
+          className="nav-link py-2 px-0 px-lg-2"
+        >
+          <button className={styles.buttonDenunciar}>Denunciar hospedaje</button>
+        </Link>
       </div>
     </div>
   );
