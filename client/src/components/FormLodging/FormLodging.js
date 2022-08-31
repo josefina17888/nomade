@@ -108,7 +108,8 @@ let hostId = params.hostId
 
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
-      <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
+
+      <form  encType='multipart/form-data' action={`http://localhost:3001/api/lodging/${hostId}`}  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>

@@ -7,6 +7,7 @@ const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 const cloudinary = require("cloudinary").v2;
 const {addServices} = require("./controller")
+require('dotenv').config();
 
 cloudinary.config({ 
   cloud_name: 'dtw1cvtdr', 
@@ -15,7 +16,6 @@ cloudinary.config({
 });
 //BUCCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
-
   try {
     let fotos = req.files.map(e=>e.path)
     let result=[]
@@ -32,8 +32,12 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
     newLodging.save();
-    // res.redirect("http://localhost:3000/")
-    res.redirect("https://nomade-khaki.vercel.app/")
+    console.log(req.body.address)
+    console.log(process.env.GOOGLE_MAPS_API_KEY)
+    const response = await axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.address}&key=${process.env.GOOGLE_MAPS_API_KEY}`)
+    console.log(response)
+    res.redirect("http://localhost:3000/")
+    // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.send("No se pudo crear el alojamiento");
   }
@@ -47,10 +51,12 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 });  */
 
 ///////////trae el lodging con toda la info del host (FUNCIONA)////////////
-/* router.get("/all", async (req, res) => { 
-  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
+router.get("/host/lodging", async (req, res) => {
+  const lodgingId = req.body.lodgingId 
+  const lodging = await Lodging.find({lodgingId}).populate({path:"hostId", model: "Host"})
+  console.log(lodging.hostId, 'GO')
   res.send(lodging) 
- }); */
+ });
 
 ///BUSCA POR CIUDAD O TRAE TODO (FUNCIONA)
 router.get("/", async (req, res) => {
