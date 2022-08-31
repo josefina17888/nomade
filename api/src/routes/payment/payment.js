@@ -35,11 +35,11 @@ router.post("/", async function (req, res, next) {
                 installments: 1
             },
             back_urls: {
-                success: "http://localhost:3000/status",
+                success: "https://nomade-khaki.vercel.app/status",
                 //"http://localhost:3000/",
                 // res.redirect("https://nomade-khaki.vercel.app/")
-                failure: "https://nomade-khaki.vercel.app/",
-                pending: "https://nomade-khaki.vercel.app/"
+                failure: "https://nomade-khaki.vercel.app/status",
+                pending: "https://nomade-khaki.vercel.app/status"
             },
         }
     console.log(preference.items)
