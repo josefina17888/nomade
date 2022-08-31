@@ -16,13 +16,12 @@ export default function Favorites() {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.userFavorites);
   let stateLodgings = useSelector((state) => state.lodgings);
-
   const guestInfo = localStorage.getItem("userInfo");
   let userEmail = JSON.parse(guestInfo).email;
   let userFavs = {
     userEmail,
   };
-console.log("payload", userFavs)
+  
   useEffect(() => {
     dispatch(getLodgings());
     dispatch(getFavorites(userFavs));
@@ -38,7 +37,6 @@ console.log("payload", userFavs)
   let filtrados = favorites.map(f=>stateLodgings.find(l=>l._id ===f.lodgingId));
   
    
-console.log("filtrados", filtrados)
 
   return (
     <div className={s.fgral}>

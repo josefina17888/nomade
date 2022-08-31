@@ -53,7 +53,6 @@ router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
 });
 
 //get users para chat//  puede ser cualquiera de los dos usuarios, uno va por query y el otro por params
-//(aqui quede)
 
 router.get("/users/:userEmail", async (req, res) => {
   const userEmail= req.params.userEmail

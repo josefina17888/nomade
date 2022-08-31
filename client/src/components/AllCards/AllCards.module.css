@@ -3,8 +3,13 @@
 .container{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    margin-left: 1%;
+    margin-right: 1%;
+    justify-self: center;
+    justify-content: center;
+    padding: 1%;
    
 }
 .pag{
@@ -12,24 +17,21 @@
    
 }
 .cards{
-      
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: row;
+    /* flex-wrap: wrap;
+    justify-content: center; */
     align-items: center;
-    max-width: 90%;
-    min-height: 80vh;
-   
 }
 .card{
-    margin: 0.7em; 
-    width: 300px;
-    height: 50vh;
-    padding: 0.3em;
+    width: 100%;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-items: center;
     border-radius: 10px;
+    padding: 3%;
     transition: 0.5s;
    position: relative;
    
@@ -44,12 +46,16 @@
 .link{
     
     cursor: pointer;
-    
-}
-
-.a{
     text-decoration: none;
     color: black;
     height: 100%;
+}
+
+.fav{
+    overflow: visible;
+    display:inline-block;
+    position:relative;
+    width: 100px;
+    height: 100px;
 }
  

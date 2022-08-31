@@ -20,10 +20,15 @@ export default function NavBar(props) {
   } else {
     var userToken = JSON.parse(guestId).email;
   }
+
+
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
   }
+
+  /* const demoHistory = window.location.pathname;
+  if(demoHistory === '/' || demoHistory==='/detail/:_id') */
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
@@ -73,8 +78,7 @@ export default function NavBar(props) {
                         <div>
                           <li>
                             <Link
-
-                              to= {`/profile/${props.email}`}
+                              to= {`/profile/${userToken}`}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Perfil

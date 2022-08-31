@@ -15,9 +15,9 @@ function handleInputChange(e){
 }
 function handleSubmit(e){
   e.preventDefault()
-  
+    
     if(city !== ""){
-    dispatch(getByCity(city));
+    dispatch(getByCity(city.toLowerCase()));
     setCity("");}
     else{
     alert("Ingresa una ciudad para buscar")

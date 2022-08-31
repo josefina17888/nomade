@@ -22,6 +22,7 @@ router.post("/", async function (req, res, next) {
     const title = req.body.lodgingId
     const quantity = req.body.night
     const price = req.body.costNight
+    console.log(price)
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
     // Toma del lodging el title y el unit price y toma del body la cantidad de noches
         let preference = {
@@ -30,38 +31,30 @@ router.post("/", async function (req, res, next) {
                 quantity: quantity,
                 unit_price: price,
             }],
-            back_urls: {
-                success: "http://localhost:3000/",
-                failure: "http://localhost:3001/api/payment/feedback",
-                pending: "http://localhost:3001/api/payment/feedback"
+            payment_methods: {
+                installments: 1
             },
-            installments: 1
+            back_urls: {
+                success: "http://localhost:3000/status",
+                //"http://localhost:3000/",
+                // res.redirect("https://nomade-khaki.vercel.app/")
+                failure: "https://nomade-khaki.vercel.app/",
+                pending: "https://nomade-khaki.vercel.app/"
+            },
         }
     console.log(preference.items)
 
     try {
     const response = await mercadopago.preferences.create(preference)
     const preferenceId = response.body.id
+    console.log(preferenceId)
     res.send({ preferenceId });
-    
-    // const initPoint = response.body.init_point
-    // console.log(initPoint)
-    // res.send(initPoint)
 
     } catch (error) {
         console.log(error)
     }
 
 })
-
-
-router.get('/feedback', function(req, res) {
-	res.json({
-		Payment: req.query.payment_id,
-		Status: req.query.status,
-		MerchantOrder: req.query.merchant_order_id
-	});
-});
 
 module.exports = router;
   

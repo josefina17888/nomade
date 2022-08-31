@@ -1,6 +1,8 @@
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
 
-module.exports = async (email,subject,text) => {
+
+
+verifyEmail =  async (email,subject,title,msg,url) => {
     try{
         const transporter = nodemailer.createTransport({
             host: process.env.HOST,
@@ -13,13 +15,20 @@ module.exports = async (email,subject,text) => {
             }
 
         })
-        
-
         await transporter.sendMail({
             from: process.env.USER,
             to: email,
             subject: subject,
-            text: text
+            html: `
+            <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
+            <h2 style="text-align: center; text-transform: uppercase;color: teal;">${title}</h2>
+            <p>${msg}</p>
+            <a href=${url} style="background: #069A8E; text-decoration: none; border-radius: 5px;
+            border: 1px solid rgb(0, 0, 0); color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Este soy yo</a>
+            <p>Si el boton no funciona da click al enlace de abajo</p>
+            <div>${url}</div>
+            </div>
+        `
         })
         console.log("Email sent Sucess")
     }
@@ -27,4 +36,8 @@ module.exports = async (email,subject,text) => {
         console.log("Email not send")
         console.log(error)
     }
+}
+
+module.exports = {
+    verifyEmail
 }
