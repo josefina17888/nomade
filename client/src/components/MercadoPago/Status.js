@@ -12,6 +12,7 @@ export default function Status() {
     //trae info de la reserva desde el localStorage
     const bookingInfo = localStorage.getItem("booking");
     const booking = JSON.parse(bookingInfo);
+    var emailGuest = booking.email
     console.log(booking)
     const checkIn = new Date(booking.checkIn).toLocaleDateString()
     const checkOut = new Date(booking.checkOut).toLocaleDateString()
@@ -44,7 +45,6 @@ export default function Status() {
     if(realStatus === "approved"){
         dispatch(createNewBooking(booking))
     }
-
 return (
 <div className="_16grqhk">
       <NavBar />

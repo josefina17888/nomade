@@ -9,17 +9,23 @@ const toId = mongoose.Types.ObjectId;
 //NUEVA CONVERSACION
 
 router.post("/", async (req, res) => {
-  const newConversation = new Conversation({
-    members: [req.body.senderId, req.body.receiverId],
+  let senderEmail= req.body.senderEmail
+  let receiverEmail= req.body.receiverEmail
+  let sender= await Guest.findOne({ email: senderEmail })
+  let senderId= sender._id
+  let receiver= await Guest.findOne({ email: receiverEmail })
+  let receiverId= receiver._id
+    const newConversation = new Conversation({
+      members: [senderId, receiverId],
+    });
+  
+    try {
+      const savedConversation = await newConversation.save();
+      res.status(200).json(savedConversation);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   });
-
-  try {
-    const savedConversation = await newConversation.save();
-    res.status(200).json(savedConversation);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 //GET CONVERSACION DE USUARIO
 
