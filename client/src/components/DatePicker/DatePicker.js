@@ -160,7 +160,7 @@ export default function DatePickerOk({ lodId }) {
                             name="adults"
                             min={1}
                             max={lodging.guests}
-                            onChange={e => setInfo({...info, guest:e.target.value})}
+                            onChange={e => setInfo({...info, guests:e.target.value})}
                             defaultValue={info.guests}
                             ></input>
                         </div>
