@@ -210,8 +210,6 @@ export function deleteFavorite(payload){
 } 
 
 
-
-
 export function favoriteNumber(payload){
   return async function(dispatch){
     try{
@@ -285,17 +283,10 @@ export function getBookingByLodgingId(payload){
   }
 } 
 
-//CHAT
-export function getConversations(payload){
-  return async function (dispatch){
-    try{
-      let res = await axios.get ('http://localhost:3001/api/conversation/:user._id')
-      console.log(res)
-    }catch(err){
-      console.log(err)
-    }
-}}
 
+
+
+ 
 
 
 
