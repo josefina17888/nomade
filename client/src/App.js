@@ -22,7 +22,7 @@ import Booking from './components/Booking/Booking'
 // import MercadoPago from './components/MercadoPago/MercadoPago'
 // import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
-
+import complaint from './components/complaint/complaint'
 
 function App() {
 
@@ -49,7 +49,9 @@ function App() {
           <Route path='/forgot-password/' component={ForgotPassword}/>
           {/* <Route path= "/status" component={Status}/> */}
           {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
+          <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= '/chat' component={Chat}/>
+          
         </Switch>
       </BrowserRouter>
    </div>

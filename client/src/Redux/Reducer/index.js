@@ -19,21 +19,41 @@ const initialState = {
   bookings: [],
   feedback: [],
   rating: [],
-
+  lodgingsInitial:[]
 };
-
+var count= {
+  countRating : 0,
+  countPets : 0,
+  countCasa : 0,
+  countCaro : 0,
+  countBarato : 0,
+}
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_LODGINGS":
+      if(state.lodgingsInitial[0]!== undefined)
+      {
+        return {
+          ...state,
+          lodgings: action.payload,
+          allLodgings: action.payload,
+          loader: false,
+        };
+      }
+      else{
       return {
         ...state,
         lodgings: action.payload,
         allLodgings: action.payload,
+        lodgingsInitial: action.payload,
         loader: false,
-      };
+      };}
 
     case "ORDER_BY_RATING":
+    if(count.countRating%2 == 0){
+      console.log(action.payload)
       const allLodgingsReviewsMap = state.allLodgingsReviews
+      
         .map((e) => {
           return {
             lodgingId: e.lodgingId,
@@ -70,18 +90,34 @@ function rootReducer(state = initialState, action) {
       var ratingMax = state.lodgings.sort(function (a, b) {
         return b.rating - a.rating;
       });
-
+      count.countRating++;
       return {
         ...state,
         lodgings: ratingMax.map((e) => e),
-      };
+      };}
+      else{
+        count.countRating++;
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        };}
+      
 
     case "FILTER_TYPE_HOUSE":
       const house = state.lodgings.filter((e) => e.lodgingType === "Casa");
+      if(count.countCasa%2=== 0){
+        count.countCasa++
       return {
         ...state,
         lodgings: house,
-      };
+      };}
+      else{
+        count.countCasa++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        }
+      }
     case "GET_COUNTRY": 
       return {
         ...state,
@@ -91,26 +127,55 @@ function rootReducer(state = initialState, action) {
       const filtering = state.lodgings;
       const pets = filtering.filter((e) => e.services.pets === true);
       console.log(pets);
+      if(count.countPets%2 === 0)
+      {
+        count.countPets++
       return {
         ...state,
         lodgings: pets,
-      };
+      };}
+      else{
+        count.countPets++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        };
+      }
     case "ORDER_BY_LOWEST":
       const lowest = state.lodgings.sort(function (a, b) {
         return a.price - b.price;
       });
+      if(count.countBarato%2===0)
+      {
+        count.countBarato++
       return {
         ...state,
         lodgings: lowest.map((e) => e),
-      };
+      };}
+      else{
+        count.countBarato++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        }
+      }
     case "ORDER_BY_HIGHEST":
       const highest = state.lodgings.sort(function (a, b) {
         return b.price - a.price;
       });
+      if(count.countCaro%2===0)
+      {
+        count.countCaro++
       return {
         ...state,
         lodgings: highest.map((e) => e),
-      };
+      };}
+      else{
+        count.countCaro++
+        return {
+          ...state,
+          lodgings: state.lodgingsInitial.map((e) => e),
+        };}
 
     case "ORDER_BY_REVIEW":
       const highesSt = state.lodgings.sort(function (a, b) {
