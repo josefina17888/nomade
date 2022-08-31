@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import style from './profile.module.css'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
@@ -7,8 +6,6 @@ import NavBar from '../NavBar/NavBar.js'
 
 
 export default function Profile() {
-  const dispatch = useDispatch()
-  const guestDet = useSelector((state) => state.guest)
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
 

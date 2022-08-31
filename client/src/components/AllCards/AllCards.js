@@ -54,9 +54,9 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
         ) : (
           currentLodging.map((e) => {
             return (
-              <div className={styles.cards}>
+              <div key={e._id} className={styles.cards}>
 
-                <div key={e._id} className={styles.card}>
+                <div  className={styles.card}>
 
                 <div>
 
@@ -87,7 +87,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
 
                     </Link>
 
-                    </div>
+                </div>
                   
                 </div>
               </div>
