@@ -14,6 +14,7 @@ export default function GoogleMaps() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
+  
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({});

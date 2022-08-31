@@ -21,42 +21,49 @@ export default function Booking(props) {
 
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
-  const unavailableDates = availibity.map((e) =>
-    e.allDates.map((d) => new Date(d).toDateString())
-  );
+  console.log(lodgingId)
 
+  //GET DETALLES DE LODGING
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
-
   const lodging = useSelector((state) => state.detail);
+  console.log(lodging)
+
+  //DECLARATION CONST FOR USE DATA
+  const unavailableDates = availibity.map((e) =>
+  e.allDates.map((d) => new Date(d).toDateString())
+  );
+
+  // PARSE INFO LOCAL STORAGE BOOKING INFO
+    const bookingInfo = localStorage.getItem("bookingInfo");
+    var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
+    var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
+    var totalGuest = JSON.parse(bookingInfo).guests;
+  
+  //PARSE INFO LOCAL STORAGE USER INFO
+    const guestInfo = localStorage.getItem("userInfo");
+    let userEmail = JSON.parse(guestInfo).email;
+    //let userEmail = true;
+  
+  //GET RANGES OF DATES
+    const alldates = getDatesInRange(checkIn, checkOut);
+  
+  //VER DISPONIBILIDAD DE DATES
+    const unavailableDatesMap = unavailableDates.flat();
+    const disabledDates = unavailableDatesMap.map((e) => new Date(e));
+    const isFound = unavailableDatesMap.some((date) =>
+      alldates.includes(new Date(date).toDateString())
+    );
+
+  //LODGING DETAIL
   const costNight = lodging.price;
+  console.log(costNight)
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
   const picture1 = obj["0"];
   const city = lodging.city;
   const country = lodging.country;
-
-  // PARSE INFO LOCAL STORAGE BOOKING INFO
-  const bookingInfo = localStorage.getItem("bookingInfo");
-  var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
-  var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
-  var totalGuest = JSON.parse(bookingInfo).guests;
-
-  //PARSE INFO LOCAL STORAGE USER INFO
-  const guestInfo = localStorage.getItem("userInfo");
-  let userEmail = JSON.parse(guestInfo).email;
-  //let userEmail = true;
-
-  //GET RANGES OF DATES
-  const alldates = getDatesInRange(checkIn, checkOut);
-
-  //VER DISPONIBILIDAD DE DATES
-  const unavailableDatesMap = unavailableDates.flat();
-  const disabledDates = unavailableDatesMap.map((e) => new Date(e));
-  const isFound = unavailableDatesMap.some((date) =>
-    alldates.includes(new Date(date).toDateString())
-  );
 
   const [input, setInput] = useState({
     checkIn: checkIn,
@@ -68,6 +75,7 @@ export default function Booking(props) {
     lodgingId: lodgingId,
     costNight: lodging.price,
   });
+  console.log(input)
 
   //DATA JOSE
   const total = costNight * input.night;
@@ -75,7 +83,7 @@ export default function Booking(props) {
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
     localStorage.setItem("booking", JSON.stringify(input));
-    isFound ? alert("NO DISPONIBLE") : dispatch(setDataPostBooking());
+    isFound ? alert("NO DISPONIBLE") : 
     dispatch(payBooking(input));
     dispatch(setDataPostBooking(input));
   }
@@ -212,3 +220,4 @@ export default function Booking(props) {
     </div>
   );
 }
+

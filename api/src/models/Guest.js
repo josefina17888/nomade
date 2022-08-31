@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const GuestSchema = new Schema({
   name: { type: String, required: true },
   lastname: { type: String, required: true },
-  userName:{type: String, required: true},
   email: { type: String, required: true },
   password: { type: String, min: 6 },
   cellPhone: { type: String },
