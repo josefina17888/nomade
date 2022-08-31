@@ -36,8 +36,9 @@ console.log(visibility)
 
   return (
  
-    <div className={styles.card}>
+   <div>
       { visibility === undefined ||visibility === true ? 
+         <div className={styles.card}>
       <div>
         <div>
           <img className={styles.img} src={picture} alt="img not found" width="200px" height="250px" />
@@ -52,10 +53,10 @@ console.log(visibility)
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
 
-          </div>
-    </div>:<div></div>
+          </div></div>
+    </div>:<div className={styles.nover}></div>
 }
 
-    </div>
+</div>
   );
 }

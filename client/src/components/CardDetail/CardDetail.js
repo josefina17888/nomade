@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDetail } from "../../Redux/Actions/index";
+import {getGuests , getDetail, deleteLodging} from "../../Redux/Actions/index";
+
 import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
@@ -30,21 +31,23 @@ import { FaSwimmingPool } from "react-icons/fa";
 export default function CardDetail(props) {
   const dispatch = useDispatch();
   const lodgingId = props.match.params._id;
-
+  const history = useHistory()
   let guestId = localStorage.getItem("userInfo");
 
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId)._id;
+    var userEmail = JSON.parse(guestId).email;
   }
-
   useEffect(() => {
+    dispatch(getGuests());
     dispatch(getDetail(lodgingId));
     dispatch(lodgingReviews());
-  }, [dispatch]);
 
+  }, [dispatch]);
   const myLodging = useSelector((state) => state.detail);
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
+  const allGuests = useSelector((state) => state.allGuests);
   let detailReview = stateLodgings.map((e) =>
     e.lodgingId === lodgingId ? [e.comments, e.rating] : false
   );
@@ -53,7 +56,11 @@ export default function CardDetail(props) {
   // const servicios = useSelector((state) => state.detail.services)
 
   const servicios = myLodging.services;
-  // console.log(servicios)
+  console.log(allGuests)
+  console.log(userEmail)
+  let arrFilter = allGuests.filter(e => e.email === userEmail)
+  console.log(arrFilter)
+
 
   const lodgingServices = [];
   const lodgingNoServices = [];
@@ -83,6 +90,11 @@ export default function CardDetail(props) {
   const handleBooking = (e) => {};
 
   //renderizado
+  function handleSubmit(e){
+    e.preventDefault()
+    dispatch(deleteLodging(props.match.params._id))  
+    history.push("/")
+  }
 
   return (
     <div className="_16grqhk">
@@ -372,6 +384,7 @@ export default function CardDetail(props) {
         >
           <button className={styles.button}>Califica este hospedaje!</button>
         </Link>
+        {console.log(guestId)}
         <Link
           to={
             userToken
@@ -382,6 +395,13 @@ export default function CardDetail(props) {
         >
           <button className={styles.buttonDenunciar}>Denunciar hospedaje</button>
         </Link>
+        {
+          userToken && allGuests[0]!== undefined && arrFilter[0].isAdmin === true ?
+          <form onSubmit={(e)=>handleSubmit(e)}> 
+          <button className={styles.buttonDenunciar} type='submit'>Borrar alojamiento</button>
+          </form>:
+          <div></div>
+        }
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const initialState = {
   userFavorites: [],
   favNumber: 0,
   guest: {},
-  allGuests: {},
+  allGuests: [],
   duplicate: [],
   allLodgingsReviews: [],
   rating: [],
@@ -319,6 +319,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
+      case "DELETE_LODGING":
+      return {
+        ...state,
+        allLodgings: action.payload,
+      };
+
 
 
     default:

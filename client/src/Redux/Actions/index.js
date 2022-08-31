@@ -140,7 +140,7 @@ export function getGuestByEmail(email){
 }
 
 // Trae todos los Guests
-export function allGuests(){
+export function getGuests(){
   return async function(dispatch){
     try {
       const res = await axios.get("/api/guest")
@@ -320,6 +320,22 @@ export function getFeedback(){
       console.log(res)
       return dispatch({
         type: "GET_FEEDBACK",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function deleteLodging(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_LODGING",
         payload: res.data
       })
     } catch (error) {
