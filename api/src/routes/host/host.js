@@ -25,7 +25,7 @@ cloudinary.config({
 
 router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
-  const cbu = req.body
+  const {cbu} = req.body
   const filename = req.file
   const result = await cloudinary.v2.uploader.upload(req.file.path)
   console.log(result)
@@ -39,8 +39,8 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     await myHost.save()
 
     let hostId = myHost._id
-        // res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
-        res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
+        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        //res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {
