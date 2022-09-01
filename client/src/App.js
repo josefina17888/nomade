@@ -26,6 +26,7 @@ import complaint from './components/complaint/complaint'
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
   let user = JSON.parse(guestInfo);
+  console.log(user, 'USER')
   return (
    <div>
       <BrowserRouter>
@@ -47,7 +48,7 @@ function App() {
           {
             user && <Route exact path='/booking/:_id'/> ?
             <Route exact path='/booking/:_id' component={Booking}/>:
-            <Redirect to ="/login" component={LoginUser} />
+            <Redirect exact to ="/login" component={LoginUser} />
           }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
