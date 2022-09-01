@@ -35,14 +35,16 @@ export default function DatePickerOk({ lodId }) {
     dispatch(getBookingByLodgingId(info));
   }, [dispatch]);
 
+  //GET INFO GUEST
+  const guestInfo = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestInfo);
+
   //AVAILIBITY LODGINGS
   const unavailableDates = availibity.map((e) =>
     e.allDates.map((d) => new Date(d).toDateString())
   );
   const unavailableDatesMap = unavailableDates.flat();
   const disabledDates = unavailableDatesMap.map((e) => new Date(e));
-
-  console.log(disabledDates, 'DISABLE DATES')
 
   //GET Q PETS
   const lodgingServices = [];
@@ -86,7 +88,11 @@ export default function DatePickerOk({ lodId }) {
       localStorage.setItem("bookingInfo", JSON.stringify(info));
       localStorage.setItem("priceBooking", JSON.stringify(price));
       dispatch(getBookingByLodgingId(info));
-      history.push(`/booking/${lodgingId}`)
+      if(user){
+        history.push(`/booking/${lodgingId}`)
+      }else{
+        history.push(`/login`)
+      }
     }
   }
 
