@@ -19,6 +19,7 @@ const initialState = {
   lodgingsInitial:[],
   postBooking: {},
   demoUser: null,
+  host: []
 
 };
 var count= {
@@ -319,7 +320,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
-
+    case 'GET_HOST_BY_DNI':
+      return {
+        ...state,
+        host: action.payload
+      }
 
     default:
       return { ...state };

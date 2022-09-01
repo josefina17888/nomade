@@ -126,7 +126,7 @@ export function getGuest(payload){
 export function getGuestByEmail(email){
   return async function(dispatch){
     try{
-      let json= await axios.get(`/api/guest?email=${email}`)
+      let json= await axios.get(`/api/guest/${email}`)
       return dispatch({
         type: 'GET_GUEST_BY_EMAIL',
         payload: json.data
@@ -153,6 +153,24 @@ export function allGuests(){
     }
   }
 }
+
+// Trae un Host por dni
+export function getHostByDni(dni){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/guest/:${dni}`)
+      return dispatch({
+        type: 'GET_HOST_BY_DNI',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 
 
   export function getDetail (lodgingId){

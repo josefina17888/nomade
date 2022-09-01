@@ -1,12 +1,11 @@
-import React ,  {useState , useEffect} from 'react'
-import { Link , useParams, useHistory} from 'react-router-dom'
+import React ,  {useState } from 'react'
+import { useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 
 export default function ResetPassword() {
-    const [validUrl , setValidUrl] = useState(false)
     const [password, setPassword] = useState({
       password1: "",
       password2: ""
@@ -16,23 +15,7 @@ export default function ResetPassword() {
     
     const params = useParams()
     const history = useHistory()
-    useEffect( () => {
-        const verifyEmailUrl = async () => {
-            try {
-                const url = `${process.env.REACT_APP_API}/api/guest/${params.email}`
-                // `http://localhost:3001/api/guest/${params.email}`
-                const {data} = await axios.get(url);
-                console.log(data)
-                setValidUrl(true)
-
-            } catch(error) {
-                console.log(error)
-                setValidUrl(false)
-            }
-        }
-        verifyEmailUrl()
-    }, [params])
-
+    
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -46,24 +29,18 @@ export default function ResetPassword() {
               "Content-Type": "application/json",
             },
           };
-          console.log("hola")
-          console.log(params.email)
-          console.log(passwordOne)
-          console.log("hola")
           const { data } = await axios.patch(
-            `${process.env.REACT_APP_API}/api/passwordReset/newPassordLogIn/${params.email}`,
+            `/api/passwordReset/newPassordLogIn/${params.email}`,
             // `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
             {
               passwordOne,
             },
             config
           );
-          console.log(data)
           setPassword("");
           history.push("/login");
         } catch (error) {
           alert("Usuario o contraseña incorrectos");
-          console.log(error)
         }
       };
 
@@ -71,7 +48,7 @@ export default function ResetPassword() {
 
   return (
     <div>
-        {validUrl ? (
+        {
 
             <div className={style.containerUser}>
                 <h1 className={style.title}>Cambia tu contraseña</h1>
@@ -101,8 +78,8 @@ export default function ResetPassword() {
                 ></input>
                 </form>
           </div>
-        )
-        : (<h1>404 not found</h1>)}
+        
+        }
     </div>
   )
 }

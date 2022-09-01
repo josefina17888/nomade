@@ -10,7 +10,7 @@ export default function Status() {
     const dispatch = useDispatch();
 
     //trae info de la reserva desde el localStorage
-    const bookingInfo = localStorage.getItem("bookingInfo");
+    const bookingInfo = localStorage.getItem("booking");
     const booking = JSON.parse(bookingInfo);
     console.log(booking)
     const checkIn = new Date(booking.checkIn).toLocaleDateString()
@@ -26,10 +26,6 @@ export default function Status() {
     const realStatus1 = status2[3].split("=")
     const realStatus = realStatus1[1]
     
-    // if(realStatus === "approved"){
-    //     dispatch(createNewBooking())
-    // }
-
     //trae los detalles del alojamiento reservado
     useEffect(() => {
         dispatch(getDetail(lodgingId));
@@ -43,6 +39,11 @@ export default function Status() {
       const picture1 = obj["0"];
       const city = lodging.city;
       const country = lodging.country;
+
+    //DESPACHO ACCION DE RESERVA
+    if(realStatus === "approved"){
+        dispatch(createNewBooking(booking))
+    }
 
 return (
 <div className="_16grqhk">
@@ -69,5 +70,6 @@ return (
         </div>
     </div>
 </div>
+
 )
 }

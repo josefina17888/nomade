@@ -4,30 +4,55 @@ import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch, useSelector} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
-import {getGuest} from '../../Redux/Actions'
+import {getGuestByEmail, getHostByDni} from '../../Redux/Actions'
+import axios from 'axios';
+import { TbLetterC } from 'react-icons/tb';
 
 export default function FormHost() {
   const dispatch = useDispatch()
 
   let guestId = localStorage.getItem("userInfo")
   guestId = JSON.parse(guestId).email
+  let hostfoto= useSelector((state)=>state.host)
+  
   const [input,setInput] = useState({
     dni: '',
     hostDniPicture:'',
 })
-const guestInfo = useSelector((state)=>state.guest)
+const guestInfo = useSelector((state)=>state.duplicate)
+console.log(guestId, "guestId")
+//-------------
+const getUser = async () => {
+  try {
+    const userData = await axios.get(`/api/guest/${guestId}`)
+    console.log(userData.data["0"], "userData")
+    return userData
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+//----------------
 useEffect(() => {
-  dispatch(getGuest(guestId.email))
+  dispatch(getGuestByEmail(guestId))
+  dispatch(getHostByDni(222))
+  getUser()
   
 },[dispatch])
-console.log(guestInfo, "guestInfo")
+
+
+
 
 let tieneDni=true
 for (var i in guestInfo[0]){
-  if(guestInfo[0].dni !== "") {
+  if(guestInfo[0].dni !== "" ) {
     tieneDni = false
   }
-}
+  // let hostFoto = getHostByDni(guestInfo[0].dni)
+  //  console.log("hostFoto")
+ }
 
 function handleDni(e){
   setInput({
@@ -44,18 +69,11 @@ function handlePhoto(e){
   })
 }
 
-// function handleSubmit(e){
-//   e.preventDefault()
-//   history.push('/form')
-//   alert("host creado")
-//  }
-
-
   return (
     <div className={estilos.formulario}>
     { tieneDni ?
-    <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
-    {/* <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> */}
+    // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
+    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
         <label>DNI:</label>
         <input 
         type="number" 
@@ -75,8 +93,8 @@ function handlePhoto(e){
         <button type='submit'>Registrarme</button>
       </form>
         :
-    <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
-    {/* <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> */}
+    // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
+    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
 
     <label>Foto:</label>
     <input 

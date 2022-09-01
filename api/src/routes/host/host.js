@@ -20,9 +20,6 @@ cloudinary.config({
 
 /// postea el host 
 
-
-
-
 router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
   const filename = req.file
@@ -37,14 +34,26 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     await myHost.save()
 
     let hostId = myHost._id
-        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
-        // res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
+        // res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {
         res.status(400).send('no se pudo guardar el Host')
         console.log(error)
     }
+});
+
+//Filtra por dni
+router.get("/:dni", async (req, res) => {
+  const dniSearch = req.params.dni;
+  try {
+      Host.find({ dni: dniSearch }, (err, dni) => {
+        res.send(dni);
+      });
+  } catch (err) {
+    res.json(err);
+  }
 });
 
 //trae todos los host con la info completa de guest(funciona)//

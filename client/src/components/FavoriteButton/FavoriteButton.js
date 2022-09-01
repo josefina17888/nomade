@@ -48,12 +48,13 @@ if(!props.guestInfo){
   var stateIds = stateLodgings.map((e) => e._id);
 
 
-  // if (favorites !== undefined) {
-  //   var favoritesId = favorites.map((e) => e.lodgingId);
-  // }
 
-  // var isfaved = favoritesId.some((favid) => favid === props.id);
-}
+  if (favorites[0] !== undefined) {
+    var favoritesId = favorites.map((e) => e.lodgingId);
+    var isfaved = favoritesId.some((favid) => favid === props.id);}
+  }
+
+
 
   // async function handleClick(e) {
   //   if (isfaved) {
