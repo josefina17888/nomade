@@ -43,10 +43,25 @@ router.patch("/guestadmin/:guestId",upload.single(), async (req, res) => {
             }
             else{
                 console.log("Updated User : ", docs);
-                
+                res.send("actualizado con exito")
             }
         });
        
         })
+
+        router.patch("/guestadminfalse/:guestId",upload.single(), async (req, res) => {
+
+            Guest.findByIdAndUpdate(req.params.guestId, { isAdmin: false },
+                                        function (err, docs) {
+                if (err){
+                    console.log(err)
+                    res.status(400).send("no se pudo actualizar el usuario");
+                }
+                else{
+                    console.log("Updated User : ", docs);
+                    res.send("actualizado con exito")
+                }
+            });
+            })
 
 module.exports = router;

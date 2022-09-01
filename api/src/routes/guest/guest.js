@@ -41,13 +41,13 @@ router.post("/", upload.single("picture") ,async (req, res) => {
         token: generateToken(newGuest._id)
       })
       token.save()
-      // const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
-      const url = `https://nomade-henry.herokuapp.com/api/guest/${newGuest._id}/verify/${token.token}`;
+      const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
+      // const url = `https://nomade-henry.herokuapp.com/api/guest/${newGuest._id}/verify/${token.token}`;
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
-      // res.status(201).redirect("http://localhost:3000/login")
-      res.status(201).redirect("https://nomade-khaki.vercel.app/login")
+      res.status(201).redirect("http://localhost:3000/login")
+      // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
       catch (error){
           res.status(404).send(error)
