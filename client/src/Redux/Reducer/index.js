@@ -51,7 +51,6 @@ function rootReducer(state = initialState, action) {
 
     case "ORDER_BY_RATING":
     if(count.countRating%2 == 0){
-      console.log(action.payload)
       const allLodgingsReviewsMap = state.allLodgingsReviews
       
         .map((e) => {
@@ -127,7 +126,6 @@ function rootReducer(state = initialState, action) {
     case "FILTER_BY_PETS":
       const filtering = state.lodgings;
       const pets = filtering.filter((e) => e.services.pets === true);
-      console.log(pets);
       if(count.countPets%2 === 0)
       {
         count.countPets++
@@ -245,21 +243,18 @@ function rootReducer(state = initialState, action) {
       };
 
     case "ADD_FAVORITE":
-      console.log("reducer", action.payload);
       return {
         ...state,
         userFavorites: [...state.userFavorites, action.payload],
       };
 
     case "GET_BOOKING_LODGING_ID":
-      console.log(action.payload, "SOY ACTION PAYLOAD REDUCER");
       return {
         ...state,
         bookings: action.payload,
       };
 
     case "DELETE_FAVORITE":
-      console.log(action.payload, "soy action");
 
       return {
         ...state,
