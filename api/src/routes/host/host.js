@@ -75,6 +75,19 @@ router.get("/all", async (req, res) => {
     })
 
 
+    // //BUSCAR UN HOST
+    // router.get("/:idHost", async (req, res) => {
+    //   try {
+    //     const host = await Host.findOne({_id: req.params.idGuest})
+    //     if(!host) return(400).send({message:"Could not find host"});
+    //     res.status(200).send(host)
+    //   }
+    //   catch(error) {
+    //     res.status(404).send(error)
+    //   }
+    
+    // })
+
   module.exports = router;
 
 

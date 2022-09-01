@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getDetail } from "../../Redux/Actions/index";
+import { getDetail, getGuestByEmail } from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
@@ -26,12 +26,15 @@ import {
   MdSecurity,
 } from "react-icons/md";
 import { FaSwimmingPool } from "react-icons/fa";
+import ConditionalReview from "./ConditionalReview/ConditionalReview";
 
 export default function CardDetail(props) {
   const dispatch = useDispatch();
   const lodgingId = props.match.params._id;
 
   let guestId = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  let userEmail = userInfo.email;
 
   if (!guestId) {
   } else {
@@ -40,6 +43,7 @@ export default function CardDetail(props) {
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
+    dispatch(getGuestByEmail(userEmail))
     dispatch(lodgingReviews());
   }, [dispatch]);
 
@@ -150,15 +154,6 @@ export default function CardDetail(props) {
                 <h3 className={styles.titles}>Servicios Incluidos</h3>
                 <hr className={styles.hr}></hr>
 
-                {/* <div>
-            {
-              lodgingServices.map((e) => {
-                return(
-                  <p className={styles.p1}>{e}</p>
-                )
-              })
-            }
-          </div> */}
                 <div className={styles.flexcontainer2}>
                   <div className={styles.flexcontainer4}>
                     <div>
@@ -362,16 +357,8 @@ export default function CardDetail(props) {
         
           <button className={styles.button}><Link className={styles.link} to="/">Volver</Link></button>
         
-        <Link
-          to={
-            userToken
-              ? `/lodgingreview/${userToken}/${props.match.params._id}`
-              : "/login"
-          }
-          className="nav-link py-2 px-0 px-lg-2"
-        >
-          <button className={styles.button}>Califica este hospedaje!</button>
-        </Link>
+          <ConditionalReview lodId={lodgingId} email={userEmail} userToken1={userToken} />
+
         <Link
           to={
             userToken

@@ -139,6 +139,23 @@ export function getGuestByEmail(email){
   }
 }
 
+//Filtra el host
+export function getHost(hostId){
+  return async function(dispatch){
+    try{
+      let json= await axios.get("/api/host/" + hostId)
+      return dispatch({
+        type: 'GET_HOST',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 // Trae todos los Guests
 export function allGuests(){
   return async function(dispatch){
@@ -281,6 +298,22 @@ export function setDataPostBooking(payload){
     payload
   }
 }
+
+//GET BOOKING BY GUEST ID
+export function getBookingByGuest (guest){
+  return async function (dispatch){
+      try{
+          const res = await axios.get("/api/booking/" + guest)
+          return dispatch({
+              type: "BOOKING_BY_GUEST",
+              payload: res.data
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+}
+
 
 export function payBooking(payload) {
   return async function (dispatch) {
