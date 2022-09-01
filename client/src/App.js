@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter, Switch, Router } from 'react-router-dom'; 
+import { Route, BrowserRouter, Switch, Navigate, Outlet, Redirect } from 'react-router-dom'; 
 import GoogleMaps from './components/GoogleMaps/GoogleMaps.js';
 import Home from './components/Home/Home.js';
 import LoginUser from './components/LoginUser/LoginUser.jsx';
@@ -22,10 +22,10 @@ import Booking from './components/Booking/Booking'
 import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
-import { useSelector } from 'react-redux';
 
 function App() {
-  /* const user = useSelector(state=> state.demoUser) */
+  const guestInfo = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestInfo);
   return (
    <div>
       <BrowserRouter>
@@ -44,8 +44,11 @@ function App() {
           <Route path='/:email/form' component={FormHost}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          <Route exact path='/booking/:_id' component={Booking}/> 
-          {/* <Route exact path='/booking/:_id'>  {user ? <LoginUser /> : <Booking />} </Route> */}
+          {
+            user && <Route exact path='/booking/:_id'/> ?
+            <Route exact path='/booking/:_id' component={Booking}/>:
+            <Redirect to ="/login" component={LoginUser} />
+          }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
