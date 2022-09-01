@@ -5,6 +5,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
 import { postGuest, postLodging, getCountry} from "../../Redux/Actions";
 import validate from "./validation";
+import NavBar from "../NavBar/NavBar";
 
 
 export default function FormLodging() {
@@ -105,10 +106,10 @@ setErrors(validate({
 }
 let hostId = params.hostId
   return (
-
+<div>
+      <NavBar/>
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
-
       <form  encType='multipart/form-data' action={`http://localhost:3001/api/lodging/${hostId}`}  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
@@ -270,6 +271,7 @@ let hostId = params.hostId
      </div>
      }
   </form>
+    </div>
     </div>
   );
 }
