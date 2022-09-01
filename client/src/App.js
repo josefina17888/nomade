@@ -15,7 +15,7 @@ import ForgotPassword from './components/EmailVerify/ForgotPassword'
 import Favorites from './components/Favorites/Favorites' 
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
-import LodgingReview from './components/LodgingReview/LodgingReview'
+import LodgingReview from './components/LodgingReview/LodgingReview.js'
 import ResetPasswordLogIn from "./components/EmailVerify/ResetPasswordLogIn"
 /* import AdminDash from './components/Admin/AdminDash'; */
 import Booking from './components/Booking/Booking'
@@ -48,14 +48,14 @@ function App() {
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
           <Route path='/:email/form' component={FormHost}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
-          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route path='/lodgingreview/:userEmail/:lodgingId' component={LodgingReview}/>
           {
             user && <Route exact path='/booking/:_id'/> ?
             <Route exact path='/booking/:_id' component={Booking}/>:
             <Redirect exact to ="/login" component={LoginUser} />
           }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route exact path='/lodgingreview/:userEmail/:lodgingId' component={LodgingReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
           <Route path='/forgot-password/' component={ForgotPassword}/>

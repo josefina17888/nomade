@@ -19,7 +19,8 @@ const initialState = {
   lodgingsInitial:[],
   postBooking: {},
   demoUser: null,
-
+  host: {},
+  booking: [],
 };
 var count= {
   countRating : 0,
@@ -236,6 +237,12 @@ function rootReducer(state = initialState, action) {
         duplicate: action.payload,
       };
 
+    case "GET_HOST":
+      return {
+        ...state,
+        host: action.payload,
+        };
+
     case "GET_FAVORITES":
       return {
         ...state,
@@ -253,6 +260,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         bookings: action.payload,
       };
+
+    case "BOOKING_BY_GUEST":
+        return {
+          ...state,
+          booking: action.payload,
+        };
 
     case "DELETE_FAVORITE":
 
