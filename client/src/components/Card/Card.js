@@ -31,7 +31,6 @@ export default function Card({ city, country, guests, price, picture,visibility,
  var promedio = cuantos/iguales
  var arrpromedio =[]
  arrpromedio = arrpromedio.map(e=>e = promedio)
-console.log(visibility)
 
 
   return (

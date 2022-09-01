@@ -323,6 +323,21 @@ export function getFeedback(){
   }
 }
 
+//TRAE HOST POR ID GUEST (EMAIL)
+export function getHostByGuestId(payload){
+  return async function (dispatch){
+    try {
+      const res = await axios.post('/api/guest/find/host', payload)
+      return dispatch({
+        type: 'GET_HOST_BY_GUEST_ID',
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
   return{
