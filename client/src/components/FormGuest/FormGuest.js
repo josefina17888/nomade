@@ -42,8 +42,8 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
-      {/* <form action={"http://localhost:3001/api/guest/"}  method="POST" encType="multipart/form-data"> */}
-    <form action= {`https://nomade-henry.herokuapp.com/</div>/api/guest`}  method="POST" encType="multipart/form-data" >
+      <form action={"http://localhost:3001/api/guest/"}  method="POST" encType="multipart/form-data">
+    {/* <form action= {`https://nomade-henry.herokuapp.com/</div>/api/guest`}  method="POST" encType="multipart/form-data" > */}
       <h1 className={style.title}>Registrate!</h1>
       <div className={style.containerForm}>
         <input

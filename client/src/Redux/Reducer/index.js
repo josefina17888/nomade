@@ -319,9 +319,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         allLodgings: action.payload,
       };
-
-
-
+      case "HACER_ADMIN":
+        return {
+          ...state,
+          allGuests: action.payload,
+        };
+      case "DELETE_USER":
+        return {
+          ...state,
+          allGuests: action.payload,
+        };
+        case "SACAR_ADMIN":
+          return {
+            ...state,
+            allGuests: action.payload,
+          };
     default:
       return { ...state };
   }

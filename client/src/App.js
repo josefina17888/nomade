@@ -23,6 +23,10 @@ import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
 
+import adminUsers from './components/Admin/AdminUsers.jsx'
+import { useSelector } from 'react-redux';
+import adminLodgings from './components/Admin/adminLodgings.jsx'
+
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
   let user = JSON.parse(guestInfo);
@@ -59,7 +63,8 @@ function App() {
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
-          
+          <Route path= '/admin/users' component={adminUsers}/>
+          <Route path= '/admin/lodgings' component={adminLodgings}/>
         </Switch>
       </BrowserRouter>
    </div>

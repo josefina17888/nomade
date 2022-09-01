@@ -338,6 +338,52 @@ export function deleteLodging(payload){
     }
   }
 }
+export function deleteUser(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestvisibility/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_USER",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function hacerAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadmin/" + payload)
+      console.log(res)
+      return payload({
+        type: "HACER_ADMIN",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function sacarAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadminfalse/" + payload)
+      console.log(res)
+      return payload({
+        type: "SACAR_ADMIN",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
