@@ -30,7 +30,8 @@ export default function Booking(props) {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
   const lodging = useSelector((state) => state.detail);
-  console.log(lodging)
+  const services= lodging.services
+  console.log(services, 'LODGING')
 
   //DECLARATION CONST FOR USE DATA
   const unavailableDates = availibity.map((e) =>
@@ -41,6 +42,7 @@ export default function Booking(props) {
     const bookingInfo = localStorage.getItem("bookingInfo");
     var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
     var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
+    var check = JSON.parse(bookingInfo).pets
     var totalGuest = JSON.parse(bookingInfo).guests;
   
   //PARSE INFO LOCAL STORAGE USER INFO
@@ -50,13 +52,11 @@ export default function Booking(props) {
   
   //GET RANGES OF DATES
     const alldates = getDatesInRange(checkIn, checkOut);
+    console.log(alldates, checkIn, checkOut, 'ALL DATES')
   
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
-    const isFound = unavailableDatesMap.some((date) =>
-      alldates.includes(new Date(date).toDateString())
-    );
 
   //LODGING DETAIL
   const costNight = lodging.price;
@@ -67,6 +67,7 @@ export default function Booking(props) {
   const city = lodging.city;
   const country = lodging.country;
 
+  //STATE BOOKING FINAL
   const [input, setInput] = useState({
     checkIn: checkIn,
     checkOut: checkOut,
@@ -76,14 +77,31 @@ export default function Booking(props) {
     email: userEmail,
     lodgingId: lodgingId,
     costNight: lodging.price,
+    pets: check
   });
-  console.log(input)
+  console.log(input, 'SOY INPUT')
 
   //DATA JOSE
   const total = costNight * input.night;
 
+  //GET Q PETS
+  const lodgingServices = []
+  for (const property in services) {
+    if (services[property] === true) {
+      lodgingServices.push(property);
+    }
+  }
+  const pets = lodgingServices.filter(e=>e=== 'pets')
+
+  function handleCheckBox(e) {
+    setInput({ ...input, pets: e.target.checked });
+  }
+
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
+    const isFound = unavailableDatesMap.some((date) =>
+      alldates.includes(new Date(date).toDateString())
+    );
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") : 
     dispatch(payBooking(input));
@@ -169,14 +187,14 @@ export default function Booking(props) {
               <span>Total </span>
               <input
                 type="number"
-                name="adults"
-                value={input.guestAdults}
                 defaultValue={totalGuest}
+                min={1}
+                max={lodging.guests}
               ></input>
             </div>
             <div className={s.selection}>
               <span>Mascotas </span>
-              <input type="checkbox" name="pets" value={input.pets}></input>
+              <input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
             </div>
           </div>
           <div className={s.card}>

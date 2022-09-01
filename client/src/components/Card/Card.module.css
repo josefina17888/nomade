@@ -35,6 +35,9 @@
   
 
 } 
+.nover{
+  display: none;
+}
 
 .guestsIcon{
   font-size:1.5em;
