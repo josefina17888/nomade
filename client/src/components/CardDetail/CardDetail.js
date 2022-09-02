@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link,useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import {getGuests , getDetail, deleteLodging, getGuestByEmail} from "../../Redux/Actions/index";
+import {getGuests , getDetail, getGuestByEmail, deleteLodging} from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
@@ -33,8 +33,7 @@ export default function CardDetail(props) {
   const lodgingId = props.match.params._id;
   const history = useHistory()
   let guestId = localStorage.getItem("userInfo");
-  /* const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  let userEmail = userInfo.email; */
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   if (!guestId) {
   } else {
