@@ -6,11 +6,39 @@ const Guest = require("../../models/Guest");
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 
+
 //NUEVA CONVERSACION
 
-router.post("/", async (req, res) => {
-  let senderEmail= req.body.senderEmail
-  let receiverEmail= req.body.receiverEmail
+router.post("/:senderId/:receiverId", async (req, res) => {
+
+  const filtered= await Conversation.find({members: [req.params.senderId, req.params.receiverId]})
+  console.log("filtered",filtered)
+  if (!filtered.length){
+    try{
+      const newConversation = await Conversation.create({
+        members: [req.params.senderId, req.params.receiverId]})
+        console.log("NEW",newConversation)
+        res.send(newConversation)
+
+    }catch(err){
+      res.status(500).json(err);
+    }
+  }else{
+    res.status(500).json("err");
+  }
+  
+
+
+  /* try {
+    await newConversation.save(); 
+    res.status(200).json(newConversation);
+    console.log("saved",newConversation)
+  } catch (err) {
+    res.status(500).json(err);
+  } */
+});
+
+/* router.post("/", async (req, res) => {
   let sender= await Guest.findOne({ email: senderEmail })
   let senderId= sender._id
   let receiver= await Guest.findOne({ email: receiverEmail })
@@ -25,7 +53,7 @@ router.post("/", async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-  });
+  }); */
 
 //GET CONVERSACION DE USUARIO
 

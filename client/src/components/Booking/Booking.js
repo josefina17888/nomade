@@ -14,7 +14,6 @@ import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
 
-import { DateRange } from "react-date-range";
 
 export default function Booking(props) {
   const dispatch = useDispatch();
@@ -45,7 +44,6 @@ export default function Booking(props) {
   }, [dispatch]);
   const lodging = useSelector((state) => state.detail);
   const services= lodging.services
-  console.log(services, 'LODGING')
 
   //DECLARATION CONST FOR USE DATA
   const unavailableDates = availibity.map((e) =>
@@ -90,8 +88,9 @@ export default function Booking(props) {
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
-    costNight: costNight,
-    pets: check
+    costNight: lodging.price,
+    pets: check,
+    hostId: lodging.hostId
   });
   console.log(input, 'SOY INPUT')
 
@@ -254,4 +253,3 @@ export default function Booking(props) {
     </div>
   );
 }
-

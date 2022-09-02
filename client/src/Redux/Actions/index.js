@@ -1,6 +1,9 @@
 
 import axios from "axios";
 
+
+
+
 export const GET_BY_CITY = " GET_BY_CITY";
 
 export function getLodgings (lodgingId){
@@ -106,7 +109,6 @@ export function postGuest(payload){
 }
 
 
-
 //Trae un guest por Id
 export function getGuest(payload){
   return async function (dispatch){
@@ -126,7 +128,7 @@ export function getGuest(payload){
 export function getGuestByEmail(email){
   return async function(dispatch){
     try{
-      let json= await axios.get(`/api/guest?email=${email}`)
+      let json= await axios.get(`/api/guest/${email}`)
       return dispatch({
         type: 'GET_GUEST_BY_EMAIL',
         payload: json.data
@@ -170,6 +172,24 @@ export function getGuests(){
     }
   }
 }
+
+// Trae un Host por dni
+export function getHostByDni(dni){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/guest/:${dni}`)
+      return dispatch({
+        type: 'GET_HOST_BY_DNI',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 
 
   export function getDetail (lodgingId){
@@ -280,6 +300,7 @@ export function lodgingReviews(){
   }
 }
 
+
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
@@ -358,11 +379,19 @@ export function getFeedback(){
 
 //TRAE HOST POR ID GUEST (EMAIL)
 export function getHostByGuestId(payload){
+  console.log(payload, 'PAYLOAAAAAD')
   return async function (dispatch){
     try {
       const res = await axios.post('/api/guest/find/host', payload)
+      console.log(res.data, 'HOLA HOLA HOLA')
       return dispatch({
         type: 'GET_HOST_BY_GUEST_ID',
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }}}
+
 export function deleteLodging(payload){
   return async function(){
     try {
@@ -378,6 +407,7 @@ export function deleteLodging(payload){
     }
   }
 }
+
 export function deleteUser(payload){
   return async function(){
     try {
@@ -424,6 +454,43 @@ export function sacarAdmin(payload){
     }
   }
 }
+ export function getConversations(userEmail){
+  return async function(dispatch){
+  try {
+    let res = await axios.get(
+      "http://localhost:3001/api/conversation/conv/" + userEmail
+      );
+      console.log("conversations action", res)
+       return dispatch({
+        type: "GET_CONVERSATIONS",
+        payload: res.data
+      }) 
+    
+  } catch (err) {
+    console.log(err);
+  }
+  }}
+
+ export function newConversation(payload){
+  console.log("pay", payload)
+  return async function(dispatch){
+    try {
+      /* await axios.post(`/api/conversation/${guest}/${host}` ) */
+       return dispatch({
+        type: "NEW_CONVERSATION",
+
+      }) 
+    
+  } catch (err) {
+    console.log(err);
+  }
+  }}
+
+
+
+  
+
+
 
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){

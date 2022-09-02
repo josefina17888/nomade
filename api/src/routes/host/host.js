@@ -20,9 +20,6 @@ cloudinary.config({
 
 /// postea el host 
 
-
-
-
 router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
   const {cbu} = req.body
@@ -49,9 +46,21 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     }
 });
 
+//Filtra por dni
+router.get("/:dni", async (req, res) => {
+  const dniSearch = req.params.dni;
+  try {
+      Host.find({ dni: dniSearch }, (err, dni) => {
+        res.send(dni);
+      });
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 //trae todos los host con la info completa de guest(funciona)//
-router.get("/all", async (req, res) => { 
-  const host = await Host.find({}).populate({path:"guestId", model: "Guest"})
+router.get("/all/:hostId", async (req, res) => { 
+  const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
   res.send(host) 
  });
 

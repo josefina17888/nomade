@@ -258,6 +258,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case "GET_HOST_BY_GUEST_ID":
+      console.log(action.payload)
       return {
         ...state,
         hosts: action.payload
@@ -267,7 +268,6 @@ function rootReducer(state = initialState, action) {
           ...state,
           booking: action.payload,
         };
-
 
     case "DELETE_FAVORITE":
       return {
@@ -301,11 +301,7 @@ function rootReducer(state = initialState, action) {
         payment: action.payload,
       };
 
-    case "GET_FEEDBACK":
-      return {
-        ...state,
-        feedback: action.payload,
-      };
+    
 
     case "SET_DATA_POSTBOOKING":
       return {
@@ -328,6 +324,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
+    case 'GET_HOST_BY_DNI':
+      return {
+        ...state,
+        host: action.payload
+      }
+
       case "DELETE_LODGING":
       return {
         ...state,
@@ -348,6 +350,22 @@ function rootReducer(state = initialState, action) {
             ...state,
             allGuests: action.payload,
           };
+
+
+     /*  case "GET_USER": */
+        /* return {
+          ...state,
+          payment: action.payload,
+        }; */
+  
+
+       case "GET_CONVERSATIONS":
+        return {
+          ...state,
+          conversations: action.payload,
+        };
+ 
+
     default:
       return { ...state };
   }
