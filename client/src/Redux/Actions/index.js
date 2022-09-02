@@ -1,6 +1,9 @@
 
 import axios from "axios";
 
+
+
+
 export const GET_BY_CITY = " GET_BY_CITY";
 
 export function getLodgings (lodgingId){
@@ -263,6 +266,7 @@ export function lodgingReviews(){
   }
 }
 
+
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
@@ -327,7 +331,7 @@ export function getFeedback(){
   }
 }
 
-/* export function getConversations(userEmail){
+ export function getConversations(userEmail){
   return async function(dispatch){
   try {
     let res = await axios.get(
@@ -344,22 +348,24 @@ export function getFeedback(){
   }
   }}
 
-export function getUser(userEmail){
+ export function newConversation(payload){
+  console.log("pay", payload)
   return async function(dispatch){
-  try {
-    let userData = await axios(
-      "http://localhost:3001/api/conversation/users/" + userEmail
-    );
-      console.log("GET USER ACTIONS", userData)
-       /* return dispatch({
-        type: "GET_USER",
-        payload: res.data
-      })  */
- /*    
+    try {
+      /* await axios.post(`/api/conversation/${guest}/${host}` ) */
+       return dispatch({
+        type: "NEW_CONVERSATION",
+
+      }) 
+    
   } catch (err) {
     console.log(err);
   }
-  }} */ 
+  }}
+
+
+
+  
 
 
 

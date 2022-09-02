@@ -17,19 +17,22 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [guest, setGuest] = useState("")
-  const [host, setHost] = useState("")
+  const [guest, setGuest] = useState("");
+  const [host, setHost] = useState("");
   const scrollRef = useRef();
   const socket = useRef();
   const bookingInfo = localStorage.getItem("booking");
   const booking = JSON.parse(bookingInfo);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let userEmail = userInfo.email;
-  console.log("CONVERSATIONS", conversations)
 
-/*   let prueba= new Set(...membrs.map(e => e));
+  console.log("CONVERSATIONS", conversations);
+  console.log("bookingInfo", booking);
+
+  console.log("host", host);
+
+  /*   let prueba= new Set(...membrs.map(e => e));
   console.log("prueba",prueba)  */
-
 
   //conecta con el server y trae los mensajes
   useEffect(() => {
@@ -48,36 +51,32 @@ export default function Chat() {
 
   const getConversations = async () => {
     try {
-      let res = await axios.get(
-        "/api/conversation/conv/" + userEmail
-      );
+      let res = await axios.get("/api/conversation/conv/" + userEmail);
       setConversations(res.data);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-      
-      getConversations();
-    }, [userEmail]);
+    getConversations();
+  }, [userEmail]);
 
-
-//crea la nueva conversacion en la db
-  const newConversation = async ()=>{
-    let prueba= (conversations.filter(c=>(c.members.includes(guest)&& c.members.includes(host))))
-    console.log("prueba",prueba)
-    if(!prueba.length){
-      let conv = await axios.post(`/api/conversation/${guest}/${host}` )
-      }
+  //crea la nueva conversacion en la db
+  const newConversation = async () => {
+    let prueba = conversations.filter(
+      (c) => c.members.includes(guest) && c.members.includes(host)
+    );
+    console.log("prueba", prueba);
+    if (!prueba.length) {
+      let conv = await axios.post(`/api/conversation/${guest}/${host}`);
     }
-   
-  useEffect(()=>{
- 
-  newConversation()
-  },[conversations])
+  };
 
+  useEffect(() => {
+    newConversation();
+  }, [conversations]);
 
-//trae la info de current User 
+  //trae la info de current User
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -93,33 +92,36 @@ export default function Chat() {
     getUser();
   }, [userEmail]);
 
-  //trae el guestId del host para gregarlo a la conversacion 
-  const hostId = lodging.hostId;
+  //trae el guestId del host para gregarlo a la conversacion
+  const hostId = booking.hostId;
+  console.log("ID", hostId);
   useEffect(() => {
     const getHostGuestId = async () => {
       try {
+        console.log("aqui");
         let res = await axios.get("/api/host/all/" + hostId);
-        let hostGuestId = res.data[1].guestId._id;
-       setHost(hostGuestId)
+        console.log("response", res.data);
+        let hostGuestId = res.data[0].guestId._id;
+        console.log("response222", hostGuestId);
+
+        setHost(hostGuestId);
       } catch (err) {
         console.log(err);
       }
     };
     getHostGuestId();
   }, [host]);
- //trae la info del guest para poder agregarlo a la conversacion
+  //trae la info del guest para poder agregarlo a la conversacion
 
-
- 
-  let guestEmail = booking.email; 
-  console.log("guest", guestEmail) 
+  let guestEmail = booking.email;
+  console.log("guest", guestEmail);
   useEffect(() => {
-    console.log("soy useeffect")
+    console.log("soy useeffect");
     const getGuestInfo = async () => {
       try {
         let res = await axios.get("/api/guest/" + guestEmail);
         let guestId = res.data[0]._id;
-        setGuest(guestId)
+        setGuest(guestId);
       } catch (err) {
         console.log(err);
       }
@@ -127,37 +129,30 @@ export default function Chat() {
     getGuestInfo();
   }, [guest]);
 
-
-//mensajes entrantes
-  useEffect(()=>{
-    if(arrivalMessage!==null){
-      if(Object.keys(currentChat).length !== 0){
-        if(currentChat.members.includes(arrivalMessage.sender)){
-          setMessages(prev=>[...prev, arrivalMessage ])
+  //mensajes entrantes
+  useEffect(() => {
+    if (arrivalMessage !== null) {
+      if (Object.keys(currentChat).length !== 0) {
+        if (currentChat.members.includes(arrivalMessage.sender)) {
+          setMessages((prev) => [...prev, arrivalMessage]);
         }
       }
-    } 
-  },[arrivalMessage, currentChat])
+    }
+  }, [arrivalMessage, currentChat]);
 
   //envia al back el usuario y trae los dos usuarios
   useEffect(() => {
-    if (user._id !== null && user!==[]) {
+    if (user._id !== null && user !== []) {
       socket.current.emit("addUser", user._id);
       socket.current.on("getUsers", (users) => {
-        console.log("users que viene del back",users);
+        console.log("users que viene del back", users);
       });
     }
   }, [user]);
 
- 
-  
-// trae las conversaciones
-
-
-
-// trae todos los mensajes
+  // trae todos los mensajes
   useEffect(() => {
-    if(currentChat._id){
+    if (currentChat._id) {
       const getMessages = async () => {
         let conversationId = currentChat._id;
         try {
@@ -172,7 +167,6 @@ export default function Chat() {
       };
       getMessages();
     }
-    
   }, [currentChat]);
 
   /* useEffect(() => {
@@ -189,6 +183,7 @@ export default function Chat() {
       text: newMessage,
       conversationId: currentChat._id,
     };
+    console.log("mensaje", message);
 
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
@@ -200,11 +195,13 @@ export default function Chat() {
     });
 
     try {
+      console.log("AQUI");
       const res = await axios.post(
-        "http://localhost:3001/api/message",
+        "/api/message",
         message
       );
-      setMessages([...messages, res.data]);
+      console.log("el mensaje", res.data);
+      /*  setMessages([...messages, res.data]); */
     } catch (err) {
       console.log(err);
     }

@@ -81,6 +81,7 @@ io.on("connection", (socket) => {
       io.emit("getUsers", users);
       console.log("soy users", users);
     });
+    console.log("socket", socket.id);
   }
   
 
@@ -89,14 +90,13 @@ io.on("connection", (socket) => {
     //busca al receiver y envia un mensaje a este usuario
     const user = getUser(receiverId);
     console.log("reciever", receiverId)
-console.log("aqui",user.socketId)
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,
         text
        });
     
-   
+      
   });
 
   //cuando se desconecta
