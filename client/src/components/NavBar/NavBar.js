@@ -42,6 +42,7 @@ export default function NavBar(props) {
 
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
+    console.log(validateHost, 'VALIDATE HOST')
     e.preventDefault();
     if(validateHost[0] && userToken){
       const hostObject = Object.values(validateHost[0])

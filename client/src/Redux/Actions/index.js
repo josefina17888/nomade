@@ -386,7 +386,7 @@ export function getHostByGuestId(payload){
       console.log(res.data, 'HOLA HOLA HOLA')
       return dispatch({
         type: 'GET_HOST_BY_GUEST_ID',
-        payload
+        payload: res.data
       })
     } catch (error) {
       console.log(error)
