@@ -48,7 +48,6 @@ export default function Card({ city, country, guests, price, picture,visibility,
  console.log(promedio)
  var arrpromedio =[]
  arrpromedio = arrpromedio.map(e=>e = promedio)
- 
 const allGuests = useSelector((state) => state.allGuests);
 let arrFilter = allGuests.filter(e => e.email === userEmail)
   return (

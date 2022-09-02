@@ -356,6 +356,13 @@ export function getFeedback(){
   }
 }
 
+//TRAE HOST POR ID GUEST (EMAIL)
+export function getHostByGuestId(payload){
+  return async function (dispatch){
+    try {
+      const res = await axios.post('/api/guest/find/host', payload)
+      return dispatch({
+        type: 'GET_HOST_BY_GUEST_ID',
 export function deleteLodging(payload){
   return async function(){
     try {
