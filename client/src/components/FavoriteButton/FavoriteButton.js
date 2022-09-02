@@ -55,16 +55,15 @@ if(!props.guestInfo){
   }
 
 
-
-  // async function handleClick(e) {
-  //   if (isfaved) {
-  //     await dispatch(deleteFavorite(favData));
-  //     dispatch(getFavorites(favData));
-  //   } else {
-  //     await dispatch(addFavorite(favData));
-  //     dispatch(getFavorites(favData));
-  //   }
-  // }
+  async function handleClick(e) {
+    if (isfaved) {
+      await dispatch(deleteFavorite(favData));
+      dispatch(getFavorites(favData));
+    } else {
+      await dispatch(addFavorite(favData));
+      dispatch(getFavorites(favData));
+    }
+  }
   return (
     <div className={s.favContainer}>
       {/* <button onClick={handleClick} className={s.favButtonF}>

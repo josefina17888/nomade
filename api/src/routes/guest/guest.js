@@ -47,7 +47,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
-       res.status(201).redirect("http://localhost:3000/login")
+
+      res.status(201).redirect("http://localhost:3000/login")
       // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
       catch (error){

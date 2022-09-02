@@ -140,7 +140,7 @@ export function getGuestByEmail(email){
 }
 
 // Trae todos los Guests
-export function allGuests(){
+export function getGuests(){
   return async function(dispatch){
     try {
       const res = await axios.get("/api/guest")
@@ -230,7 +230,6 @@ export function addFavorite(payload){
     }
   } 
   export function deleteFavorite(payload){
-    console.log(payload, "soy delete")
     return async function(dispatch){
       try{
       let response = await axios.post('/api/favorite/delete', payload)
@@ -309,7 +308,6 @@ export function lodgingReviews(){
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
-    console.log(payload);
     var json = await axios.post(
       "/api/booking",
       payload
@@ -328,7 +326,6 @@ export function payBooking(payload) {
   return async function (dispatch) {
     try{
     const res = await axios.post("/api/payment/", payload)
-    console.log(res)
     return dispatch({
       type: "PAY_BOOKING",
       payload: res.data
@@ -339,11 +336,9 @@ export function payBooking(payload) {
 }
 
 export function getBookingByLodgingId(payload){
-  console.log(payload, 'PAYLOAD')
   return async function(dispatch){
     try{
     var response = await axios.post('/api/booking/booking', payload)
-    console.log(response.data, 'SOY RESPONSE')
       return dispatch({
         type: "GET_BOOKING_LODGING_ID",
         payload: response.data
@@ -362,6 +357,68 @@ export function getFeedback(){
       console.log(res)
       return dispatch({
         type: "GET_FEEDBACK",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function deleteLodging(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_LODGING",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function deleteUser(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestvisibility/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_USER",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function hacerAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadmin/" + payload)
+      console.log(res)
+      return payload({
+        type: "HACER_ADMIN",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function sacarAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadminfalse/" + payload)
+      console.log(res)
+      return payload({
+        type: "SACAR_ADMIN",
         payload: res.data
       })
     } catch (error) {
