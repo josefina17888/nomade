@@ -18,6 +18,8 @@ const initialState = {
   rating: [],
   lodgingsInitial: [],
   postBooking: {},
+  demoUser: null,
+  allcomplaints: [],
   hosts: [],
   host: {},
   booking: []
@@ -29,6 +31,7 @@ var count = {
   countCasa: 0,
   countCaro: 0,
   countBarato: 0,
+
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -352,6 +355,17 @@ function rootReducer(state = initialState, action) {
           };
 
 
+        case "GET_ALL_COMPLAINTS":
+          return {
+            ...state,
+            allcomplaints: action.payload,
+          };
+          case "DELETE_COMPLAINT":
+            return {
+              ...state,
+              allcomplaints: action.payload,
+            };
+
      /*  case "GET_USER": */
         /* return {
           ...state,
@@ -365,7 +379,6 @@ function rootReducer(state = initialState, action) {
           conversations: action.payload,
         };
  
-
     default:
       return { ...state };
   }

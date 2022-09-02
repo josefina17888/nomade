@@ -22,6 +22,11 @@ import Booking from './components/Booking/Booking'
 import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
+import adminUsers from './components/Admin/AdminUsers.jsx'
+import { useSelector } from 'react-redux';
+import adminLodgings from './components/Admin/adminLodgings.jsx'
+import adminComplaints from './components/Admin/adminComplaints.jsx'
+import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
 
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
@@ -70,7 +75,10 @@ function App() {
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
-          
+          <Route path= '/admin/users' component={adminUsers}/>
+          <Route path= '/admin/lodgings' component={adminLodgings}/>
+          <Route path= '/admin/complaints' component={adminComplaints}/>
+          <Route path= '/admin/estadisticas' component={adminEstadisticas}/>
         </Switch>
       </BrowserRouter>
    </div>

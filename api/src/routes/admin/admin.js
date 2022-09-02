@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require('../../../libs/storage.js');
 const Lodging = require("../../models/Lodging");
+const complaint = require("../../models/complaint");
 const mongoose = require ("mongoose")
 const Guest = require("../../models/Guest");
 router.patch("/:LodgingId",upload.single(), async (req, res) => {
@@ -52,6 +53,26 @@ router.patch("/guestadmin/:guestId",upload.single(), async (req, res) => {
         router.patch("/guestadminfalse/:guestId",upload.single(), async (req, res) => {
 
             Guest.findByIdAndUpdate(req.params.guestId, { isAdmin: false },
+                                        function (err, docs) {
+                if (err){
+                    console.log(err)
+                    res.status(400).send("no se pudo actualizar el usuario");
+                }
+                else{
+                    console.log("Updated User : ", docs);
+                    res.send("actualizado con exito")
+                }
+            });
+            })
+
+        router.get("/getcomplaint", async (req, res) => {
+            complaint.find({}, (error,docs)=>{
+            res.send(docs)
+        })
+        })
+        router.patch("/complaintfalse/:complaintId",upload.single(), async (req, res) => {
+
+            complaint.findByIdAndUpdate(req.params.complaintId, { Visibility: false },
                                         function (err, docs) {
                 if (err){
                     console.log(err)

@@ -492,6 +492,36 @@ export function sacarAdmin(payload){
 
 
 
+export function getComplaints(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/admin/getcomplaint")
+      return dispatch({
+        type: "GET_ALL_COMPLAINTS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function deleteComplaint(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/complaintfalse/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_COMPLAINT",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
   return{
