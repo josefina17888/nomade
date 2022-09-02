@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   getDetail,
   createNewBooking,
@@ -26,6 +27,19 @@ export default function Booking(props) {
   console.log(lodgingId)
 
   //GET DETALLES DE LODGING
+  // const [lodging, setLodging] = useState("")
+
+  // useEffect(() => {
+  //   const getLodgingDetails = async () => {
+  //     try {
+  //       let data = await axios.get("/api/lodging/detail/" + lodgingId)
+  //       let lodgingDets = data.data;
+  //       setLodging(lodgingDets)
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   }}, [lodging])
+
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
@@ -76,7 +90,7 @@ export default function Booking(props) {
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
-    costNight: lodging.price,
+    costNight: costNight,
     pets: check
   });
   console.log(input, 'SOY INPUT')

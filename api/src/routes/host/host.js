@@ -25,6 +25,7 @@ cloudinary.config({
 
 router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
+  const {cbu} = req.body
   const filename = req.file
   const result = await cloudinary.v2.uploader.upload(req.file.path)
   console.log(result)
@@ -33,6 +34,7 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     const myHost = new Host()
     myHost.dni= req.body.dni
     myHost.hostDniPicture= result.url
+    myHost.cbu = req.body.cbu
     myHost.guestId = guest._id
     await myHost.save()
 
@@ -72,6 +74,19 @@ router.get("/all", async (req, res) => {
       }
     })
 
+
+    // //BUSCAR UN HOST
+    // router.get("/:idHost", async (req, res) => {
+    //   try {
+    //     const host = await Host.findOne({_id: req.params.idGuest})
+    //     if(!host) return(400).send({message:"Could not find host"});
+    //     res.status(200).send(host)
+    //   }
+    //   catch(error) {
+    //     res.status(404).send(error)
+    //   }
+    
+    // })
 
   module.exports = router;
 

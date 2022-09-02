@@ -28,8 +28,15 @@ router.post("/", async (req, res) => {
 });
 
 //trae las reservas de un guest
-router.get("/:guestId", async (req, res) => {
+router.get("/all/:guestId", async (req, res) => {
   Booking.find({ guestId: req.params.guestId }, (error, docs) => {
+    res.send(docs);
+  });
+});
+
+//trae las reservas de un lodging de un guest
+router.get("/:lodgingId/:guestId", async (req, res) => {
+  Booking.find({ lodgingId: req.params.lodgingId, guestId: req.params.guestId }, (error, docs) => {
     res.send(docs);
   });
 });

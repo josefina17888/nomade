@@ -7,7 +7,7 @@ const initialState = {
   userFavorites: [],
   favNumber: 0,
   guest: {},
-  allGuests: {},
+  allGuests: [],
   duplicate: [],
   allLodgingsReviews: [],
   rating: [],
@@ -18,8 +18,11 @@ const initialState = {
   rating: [],
   lodgingsInitial: [],
   postBooking: {},
-  hosts: []
+  hosts: [],
+  host: {},
+  booking: []
 };
+
 var count = {
   countRating: 0,
   countPets: 0,
@@ -230,6 +233,12 @@ function rootReducer(state = initialState, action) {
         duplicate: action.payload,
       };
 
+    case "GET_HOST":
+      return {
+        ...state,
+        host: action.payload,
+        };
+
     case "GET_FAVORITES":
       return {
         ...state,
@@ -253,6 +262,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         hosts: action.payload
       };
+    case "BOOKING_BY_GUEST":
+        return {
+          ...state,
+          booking: action.payload,
+        };
+
 
     case "DELETE_FAVORITE":
       return {
@@ -313,7 +328,26 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
-
+      case "DELETE_LODGING":
+      return {
+        ...state,
+        allLodgings: action.payload,
+      };
+      case "HACER_ADMIN":
+        return {
+          ...state,
+          allGuests: action.payload,
+        };
+      case "DELETE_USER":
+        return {
+          ...state,
+          allGuests: action.payload,
+        };
+        case "SACAR_ADMIN":
+          return {
+            ...state,
+            allGuests: action.payload,
+          };
     default:
       return { ...state };
   }

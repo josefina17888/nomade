@@ -15,13 +15,17 @@ import ForgotPassword from './components/EmailVerify/ForgotPassword'
 import Favorites from './components/Favorites/Favorites' 
 import Profile from './components/Profile/profile';
 import GuestReview from './components/GuestReview/GuestReview'
-import LodgingReview from './components/LodgingReview/LodgingReview'
+import LodgingReview from './components/LodgingReview/LodgingReview.js'
 import ResetPasswordLogIn from "./components/EmailVerify/ResetPasswordLogIn"
 /* import AdminDash from './components/Admin/AdminDash'; */
 import Booking from './components/Booking/Booking'
 import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
+
+import adminUsers from './components/Admin/AdminUsers.jsx'
+import { useSelector } from 'react-redux';
+import adminLodgings from './components/Admin/adminLodgings.jsx'
 
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
@@ -45,7 +49,7 @@ function App() {
           <Route path='/profile/:email' component={Profile}></Route>
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
-          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route path='/lodgingreview/:userEmail/:lodgingId' component={LodgingReview}/>
           {
             user?
             <Route exact path='/booking/:_id' component={Booking}/>:
@@ -62,7 +66,7 @@ function App() {
             <Redirect exact to ="/login" component={LoginUser} />
           }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route exact path='/lodgingreview/:userEmail/:lodgingId' component={LodgingReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
           <Route path='/forgot-password/' component={ForgotPassword}/>
@@ -70,7 +74,8 @@ function App() {
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
-          
+          <Route path= '/admin/users' component={adminUsers}/>
+          <Route path= '/admin/lodgings' component={adminLodgings}/>
         </Switch>
       </BrowserRouter>
    </div>

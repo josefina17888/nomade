@@ -139,8 +139,25 @@ export function getGuestByEmail(email){
   }
 }
 
+//Filtra el host
+export function getHost(hostId){
+  return async function(dispatch){
+    try{
+      let json= await axios.get("/api/host/" + hostId)
+      return dispatch({
+        type: 'GET_HOST',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 // Trae todos los Guests
-export function allGuests(){
+export function getGuests(){
   return async function(dispatch){
     try {
       const res = await axios.get("/api/guest")
@@ -280,6 +297,22 @@ export function setDataPostBooking(payload){
   }
 }
 
+//GET BOOKING BY GUEST ID
+export function getBookingByGuest (guest){
+  return async function (dispatch){
+      try{
+          const res = await axios.get("/api/booking/" + guest)
+          return dispatch({
+              type: "BOOKING_BY_GUEST",
+              payload: res.data
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+}
+
+
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
@@ -330,6 +363,60 @@ export function getHostByGuestId(payload){
       const res = await axios.post('/api/guest/find/host', payload)
       return dispatch({
         type: 'GET_HOST_BY_GUEST_ID',
+export function deleteLodging(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_LODGING",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function deleteUser(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestvisibility/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_USER",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function hacerAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadmin/" + payload)
+      console.log(res)
+      return payload({
+        type: "HACER_ADMIN",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function sacarAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadminfalse/" + payload)
+      console.log(res)
+      return payload({
+        type: "SACAR_ADMIN",
         payload: res.data
       })
     } catch (error) {

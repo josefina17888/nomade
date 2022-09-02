@@ -1,13 +1,79 @@
 import React from "react";
 import style from './profile.module.css'
+import axios from "axios";
+import {useState,useEffect} from 'react'
+import {useHistory, useParams} from 'react-router-dom'
+import{useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
+import { getGuestByEmail, getDetail } from "../../Redux/Actions";
 
 
 
 export default function Profile() {
-  let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId)
+const params = useParams()
+let guestData = localStorage.getItem("userInfo");
+let user = JSON.parse(guestData)
+
+//BUSCANDO EL GUEST CON EL EMAIL y LOS BOOKINGS POR GUEST ID y LOS LODGING IDS DE LAS BOOKINGS
+const [guest, setGuest] = useState("")
+const [booking, setBooking] = useState("")
+const [lodgingIds, setLodgingIds] = useState("")
+
+useEffect(() => {
+  const getGuestInfo = async () => {
+    try {
+
+      let email = params.email
+      console.log(email)
+
+      let res = await axios.get("/api/guest/" + email);
+      let guestId = res.data[0]._id;
+      setGuest(guestId)
+      console.log(guest)
+
+      try{
+      let response = await axios.get("/api/booking/all/" + guest);
+      let guestBooking = response.data
+      setBooking(guestBooking)
+      console.log(booking)
+      let lodgingsGot = []
+      await guestBooking.forEach((e) => {
+        let lodging = e.lodgingId
+        lodgingsGot.push(lodging)
+      })
+      let lodgingsUnique=[]
+      lodgingsGot.forEach((e)=>{
+      if(!lodgingsUnique.includes(e)){
+          lodgingsUnique.push(e)
+        }
+      })
+      setLodgingIds(lodgingsUnique)
+    }catch(err){console.log(err)}
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  getGuestInfo();
+}, [guest]);
+
+let lodgingDetails = []
+if (lodgingIds){
+const getDetail = async () => {
+  lodgingIds.forEach(async (e)=>{
+    try{
+    let data = await axios.get("/api/lodging/detail/" + e)
+    lodgingDetails.push(data.data)
+  }  catch(err){
+    console.log(err)
+  }
+})
+}
+getDetail();
+console.log(lodgingDetails)
+}
+
+
 
   return (
     <div>
@@ -52,6 +118,21 @@ export default function Profile() {
                 ) : (
                   ""
                 )}
+                <div>
+                  <h4>Reservas</h4>
+                  <div>
+                    {
+                      lodgingDetails ? lodgingDetails.map((e)=>
+                      <div key={e._id}>
+                      title= {e.title}
+                      </div>
+                      ) : 
+                      <div>
+                        Aún no tienes reservas para mostrar
+                      </div>
+                    }
+                  </div>
+                </div>
               </div>
               <div className={style.container_card_profile}>
                 <div className={style.card_profile}>
