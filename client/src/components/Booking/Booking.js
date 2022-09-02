@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   getDetail,
   createNewBooking,
@@ -13,7 +14,6 @@ import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
 
-import { DateRange } from "react-date-range";
 
 export default function Booking(props) {
   const dispatch = useDispatch();
@@ -26,11 +26,24 @@ export default function Booking(props) {
   console.log(lodgingId)
 
   //GET DETALLES DE LODGING
+  // const [lodging, setLodging] = useState("")
+
+  // useEffect(() => {
+  //   const getLodgingDetails = async () => {
+  //     try {
+  //       let data = await axios.get("/api/lodging/detail/" + lodgingId)
+  //       let lodgingDets = data.data;
+  //       setLodging(lodgingDets)
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   }}, [lodging])
+
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
   const lodging = useSelector((state) => state.detail);
-  console.log(lodging)
+  const services= lodging.services
 
   //DECLARATION CONST FOR USE DATA
   const unavailableDates = availibity.map((e) =>
@@ -41,6 +54,7 @@ export default function Booking(props) {
     const bookingInfo = localStorage.getItem("bookingInfo");
     var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
     var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
+    var check = JSON.parse(bookingInfo).pets
     var totalGuest = JSON.parse(bookingInfo).guests;
   
   //PARSE INFO LOCAL STORAGE USER INFO
@@ -50,13 +64,11 @@ export default function Booking(props) {
   
   //GET RANGES OF DATES
     const alldates = getDatesInRange(checkIn, checkOut);
+    console.log(alldates, checkIn, checkOut, 'ALL DATES')
   
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
-    const isFound = unavailableDatesMap.some((date) =>
-      alldates.includes(new Date(date).toDateString())
-    );
 
   //LODGING DETAIL
   const costNight = lodging.price;
@@ -67,6 +79,7 @@ export default function Booking(props) {
   const city = lodging.city;
   const country = lodging.country;
 
+  //STATE BOOKING FINAL
   const [input, setInput] = useState({
     checkIn: checkIn,
     checkOut: checkOut,
@@ -76,18 +89,39 @@ export default function Booking(props) {
     email: userEmail,
     lodgingId: lodgingId,
     costNight: lodging.price,
+    pets: check,
+    hostId: lodging.hostId
   });
-  console.log(input)
 
   //DATA JOSE
   const total = costNight * input.night;
 
+  //GET Q PETS
+  const lodgingServices = []
+  for (const property in services) {
+    if (services[property] === true) {
+      lodgingServices.push(property);
+    }
+  }
+  const pets = lodgingServices.filter(e=>e=== 'pets')
+
+  function handleCheckBox(e) {
+    setInput({ ...input, pets: e.target.checked });
+  }
+
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
+    const allDates = getDatesInRange(input.checkIn, input.checkOut);
+    setInput({...input,
+      night : allDates.length,
+      allDates: allDates
+    })
+    const isFound = unavailableDatesMap.some((date) =>
+      allDates.includes(new Date(date).toDateString())
+    );
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") : 
     dispatch(payBooking(input));
-    dispatch(setDataPostBooking(input));
   }
 
   //MERCADO PAGO
@@ -152,7 +186,8 @@ export default function Booking(props) {
                         setInput({
                           ...input,
                           checkOut: new Date(currentDate).toDateString(),
-                        })}
+                        })
+                      }
                       selectsStart
                       startDate={new Date(input.checkIn)}
                       endDate={new Date(input.checkOut)}
@@ -169,14 +204,14 @@ export default function Booking(props) {
               <span>Total </span>
               <input
                 type="number"
-                name="adults"
-                value={input.guestAdults}
                 defaultValue={totalGuest}
+                min={1}
+                max={lodging.guests}
               ></input>
             </div>
             <div className={s.selection}>
               <span>Mascotas </span>
-              <input type="checkbox" name="pets" value={input.pets}></input>
+              <input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
             </div>
           </div>
           <div className={s.card}>
@@ -222,4 +257,3 @@ export default function Booking(props) {
     </div>
   );
 }
-

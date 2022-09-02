@@ -5,6 +5,7 @@ import{useDispatch, useSelector} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
 import {getGuest} from '../../Redux/Actions'
+import NavBar from '../NavBar/NavBar';
 
 export default function FormHost() {
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ export default function FormHost() {
   guestId = JSON.parse(guestId).email
   const [input,setInput] = useState({
     dni: '',
+    cbu: '',
     hostDniPicture:'',
 })
 const guestInfo = useSelector((state)=>state.guest)
@@ -35,6 +37,12 @@ function handleDni(e){
   })
 }
 
+function handleCbu(e){
+  setInput({
+      ...input,
+      [e.target.name]: e.target.value
+  })
+}
 
 function handlePhoto(e){
   setInput({
@@ -51,6 +59,8 @@ function handlePhoto(e){
 
 
   return (
+    <div>
+      <NavBar/>
     <div className={estilos.formulario}>
     { tieneDni ?
     // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
@@ -59,6 +69,7 @@ function handlePhoto(e){
 
         <label>DNI:</label>
         <input 
+        className={estilos.margin}
         type="number" 
         name="dni"
         value={input.dni}
@@ -68,18 +79,36 @@ function handlePhoto(e){
         />
         <label>Foto de tu DNI:</label>
         <input 
+        className={estilos.margin}
         name="hostDniPicture"
         type="file"
         onChange={handlePhoto}
         required
         />
+        <label>CBU:</label>
+        <input 
+        type="number" 
+        name="cbu"
+        value={input.cbu}
+        onChange={handleCbu}
+        placeholder="CBU"
+        required
+        />
+        <h6 className={estilos.ac}>Ingresá el CBU al que transferiremos las ganancias de tus reservas</h6>
         <button type='submit'>Registrarme</button>
       </form>
         :
     // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
-   <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> 
-
-
+    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+      <label>CBU:</label>
+      <input 
+      type="number" 
+      name="cbu"
+      value={input.cbu}
+      onChange={handleCbu}
+      placeholder="CBU"
+      required
+      />
     <label>Foto:</label>
     <input 
     name="hostDniPicture"
@@ -90,6 +119,7 @@ function handlePhoto(e){
     <button type='submit'>Registrarme</button>
     </form>
   }
+  </div>
   </div>
   )
 }

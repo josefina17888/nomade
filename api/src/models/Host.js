@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 
 const hostSchema = new Schema({
-  
   name: {
     type: String, 
   },
@@ -20,6 +19,7 @@ const hostSchema = new Schema({
   country: String,
   birthDate: Date,
   picture: String,
+  cbu: String,
   Lodging: [
     {
       type: Schema.ObjectId,

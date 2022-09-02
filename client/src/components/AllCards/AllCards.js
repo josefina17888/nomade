@@ -20,7 +20,7 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
 
 export default function AllCards({setCurrentPage, paging, lodgingPerPage, currentLodging}) {
   let stateLodgings = useSelector((state) => state.lodgings);
-  {console.log(currentLodging)}
+  
   const dispatch = useDispatch();
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
   // const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual

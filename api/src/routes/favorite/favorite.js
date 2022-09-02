@@ -40,18 +40,18 @@ if(req.body.userEmail){
   // }) 
 
     //TRAE LOS FAVORITOS DE UN USUARIO
-    router.post("/fav", async (req, res) => { 
-      try{
-      const infoGuest= await Guest.find({email: req.body.userEmail})
-      let guestId = ( infoGuest[0]._id)
-      let favs = await Favorite.find({ guestId})
-      console.log("favs",typeof favs)
-            res.send(favs);
-      }catch(err){
-        res.send(err)
-      }
-      
-    }) 
+  router.post("/fav", async (req, res) => { 
+    try{
+    const infoGuest= await Guest.find({email: req.body.userEmail})
+    let guestId = ( infoGuest[0]._id)
+    let favs = await Favorite.find({ guestId})
+    console.log("favs",typeof favs)
+          res.send(favs);
+    }catch(err){
+      res.send(err)
+    }
+    
+  })
 
 ///numero de favoritos de un lodging
 
@@ -87,3 +87,5 @@ if(req.body.userEmail){
 
   module.exports = router
   
+
+ 

@@ -12,10 +12,8 @@ import {deleteLodging} from "../../Redux/Actions/index";
 export default function Card({ city, country, guests, price, picture,visibility, currency, id }) {
   const dispatch = useDispatch();
   const history = useHistory()
-  useEffect(() => {
-    dispatch(lodgingReviews());
-    dispatch(getGuests());
-  }, [dispatch]);
+
+  //AQUI ESTA EL PROBLEMA DE 
   let guestId = localStorage.getItem("userInfo");
 
   if (!guestId) {
@@ -24,8 +22,14 @@ export default function Card({ city, country, guests, price, picture,visibility,
     var userEmail = JSON.parse(guestId).email;
   }
   let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
+
+  //console.log(stateLodgings)
   let cantidad = stateLodgings.map(e=> e.lodgingId)
+  //console.log(cantidad)
   let iguales = cantidad.map(e=> e === id)
+  //console.log(id)
+  //console.log(iguales)
+
   iguales = iguales.filter(e=> e === true)
   iguales = iguales.length
   
@@ -41,10 +45,9 @@ export default function Card({ city, country, guests, price, picture,visibility,
     }
   }
  var promedio = cuantos/iguales
- console.log(promedio)
+ //console.log(promedio)
  var arrpromedio =[]
  arrpromedio = arrpromedio.map(e=>e = promedio)
- 
 const allGuests = useSelector((state) => state.allGuests);
 let arrFilter = allGuests.filter(e => e.email === userEmail)
   return (
@@ -65,6 +68,7 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
           <h3 className={styles.city}>{`${city}, ${country}`}</h3>
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
+
 
           </div></div>
           

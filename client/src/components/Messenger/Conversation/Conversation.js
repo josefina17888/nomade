@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import s from "./Conversation.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { BsNutFill } from "react-icons/bs";
+
 
 export default function Conversation({ conversation, currentUser }) {
   let dispatch = useDispatch();
