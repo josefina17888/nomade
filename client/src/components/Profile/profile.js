@@ -14,42 +14,75 @@ export default function Profile() {
 const params = useParams()
 let guestData = localStorage.getItem("userInfo");
 let user = JSON.parse(guestData)
+let email = params.email
 
 //BUSCANDO EL GUEST CON EL EMAIL y LOS BOOKINGS POR GUEST ID y LOS LODGING IDS DE LAS BOOKINGS
 const [guest, setGuest] = useState("")
 const [booking, setBooking] = useState("")
 const [lodgingIds, setLodgingIds] = useState("")
+const [lodgingDets, setLodgingDets] = useState([])
+// const [lodgingComplete, setLodgingComplete] = useState([])
+// let lodgingDetails = []
 
 useEffect(() => {
   const getGuestInfo = async () => {
     try {
 
-      let email = params.email
-      console.log(email)
-
       let res = await axios.get("/api/guest/" + email);
       let guestId = res.data[0]._id;
       setGuest(guestId)
-      console.log(guest)
 
-      try{
+      // try{
       let response = await axios.get("/api/booking/all/" + guest);
       let guestBooking = response.data
+      //sacar las dos fechas y el lodging id
       setBooking(guestBooking)
-      console.log(booking)
+      
       let lodgingsGot = []
       await guestBooking.forEach((e) => {
-        let lodging = e.lodgingId
-        lodgingsGot.push(lodging)
+        let subArray = []
+        subArray.push(e.lodgingId)
+        subArray.push(e.checkIn)
+        subArray.push(e.checkOut)
+        lodgingsGot.push(subArray)
       })
-      let lodgingsUnique=[]
-      lodgingsGot.forEach((e)=>{
-      if(!lodgingsUnique.includes(e)){
-          lodgingsUnique.push(e)
-        }
-      })
-      setLodgingIds(lodgingsUnique)
-    }catch(err){console.log(err)}
+      setLodgingIds(lodgingsGot)
+
+      // let lodgingsUnique=[]
+      // lodgingsGot.forEach((e)=>{
+      // if(!lodgingsUnique.includes(e)){
+      //     lodgingsUnique.push(e)
+      //   }
+      // })
+      // setLodgingIds(lodgingsUnique)
+    // }catch(err){console.log(err)}
+
+    // if (lodgingsUnique){
+    //   // const getDetail = () => {
+    //   let lodgingDetails = []
+    //   lodgingsUnique.forEach(async (e)=>{
+    //   try{
+    //     let data = await axios.get("/api/lodging/detail/" + e)
+    //     let final = data.data
+    // //   lodgingsCombined.push(e)
+    //     lodgingDetails.push(final)
+    //     }catch(err){
+    //     console.log(err)
+    //     }
+    //     setLodgingDets(lodgingDetails)
+    //   })
+    //  }
+
+    //  let bookingsLodging = []
+    //  lodgingDets.forEach(async (elem) => 
+    //  {let id = elem._id
+    //   let filtered = await guestBooking.filter((e)=>e.lodgingId === id)
+    //   elem.concat(filtered)
+    //   bookingsLodging.push(elem)
+    //   setLodgingComplete(bookingsLodging)
+    // })
+    
+     
     } catch (err) {
       console.log(err);
     }
@@ -57,23 +90,22 @@ useEffect(() => {
   getGuestInfo();
 }, [guest]);
 
-let lodgingDetails = []
-if (lodgingIds){
-const getDetail = async () => {
-  lodgingIds.forEach(async (e)=>{
-    try{
-    let data = await axios.get("/api/lodging/detail/" + e)
-    lodgingDetails.push(data.data)
-  }  catch(err){
-    console.log(err)
-  }
-})
-}
-getDetail();
-console.log(lodgingDetails)
-}
+console.log(email)
+console.log(guest)
+console.log(booking)
+console.log(lodgingIds)
+// console.log(lodgingDets)
 
 
+// let bookingsLodging = []
+// lodgingDets.forEach(async (elem) => 
+//      {let id = elem._id
+//       elem.filtered = await booking.filter((e)=>e.lodgingId === id)
+//       // let concatenado = elem.concat(filtered)
+//       bookingsLodging.push(elem)
+// })
+
+// console.log(bookingsLodging)
 
   return (
     <div>
@@ -122,14 +154,18 @@ console.log(lodgingDetails)
                   <h4>Reservas</h4>
                   <div>
                     {
-                      lodgingDetails ? lodgingDetails.map((e)=>
-                      <div key={e._id}>
-                      title= {e.title}
-                      </div>
-                      ) : 
+                      !lodgingIds.length ?                       
                       <div>
-                        Aún no tienes reservas para mostrar
+                      Aún no tienes reservas para mostrar
+                      </div> :
+                      lodgingIds.map((e)=>
+                      <div key={e._id}>
+                      <h5>{e["1"]}</h5>
+                      <h5>{e["2"]}</h5>
+                        <Link to= {`/detail/${e["0"]}`}>ver detalles</Link>
                       </div>
+                      ) 
+
                     }
                   </div>
                 </div>
