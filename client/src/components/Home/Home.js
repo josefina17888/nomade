@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import AllCards from "../AllCards/AllCards";
 import Menu from "../Menu/Menu";
 import NavBar from "../NavBar/NavBar";
@@ -14,12 +14,6 @@ console.log(user , "user")
 
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
-  const dispatch = useDispatch();
-
-  //GET HOST
- /*  useEffect(()=>{
-    dispatch(getHostBy)
-  }) */
 
   //PAGINATED
   const [currentPage, setCurrentPage] = useState(1); 

@@ -12,10 +12,8 @@ import {deleteLodging} from "../../Redux/Actions/index";
 export default function Card({ city, country, guests, price, picture,visibility, currency, id }) {
   const dispatch = useDispatch();
   const history = useHistory()
-  useEffect(() => {
-    dispatch(lodgingReviews());
-    dispatch(getGuests());
-  }, [dispatch]);
+
+  //AQUI ESTA EL PROBLEMA DE 
   let guestId = localStorage.getItem("userInfo");
 
   if (!guestId) {

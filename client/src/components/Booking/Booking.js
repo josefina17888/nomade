@@ -92,7 +92,6 @@ export default function Booking(props) {
     pets: check,
     hostId: lodging.hostId
   });
-  console.log(input, 'SOY INPUT')
 
   //DATA JOSE
   const total = costNight * input.night;
@@ -112,13 +111,17 @@ export default function Booking(props) {
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
+    const allDates = getDatesInRange(input.checkIn, input.checkOut);
+    setInput({...input,
+      night : allDates.length,
+      allDates: allDates
+    })
     const isFound = unavailableDatesMap.some((date) =>
-      alldates.includes(new Date(date).toDateString())
+      allDates.includes(new Date(date).toDateString())
     );
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") : 
     dispatch(payBooking(input));
-    dispatch(setDataPostBooking(input));
   }
 
   //MERCADO PAGO
@@ -183,7 +186,8 @@ export default function Booking(props) {
                         setInput({
                           ...input,
                           checkOut: new Date(currentDate).toDateString(),
-                        })}
+                        })
+                      }
                       selectsStart
                       startDate={new Date(input.checkIn)}
                       endDate={new Date(input.checkOut)}

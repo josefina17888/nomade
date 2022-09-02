@@ -16,7 +16,7 @@ export default function Chat() {
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState('');
   const [guest, setGuest] = useState("");
   const [host, setHost] = useState("");
   const scrollRef = useRef();
@@ -26,11 +26,6 @@ export default function Chat() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let userEmail = userInfo.email;
 
-  console.log("CONVERSATIONS", conversations);
-  console.log("bookingInfo", booking);
-
-  console.log("host", host);
-
   /*   let prueba= new Set(...membrs.map(e => e));
   console.log("prueba",prueba)  */
 
@@ -38,6 +33,7 @@ export default function Chat() {
   useEffect(() => {
     socket.current = io("ws://localhost:3001");
     socket.current.on("getMessage", (data) => {
+      console.log(data, 'DATAAA')
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -95,15 +91,12 @@ export default function Chat() {
 
   //trae el guestId del host para gregarlo a la conversacion
   const hostId = booking.hostId;
-  console.log("ID", hostId);
   useEffect(() => {
     const getHostGuestId = async () => {
       try {
-        console.log("aqui");
         let res = await axios.get("/api/host/all/" + hostId);
         console.log("response", res.data);
         let hostGuestId = res.data[0].guestId._id;
-        console.log("response222", hostGuestId);
 
         setHost(hostGuestId);
       } catch (err) {
@@ -115,9 +108,7 @@ export default function Chat() {
   //trae la info del guest para poder agregarlo a la conversacion
 
   let guestEmail = booking.email;
-  console.log("guest", guestEmail);
   useEffect(() => {
-    console.log("soy useeffect");
     const getGuestInfo = async () => {
       try {
         let res = await axios.get("/api/guest/" + guestEmail);

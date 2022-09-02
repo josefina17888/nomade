@@ -18,6 +18,10 @@ const BookingSchema = new mongoose.Schema({
   guestId: {
     type: Schema.ObjectId,
     ref: "Guest",
+  },
+  hostId:{
+    type: Schema.ObjectId,
+    ref: "Guest",
   }
 });
 
