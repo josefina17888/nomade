@@ -126,10 +126,9 @@ export function getGuest(payload){
 
 //Filtra el guest por email
 export function getGuestByEmail(email){
-  console.log(email, 'PAYLOAD EMAIL')
   return async function(dispatch){
     try{
-      let json= await axios.get(`/api/guest?email=${email}`)
+      let json= await axios.get(`/api/guest/${email}`)
       return dispatch({
         type: 'GET_GUEST_BY_EMAIL',
         payload: json.data
@@ -173,6 +172,24 @@ export function getGuests(){
     }
   }
 }
+
+// Trae un Host por dni
+export function getHostByDni(dni){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/guest/:${dni}`)
+      return dispatch({
+        type: 'GET_HOST_BY_DNI',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 
 
   export function getDetail (lodgingId){
@@ -362,11 +379,14 @@ export function getFeedback(){
 
 //TRAE HOST POR ID GUEST (EMAIL)
 export function getHostByGuestId(payload){
+  console.log(payload, 'PAYLOAAAAAD')
   return async function (dispatch){
     try {
       const res = await axios.post('/api/guest/find/host', payload)
+      console.log(res.data, 'HOLA HOLA HOLA')
       return dispatch({
         type: 'GET_HOST_BY_GUEST_ID',
+        payload
       })
     } catch (error) {
       console.log(error)

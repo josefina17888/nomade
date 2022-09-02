@@ -70,6 +70,7 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
           <p className={styles.price}>${`${price} ${currency}`}</p>
           <p className={styles.noche}> noche </p>
 
+
           </div></div>
           
     </div>:<div className={styles.nover}></div>

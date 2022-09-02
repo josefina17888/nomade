@@ -26,12 +26,14 @@ export default function NavBar(props) {
     email: userToken
   }
   
+
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
   }
 
-  const location = window.location.pathname;
+  /* const demoHistory = window.location.pathname;
+  if(demoHistory === '/' || demoHistory==='/detail/:_id') */
 
   //GET HOST
   useEffect(()=>{
@@ -40,9 +42,8 @@ export default function NavBar(props) {
 
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
-    console.log(validateHost, 'VALIDATE HOST')
     e.preventDefault();
-    if(validateHost && validateHost[0] && userToken){
+    if(validateHost[0] && userToken){
       const hostObject = Object.values(validateHost[0])
       const hostId = hostObject[0]
       history.push(`${hostId}/registerlodging`)
@@ -75,28 +76,19 @@ export default function NavBar(props) {
               </div>
             </div>
             <div>
-              {
-                location !=='/'? <div></div> :
               <SearchBar />
-              }
             </div>
             <div className="cylj8v3 dir dir-ltr">
               <div className="c1yo0219 dir dir-ltr">
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
-                      {
-                        location === '/'? <button className={s.btn_host} onClick={handleClick}>Hospeda nómades</button> :
-                        <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
-                        <button className={s.btn_host}>Volver</button>
-                        </Link>
-                      }
+                    {/* <Link
+                      to={userToken ? `${userToken}/form` : "/registerguest"}
+                      className="nav-link py-2 px-0 px-lg-2"> */}
+                      <button className={s.btn_host} onClick={handleClick}>Hospeda nómades</button>
+                    {/* </Link> */}
                   </div>
-                  <div>
-                    {
-                      location === `/profile/${userToken}` ? <div></div> :
-
-                    
-                    <div className={s.container_btn_icon}>
+                  <div className={s.container_btn_icon}>
                     <button
                       className={s.button}
                       type="button"
@@ -153,8 +145,6 @@ export default function NavBar(props) {
                         </div>
                       )}
                     </ul>
-                  </div>
-                  }
                   </div>
                 </nav>
               </div>

@@ -258,6 +258,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case "GET_HOST_BY_GUEST_ID":
+      console.log(action.payload)
       return {
         ...state,
         hosts: action.payload
@@ -324,6 +325,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
+    case 'GET_HOST_BY_DNI':
+      return {
+        ...state,
+        host: action.payload
+      }
+
       case "DELETE_LODGING":
       return {
         ...state,

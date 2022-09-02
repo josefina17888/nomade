@@ -9,7 +9,6 @@ import {
   getLodgings,
 } from "../../Redux/Actions";
 import FavoritesCard from "../FavoritesCard/FavoritesCard";
-import NavBar from "../NavBar/NavBar";
 
 
 
@@ -40,8 +39,6 @@ export default function Favorites() {
    
 
   return (
-    <div>
-      <NavBar/>
     <div className={s.fgral}>
       <div className={s.ftitle}><h3>tus favoritos</h3></div>
 
@@ -60,7 +57,6 @@ export default function Favorites() {
       ) : (
         <div>NO HAY FAVORITOS PARA MOSTRAR</div>
       )}
-    </div>
     </div>
   );
 }

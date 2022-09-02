@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
 import { getGuestByEmail, getDetail } from "../../Redux/Actions";
 
-
-
 export default function Profile() {
 const params = useParams()
 let guestData = localStorage.getItem("userInfo");
