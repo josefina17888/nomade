@@ -7,10 +7,19 @@ const toId = mongoose.Types.ObjectId;
 
 //POST MENSAJE
 router.post('/', async (req,res)=>{
-    const newMessage= new Message(req.body)
+ console.log("back1")
+    console.log(req.body)
     try{
-        const savedMessage = await newMessage.save()
-        res.status(200).json(savedMessage)
+      console.log("back2")
+        const newMessage = await Message.create(req.body)
+        console.log(newMessage)
+        console.log("back3")
+        newMessage.conversationId= req.body.conversationId
+        newMessage.sender= req.body.sender
+        newMessage.text= req.body.text
+        newMessage.save()
+        console.log()
+        res.status(200).json(newMessage)
     }catch(err){
         res.status(500).json(err)
     }

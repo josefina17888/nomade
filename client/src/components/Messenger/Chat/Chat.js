@@ -7,6 +7,7 @@ import Message from "../Message/Message";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import io from "socket.io-client";
+import { sendMessage } from "../../../Redux/Actions";
 
 export default function Chat() {
   const dispatch = useDispatch();
@@ -155,10 +156,10 @@ export default function Chat() {
     if (currentChat._id) {
       const getMessages = async () => {
         let conversationId = currentChat._id;
+        console.log("CONViD", conversationId);
         try {
-          let res = await axios(
-            "http://localhost:3001/api/message/" + conversationId
-          );
+          let res = await axios("/api/message/" + conversationId);
+          console.log("getmensajes res.data", res.data);
           setMessages(res.data);
           setNewMessage("");
         } catch (err) {
@@ -178,33 +179,31 @@ export default function Chat() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("AQUI1");
     const message = {
       sender: user._id,
       text: newMessage,
       conversationId: currentChat._id,
     };
+    console.log("AQUI2");
     console.log("mensaje", message);
 
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
     );
-    socket.current.emit("sendMessage", {
+    console.log("receiverId", receiverId);
+    console.log("AQUI3");
+   /*  socket.current.emit("sendMessage", {
       senderId: user._id,
       receiverId,
       text: newMessage,
-    });
-
-    try {
-      console.log("AQUI");
-      const res = await axios.post(
-        "/api/message",
-        message
-      );
-      console.log("el mensaje", res.data);
-      /*  setMessages([...messages, res.data]); */
-    } catch (err) {
-      console.log(err);
-    }
+    }); */
+    console.log("AQUI4");
+    dispatch(sendMessage(message))
+    //const res = await axios.post("/api/message", message);
+    console.log("AQUI5");
+    /* console.log("el mensaje", res); */
+    /*  setMessages([...messages, res.data]); */
   };
   console.log(currentChat.members);
 

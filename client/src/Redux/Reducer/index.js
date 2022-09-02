@@ -19,7 +19,6 @@ const initialState = {
   lodgingsInitial:[],
   postBooking: {},
   demoUser: null,
-  conversations:[]
 
 };
 var count= {
@@ -317,19 +316,6 @@ function rootReducer(state = initialState, action) {
         postBooking: bookingFinal,
       };
 
-
-     /*  case "GET_USER": */
-        /* return {
-          ...state,
-          payment: action.payload,
-        }; */
-  
-
-       case "GET_CONVERSATIONS":
-        return {
-          ...state,
-          conversations: action.payload,
-        };
  
 
     default:

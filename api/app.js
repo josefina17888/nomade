@@ -48,11 +48,11 @@ const io = socketio(server, {
   },
 });
 
-let users = [...new Set([])]
+let users = []
 
 //trae los ids de los usuarios conectados desde el front
 const addUser = (userId, socketId) => {
-  if (userId!==null){
+  if (users!==undefined && userId!==null){
     !users.some((user) => user.userId === userId) &&
     users.push({ userId, socketId });
 
@@ -89,14 +89,12 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     //busca al receiver y envia un mensaje a este usuario
     const user = getUser(receiverId);
-    console.log("reciever", receiverId)
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,
         text
-       });
-    
-      
+       }); 
+       console.log("user.socketId", user.socketId)
   });
 
   //cuando se desconecta
