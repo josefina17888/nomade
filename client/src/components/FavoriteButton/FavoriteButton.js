@@ -70,4 +70,3 @@ if(!props.guestInfo){
     </div>
   );
 }
-

@@ -1,6 +1,9 @@
 
 import axios from "axios";
 
+
+
+
 export const GET_BY_CITY = " GET_BY_CITY";
 
 export function getLodgings (lodgingId){
@@ -104,7 +107,6 @@ export function postGuest(payload){
         return json
     }
 }
-
 
 
 //Trae un guest por Id
@@ -280,6 +282,7 @@ export function lodgingReviews(){
   }
 }
 
+
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
@@ -430,6 +433,43 @@ export function sacarAdmin(payload){
     }
   }
 }
+ export function getConversations(userEmail){
+  return async function(dispatch){
+  try {
+    let res = await axios.get(
+      "http://localhost:3001/api/conversation/conv/" + userEmail
+      );
+      console.log("conversations action", res)
+       return dispatch({
+        type: "GET_CONVERSATIONS",
+        payload: res.data
+      }) 
+    
+  } catch (err) {
+    console.log(err);
+  }
+  }}
+
+ export function newConversation(payload){
+  console.log("pay", payload)
+  return async function(dispatch){
+    try {
+      /* await axios.post(`/api/conversation/${guest}/${host}` ) */
+       return dispatch({
+        type: "NEW_CONVERSATION",
+
+      }) 
+    
+  } catch (err) {
+    console.log(err);
+  }
+  }}
+
+
+
+  
+
+
 
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){

@@ -13,7 +13,6 @@ import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
 
-import { DateRange } from "react-date-range";
 
 export default function Booking(props) {
   const dispatch = useDispatch();
@@ -240,4 +239,3 @@ export default function Booking(props) {
     </div>
   );
 }
-

@@ -301,11 +301,7 @@ function rootReducer(state = initialState, action) {
         payment: action.payload,
       };
 
-    case "GET_FEEDBACK":
-      return {
-        ...state,
-        feedback: action.payload,
-      };
+    
 
     case "SET_DATA_POSTBOOKING":
       return {
@@ -348,6 +344,22 @@ function rootReducer(state = initialState, action) {
             ...state,
             allGuests: action.payload,
           };
+
+
+     /*  case "GET_USER": */
+        /* return {
+          ...state,
+          payment: action.payload,
+        }; */
+  
+
+       case "GET_CONVERSATIONS":
+        return {
+          ...state,
+          conversations: action.payload,
+        };
+ 
+
     default:
       return { ...state };
   }
