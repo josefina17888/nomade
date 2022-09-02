@@ -136,8 +136,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-
 //Trae un guest en particular
 router.get("/:email", async(req,res) => {
   try {

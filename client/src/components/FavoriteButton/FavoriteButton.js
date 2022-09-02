@@ -54,6 +54,7 @@ if(!props.guestInfo){
   }
 
 
+
   async function handleClick(e) {
     if (isfaved) {
       await dispatch(deleteFavorite(favData));
@@ -71,4 +72,3 @@ if(!props.guestInfo){
     </div>
   );
 }
-

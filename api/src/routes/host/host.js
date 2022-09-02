@@ -48,7 +48,7 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
 });
 
 //trae todos los host con la info completa de guest(funciona)//
-router.get("/all", async (req, res) => { 
+router.get("/all/:hostId", async (req, res) => { 
   const host = await Host.find({}).populate({path:"guestId", model: "Guest"})
   res.send(host) 
  });

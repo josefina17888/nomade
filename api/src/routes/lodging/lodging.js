@@ -57,6 +57,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 router.get("/host/lodging", async (req, res) => {
   const lodgingId = req.body.lodgingId 
   const lodging = await Lodging.find({lodgingId}).populate({path:"hostId", model: "Host"})
+  console.log(lodging,"ID")
   console.log(lodging.hostId, 'GO')
   res.send(lodging) 
  });

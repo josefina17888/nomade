@@ -106,7 +106,6 @@ export function postGuest(payload){
 }
 
 
-
 //Trae un guest por Id
 export function getGuest(payload){
   return async function (dispatch){
@@ -327,6 +326,42 @@ export function getFeedback(){
     }
   }
 }
+
+/* export function getConversations(userEmail){
+  return async function(dispatch){
+  try {
+    let res = await axios.get(
+      "http://localhost:3001/api/conversation/conv/" + userEmail
+      );
+      console.log("conversations action", res)
+       return dispatch({
+        type: "GET_CONVERSATIONS",
+        payload: res.data
+      }) 
+    
+  } catch (err) {
+    console.log(err);
+  }
+  }}
+
+export function getUser(userEmail){
+  return async function(dispatch){
+  try {
+    let userData = await axios(
+      "http://localhost:3001/api/conversation/users/" + userEmail
+    );
+      console.log("GET USER ACTIONS", userData)
+       /* return dispatch({
+        type: "GET_USER",
+        payload: res.data
+      })  */
+ /*    
+  } catch (err) {
+    console.log(err);
+  }
+  }} */ 
+
+
 
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){

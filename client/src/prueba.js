@@ -8,9 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import io from "socket.io-client";
 
+
 export default function Chat() {
-  const dispatch = useDispatch();
   const lodging = useSelector((state) => state.detail);
+  const dispatch = useDispatch();
   const [conversations, setConversations] = useState([]);
   const [user, setUser] = useState({});
   const [currentChat, setCurrentChat] = useState({});
@@ -21,63 +22,99 @@ export default function Chat() {
   const [host, setHost] = useState("")
   const scrollRef = useRef();
   const socket = useRef();
-  const bookingInfo = localStorage.getItem("booking");
-  const booking = JSON.parse(bookingInfo);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let userEmail = userInfo.email;
-  console.log("CONVERSATIONS", conversations)
+  const hostId = lodging.hostId;
 
-/*   let prueba= new Set(...membrs.map(e => e));
-  console.log("prueba",prueba)  */
+  console.log("CONV",conversations)
+  
+  /* useEffect(()=>{
+    const newConversation = async ()=>{
+    let conversation = await axios.post(`/api/conversation/${guest}/${host}` )
+    console.log("CONV",conversation)
+    
+    }
+    newConversation()
+  },[])
 
+  //trae el guestId del host
+  useEffect(() => {
+    const getHostGuestId = async () => {
+      try {
+        let res = await axios.get("/api/host/all/" + hostId);
+        let hostGuestId = res.data[1].guestId._id;
+       setHost(hostGuestId)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getHostGuestId();
+  }, []);
 
-  //conecta con el server y trae los mensajes
+ //trae la info del guest
+  
+  useEffect(() => {
+    const getGuestInfo = async () => {
+      try {
+        let res = await axios.get("/api/guest/" + userEmail);
+        let guestId = res.data[0]._id;
+        setGuest(guestId)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getGuestInfo();
+  }, [guest]); */
+
   useEffect(() => {
     socket.current = io("ws://localhost:3001");
-    socket.current.on("getMessage", (data) => {
+    socket.current.on("getMessage", data =>{
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
-      });
-    });
+      })
+    })
+
   }, []);
+  console.log("user",user)
+  console.log("socket",socket.current)
+  console.log("arrival",arrivalMessage)
 
-  /* dispatch(getAllTemperaments())
-    .then(()=>setLoader(false)) */
-
-  const getConversations = async () => {
-    try {
-      let res = await axios.get(
-        "/api/conversation/conv/" + userEmail
-      );
-      setConversations(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-      
-      getConversations();
-    }, [userEmail]);
-
-
-//crea la nueva conversacion en la db
-  const newConversation = async ()=>{
-    let prueba= (conversations.filter(c=>(c.members.includes(guest)&& c.members.includes(host))))
-    console.log("prueba",prueba)
-    if(!prueba.length){
-      let conv = await axios.post(`/api/conversation/${guest}/${host}` )
-      }
-    }
-   
   useEffect(()=>{
- 
-  newConversation()
-  },[conversations])
+    if(arrivalMessage!==null){
+      if(Object.keys(currentChat).length !== 0){
+        if(currentChat.members.includes(arrivalMessage.sender)){
+          setMessages(prev=>[...prev, arrivalMessage ])
+        }
+      }
+    } 
+  },[arrivalMessage, currentChat])
+  
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [user]);
 
+  console.log("CURRENT", currentChat)
 
-//trae la info de current User 
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        let res = await axios.get(
+          "http://localhost:3001/api/conversation/conv/" + userEmail
+        );
+        if(conversations.includes([]))
+        setConversations(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, [userEmail]);
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -93,94 +130,26 @@ export default function Chat() {
     getUser();
   }, [userEmail]);
 
-  //trae el guestId del host para gregarlo a la conversacion 
-  const hostId = lodging.hostId;
   useEffect(() => {
-    const getHostGuestId = async () => {
+    const getMessages = async () => {
+      let conversationId = currentChat._id;
       try {
-        let res = await axios.get("/api/host/all/" + hostId);
-        let hostGuestId = res.data[1].guestId._id;
-       setHost(hostGuestId)
+        let res = await axios(
+          "http://localhost:3001/api/message/" + conversationId
+        );
+        setMessages(res.data);
+        setNewMessage("");
       } catch (err) {
         console.log(err);
       }
     };
-    getHostGuestId();
-  }, [host]);
- //trae la info del guest para poder agregarlo a la conversacion
-
-
- 
-  let guestEmail = booking.email; 
-  console.log("guest", guestEmail) 
-  useEffect(() => {
-    console.log("soy useeffect")
-    const getGuestInfo = async () => {
-      try {
-        let res = await axios.get("/api/guest/" + guestEmail);
-        let guestId = res.data[0]._id;
-        setGuest(guestId)
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getGuestInfo();
-  }, [guest]);
-
-
-//mensajes entrantes
-  useEffect(()=>{
-    if(arrivalMessage!==null){
-      if(Object.keys(currentChat).length !== 0){
-        if(currentChat.members.includes(arrivalMessage.sender)){
-          setMessages(prev=>[...prev, arrivalMessage ])
-        }
-      }
-    } 
-  },[arrivalMessage, currentChat])
-
-  //envia al back el usuario y trae los dos usuarios
-  useEffect(() => {
-    if (user._id !== null && user!==[]) {
-      socket.current.emit("addUser", user._id);
-      socket.current.on("getUsers", (users) => {
-        console.log("users que viene del back",users);
-      });
-    }
-  }, [user]);
-
- 
-  
-// trae las conversaciones
-
-
-
-// trae todos los mensajes
-  useEffect(() => {
-    if(currentChat._id){
-      const getMessages = async () => {
-        let conversationId = currentChat._id;
-        try {
-          let res = await axios(
-            "http://localhost:3001/api/message/" + conversationId
-          );
-          setMessages(res.data);
-          setNewMessage("");
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      getMessages();
-    }
-    
+    getMessages();
   }, [currentChat]);
 
-  /* useEffect(() => {
-    if( scrollRef.current){
-      scrollRef.current.scrollInToView({behavior:"smooth"}) 
-    }
- 
-  }, [messages]); */
+
+  useEffect(() => {
+    /* scrollRef.current?.scrollInToView({behavior:"smooth"}) */
+  }, [messages]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -215,15 +184,18 @@ export default function Chat() {
     <div className={s.chatContainer}>
       <NavBar />
       <div className={s.chat}>
-        <div className={s.chatMsjWrapper}>Tus Mensajes</div>
+         <div className={s.chatMsjWrapper}>Tus Mensajes</div>
         <div className={s.chatMsj}>
+       
           <div className={s.chatMsjBottom}>
-            {conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)}>
-                <Conversation key={c._id} conversation={c} currentUser={user} />
-              </div>
-            ))}
+          {conversations.map((c) => (
+            
+            <div  onClick={() => setCurrentChat(c)}>
+              <Conversation key={c._id} conversation={c} currentUser={user} />
+            </div>
+          ))}
           </div>
+         
         </div>
         <div className={s.chatBox}>
           <div className={s.chatBoxWrapper}>

@@ -19,6 +19,7 @@ const initialState = {
   lodgingsInitial:[],
   postBooking: {},
   demoUser: null,
+  conversations:[]
 
 };
 var count= {
@@ -292,11 +293,7 @@ function rootReducer(state = initialState, action) {
         payment: action.payload,
       };
 
-    case "GET_FEEDBACK":
-      return {
-        ...state,
-        feedback: action.payload,
-      };
+    
 
     case "SET_DATA_POSTBOOKING":
       return {
@@ -320,6 +317,30 @@ function rootReducer(state = initialState, action) {
         postBooking: bookingFinal,
       };
 
+
+     /*  case "GET_USER": */
+        /* return {
+          ...state,
+          payment: action.payload,
+        }; */
+  
+
+      /* case "GET_CONVERSATIONS":
+        let user1 = 630c1747c02dad7882117034
+        let user2 = 630c15b3c02dad7882116fe2
+       arr = [user1,user2]
+       arr.push(user1, user2) 
+     
+      let users= action.payload
+      let users2= users.map(e=>e.members)
+      
+      console.log("users Payload",users2)
+
+        return {
+          ...state,
+          conversations: action.payload,
+        };
+ */
 
     default:
       return { ...state };
