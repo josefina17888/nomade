@@ -17,17 +17,17 @@ export default function Users({ email, picture,visibility, id,name,lastname, isA
   function handleSubmit(e){
     e.preventDefault()
     dispatch(deleteUser(id))  
-    history.push("/admin/users")
+    window.location.reload();
   }
   function handleSubmitAdmin(e){
     e.preventDefault()
     dispatch(hacerAdmin(id))  
-    history.push("/admin/users")
+    window.location.reload();
   }
   function handleSacarAdmin(e){
     e.preventDefault()
     dispatch(sacarAdmin(id))  
-    history.push("/admin/users")
+    window.location.reload();
   }
   return (
  

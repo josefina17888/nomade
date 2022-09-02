@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Card.module.css";
+import styles from "../Card/Card.module.css";
 import { VscPerson } from "react-icons/vsc";
 import { IoIosStar } from "react-icons/io";
 import { GrFavorite } from "react-icons/gr";
@@ -9,15 +9,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {lodgingReviews, getGuests,} from "../../Redux/Actions/index";
 import { Link,useHistory } from "react-router-dom";
 import {deleteLodging} from "../../Redux/Actions/index";
-export default function Card({ city, country, guests, price, picture,visibility, currency, id }) {
+export default function CardComplaint({ id, tipo, descripcion, dated, visibility,guest, lodgingId }) {
   const dispatch = useDispatch();
   const history = useHistory()
   useEffect(() => {
     dispatch(lodgingReviews());
     dispatch(getGuests());
   }, [dispatch]);
-  let guestId = localStorage.getItem("userInfo");
 
+  let guestId = localStorage.getItem("userInfo");
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId)._id;
@@ -47,26 +47,29 @@ export default function Card({ city, country, guests, price, picture,visibility,
  
 const allGuests = useSelector((state) => state.allGuests);
 let arrFilter = allGuests.filter(e => e.email === userEmail)
+let currentDate = new Date(dated)
   return (
  
    <div>
       { visibility === undefined ||visibility === true ? 
          <div className={styles.card}>
       <div>
-        <div>
-          <img className={styles.img} src={picture} alt="img not found" width="200px" height="250px" />
-        </div>
-
         <div className={styles.icons}>
-          <div className={styles.guests}><VscPerson className={styles.guestsIcon}/> {guests}</div>
-          <div className={styles.rating}><IoIosStar className={styles.ratingIcon}/> { promedio > 0 && promedio < 6 ? promedio === 1.0 || promedio === 2.0 ||promedio ===3.0 ||promedio === 4.0 ||promedio === 5.0 ? promedio.toFixed(0):promedio.toFixed(1): "n/c"}</div>
+          <div className={styles.guests}> {tipo}</div>
       </div>
       <div className={styles.text}>
-          <h3 className={styles.city}>{`${city}, ${country}`}</h3>
-          <p className={styles.price}>${`${price} ${currency}`}</p>
-          <p className={styles.noche}> noche </p>
-
-          </div></div>
+          <h3 className={styles.city}>{descripcion}</h3>
+         
+          <p className={styles.price}>{currentDate.toLocaleDateString()}</p>
+          </div>
+          <div className={styles.text}>
+          <p className={styles.noche}>Lodging: {lodgingId}</p>
+          </div>
+          <div className={styles.text}>
+          <p className={styles.noche}>guest: {guest}</p>
+          </div> 
+          
+          </div>
           
     </div>:<div className={styles.nover}></div>
 }

@@ -56,6 +56,7 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
             </Link>
           </div>
           <div>
+          <Link to="/admin/estadisticas">
             <button className={s.button_icon} >
               <span>
                 <BsGraphUp className={s.icons} />
@@ -64,9 +65,10 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
                 </div>
               </span>
             </button>
+          </Link>
           </div>
           <div>
-          
+          <Link to="/admin/complaints">
             <button className={s.button_icon} >
               <span>
                 <BsShieldFillExclamation className={s.icons} />
@@ -75,6 +77,7 @@ export default function Menu({setCurrentPage, paging, lodgingsPerPage, currentLo
                 </div>
               </span>
             </button>
+          </Link>
           </div>
          
         </div>

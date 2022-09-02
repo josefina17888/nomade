@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import AllCards from '../AllCards/AllCards';
+import AllComplaints from '../AllComplaints/AllComplaints.jsx';
 import Menu from './menuAdmin';
 import NavBar from '../NavBar/NavBar';
-
+import {getGuests} from "../../Redux/Actions/index";
 //import styles from './Home.module.css'
 import Profile from '../Profile/profile';
 export default function Home() {
+  useEffect(() => {
+    dispatch(getGuests());
+  }, [dispatch]);
 
   let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId)
+
+  if (!guestId) {
+  } else {
+    var userToken = JSON.parse(guestId)._id;
+    var userEmail = JSON.parse(guestId).email;
+    var user = JSON.parse(guestId)
+  }
+ 
+  
+  const allGuests = useSelector((state) => state.allGuests);
+  let arrFilter = allGuests.filter(e => e.email === userEmail)
 
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
@@ -29,10 +42,14 @@ export default function Home() {
 
   return (
     <div className="c1kae56o dir dir-ltr">
+      {userToken && allGuests[0]!== undefined && arrFilter[0].isAdmin === true ?
+    <div>
     <NavBar
     email={user?user.email: ""} />
     <Menu setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
-    <AllCards setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
+    <AllComplaints setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
+    </div>:
+    <h1>No puedes ver esta pagina.</h1>}
     </div>
   )
 }
