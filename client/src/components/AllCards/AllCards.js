@@ -7,10 +7,12 @@ import {
   orderPrice,
   setLoaderFalse,
   setLoaderTrue,
+  getGuests,
+  deleteLodging
 } from "../../Redux/Actions/index";
 import AllCardsPaging from "../AllCardsPaging/AllCardsPaging";
 import Card from "../Card/Card";
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import styles from "./AllCards.module.css";
 import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
 
@@ -18,7 +20,9 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton.js";
 
 export default function AllCards({setCurrentPage, paging, lodgingPerPage, currentLodging}) {
   let stateLodgings = useSelector((state) => state.lodgings);
+  
   const dispatch = useDispatch();
+  let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
   // const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
   // const [lodgingPerPage, setLodgingPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página
   // const indexLastLodging = currentPage * lodgingPerPage;
@@ -29,21 +33,33 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
   // );
   const loader = useSelector((state) => state.loader);
   const [order, setOrder] = useState("");
-
+  const history = useHistory()
   // const paging = (pageNumber) => {
   //   setCurrentPage(pageNumber);
   // };
 
   useEffect(() => {
     dispatch(getLodgings());
+    dispatch(getGuests());
   }, [dispatch]);
 
-  let userId = localStorage.getItem("userInfo");
-  
-  if(userId) {
-    var user = JSON.parse(userId);
+  function handleSubmit(e,id){
+    e.preventDefault()
+    dispatch(deleteLodging(id))  
+    history.push("/admin/lodgings")
   }
 
+ 
+
+let guestId = localStorage.getItem("userInfo");
+
+if (!guestId) {
+} else {
+  var userToken = JSON.parse(guestId)._id;
+  var userEmail = JSON.parse(guestId).email;
+}
+const allGuests = useSelector((state) => state.allGuests);
+let arrFilter = allGuests.filter(e => e.email === userEmail)
   return (
     <div className={styles.container}>
       <div className={styles.container}>
@@ -51,7 +67,9 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
           <h2>Loading...</h2>
         ) : currentLodging.length < 1 ? (
           <h2>No se encontraron alojamientos</h2>
+          
         ) : (
+          
           currentLodging.map((e) => {
             return (
               <div key={e._id} className={styles.cards}>
@@ -62,7 +80,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
 
                 {
 
-                    user ? <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
+            guestId ? <FavoriteButton guestInfo= {localStorage.getItem("userInfo")} id={e._id} city={e.city}
                     country={e.country}
                     price={e.price}
                     
@@ -74,7 +92,8 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                   }
 
                   <Link to={`/detail/${e._id}`} className={styles.link}>
-
+                      
+             
                     <Card
                       id={e._id}
                       city={e.city}
@@ -85,9 +104,15 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
                       picture={e.picture[0]}
                       currency={e.currency}
                     />
-
                     </Link>
-
+                  
+                    {
+                    userToken && allGuests[0]!== undefined &&  arrFilter[0].isAdmin ===true?
+                    <form onSubmit={(j)=>handleSubmit(j,e._id)}> 
+                    <button className={styles.buttonDenunciar} type='submit'>Borrar alojamiento</button>
+                    </form>:
+                    <div></div>
+        }
                 </div>
                   
                 </div>
@@ -102,7 +127,7 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
           {!loader ? (
             <AllCardsPaging
               lodgingPerPage={lodgingPerPage}
-              stateLodgings={stateLodgings.length}
+              stateLodgings={lodgingsVisibles.length}
               paging={paging}
             />
           ) : null}

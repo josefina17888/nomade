@@ -26,7 +26,6 @@ export default function NavBar(props) {
     email: userToken
   }
   
-
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
@@ -42,7 +41,7 @@ export default function NavBar(props) {
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
     e.preventDefault();
-    if(validateHost[0] && userToken){
+    if(validateHost && validateHost[0] && userToken){
       const hostObject = Object.values(validateHost[0])
       const hostId = hostObject[0]
       history.push(`${hostId}/registerlodging`)

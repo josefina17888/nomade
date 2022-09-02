@@ -11,6 +11,7 @@ export default function Home() {
   let user = JSON.parse(guestId);
 
   let stateLodgings = useSelector((state) => state.lodgings);
+  let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
   const dispatch = useDispatch();
 
   //GET HOST
@@ -23,7 +24,7 @@ export default function Home() {
   const [lodgingPerPage, setLodgingPerPage] = useState(10); 
   const indexLastLodging = currentPage * lodgingPerPage;
   const indexFirstLodging = indexLastLodging - lodgingPerPage;
-  const currentLodging = stateLodgings.slice(
+  const currentLodging = lodgingsVisibles.slice(
     indexFirstLodging,
     indexLastLodging
   );

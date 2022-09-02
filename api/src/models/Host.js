@@ -19,6 +19,7 @@ const hostSchema = new Schema({
   country: String,
   birthDate: Date,
   picture: String,
+  cbu: String,
   Lodging: [
     {
       type: Schema.ObjectId,
