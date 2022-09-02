@@ -5,6 +5,7 @@ import{useDispatch, useSelector} from 'react-redux'
 import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
 import {getGuest} from '../../Redux/Actions'
+import NavBar from '../NavBar/NavBar';
 
 export default function FormHost() {
   const dispatch = useDispatch()
@@ -58,6 +59,8 @@ function handlePhoto(e){
 
 
   return (
+    <div>
+      <NavBar/>
     <div className={estilos.formulario}>
     { tieneDni ?
     // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
@@ -116,6 +119,7 @@ function handlePhoto(e){
     <button type='submit'>Registrarme</button>
     </form>
   }
+  </div>
   </div>
   )
 }

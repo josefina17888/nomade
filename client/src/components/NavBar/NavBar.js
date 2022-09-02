@@ -32,8 +32,7 @@ export default function NavBar(props) {
     dispatch(getLodgings());
   }
 
-  /* const demoHistory = window.location.pathname;
-  if(demoHistory === '/' || demoHistory==='/detail/:_id') */
+  const location = window.location.pathname;
 
   //GET HOST
   useEffect(()=>{
@@ -77,19 +76,26 @@ export default function NavBar(props) {
               </div>
             </div>
             <div>
-              <SearchBar />
+              {
+                location === '/'? <SearchBar /> : <div></div>
+              }
+              
             </div>
             <div className="cylj8v3 dir dir-ltr">
               <div className="c1yo0219 dir dir-ltr">
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
-                    {/* <Link
-                      to={userToken ? `${userToken}/form` : "/registerguest"}
-                      className="nav-link py-2 px-0 px-lg-2"> */}
-                      <button className={s.btn_host} onClick={handleClick}>Hospeda nómades</button>
-                    {/* </Link> */}
+                  {
+                        location === '/'? <button className={s.btn_host} onClick={handleClick}>Hospeda nómades</button> :
+                        <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
+                        <button className={s.btn_host}>Volver</button>
+                        </Link>
+                      }
                   </div>
-                  <div className={s.container_btn_icon}>
+                    <div>
+                    {
+                      location === `/profile/${userToken}` ? <div></div> :
+                      <div className={s.container_btn_icon}>
                     <button
                       className={s.button}
                       type="button"
@@ -147,6 +153,8 @@ export default function NavBar(props) {
                       )}
                     </ul>
                   </div>
+                      }
+                    </div>
                 </nav>
               </div>
             </div>
