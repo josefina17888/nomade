@@ -15,7 +15,7 @@ export default function Profile() {
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
   let email = user.email
-  console.log(email)
+  console.log(user, 'USER')
 
 //BUSCANDO EL GUEST CON EL EMAIL
 const [guest, setGuest] = useState("")

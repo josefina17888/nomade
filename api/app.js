@@ -64,6 +64,7 @@ const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
+
 // encuentra un user por id y lo devuelve
 const getUser = (userId) => {
   return users.find((user) => user.userId === userId);
@@ -89,7 +90,7 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     //busca al receiver y envia un mensaje a este usuario
     const user = getUser(receiverId);
-    console.log("reciever", receiverId)
+    console.log("reciever", user)
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,

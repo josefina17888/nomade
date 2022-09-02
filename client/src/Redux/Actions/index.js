@@ -126,6 +126,7 @@ export function getGuest(payload){
 
 //Filtra el guest por email
 export function getGuestByEmail(email){
+  console.log(email, 'PAYLOAD EMAIL')
   return async function(dispatch){
     try{
       let json= await axios.get(`/api/guest?email=${email}`)

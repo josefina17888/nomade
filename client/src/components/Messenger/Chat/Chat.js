@@ -53,6 +53,7 @@ export default function Chat() {
     try {
       let res = await axios.get("/api/conversation/conv/" + userEmail);
       setConversations(res.data);
+      console.log(conversations, 'SOY RES DATA')
     } catch (err) {
       console.log(err);
     }
@@ -158,7 +159,8 @@ export default function Chat() {
         try {
           let res = await axios(
             "http://localhost:3001/api/message/" + conversationId
-          );
+            );
+            console.log(res.data, 'RES.DATA')
           setMessages(res.data);
           setNewMessage("");
         } catch (err) {
@@ -177,13 +179,14 @@ export default function Chat() {
   }, [messages]); */
 
   const handleSubmit = async (e) => {
+    try {
     e.preventDefault();
     const message = {
       sender: user._id,
       text: newMessage,
       conversationId: currentChat._id,
     };
-    console.log("mensaje", message);
+    console.log("mensaje", user._id);
 
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
@@ -194,14 +197,14 @@ export default function Chat() {
       text: newMessage,
     });
 
-    try {
+    
       console.log("AQUI");
       const res = await axios.post(
         "/api/message",
         message
       );
-      console.log("el mensaje", res.data);
-      /*  setMessages([...messages, res.data]); */
+      console.log("el mensaje AJHFHJ", res.data);
+       setMessages([...messages, res.data]);
     } catch (err) {
       console.log(err);
     }
