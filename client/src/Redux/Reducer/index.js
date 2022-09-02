@@ -263,7 +263,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         hosts: action.payload
       };
-
     case "BOOKING_BY_GUEST":
         return {
           ...state,
