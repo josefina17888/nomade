@@ -31,7 +31,6 @@ export default function Booking(props) {
   }, [dispatch]);
   const lodging = useSelector((state) => state.detail);
   const services= lodging.services
-  console.log(services, 'LODGING')
 
   //DECLARATION CONST FOR USE DATA
   const unavailableDates = availibity.map((e) =>
@@ -77,7 +76,8 @@ export default function Booking(props) {
     email: userEmail,
     lodgingId: lodgingId,
     costNight: lodging.price,
-    pets: check
+    pets: check,
+    hostId: lodging.hostId
   });
   console.log(input, 'SOY INPUT')
 
