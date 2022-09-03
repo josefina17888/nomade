@@ -14,11 +14,12 @@ export const createOrGetUserGoogle = async (user) => {
     name: given_name,
     picture
   }
-	// forma antigua
+
+    //forma antigua
   //  localStorage.setItem("userInfo", JSON.stringify(userObject));
   //  await axios.post("/api/login/google", userObject);
-  
+
   const infoGuest = await axios.post("/api/login/google", userObject);
   localStorage.setItem("userInfo", JSON.stringify(infoGuest.data));
-  
+
 };

@@ -27,6 +27,7 @@ import { useSelector } from 'react-redux';
 import adminLodgings from './components/Admin/adminLodgings.jsx'
 import adminComplaints from './components/Admin/adminComplaints.jsx'
 import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
+import Reservations from './components/Profile/HostReservations/hostreservations';
 
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
@@ -47,7 +48,8 @@ function App() {
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route exact path='/favorites' component={Favorites}/> 
-          <Route path='/profile/:email' component={Profile}></Route>
+          <Route exact path='/profile/:email' component={Profile}></Route>
+          <Route exact path='/profile/:email/:hostId/reservations' component={Reservations}></Route>
           {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
