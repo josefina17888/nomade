@@ -56,7 +56,6 @@ export default function Booking(props) {
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
-
   //LODGING DETAIL
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
@@ -73,13 +72,18 @@ export default function Booking(props) {
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
-    costNight: lodging.price,
+    costNight: costNight,
     pets: check,
-    hostId: lodging.hostId
+    hostId: lodging.hostId,
+    total: total
   });
 
+  const allDates = getDatesInRange(input.checkIn, input.checkOut);
   //DATA JOSE
-  const total = costNight * input.night;
+  const total = costNight * allDates.length;
+  useEffect(()=>{
+    setInput({...input, total:total})
+  }, [])
 
   //GET Q PETS
   const lodgingServices = []
@@ -94,6 +98,7 @@ export default function Booking(props) {
     setInput({ ...input, pets: e.target.checked });
   }
 
+
   //MERCADO PAGO
   //estado local para la preferenceId
   const [preferenceId, setPreferenceId] = useState("")
@@ -107,9 +112,45 @@ export default function Booking(props) {
     }
   }  
 
+
+//ON CHANGE CHECK IN
+function onChangeCheckIn(currentDate){
+  let start = getDatesInRange(input.checkIn, input.checkOut)
+  setInput({
+    ...input,
+    checkIn: new Date(currentDate).toDateString(),
+    allDates: start,
+    night: start.length,
+    total: costNight * start.length
+  })
+  console.log(input, 'INPUUUT')
+
+}
+useEffect(()=>{
+  let start = getDatesInRange(input.checkIn, input.checkOut)
+  setInput({
+    ...input,
+    allDates: start,
+    night: start.length,
+    total: costNight * start.length
+  })
+},[input.checkIn,input.checkOut])
+
+//ON CHANGE CHECK OUT
+function onChangeCheckOut(currentDate){
+  let start = getDatesInRange(input.checkIn, input.checkOut)
+  setInput({
+    ...input,
+    checkOut: new Date(currentDate).toDateString(),
+    allDates: start,
+    night: start.length,
+    total: costNight * start.length
+  })
+
+}
+
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
-    const allDates = getDatesInRange(input.checkIn, input.checkOut);
     setInput({...input,
       night : allDates.length,
       allDates: allDates
@@ -117,6 +158,7 @@ export default function Booking(props) {
     const isFound = unavailableDatesMap.some((date) =>
       allDates.includes(new Date(date).toDateString())
     );
+    console.log(preferenceId.hasOwnProperty(preferenceId))
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") :
     preference !== undefined? alert('Haz clic en el boton de pago') :
@@ -164,11 +206,7 @@ export default function Booking(props) {
                     disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkIn)}
-                    onChange={(currentDate) =>
-                      setInput({
-                        ...input,
-                        checkIn: new Date(currentDate).toDateString(),
-                      })
+                    onChange={(currentDate) =>onChangeCheckIn(currentDate)
                     }
                     selectsStart
                     startDate={new Date(input.checkIn)}
@@ -184,11 +222,7 @@ export default function Booking(props) {
                     disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkOut)}
-                      onChange={(currentDate) =>
-                        setInput({
-                          ...input,
-                          checkOut: new Date(currentDate).toDateString(),
-                        })
+                      onChange={(currentDate) =>onChangeCheckOut(currentDate)
                       }
                       selectsStart
                       startDate={new Date(input.checkIn)}
@@ -230,7 +264,7 @@ export default function Booking(props) {
                 <div>
                   <h6 className={s.sub2}>Costo Total</h6>
                   <h6 className={s.h1}>
-                    ${total} por {input.night} noches
+                    ${input.total} por {input.night} noches
                   </h6>
                 </div>
                 <div>
