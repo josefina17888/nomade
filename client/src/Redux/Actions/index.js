@@ -454,43 +454,6 @@ export function sacarAdmin(payload){
     }
   }
 }
- export function getConversations(userEmail){
-  return async function(dispatch){
-  try {
-    let res = await axios.get(
-      "http://localhost:3001/api/conversation/conv/" + userEmail
-      );
-      console.log("conversations action", res)
-       return dispatch({
-        type: "GET_CONVERSATIONS",
-        payload: res.data
-      }) 
-    
-  } catch (err) {
-    console.log(err);
-  }
-  }}
-
- export function newConversation(payload){
-  console.log("pay", payload)
-  return async function(dispatch){
-    try {
-      /* await axios.post(`/api/conversation/${guest}/${host}` ) */
-       return dispatch({
-        type: "NEW_CONVERSATION",
-
-      }) 
-    
-  } catch (err) {
-    console.log(err);
-  }
-  }}
-
-
-
-  
-
-
 
 export function getComplaints(){
   return async function(dispatch){

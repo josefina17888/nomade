@@ -29,11 +29,8 @@ export default function Status() {
   //trae los detalles del alojamiento reservado
   useEffect(() => {
     dispatch(getDetail(lodgingId));
-    let i = 1
+    dispatch(createNewBooking(booking));
   }, [dispatch]);
-
-  dispatch(createNewBooking(booking));
-  
 
   const lodging = useSelector((state) => state.detail);
   const title = lodging.title;

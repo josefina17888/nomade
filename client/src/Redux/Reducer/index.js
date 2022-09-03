@@ -371,7 +371,6 @@ function rootReducer(state = initialState, action) {
           ...state,
           payment: action.payload,
         }; */
-  
 
        case "GET_CONVERSATIONS":
         return {
@@ -386,6 +385,7 @@ function rootReducer(state = initialState, action) {
             ...state,
             allGuests: action.payload,
           };
+
     default:
       return { ...state };
   }
