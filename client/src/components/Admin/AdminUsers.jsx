@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined && (arrFilter || arrFilter[0].isAdmin === true) ?
+      {userToken && allGuests[0]!== undefined && (arrFilter[0].isAdmin || arrFilter[0].isAdmin === true) ?
     <div>
    
    <UserNav
