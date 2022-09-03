@@ -12,6 +12,7 @@ export default function Chat() {
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
   const socket = useRef();
@@ -29,7 +30,7 @@ export default function Chat() {
       });
     });
   }, []);
-  
+
   useEffect(() => {
     if (arrivalMessage !== null) {
       if (Object.keys(currentChat).length !== 0) {
@@ -70,6 +71,7 @@ export default function Chat() {
         let conversationId = currentChat._id;
         try {
           let res = await axios("/api/message/" + conversationId);
+
           setMessages(res.data);
         } catch (err) {
           console.log(err);
@@ -80,6 +82,7 @@ export default function Chat() {
   }, [currentChat]);
 
   const handleSubmit = async (e) => {
+    try {
     e.preventDefault();
     //este objeto es el que va a la DB
     const message = {
@@ -87,6 +90,7 @@ export default function Chat() {
       text: newMessage,
       conversationId: currentChat._id,
     };
+
     const receiverId = currentChat.members.find((member) => member !== userId);
 
     socket.current.emit("sendMessage", {
@@ -100,6 +104,7 @@ export default function Chat() {
       const res = await axios.post("/api/message", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
+
     } catch (err) {
       console.log(err);
     }

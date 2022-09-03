@@ -64,6 +64,7 @@ const removeUser = (socketId) => {
 };
 
 //busca por idal usuario al que hay que enviarle el mensaje
+
 const getUser = (userId) => {
   return users.find((user) => user.userId === userId);
 };
@@ -87,6 +88,7 @@ io.on("connection", (socket) => {
  socket.on("sendMessage", ({ senderId, receiverId, text }) => { 
 //busca el receiver
  const user = getUser(receiverId);
+
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,

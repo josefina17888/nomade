@@ -14,6 +14,7 @@ export const createOrGetUserGoogle = async (user) => {
     name: given_name,
     picture
   }
+  
 	//forma antigua
   //  localStorage.setItem("userInfo", JSON.stringify(userObject));
   //  await axios.post("/api/login/google", userObject);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   getDetail,
   createNewBooking,
@@ -25,6 +26,19 @@ export default function Booking(props) {
   console.log(lodgingId)
 
   //GET DETALLES DE LODGING
+  // const [lodging, setLodging] = useState("")
+
+  // useEffect(() => {
+  //   const getLodgingDetails = async () => {
+  //     try {
+  //       let data = await axios.get("/api/lodging/detail/" + lodgingId)
+  //       let lodgingDets = data.data;
+  //       setLodging(lodgingDets)
+  //     }catch(err){
+  //       console.log(err)
+  //     }
+  //   }}, [lodging])
+
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
@@ -78,7 +92,6 @@ export default function Booking(props) {
     pets: check,
     hostId: lodging.hostId
   });
-  console.log(input, 'SOY INPUT')
 
   //DATA JOSE
   const total = costNight * input.night;
@@ -98,13 +111,17 @@ export default function Booking(props) {
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
+    const allDates = getDatesInRange(input.checkIn, input.checkOut);
+    setInput({...input,
+      night : allDates.length,
+      allDates: allDates
+    })
     const isFound = unavailableDatesMap.some((date) =>
-      alldates.includes(new Date(date).toDateString())
+      allDates.includes(new Date(date).toDateString())
     );
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") : 
     dispatch(payBooking(input));
-    dispatch(setDataPostBooking(input));
   }
 
   //MERCADO PAGO
@@ -169,7 +186,8 @@ export default function Booking(props) {
                         setInput({
                           ...input,
                           checkOut: new Date(currentDate).toDateString(),
-                        })}
+                        })
+                      }
                       selectsStart
                       startDate={new Date(input.checkIn)}
                       endDate={new Date(input.checkOut)}
