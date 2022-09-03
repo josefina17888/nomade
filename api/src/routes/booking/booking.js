@@ -67,6 +67,8 @@ router.get("/all/:guestId", async (req, res) => {
 
 router.post("/emailVerified/:email",async (req, res) => {
   const {email} = req.params
+  console.log(email)
+  console.log(req.body)
     try{
       const userExist = await Guest.findOne({ email });
       const tokenExist = await Token.findOne({userId: userExist._id})
