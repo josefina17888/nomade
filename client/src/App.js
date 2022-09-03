@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, BrowserRouter, Switch, Router } from 'react-router-dom'; 
+import { Route, BrowserRouter, Switch, Navigate, Outlet, Redirect } from 'react-router-dom'; 
 import GoogleMaps from './components/GoogleMaps/GoogleMaps.js';
 import Home from './components/Home/Home.js';
 import LoginUser from './components/LoginUser/LoginUser.jsx';
@@ -22,10 +22,20 @@ import Booking from './components/Booking/Booking'
 import Status from './components/MercadoPago/Status';
 import Chat from './components/Messenger/Chat/Chat'
 import complaint from './components/complaint/complaint'
+import adminUsers from './components/Admin/AdminUsers.jsx'
 import { useSelector } from 'react-redux';
+import adminLodgings from './components/Admin/adminLodgings.jsx'
+import adminComplaints from './components/Admin/adminComplaints.jsx'
+import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
 
 function App() {
-  /* const user = useSelector(state=> state.demoUser) */
+  const guestInfo = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestInfo);
+  console.log(user, 'USER')
+  //GET HOST
+  /* useEffect(()=>{
+    dispatch(getHostByguestId(user.email))
+  }) */
   return (
    <div>
       <BrowserRouter>
@@ -33,18 +43,29 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/map" component={GoogleMaps} />
           <Route path="/login" component={LoginUser} />
-          <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route path="/registerguest" component={FormUser} />
           <Route exact path= '/detail/:_id' component={CardDetail}/>
-          <Route path='/:guestId/form' component={FormHost}/>
           <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route exact path='/favorites' component={Favorites}/> 
           <Route path='/profile/:email' component={Profile}></Route>
           <Route path='/:email/form' component={FormHost}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          <Route exact path='/booking/:_id' component={Booking}/> 
-          {/* <Route exact path='/booking/:_id'>  {user ? <LoginUser /> : <Booking />} </Route> */}
+          {
+            user?
+            <Route exact path='/booking/:_id' component={Booking}/>:
+            <Redirect exact to ="/login" component={LoginUser} />
+          }
+          {
+            user?
+            <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>:
+            <Redirect exact to ="/login" component={LoginUser} />
+          }
+          {
+            user?
+            <Route exact path= '/:email/form' component={FormHost}/>:
+            <Redirect exact to ="/login" component={LoginUser} />
+          }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
@@ -53,7 +74,10 @@ function App() {
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
-          
+          <Route path= '/admin/users' component={adminUsers}/>
+          <Route path= '/admin/lodgings' component={adminLodgings}/>
+          <Route path= '/admin/complaints' component={adminComplaints}/>
+          <Route path= '/admin/estadisticas' component={adminEstadisticas}/>
         </Switch>
       </BrowserRouter>
    </div>

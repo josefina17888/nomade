@@ -96,6 +96,8 @@ useEffect(() => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
+    <div>
+      <NavBar/>
     <div className={style.containerMap}>
       <GoogleMap
         zoom={15}
@@ -148,6 +150,7 @@ useEffect(() => {
           className={style.input}
         />
       </Autocomplete>
+    </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ cloudinary.config({
   api_key: '828297737868324', 
   api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
 });
-//BUCCA LODGING Y REALCIONA EL HOST
+//BUSCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
     let fotos = req.files.map(e=>e.path)
@@ -50,10 +50,14 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 })
 });  */
 
+
+
 ///////////trae el lodging con toda la info del host (FUNCIONA)////////////
+
 router.get("/host/lodging", async (req, res) => {
   const lodgingId = req.body.lodgingId 
   const lodging = await Lodging.find({lodgingId}).populate({path:"hostId", model: "Host"})
+  console.log(lodging,"ID")
   console.log(lodging.hostId, 'GO')
   res.send(lodging) 
  });

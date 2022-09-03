@@ -48,17 +48,22 @@ const io = socketio(server, {
   },
 });
 
-let users = [];
+let users = [...new Set([])]
 
 //trae los ids de los usuarios conectados desde el front
 const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === userId) &&
+  if (userId!==null){
+    !users.some((user) => user.userId === userId) &&
     users.push({ userId, socketId });
+
+  }
+ 
 };
 // elimina el Id del que se desconecta
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
+
 
 // encuentra un user por id y lo devuelve
 const getUser = (userId) => {
@@ -71,25 +76,28 @@ io.on("connection", (socket) => {
   console.log("a user connected.");
 
   //toma el userId y socketId desde user del front
-  socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
-    io.emit("getUsers", users);
-    console.log("soy users", users);
-  });
+  if (users !==undefined){
+    socket.on("addUser", (userId) => {
+      addUser(userId, socket.id);
+      io.emit("getUsers", users);
+      console.log("soy users", users);
+    });
+    console.log("socket", socket.id);
+  }
+  
 
   //recibe los mensajes del front y se lo envia al user indicado
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
     //busca al receiver y envia un mensaje a este usuario
     const user = getUser(receiverId);
-    console.log("reciever", receiverId)
-console.log("aqui",user.socketId)
+    console.log("reciever", user)
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,
         text
        });
     
-   
+      
   });
 
   //cuando se desconecta
