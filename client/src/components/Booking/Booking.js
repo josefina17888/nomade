@@ -37,12 +37,13 @@ export default function Booking(props) {
   );
 
   // PARSE INFO LOCAL STORAGE BOOKING INFO
+  let costNight = JSON.parse(localStorage.getItem("priceBooking"))
     const bookingInfo = localStorage.getItem("bookingInfo");
     var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
     var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
     var check = JSON.parse(bookingInfo).pets
     var totalGuest = JSON.parse(bookingInfo).guests;
-    let costNight = JSON.parse(localStorage.getItem("priceBooking"))
+
 
   //PARSE INFO LOCAL STORAGE USER INFO
     const guestInfo = localStorage.getItem("userInfo");
@@ -57,6 +58,9 @@ export default function Booking(props) {
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
   //LODGING DETAIL
+  //const costNight = lodging.price; 
+  console.log(costNight)
+
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
   const picture1 = obj["0"];

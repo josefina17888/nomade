@@ -7,22 +7,57 @@ import Conversation from "../Conversation/Conversation";
 import Message from "../Message/Message";
 import io from "socket.io-client";
 
+
 export default function Chat() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [host, setHost] = useState({});
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [bookingInfo, setBookingInfo] = useState("");
   const scrollRef = useRef();
   const socket = useRef();
   const user = JSON.parse(localStorage.getItem("userInfo"));
   let userId = user._id;
-  console.log(userId)
+  let userEmail = user.email;
 
+
+  if (localStorage.booking) {
+    useEffect(() => {
+      const bookingInfo = JSON.parse(localStorage.getItem("booking"));
+      let hostId = bookingInfo.hostId;
+      const getHostGuestId = async () => {
+        try {
+          let res = await axios.get("/api/host/all/" + hostId);
+          let guestId = res.data
+          if(guestId){
+            setHost(guestId)}
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getHostGuestId()
+
+      const newConversation = async () => {
+        let filtered = conversations.filter(
+          (c) => c.members.includes(userId) && c.members.includes(host)
+        );
+        console.log("prueba", filtered);
+        if (!filtered.length) {
+            let conv = await axios.post(`/api/conversation/${userId}/${host}`); 
+            console.log("nueva conversacion", conv)
+        }
+      };
+      newConversation()
+    }, [conversations]);
+  }
+
+  //conecta con el server y trae los mensajes
   useEffect(() => {
     socket.current = io("ws://localhost:3001");
     socket.current.on("getMessage", (data) => {
-   
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -30,7 +65,7 @@ export default function Chat() {
       });
     });
   }, []);
-  
+  //mensajes entrantes
   useEffect(() => {
     if (arrivalMessage !== null) {
       if (Object.keys(currentChat).length !== 0) {
@@ -41,26 +76,27 @@ export default function Chat() {
     }
   }, [arrivalMessage, currentChat]);
 
-  //envia al back el usuario y trae los dos usuarios
   useEffect(() => {
-    if (user._id !== null) {
-      socket.current.emit("addUser", user._id);
-      socket.current.on("getUsers", (users) => {
-        console.log("users que viene del back", users);
-      });
+
+    if (userId) {
+      socket.current.emit("addUser", userId);
+
     }
+    socket.current.on("getUsers", (users) => {
+      console.log("users del back", users);
+    });
   }, [user]);
 
   // obtiene todas las conversaciones asociadas al usuario
-  const getConversations = async () => {
-    try {
-      let res = await axios.get("/api/conversation/conv/" + userId);
-      setConversations(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
+    const getConversations = async () => {
+      try {
+        let res = await axios.get("/api/conversation/conv/" + userId);
+        setConversations(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getConversations();
   }, [userId]);
 
@@ -88,10 +124,12 @@ export default function Chat() {
       text: newMessage,
       conversationId: currentChat._id,
     };
-    const receiverId = currentChat.members.find((member) => member !== userId);
+    const receiverId = currentChat.members.find(
+      (member) => member !== user._id
+    );
 
     socket.current.emit("sendMessage", {
-      senderId: userId,
+      senderId: user._id,
       receiverId,
       text: newMessage,
     });
@@ -105,14 +143,6 @@ export default function Chat() {
       console.log(err);
     }
   };
-
-
-  /* useEffect(() => {
-    if( scrollRef.current){
-      scrollRef.current.scrollInToView({behavior:"smooth"}) 
-    }
-
-  }, [messages]); */
 
   return (
     <div className={s.chatContainer}>

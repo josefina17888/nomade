@@ -50,24 +50,20 @@ const io = socketio(server, {
 });
 
 let users = [];
-//filtro para que no hayan usuarios repetidos en el arr users
+
 const addUser = (userId, socketId) => {
-  if (users !== undefined && userId !== null) {
-    !users.some((user) => user.userId === userId) &&
-      users.push({ userId, socketId });
-  }
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
 };
 
-//elimina del arr de usuarios si se desconecta
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
-//busca por idal usuario al que hay que enviarle el mensaje
-
 const getUser = (userId) => {
   return users.find((user) => user.userId === userId);
 };
+
 
 
 io.on("connection", (socket) => {
@@ -75,14 +71,15 @@ io.on("connection", (socket) => {
   console.log("a user connected.");
 
   //despues de cada conexion toma el userId y el socketId del usuario desde el front
-  if (users !== undefined) {
     socket.on("addUser", (userId) => {
       addUser(userId, socket.id);
-      io.emit("getUsers", users);
+      if(users){
+        io.emit("getUsers", users);
+      }
       console.log("soy users", users);
     });
     console.log("socket", socket.id);
-  }
+
 
 //enviar y recibir mensajes(viene del front y de aqui se envia al otro usuario)
  socket.on("sendMessage", ({ senderId, receiverId, text }) => { 
