@@ -6,12 +6,7 @@ import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
-<<<<<<< HEAD
-import { getGuestByEmail } from "../../Redux/Actions";
-=======
 import { getGuestByEmail, getDetail } from "../../Redux/Actions";
->>>>>>> 33fee824e817414b89b9c12bd7736e81378800fb
-
 export default function Profile() {
 const params = useParams()
 let guestData = localStorage.getItem("userInfo");
@@ -98,28 +93,16 @@ console.log(booking)
 console.log(lodgingIds)
 // console.log(lodgingDets)
 
-export default function Profile() {
-  
-  let guestId = localStorage.getItem("userInfo");
-  let user = JSON.parse(guestId)
-  let email = user.email
-  console.log(user, 'USER')
 
-//BUSCANDO EL GUEST CON EL EMAIL
-const [guest, setGuest] = useState("")
+// let bookingsLodging = []
+// lodgingDets.forEach(async (elem) => 
+//      {let id = elem._id
+//       elem.filtered = await booking.filter((e)=>e.lodgingId === id)
+//       // let concatenado = elem.concat(filtered)
+//       bookingsLodging.push(elem)
+// })
 
-useEffect(() => {
-  const getGuestInfo = async () => {
-    try {
-      let res = await axios.get("/api/guest/" + email);
-      let guestId = res.data[0]._id;
-      setGuest(guestId)
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  getGuestInfo();
-}, [guest]);
+// console.log(bookingsLodging)
 
   return (
     <div>

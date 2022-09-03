@@ -11,6 +11,7 @@ import {
 import style from "./GoogleMaps.module.css";
 import { getLodgings } from '../../Redux/Actions/index'
 import { useSelector, useDispatch } from "react-redux";
+import NavBar from "../NavBar/NavBar"
 
 export default function GoogleMaps() {
   const selector = useSelector((state) => state.lodgings);

@@ -42,7 +42,7 @@ export default function Booking(props) {
   useEffect(() => {
     dispatch(getDetail(lodgingId));
     const data = async () => {
-      await axios.post(`http://localhost:3001/api/booking/emailVerified/${emailGuest}`,booking)
+      await axios.post(`http://localhost:3001/api/booking/emailVerified/${userEmail}`,bookingInfo)
    }
    data()
   }, [dispatch]);
