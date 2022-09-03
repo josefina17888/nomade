@@ -25,11 +25,8 @@ router.post("/", async (req, res) => {
         })
 
     } else {
-        if(user) {
-            res.send('Usuario logueado')
+            res.json(user)
         }
-    }
-    
 });
 
 

@@ -371,13 +371,6 @@ function rootReducer(state = initialState, action) {
           ...state,
           payment: action.payload,
         }; */
-  
-
-       case "GET_CONVERSATIONS":
-        return {
-          ...state,
-          conversations: action.payload,
-        };
  
     default:
       return { ...state };

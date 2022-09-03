@@ -9,15 +9,21 @@ export default function Conversation({ conversation, currentUser }) {
   const [friend, setFriend] = useState({})
   const [sFriendId, setsFriendId] = useState(null);
   
+  
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
+    console.log("friendId", friendId)
     setsFriendId(friendId);
     const getFriend = async () => {
       try {
         let friendInfo = await axios(
-          "http://localhost:3001/api/conversation/users/friend/" + friendId
-        );
-        setFriend(friendInfo.data) 
+          "/api/conversation/users/friend/" + friendId
+          );
+          console.log("amigo",friendInfo)
+          if (friendInfo.data!==null){
+            setFriend(friendInfo.data) 
+          }
+       
       } catch (err) {
         console.log(err);
       }
