@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDetail } from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
+import GoogleMapDetail from "../GoogleMapsDetail/GoogleMapsDetail";
 import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
 import styles from "./CardDetail.module.css";
 import { AiOutlineWifi, AiFillCar } from "react-icons/ai";
-import {lodgingReviews} from "../../Redux/Actions/index";
+import { lodgingReviews } from "../../Redux/Actions/index";
 import NavBar from "../NavBar/NavBar";
+import s from '../DatePicker/DatePicker.module.css'
 
 import {
   GiThermometerCold,
@@ -43,13 +45,11 @@ export default function CardDetail(props) {
   }, [dispatch]);
 
   const myLodging = useSelector((state) => state.detail);
-  let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
-  let detailReview = stateLodgings.map(e => e.lodgingId ===lodgingId ? [e.comments, e.rating]: false)
-  let filtrado =detailReview.filter(e=> e!== false)
-
-
-
-
+  let stateLodgings = useSelector((state) => state.allLodgingsReviews);
+  let detailReview = stateLodgings.map((e) =>
+    e.lodgingId === lodgingId ? [e.comments, e.rating] : false
+  );
+  let filtrado = detailReview.filter((e) => e !== false);
 
   // const servicios = useSelector((state) => state.detail.services)
 
@@ -93,247 +93,278 @@ export default function CardDetail(props) {
       ) : (
         <div className={styles._le6wlg}>
           <div className={styles.container}>
-          <div className="_88xxct">
-            <div className="plmw1e5 mq5rv0q dir dir-ltr">
-              <div className={styles.carousel}>
-                <div className="_168ht2w">
-                <Carousel activeIndex={index} onSelect={handleSelect}
-                className="_168ht2w">
-                  <Carousel.Item className="_168ht2w">
-                    <img
-                      className="d-block w-100"
-                      src={picture1}
-                      alt="First slide"
-                    />
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <img
-                      className="d-block w-100"
-                      src={picture2}
-                      alt="Second slide"
-                    />
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <img
-                      className="d-block w-100"
-                      src={picture3}
-                      alt="Third slide"
-                    />
-                  </Carousel.Item>
-                </Carousel>
+            <div className="_88xxct">
+              <div className="plmw1e5 mq5rv0q dir dir-ltr">
+                <div className={styles.carousel}>
+                  <div className="_168ht2w">
+                    <Carousel
+                      activeIndex={index}
+                      onSelect={handleSelect}
+                      className="_168ht2w"
+                    >
+                      <Carousel.Item className="_168ht2w">
+                        <img
+                          className="d-block w-100"
+                          src={picture1}
+                          alt="First slide"
+                        />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <img
+                          className="d-block w-100"
+                          src={picture2}
+                          alt="Second slide"
+                        />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <img
+                          className="d-block w-100"
+                          src={picture3}
+                          alt="Third slide"
+                        />
+                      </Carousel.Item>
+                    </Carousel>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h5 className={styles.city}>{myLodging.city}</h5>
+              </div>
+
+              <div className={styles.padding}>
+                <h3 className={styles.titles}>Alojamiento</h3>
+                <hr className={styles.hr}></hr>
+                <div>
+                  <h4>{myLodging.title}</h4>
+                  <h4>{myLodging.lodgingType}</h4>
+                </div>
+              </div>
+
+              <div className={styles.padding}>
+                <h3 className={styles.titles}>Descripción</h3>
+                <hr className={styles.hr}></hr>
+                <h4>{myLodging.description}</h4>
+              </div>
+
+              <div className={styles.padding}>
+                <h3 className={styles.titles}>Servicios Incluidos</h3>
+                <hr className={styles.hr}></hr>
+
+
+                {/* <div>
+            {
+              lodgingServices.map((e) => {
+                return(
+                  <p className={styles.p1}>{e}</p>
+                )
+              })
+            }
+          </div> */}
+                <div className={styles.flexcontainer2}>
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <AiOutlineWifi />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("wifi") ? (
+                        <p className={styles.p1}>Wifi</p>
+                      ) : (
+                        <p className={styles.p2}>Wifi</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <GiThermometerCold />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("ac") === true ? (
+                        <p className={styles.p1}>Aire Acondicionado</p>
+                      ) : (
+                        <p className={styles.p2}>Aire Acondicionado</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <GiShower />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("hotWater") === true ? (
+                        <p className={styles.p1}>Agua Caliente</p>
+                      ) : (
+                        <p className={styles.p2}>Agua Caliente</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <MdOndemandVideo />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("tv") === true ? (
+                        <p className={styles.p1}>Televisión</p>
+                      ) : (
+                        <p className={styles.p2}>Televisión</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <MdSecurity />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("security") === true ? (
+                        <p className={styles.p1}>Seguridad</p>
+                      ) : (
+                        <p className={styles.p2}>Seguridad</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <AiFillCar />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("parking") === true ? (
+                        <p className={styles.p1}>Estacionamiento</p>
+                      ) : (
+                        <p className={styles.p2}>Estacionamiento</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <MdCleaningServices />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("cleaning") === true ? (
+                        <p className={styles.p1}>Limpieza</p>
+                      ) : (
+                        <p className={styles.p2}>Limpieza</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <GiWashingMachine />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("laundry") === true ? (
+                        <p className={styles.p1}>Lavandería</p>
+                      ) : (
+                        <p className={styles.p2}>Lavandería</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <GiCookingPot />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("kitchen") === true ? (
+                        <p className={styles.p1}>Cocina</p>
+                      ) : (
+                        <p className={styles.p2}>Cocina</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <MdLocalDining />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("dining") === true ? (
+                        <p className={styles.p1}>Comedor</p>
+                      ) : (
+                        <p className={styles.p2}>Comedor</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <FaSwimmingPool />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("pool") === true ? (
+                        <p className={styles.p1}>Piscina</p>
+                      ) : (
+                        <p className={styles.p2}>Piscina</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={styles.flexcontainer4}>
+                    <div>
+                      <MdOutlinePets />
+                    </div>
+                    <div>
+                      {lodgingServices.includes("pets") === true ? (
+                        <p className={styles.p1}>Mascotas</p>
+                      ) : (
+                        <p className={styles.p2}>Mascotas</p>
+                      )}
+                    </div>
+                  </div>
+                  <GoogleMapDetail />
                 </div>
               </div>
             </div>
-
             <div>
-              <h5 className={styles.city}>{myLodging.city}</h5>
-            </div>
+              <DatePickerOk lodId={lodgingId} />
 
-            <div className={styles.padding}>
-              <h3 className={styles.titles}>Alojamiento</h3>
-              <hr className={styles.hr}></hr>
-              <div className={styles.lod}>
-                <h5>{myLodging.title}</h5>
-                <h5> Tipo de alojamiento: {myLodging.lodgingType}</h5>
-              </div>
-            </div>
-
-            <div className={styles.padding}>
-              <h3 className={styles.titles}>Descripción</h3>
-              <hr className={styles.hr}></hr>
-              <h5 className={styles.lod}>{myLodging.description}</h5>
-            </div>
-
-            <div className={styles.padding}>
-              <h3 className={styles.titles}>Servicios Incluidos</h3>
-              <hr className={styles.hr}></hr>
-
-              <div className={styles.flexcontainer2}>
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <AiOutlineWifi />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("wifi") ? (
-                      <p className={styles.p1}>Wifi</p>
-                    ) : (
-                      <p className={styles.p2}>Wifi</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <GiThermometerCold />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("ac") === true ? (
-                      <p className={styles.p1}>Aire Acondicionado</p>
-                    ) : (
-                      <p className={styles.p2}>Aire Acondicionado</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <GiShower />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("hotWater") === true ? (
-                      <p className={styles.p1}>Agua Caliente</p>
-                    ) : (
-                      <p className={styles.p2}>Agua Caliente</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <MdOndemandVideo />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("tv") === true ? (
-                      <p className={styles.p1}>Televisión</p>
-                    ) : (
-                      <p className={styles.p2}>Televisión</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <MdSecurity />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("security") === true ? (
-                      <p className={styles.p1}>Seguridad</p>
-                    ) : (
-                      <p className={styles.p2}>Seguridad</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <AiFillCar />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("parking") === true ? (
-                      <p className={styles.p1}>Estacionamiento</p>
-                    ) : (
-                      <p className={styles.p2}>Estacionamiento</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <MdCleaningServices />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("cleaning") === true ? (
-                      <p className={styles.p1}>Limpieza</p>
-                    ) : (
-                      <p className={styles.p2}>Limpieza</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <GiWashingMachine />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("laundry") === true ? (
-                      <p className={styles.p1}>Lavandería</p>
-                    ) : (
-                      <p className={styles.p2}>Lavandería</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <GiCookingPot />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("kitchen") === true ? (
-                      <p className={styles.p1}>Cocina</p>
-                    ) : (
-                      <p className={styles.p2}>Cocina</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <MdLocalDining />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("dining") === true ? (
-                      <p className={styles.p1}>Comedor</p>
-                    ) : (
-                      <p className={styles.p2}>Comedor</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <FaSwimmingPool />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("pool") === true ? (
-                      <p className={styles.p1}>Piscina</p>
-                    ) : (
-                      <p className={styles.p2}>Piscina</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className={styles.flexcontainer4}>
-                  <div>
-                    <MdOutlinePets />
-                  </div>
-                  <div>
-                    {lodgingServices.includes("pets") === true ? (
-                      <p className={styles.p1}>Mascotas</p>
-                    ) : (
-                      <p className={styles.p2}>Mascotas</p>
-                    )}
-                  </div>
+              <h3 className={styles.h3}>Reseñas</h3>
+              <div className={styles.modal}>
+                <div className={styles.reviews}>
+                  {filtrado[0] !== undefined ? (
+                    <div>
+                      {filtrado.map((e) => (
+                        <div className={styles.texto}>
+                          <label className={styles.estrellas} value={e[1]}>
+                            {e[1] === 5
+                              ? "★★★★★ "
+                              : e[1] === 4
+                              ? "★★★★ "
+                              : e[1] === 3
+                              ? "★★★ "
+                              : e[1] === 2
+                              ? "★★ "
+                              : e[1] === 1
+                              ? "★ "
+                              : false}
+                          </label>
+                          <label value={e[0]}>{e[0]}</label>
+                          <hr></hr>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className={styles.aun}>
+                      <h5>{"Aún no hay reseñas"}</h5>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-
-            <DatePickerOk lodId={lodgingId} />
-            <h3 className={styles.h3}>Reseñas</h3>
-            <div className={styles.modal}>
-            <div className={styles.reviews}>
-              {filtrado[0]!==undefined ?<div>
-                { filtrado.map((e) => (            
-                      <div className={styles.texto}>
-                      <label className={styles.estrellas} value = {e[1]}>{e[1] === 5 ? "★★★★★ " : e[1] === 4? "★★★★ ": e[1] === 3? "★★★ ": e[1] === 2? "★★ ": e[1] === 1? "★ ": false}</label>
-                      <label value = {e[0]}>{e[0]}</label>
-                      <hr></hr>   
-                            </div>
-                        ) )
-                }
-              </div>: <div className={styles.aun}><h5>{"Aún no hay reseñas"}</h5></div>}
-          </div>
-          </div>
-          </div>
           </div>
         </div>
       )}
 
-      <div>
-        <Link to="/">
-          <button className={styles.button}>Volver</button>
-        </Link>
+      <div className={styles.container_btn}>
+        
+          <button className={styles.button}><Link className={styles.link} to="/">Volver</Link></button>
+        
         <Link
           to={
             userToken
@@ -344,10 +375,17 @@ export default function CardDetail(props) {
         >
           <button className={styles.button}>Califica este hospedaje!</button>
         </Link>
-        
+        <Link
+          to={
+            userToken
+              ? `/complaint/${userToken}/${props.match.params._id}`
+              : "/login"
+          }
+          className="nav-link py-2 px-0 px-lg-2"
+        >
+          <button className={styles.buttonDenunciar}>Denunciar hospedaje</button>
+        </Link>
       </div>
-      
     </div>
   );
-
 }

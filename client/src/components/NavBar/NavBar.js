@@ -26,6 +26,9 @@ export default function NavBar(props) {
     e.preventDefault();
     dispatch(getLodgings());
   }
+
+  /* const demoHistory = window.location.pathname;
+  if(demoHistory === '/' || demoHistory==='/detail/:_id') */
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
@@ -55,9 +58,7 @@ export default function NavBar(props) {
                   <div className="_176ugpa">
                     <Link
                       to={userToken ? `${userToken}/form` : "/registerguest"}
-                      className="nav-link py-2 px-0 px-lg-2"
-                    >
-                      {/* <Link to={`/form`} className="nav-link py-2 px-0 px-lg-2"> */}
+                      className="nav-link py-2 px-0 px-lg-2">
                       <button className={s.btn_host}>Hospeda nómades</button>
                     </Link>
                   </div>
@@ -70,7 +71,7 @@ export default function NavBar(props) {
                     >
                       <FaUserCircle className={s.icon} />
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul className="dropdown-menu dropdown-menu-end">
                       {guestId ? (
                         <div>
                           <li>
@@ -82,7 +83,7 @@ export default function NavBar(props) {
                             </Link>
                           </li>
                           <li>
-                            <Link className="dropdown-item">
+                            <Link to="/login" className="dropdown-item">
                               <TbMessageCircle /> Mensajes
                             </Link>
                           </li>

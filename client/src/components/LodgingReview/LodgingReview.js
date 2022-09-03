@@ -85,7 +85,7 @@ function handleChange(e){
      </div>
      
      }
-     <div className={style.contenedor}><Link to= '/'>
+     <div className={style.contenedor}><Link to=  {"/detail/" +props.match.params.lodgingId}>
           <button className={style.button}>Volver</button>
         </Link></div>
         </form> 

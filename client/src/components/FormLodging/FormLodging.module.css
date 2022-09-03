@@ -84,3 +84,7 @@
 .services label{
 margin: 5px;
 }
+
+.inputLtgLtg {
+    display: none;
+}

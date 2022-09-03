@@ -230,8 +230,6 @@ export function addFavorite(payload){
   }
 
 
-
-
 export function favoriteNumber(payload){
   return async function(dispatch){
     try{
@@ -276,6 +274,14 @@ export function createNewBooking(payload) {
     );
   }}
 
+//ACTION QUE SETEA LOS DATOS DEL LODGING EN 
+export function setDataPostBooking(payload){
+  return{
+    type: 'SET_DATA_POSTBOOKING',
+    payload
+  }
+}
+
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
@@ -291,9 +297,11 @@ export function payBooking(payload) {
 }
 
 export function getBookingByLodgingId(payload){
+  console.log(payload, 'PAYLOAD')
   return async function(dispatch){
     try{
     var response = await axios.post('/api/booking/booking', payload)
+    console.log(response.data, 'SOY RESPONSE')
       return dispatch({
         type: "GET_BOOKING_LODGING_ID",
         payload: response.data
@@ -319,6 +327,18 @@ export function getFeedback(){
     }
   }
 }
+
+//FUNCION QUE ALMACENA DATOS DEL USUARIO
+/* export function getInfoGuest(){
+  return{
+    type: 'GET_INFO_LOCAL_STORAGE'
+  }
+} */
+
+
+
+
+ 
 
 
 
