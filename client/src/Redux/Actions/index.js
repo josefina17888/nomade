@@ -485,6 +485,23 @@ export function deleteComplaint(payload){
   }
 }
 
+export function getByUser(user){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/admin?email=${user}`)
+      console.log(json.data)
+      return dispatch({
+        type: 'GET_BY_USER',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
   return{
