@@ -35,19 +35,37 @@ useEffect(() => {
       let guestBooking = response.data
       //sacar las dos fechas y el lodging id
       setBooking(guestBooking)
-      
+      try{
       let lodgingsGot = []
-      await guestBooking.forEach((e) => {
+      await guestBooking.forEach(async (e) => {
         let subArray = []
         subArray.push(e.lodgingId)
         subArray.push(e.checkIn)
         subArray.push(e.checkOut)
+      
+          let data = await axios.get("/api/lodging/detail/" + e.lodgingId)
+          let title = data.data.title
+          let picture = data.data.picture["0"]
+          subArray.push(title, picture)
+
         lodgingsGot.push(subArray)
       })
-      setLodgingIds(lodgingsGot)
+      
 
-      // let lodgingsUnique=[]
-      // lodgingsGot.forEach((e)=>{
+//       async ()=>{
+//         await lodgingsGot.forEach(async (e)=>{
+//           try{
+//             let data = await axios.get("/api/lodging/detail/" + e["0"])
+//             let title = data.data.title
+//             let picture = data.data.picture["0"]
+//             e.push(title, picture)
+//             }catch(err){
+//             console.log(err)
+//             }
+//           })
+// }
+        setLodgingIds(lodgingsGot)
+      }catch(err){console.log(err)}
       // if(!lodgingsUnique.includes(e)){
       //     lodgingsUnique.push(e)
       //   }
@@ -80,7 +98,6 @@ useEffect(() => {
     //   setLodgingComplete(bookingsLodging)
     // })
     
-     
     } catch (err) {
       console.log(err);
     }
@@ -118,10 +135,10 @@ console.log(lodgingIds)
                 <h2>Detalle del Perfil</h2>
                 <h4>Nombre</h4>
                 <h6>
-                  {user.name.charAt(0).toUpperCase() +
+                  {/* {user.name.charAt(0).toUpperCase() +
                     user.name.slice(1)}{" "}
                   {user.lastname.charAt(0).toUpperCase() +
-                    user.lastname.slice(1)}
+                    user.lastname.slice(1)} */}
                 </h6>
                 <hr width="700"></hr>
                 {user.birthDate ? (
@@ -157,9 +174,11 @@ console.log(lodgingIds)
                       Aún no tienes reservas para mostrar
                       </div> :
                       lodgingIds.map((e)=>
-                      <div key={e._id}>
+                      <div key={e["0"]}>
+                      <h5>{e["3"]}</h5>
                       <h5>{e["1"]}</h5>
                       <h5>{e["2"]}</h5>
+                      <img src={e["4"]} alt="img not found"/>
                         <Link to= {`/detail/${e["0"]}`}>ver detalles</Link>
                       </div>
                       ) 
