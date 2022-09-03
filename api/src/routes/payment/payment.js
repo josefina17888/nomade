@@ -32,7 +32,10 @@ router.post("/", async function (req, res, next) {
                 unit_price: price,
             }],
             payment_methods: {
-                installments: 1
+                installments: 1,
+                excluded_payment_types:[{
+                    id: "ticket"
+                } ]
             },
             back_urls: {
                 success: "http://localhost:3000/status",
