@@ -41,6 +41,7 @@ app.use((err, req, res, next) => {
   res.status(status).send(message);
 });
 
+//crea el server
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
@@ -50,55 +51,56 @@ const io = socketio(server, {
 
 let users = [];
 
-//trae los ids de los usuarios conectados desde el front
 const addUser = (userId, socketId) => {
   !users.some((user) => user.userId === userId) &&
     users.push({ userId, socketId });
 };
-// elimina el Id del que se desconecta
+
 const removeUser = (socketId) => {
   users = users.filter((user) => user.socketId !== socketId);
 };
 
-// encuentra un user por id y lo devuelve
 const getUser = (userId) => {
   return users.find((user) => user.userId === userId);
- 
 };
+
+
 
 io.on("connection", (socket) => {
   //cuando se conecta un usuario
   console.log("a user connected.");
 
-  //toma el userId y socketId desde user del front
-  socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
-    io.emit("getUsers", users);
-    console.log("soy users", users);
-  });
+  //despues de cada conexion toma el userId y el socketId del usuario desde el front
+    socket.on("addUser", (userId) => {
+      addUser(userId, socket.id);
+      if(users){
+        io.emit("getUsers", users);
+      }
+      console.log("soy users", users);
+    });
+    console.log("socket", socket.id);
 
-  //recibe los mensajes del front y se lo envia al user indicado
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-    //busca al receiver y envia un mensaje a este usuario
-    const user = getUser(receiverId);
-    console.log("reciever", receiverId)
-console.log("aqui",user.socketId)
+
+//enviar y recibir mensajes(viene del front y de aqui se envia al otro usuario)
+ socket.on("sendMessage", ({ senderId, receiverId, text }) => { 
+//busca el receiver
+ const user = getUser(receiverId);
+
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,
         text
-       });
-    
-   
-  });
+       }); 
+       console.log("user.socketId", user.socketId)
+  })
 
-  //cuando se desconecta
-
+  ///cuando alguien se desconecta
   socket.on("disconnect", () => {
     console.log("a user disconnected!");
     removeUser(socket.id);
-    console.log("soy users", users.socketId);
     io.emit("getUsers", users);
   });
 });
+
+
 module.exports = server;

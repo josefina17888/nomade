@@ -2,11 +2,14 @@ const express = require("express");
 const router = express.Router();
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
+const Host = require('../../models/Host')
 const upload = require("../../../libs/storage")
 const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
+const mongoose = require("mongoose");
+const toId = mongoose.Types.ObjectId;
 require('dotenv').config();
 
 
@@ -26,6 +29,7 @@ cloudinary.config({
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
+
   const { name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
     try{
       const userExist = await Guest.findOne({ email });
@@ -46,6 +50,10 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
+<<<<<<< HEAD
+=======
+
+>>>>>>> ce474436a527ebb573bde404083a9757eec6b178
       res.status(201).redirect("http://localhost:3000/login")
       // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
@@ -66,8 +74,14 @@ router.post("/reverified",async (req, res) => {
         token: generateToken(userExist._id)
       })
       token.save()
+<<<<<<< HEAD
       const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
       // const url = `https://nomade-henry.herokuapp.com/api/guest/${userExist._id}/verify/${token.token}`;
+=======
+       const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
+      // const url = `https://nomade-henry.herokuapp.com/api/guest/${userExist._id}/verify/${token.token}`;
+
+>>>>>>> ce474436a527ebb573bde404083a9757eec6b178
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(userExist.email,"Verify Email",title , msg , url)
@@ -93,7 +107,11 @@ router.get("/:idGuest/verify/:token", async (req, res) => {
     if(!token) return res.status(400).send({message: "invalid link"})
     await guest.updateOne({_id: guest._id, verified: true})
     await token.remove()
+<<<<<<< HEAD
     res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+=======
+     res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+>>>>>>> ce474436a527ebb573bde404083a9757eec6b178
     // res.redirect(`https://nomade-khaki.vercel.app/${req.params.idGuest}/verify/${req.params.token}`)
   }
   catch(error) {
@@ -227,6 +245,32 @@ router.delete("/:id", async (req,res) => {
         res.status(404).send(error)
     }
 })
+
+router.post("/find/host", async (req, res) => {
+  try {
+    const infoGuest = await Guest.find({ email: req.body.email });
+    const guestId = infoGuest
+    console.log(guestId, 'REQ')
+    const isHost = await Host.find({ guestId: guestId});
+    res.status(200).json(isHost)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+//busco un host por guest id FUNCIONA
+router.get("/found/host/:guest", async (req, res) => {
+  try {
+    //const guestId = toId(req.params.guest)
+    const infoGuest = await Guest.find({email: req.params.guest})
+    const guestId = infoGuest[0]._id
+    const infoHost = await Host.find({guestId: guestId});
+    const hostId = infoHost["0"]._id
+    res.status(200).json(hostId)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 
 module.exports = router

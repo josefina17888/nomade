@@ -11,6 +11,8 @@ import {
   Autocomplete,
   MarkerF,
 } from "@react-google-maps/api";
+import NavBar from "../NavBar/NavBar";
+
 
 export default function FormLodging() {
   const [coordinates, setCoordinates] = useState({lat: -34.397,
@@ -368,7 +370,7 @@ return (
      </button>
      </div>
      }
-  </form>
+    </form>
     </div>
   );
 }

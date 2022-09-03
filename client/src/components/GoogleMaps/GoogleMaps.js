@@ -11,6 +11,7 @@ import style from "./GoogleMaps.module.css";
 import { getDetail, getLodgings } from "../../Redux/Actions/index";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 
 export default function GoogleMaps() {
   const selector = useSelector((state) => state.lodgings);
@@ -78,6 +79,8 @@ export default function GoogleMaps() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
+    <div>
+      <NavBar/>
     <div className={style.containerMap}>
       <GoogleMap
         zoom={12}
@@ -129,6 +132,7 @@ export default function GoogleMaps() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
+    </div>
     </div>
   );
 }

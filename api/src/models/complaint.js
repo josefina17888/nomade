@@ -9,7 +9,8 @@ const complaintSchema = new Schema({
     guestId : {type: String},
     dated: {
         type: Date
-    }
+    },
+    Visibility: { type: Boolean, default: true },
 }, { versionKey: false});
 
 

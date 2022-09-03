@@ -15,7 +15,7 @@ cloudinary.config({
   api_key: '828297737868324', 
   api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
 });
-//BUCCA LODGING Y REALCIONA EL HOST
+//BUSCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
     console.log(req.body)
@@ -49,10 +49,14 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 })
 });  */
 
+
+
 ///////////trae el lodging con toda la info del host (FUNCIONA)////////////
+
 router.get("/host/lodging", async (req, res) => {
   const lodgingId = req.body.lodgingId 
   const lodging = await Lodging.find({lodgingId}).populate({path:"hostId", model: "Host"})
+  console.log(lodging,"ID")
   console.log(lodging.hostId, 'GO')
   res.send(lodging) 
  });
@@ -88,11 +92,25 @@ router.get("/detail/:lodgingId", async (req, res) => {
   }
 });
 
-/// trae todos los lodgings de un host
+/// trae todos los lodgings de un host FUNCIONA
 router.get("/:hostId", async (req, res) => {
-  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+  let hostId = toId(req.params.hostId)
+  Lodging.find({hostId: hostId}, (error,docs)=>{
       res.send(docs)
   })
+})
+
+//MODIFICA ALOJAMIENTO A VISIBILITY FALSE
+router.patch("/:_id", async (req, res) => {
+      
+  try {
+    let lodgingId = toId(req.params._id)
+    await Lodging.findByIdAndUpdate(lodgingId, { Visibility: 'false' }).exec();
+    res.send("actualizado con exito")
+  } catch (error) {
+  res.status(400).send("no se pudo actualizar el lodging");
+  console.log(error);
+}
 })
 
 // esto crea una relacion al hacer get (FUNCIONA)

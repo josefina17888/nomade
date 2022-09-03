@@ -58,4 +58,22 @@
     width: 100px;
     height: 100px;
 }
- 
+.nover{
+    display: none;
+  }
+  .buttonDenunciar{
+    transition-duration: 0.4s;
+    background-color: red;
+    color: rgb(248, 247, 246);
+    font-weight: bold;
+    border: 0mm;
+    border-radius: 4px;
+    padding: 8px 28px;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
+  
+  .buttonDenunciar:hover {
+    background-color: rgb(248, 247, 246); 
+    color: rgb(59, 64, 64);
+  }
