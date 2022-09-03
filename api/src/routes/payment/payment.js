@@ -12,7 +12,7 @@ mercadopago.configure({
 
 
 router.post("/", async function (req, res, next) {
-    
+
     // const searchBooking = req.params.id;
     const bookingData = req.body
     // console.log(bookingData)
@@ -37,7 +37,7 @@ router.post("/", async function (req, res, next) {
             back_urls: {
                 success: "http://localhost:3000/status",
                 //"http://localhost:3000/",
-                // res.redirect("https://nomade-khaki.vercel.app/")
+                // res.redirect("https://nomade-khaki.vercel.app/%22)
                 failure: "https://nomade-khaki.vercel.app/",
                 pending: "https://nomade-khaki.vercel.app/"
             },
@@ -57,4 +57,3 @@ router.post("/", async function (req, res, next) {
 })
 
 module.exports = router;
-  

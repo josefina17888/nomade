@@ -52,7 +52,7 @@ const LodgingSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Favorite",
   }, 
-
+  Visibility: { type: Boolean, default: true },
   unavailableDate: [{type: Date}] 
 
   

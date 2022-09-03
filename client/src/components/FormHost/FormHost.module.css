@@ -1,5 +1,6 @@
 .formulario{
     top: 2rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
 }
 .formulario > form{
@@ -21,9 +22,11 @@
     background-color: #069A8E;
     height: 35px;
     font-size: 18px;
-    color: #c5c2c2;
+    color: white;
     cursor: pointer;
     transition: 0.5s;
+    border-width: 0vh;
+    border-radius: 1vh;
 }
 
 .formulario > form>button:hover{
@@ -31,4 +34,14 @@
     box-shadow: 3px 3px 40px 0 rgba(78, 75, 75, 0.603);
     transition: .7s;
   
+}
+
+.ac{
+    font-weight: lighter;
+    color: gray;
+    font-style: italic;
+}
+
+.margin{
+    margin-bottom: 2%;
 }

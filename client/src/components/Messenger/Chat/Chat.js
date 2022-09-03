@@ -23,6 +23,7 @@ export default function Chat() {
   let userId = user._id;
   let userEmail = user.email;
 
+
   if (localStorage.booking) {
     useEffect(() => {
       const bookingInfo = JSON.parse(localStorage.getItem("booking"));
@@ -76,8 +77,10 @@ export default function Chat() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
+
     if (userId) {
       socket.current.emit("addUser", userId);
+
     }
     socket.current.on("getUsers", (users) => {
       console.log("users del back", users);

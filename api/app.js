@@ -85,6 +85,7 @@ io.on("connection", (socket) => {
  socket.on("sendMessage", ({ senderId, receiverId, text }) => { 
 //busca el receiver
  const user = getUser(receiverId);
+
       io.to(user.socketId).emit("getMessage", { 
         //este es mi sender
         senderId,

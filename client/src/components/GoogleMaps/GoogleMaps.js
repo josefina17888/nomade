@@ -8,6 +8,7 @@ import {
   MarkerClusterer,
 } from "@react-google-maps/api";
 import style from "./GoogleMaps.module.css";
+import NavBar from "../NavBar/NavBar";
 
 export default function GoogleMaps() {
   const { isLoaded } = useLoadScript({
@@ -91,6 +92,8 @@ export default function GoogleMaps() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
+    <div>
+      <NavBar/>
     <div className={style.containerMap}>
       <GoogleMap
         zoom={6}
@@ -132,6 +135,7 @@ export default function GoogleMaps() {
           className={style.input}
         />
       </Autocomplete>
+    </div>
     </div>
   );
 }
