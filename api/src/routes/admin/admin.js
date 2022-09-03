@@ -84,5 +84,20 @@ router.patch("/guestadmin/:guestId",upload.single(), async (req, res) => {
                 }
             });
             })
+            router.get("/", async (req, res) => {
+                const userSearching = await req.query.email;
+                allGuest = await Guest.find();
+                try {
+                  if (userSearching) {
+                    Guest.find({email : userSearching }, (err, usuario) => {
+                      res.send(usuario);
+                    });
+                  } else {
+                    res.json(allGuest);
+                  }
+                } catch (err) {
+                  res.json(err);
+                }
+              });
 
 module.exports = router;

@@ -378,7 +378,14 @@ function rootReducer(state = initialState, action) {
           ...state,
           conversations: action.payload,
         };
- 
+        case "GET_BY_USER":
+          if (typeof action.payload === "string") {
+            return alert(" Not Found");
+          }
+          return {
+            ...state,
+            allGuests: action.payload,
+          };
     default:
       return { ...state };
   }

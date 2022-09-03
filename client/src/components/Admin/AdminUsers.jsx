@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import AllUsers from '../AllUsers/AllUsers';
 import Menu from './menuAdmin';
-import NavBar from '../NavBar/NavBar';
+import UserNav from './userNavBar';
 import {getGuests} from "../../Redux/Actions/index";
 import styles from './admin.module.css'
 import Profile from '../Profile/profile';
@@ -22,7 +22,7 @@ export default function Home() {
     var user = JSON.parse(guestId)
   }
   const allGuests = useSelector((state) => state.allGuests);
-  let arrFilter = allGuests.filter(e => e.email === userEmail)
+  let arrFilter =  allGuests.filter(e => e.email === userEmail)
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= allGuests.filter(e=> e.Visibility===true)
   const dispatch = useDispatch();
@@ -41,11 +41,11 @@ export default function Home() {
 
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined && arrFilter[0].isAdmin === true ?
+      {userToken && allGuests[0]!== undefined && (arrFilter || arrFilter[0].isAdmin === true) ?
     <div>
-    <NavBar
+   
+   <UserNav
     email={user?user.email: ""} />
-    
     <Menu setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentLodging}/>
     <AllUsers setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentLodging}/>
     </div>:

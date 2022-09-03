@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchUser from "../SearchUser/SearchUser";
 import s from "../NavBar/NavBar.module.css";
 import { Link, useHistory } from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
@@ -12,7 +12,7 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { getHostByGuestId, getLodgings } from "../../Redux/Actions/index";
 
-export default function NavBar(props) {
+export default function UserNav(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   let guestId = localStorage.getItem("userInfo");
@@ -77,7 +77,7 @@ export default function NavBar(props) {
             </div>
             <div>
               {
-                location === '/' || location === '/admin/lodgings'? <SearchBar /> : <div></div>
+                location === '/' || location === '/admin/users'? <SearchUser /> : <div></div>
               }
               
             </div>
