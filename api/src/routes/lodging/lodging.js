@@ -93,11 +93,25 @@ router.get("/detail/:lodgingId", async (req, res) => {
   }
 });
 
-/// trae todos los lodgings de un host
+/// trae todos los lodgings de un host FUNCIONA
 router.get("/:hostId", async (req, res) => {
-  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+  let hostId = toId(req.params.hostId)
+  Lodging.find({hostId: hostId}, (error,docs)=>{
       res.send(docs)
   })
+})
+
+//MODIFICA ALOJAMIENTO A VISIBILITY FALSE
+router.patch("/:_id", async (req, res) => {
+      
+  try {
+    let lodgingId = toId(req.params._id)
+    await Lodging.findByIdAndUpdate(lodgingId, { Visibility: 'false' }).exec();
+    res.send("actualizado con exito")
+  } catch (error) {
+  res.status(400).send("no se pudo actualizar el lodging");
+  console.log(error);
+}
 })
 
 // esto crea una relacion al hacer get (FUNCIONA)
