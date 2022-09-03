@@ -9,6 +9,7 @@ export default function Conversation({ conversation, currentUser }) {
   const [friend, setFriend] = useState({})
   const [sFriendId, setsFriendId] = useState(null);
   
+  
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
     console.log("friendId", friendId)
