@@ -5,10 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./Status.module.css"
 import NavBar from '../NavBar/NavBar';
+import axios  from "axios";
 
 export default function Status() {
     const dispatch = useDispatch();
-
+    //trae los detalles del alojamiento reservado
+    useEffect(() => {
+      dispatch(getDetail(lodgingId));
+      dispatch(createNewBooking(booking))
+      const data = async () => {
+        await axios.post(`http://localhost:3001/api/booking/emailVerified/${emailGuest}`,booking)
+     }
+     data()
+    },[dispatch]);
     //trae info de la reserva desde el localStorage
     const bookingInfo = localStorage.getItem("booking");
     const booking = JSON.parse(bookingInfo);
@@ -27,10 +36,7 @@ export default function Status() {
     const realStatus1 = status2[3].split("=")
     const realStatus = realStatus1[1]
     
-    //trae los detalles del alojamiento reservado
-    useEffect(() => {
-        dispatch(getDetail(lodgingId));
-      }, [dispatch]);
+    
     
       const lodging = useSelector((state) => state.detail);
       const title = lodging.title;
@@ -42,9 +48,8 @@ export default function Status() {
       const country = lodging.country;
 
     //DESPACHO ACCION DE RESERVA
-    if(realStatus === "approved"){
-        dispatch(createNewBooking(booking))
-    }
+   
+   
 return (
 <div className="_16grqhk">
       <NavBar />

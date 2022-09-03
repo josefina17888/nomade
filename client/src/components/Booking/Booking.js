@@ -20,6 +20,7 @@ export default function Booking(props) {
 
   //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
+  const payment = useSelector((state) => state.bookings);
 
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
@@ -45,7 +46,10 @@ export default function Booking(props) {
   
   //PARSE INFO LOCAL STORAGE USER INFO
     const guestInfo = localStorage.getItem("userInfo");
-    let userEmail = JSON.parse(guestInfo).email;
+    if(guestInfo){
+      var userEmail = JSON.parse(guestInfo).email;
+    }
+
     //let userEmail = true;
   
   //GET RANGES OF DATES
@@ -112,7 +116,10 @@ export default function Booking(props) {
         </div>
       </div>
       {!userEmail ? (
-        <div> Debes registrarte</div>
+        <Link to="/login">
+              <div> Debes registrarte</div>
+        </Link>
+    
       ) : (
         <div className={s.container}>
           <div className={s.margin}>

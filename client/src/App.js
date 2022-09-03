@@ -40,14 +40,12 @@ function App() {
           <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route exact path='/favorites' component={Favorites}/> 
           <Route path='/profile/:email' component={Profile}></Route>
-          {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
           <Route path='/:email/form' component={FormHost}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route exact path='/booking/:_id' component={Booking}/> 
           {/* <Route exact path='/booking/:_id'>  {user ? <LoginUser /> : <Booking />} </Route> */}
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
           <Route path='/forgot-password/' component={ForgotPassword}/>

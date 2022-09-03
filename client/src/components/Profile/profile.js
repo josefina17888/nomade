@@ -1,13 +1,37 @@
 import React from "react";
 import style from './profile.module.css'
+import axios from "axios";
+import {useState,useEffect} from 'react'
+import {useHistory, useParams} from 'react-router-dom'
+import{useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
+import { getGuestByEmail } from "../../Redux/Actions";
 
 
 
 export default function Profile() {
+  
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
+  let email = user.email
+  console.log(user, 'USER')
+
+//BUSCANDO EL GUEST CON EL EMAIL
+const [guest, setGuest] = useState("")
+
+useEffect(() => {
+  const getGuestInfo = async () => {
+    try {
+      let res = await axios.get("/api/guest/" + email);
+      let guestId = res.data[0]._id;
+      setGuest(guestId)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  getGuestInfo();
+}, [guest]);
 
   return (
     <div>
