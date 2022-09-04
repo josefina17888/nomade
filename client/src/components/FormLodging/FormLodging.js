@@ -1,13 +1,22 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector} from "react-redux"
 import { Link, useHistory, useParams } from "react-router-dom";
 import style from "./FormLodging.module.css";
 import { postGuest, postLodging, getCountry} from "../../Redux/Actions";
 import validate from "./validation";
+import {
+  GoogleMap,
+  useLoadScript,
+  Autocomplete,
+  MarkerF,
+} from "@react-google-maps/api";
 
 
 export default function FormLodging() {
+  const [coordinates, setCoordinates] = useState({lat: -34.397,
+    lng: 150.644,});
+  const [address, setAddress] = useState("");
   const params = useParams()
   const dispatch= useDispatch()
   const countries = useSelector((state) => state.country)
@@ -31,41 +40,89 @@ export default function FormLodging() {
     checkInHour:"",
     checkOutHour:"",
     description: "",
-    picture:""
-})    
+    picture:"",
+    latitud:"",
+    longitud:""
+  })    
   useEffect(() => {
     dispatch(getCountry())
   }, []);
 
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
+  });
 
-  function handleDelete(){
-    
-    document.getElementById("file").click()
+  const options = useMemo(
+    () => ({
+      disableDefaultUI: true,
+      clickableIcons: false,
+      zoomControl: false,
+      streetViewControl: false,
+      mapTypeControl: false,
+      fullscreenControl: false,
+      mapId: "22d661f3188bcd6d",
+    }),
+    []
+  );
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCoordinates({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  }, []);
+
+  
+  const onChange = (e) => {
+    setAddress(e.target.value);
+    setInput({...input, address: e.target.value})
+  };
+  
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      );
+      const data = await response.json();
+      if(data.results.length === 0){
+        return alert("No se encontro la dirección")
+      }
+    setInput({...input, latitud: data.results[0].geometry.location.lat, longitud: data.results[0].geometry.location.lng})
+    setCoordinates(data.results[0].geometry.location);
+    setErrors({latitud:""})
+  };
+ 
+  const handleClickDirection = (e) => {
+    onSubmit(e);
   }
 
-  function handleCountries(e) {
-      setInput({
-        ...input,
-        country: e.target.value,
-      });
-    }
-
+  // const handleEditAddres = (e) => {
+  //   e.preventDefault()
+  //   setInput({...input, address: "", longitud: "", latitud: ""})
+  //   setErrors({latitud:"sad"})
+  // }
+    
+  function handleDelete(){
+    document.getElementById("file").click()
+  }
+  
   function handleChange(e){
-   console.log(input.picture)
     if(e.target.name!== "picture")
     {  
-    setInput({
+      setInput({
         ...input,
         [e.target.name] : e.target.value,
-    })
-    console.log(input)
-    setErrors(validate({
-      ...input,
+      })
+      setErrors(validate({
+        ...input,
       [e.target.name] : e.target.value
   }))
 }
 else{
- 
+  
   if(document.getElementById("imgPreview0"))
   {
     for(let i = 0; i<3 ; i++)
@@ -78,17 +135,16 @@ else{
   }
   for(let i= 0; i<e.target.files.length;i++ )
   {
-          let  reader = new FileReader()
-            reader.readAsDataURL(e.target.files[i])
-            reader.onload = function(){
-            let preview = document.getElementById("preview")
-            let imagen=document.createElement("img")
-            imagen.src = reader.result;
-            imagen.style.width = "200px"
-            imagen.id= "imgPreview"+ i
-            preview.append(imagen)
-            console.log(reader)
-        }
+    let  reader = new FileReader()
+    reader.readAsDataURL(e.target.files[i])
+    reader.onload = function(){
+      let preview = document.getElementById("preview")
+      let imagen=document.createElement("img")
+      imagen.src = reader.result;
+      imagen.style.width = "200px"
+      imagen.id= "imgPreview"+ i
+      preview.append(imagen)
+    }
   }
   if(!document.getElementById("reset"))
   {
@@ -104,19 +160,22 @@ else{
   setInput({
     ...input,
     [e.target.name] : e.target.value
-})
-setErrors(validate({
-  ...input,
-  [e.target.name] : imgs
-}))
+  })
+  setErrors(validate({
+    ...input,
+    [e.target.name] : imgs
+  }))
 }
 }
-let hostId = params.hostId
-  return (
 
+if (!isLoaded) return <div>Loading...</div>;
+
+let hostId = params.hostId
+console.log(hostId)
+return (
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
-      <form  encType='multipart/form-data' action="http://localhost:3001/api/lodging/62fe7ea0b2a41b94d94fd0f2"  method="POST">
+      <form  encType='multipart/form-data' action={`http://localhost:3001/api/lodging/${hostId}`}  method="POST">
       <script src="./preview.js"></script>
       <div className={style.titulo}>
       <h1 className={style.title}>Registra tu alojamiento</h1>
@@ -201,7 +260,7 @@ let hostId = params.hostId
                  
           </select>
           <p >{errors.bathrooms}</p>
-        <select onChange={handleCountries}>
+        <select onChange={handleChange} name="country">
           <option value="" disabled selected>País</option>
         {
           countries.map(e=>(
@@ -209,7 +268,6 @@ let hostId = params.hostId
               ))
         }
         </select>
-        <p >{errors.country}</p>
         <input
           type="text"
           name ="city"
@@ -218,14 +276,50 @@ let hostId = params.hostId
           onChange={handleChange}
         />
         <p >{errors.city}</p>
-         <input
-          type="text"
-          name ="address"
+    <div className={style.containerMap}>
+      <GoogleMap
+        zoom={15}
+        center={coordinates}
+        mapContainerStyle={{
+          height: "40vh",
+          width: "40vw",
+        }}
+        options={options}
+      >
+        <MarkerF position={coordinates}>
+        </MarkerF>
+      </GoogleMap>
+        <input
+          name="address" 
           value={input.address}
-          placeholder="Direccion"
-          onChange={handleChange}
+          onChange={onChange}
+          type="text"
+          placeholder="Direccion:"
+          className={style.input}
+          title="Debes verificar la direccion"
+          required={true}
         />
-        <p >{errors.address}</p>
+      <p>{errors.address}</p>
+      <p>{errors.latitud}</p>
+      <input
+        value={input.latitud}
+        name="latitud"
+        onChange={(e) => onChange(e)}
+        type="text"
+        className={style.inputLtgLtg}
+      >
+      </input>
+      <input
+        value={input.longitud}
+        name="longitud"
+        onChange={(e) => onChange(e)}
+        type="text"
+        className={style.inputLtgLtg}
+      >
+      </input>
+    </div>
+    <button onClick={handleClickDirection}>Verificar dirección</button>
+    {/* <button onClick={handleEditAddres}>Editar</button> */}
          <textarea
           type="text"
           name ="description"
@@ -264,8 +358,7 @@ let hostId = params.hostId
           <label>Mascotas <input type="checkbox"   name="pets" /></label>
           </div>
       </div>
-      {console.log(input.picture)}
-      {Object.entries(errors).length === 0 && input.title !== "" && input.picture !== ""?
+      {Object.entries(errors).length === 0 && input.title !== "" && input.picture !== "" && input.latitud !== "" ?
       <div>
       <button className={style.button}  type="submit">
         Crear hospedaje
@@ -279,4 +372,3 @@ let hostId = params.hostId
     </div>
   );
 }
-

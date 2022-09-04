@@ -48,11 +48,12 @@ if(!props.guestInfo){
   var stateIds = stateLodgings.map((e) => e._id);
 
 
-  if (favorites !== undefined) {
-    var favoritesId = favorites?.map((e) => e.lodgingId);
+
+  if (favorites[0] !== undefined) {
+    var favoritesId = favorites.map((e) => e.lodgingId);
+    var isfaved = favoritesId.some((favid) => favid === props.id);}
   }
 
-  var isfaved = favoritesId.some((favid) => favid === props.id);}
 
   async function handleClick(e) {
     if (isfaved) {
@@ -65,10 +66,9 @@ if(!props.guestInfo){
   }
   return (
     <div className={s.favContainer}>
-      <button onClick={handleClick} className={s.favButtonF}>
+      {/* <button onClick={handleClick} className={s.favButtonF}>
         <FaHeart className={isfaved ? s.favT : s.favF} />
-      </button>
+      </button> */}
     </div>
   );
 }
-
