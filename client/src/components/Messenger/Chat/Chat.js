@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import io from "socket.io-client";
 
-
 export default function Chat() {
   const dispatch = useDispatch();
   const lodging = useSelector((state) => state.detail);
@@ -16,8 +15,8 @@ export default function Chat() {
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [host, setHost] = useState({});
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [host, setHost] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [bookingInfo, setBookingInfo] = useState("");
   const scrollRef = useRef();
@@ -27,43 +26,60 @@ export default function Chat() {
   let userEmail = user.email;
 
 
-  /* if (localStorage.booking) {
+  //conecta con el server y trae los mensajes
+ 
+  useEffect(() => {
+    console.log("uno")
+    socket.current = io("ws://localhost:3001");
+    /* socket.current = io(`ws:https://nomade-henry.herokuapp.com`);*/
+  }, []);
+
+
+  if (localStorage.booking) {
+    const bookingInfo = JSON.parse(localStorage.getItem("booking"));
+    let hostId = bookingInfo.hostId;
     useEffect(() => {
-      const bookingInfo = JSON.parse(localStorage.getItem("booking"));
-      let hostId = bookingInfo.hostId;
-      setBookingInfo(bookingInfo)
-      console.log(bookingInfo)
+      console.log("dos")
+      setBookingInfo(bookingInfo);
       const getHostGuestId = async () => {
         try {
-          let res = await axios.get("/api/host/all/" + hostId);
-          let guestId = res.data
-          if(guestId){
-            setHost(guestId)}
+          let res = await axios.get("/api/conversation/host/" + hostId);
+          let hostGuestId = res.data;
+         setHost(hostGuestId) 
         } catch (err) {
           console.log(err);
         }
       };
-      getHostGuestId()
+      getHostGuestId();
+    }, []);
 
+
+    
+
+    useEffect(()=>{
       const newConversation = async () => {
-        console.log("newConversation")
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
         );
-        console.log("prueba", filtered);
-        if (!filtered.length) {
-            let conv = await axios.post(`/api/conversation/${userId}/${host}`); 
-            console.log("nueva conversacion", conv)
-        }
-      };
-      newConversation()
-    }, [conversations]);
-  }  */
+        console.log(
+          "esto es el filtro para ver si ya los miembos estan en el estado",
+          filtered
+        ); 
+     if (!filtered.length) { 
+         
+          let conv = await axios.post(
+            "/api/conversation/" + userId + "/" + host
+          );
+          console.log("respuesta nueva conversacion creada ", conv);
+        } 
+       }; 
+      newConversation();
+    },[conversations])
+    
+  }
 
-  //conecta con el server y trae los mensajes
   useEffect(() => {
-    /* socket.current = io("ws://localhost:3001"); */
-    socket.current = io(`ws:https://nomade-henry.herokuapp.com`);
+    console.log("cinco")
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -71,9 +87,11 @@ export default function Chat() {
         createdAt: Date.now(),
       });
     });
-  }, []);
+  }, [messages]);
+
   //mensajes entrantes
   useEffect(() => {
+    console.log("seis")
     if (arrivalMessage !== null) {
       if (Object.keys(currentChat).length !== 0) {
         if (currentChat.members.includes(arrivalMessage.sender)) {
@@ -84,18 +102,18 @@ export default function Chat() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
-
+    console.log("siete")
     if (userId) {
       socket.current.emit("addUser", userId);
-
     }
     socket.current.on("getUsers", (users) => {
       console.log("users del back", users);
     });
-  }, [user]);
+  }, [conversations]);
 
   // obtiene todas las conversaciones asociadas al usuario
   useEffect(() => {
+    console.log("ocho")
     const getConversations = async () => {
       try {
         let res = await axios.get("/api/conversation/conv/" + userId);
@@ -104,11 +122,14 @@ export default function Chat() {
         console.log(err);
       }
     };
-    getConversations();
-  }, [userId]);
+    getConversations()
+    
+
+  }, [userId, host]);
 
   // trae todos los mensajes de una conversacion
   useEffect(() => {
+    console.log("nueve")
     if (currentChat._id) {
       const getMessages = async () => {
         let conversationId = currentChat._id;
@@ -138,9 +159,7 @@ export default function Chat() {
       text: newMessage,
       conversationId: currentChat._id,
     };
-    const receiverId = currentChat.members.find(
-      (member) => member !== userId
-    );
+    const receiverId = currentChat.members.find((member) => member !== userId);
 
     socket.current.emit("sendMessage", {
       senderId: userId,
@@ -174,7 +193,6 @@ export default function Chat() {
         </div>
         <div className={s.try}>Titulo</div>
         <div className={s.chatBox}>
-          
           <div className={s.chatBoxWrapper}>
             {currentChat._id ? (
               <>
@@ -207,16 +225,14 @@ export default function Chat() {
             )}
           </div>
         </div>
-       
+
         <div className={s.resDetail}>
-          <div className={s.resDetailWrapper}>
-            Detalles de tu reserva
-          </div>
-          
+          <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
         </div>
-        <div className={s.reserv}><ResDetail /></div>
+        <div className={s.reserv}>
+          <ResDetail />
+        </div>
       </div>
     </div>
   );
-
 }
