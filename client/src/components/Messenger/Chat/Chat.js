@@ -32,7 +32,7 @@ export default function Chat() {
     console.log("uno")
 
   /*   socket.current = io("ws://localhost:3001"); */
-     socket.current = io(`ws:https://nomade-henry.herokuapp.com`);
+     socket.current = io(process.env.REACT_APP_API);
 
   }, []);
 
