@@ -18,12 +18,14 @@ router.post("/", async (req, res) => {
   const filtered = await Booking.find({allDates:req.body.allDates, lodgingId:req.body.lodgingId})
   if(!filtered.length){
     try {
+      let dated = new Date()
       const newBooking = await Booking.create(req.body);
       newBooking.lodgingId = toId(req.body.lodgingId);
       newBooking.hostId = toId(req.body.hostId);
       const infoGuest = await Guest.find({ email: req.body.email });
       let userId = infoGuest[0]._id;
       newBooking.totalPrice = newBooking.costNight * newBooking.night;
+      newBooking.dated = dated
       newBooking.guestId = userId;
       newBooking.save();
       res.status(200).json(newBooking);
@@ -57,6 +59,17 @@ router.post("/booking", async (req, res) => {
     res.json(docs);
   });
 });
+
+
+router.get("/", async (req, res) => {
+  
+  let reservas = await Booking.find();
+   try {
+         res.send(reservas);  
+   } catch (err) {
+     res.json(err);
+   }
+ });
 
 //trae las reservas de un guest
 router.get("/all/:guestId", async (req, res) => {
@@ -92,6 +105,7 @@ router.post("/emailVerified/:email",async (req, res) => {
           res.status(404).send(error)
       }
 });
+
 
 
 module.exports = router;

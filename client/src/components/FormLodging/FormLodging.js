@@ -13,6 +13,7 @@ import {
 } from "@react-google-maps/api";
 
 
+
 export default function FormLodging() {
   const [coordinates, setCoordinates] = useState({lat: -34.397,
     lng: 150.644,});
@@ -169,6 +170,7 @@ else{
 }
 
 if (!isLoaded) return <div>Loading...</div>;
+
 
 let hostId = params.hostId
 console.log(hostId)
@@ -368,7 +370,8 @@ return (
      </button>
      </div>
      }
-  </form>
+
+    </form>
     </div>
   );
 }
