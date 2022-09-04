@@ -59,7 +59,8 @@ export default function Chat() {
 
   //conecta con el server y trae los mensajes
   useEffect(() => {
-    socket.current = io("ws://localhost:3001");
+    /* socket.current = io("ws://localhost:3001"); */
+    socket.current = io(`ws:https://nomade-henry.herokuapp.com`);
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -208,4 +209,5 @@ export default function Chat() {
     </div>
   );
 }
+
 
