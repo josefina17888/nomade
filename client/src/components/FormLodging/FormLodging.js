@@ -100,11 +100,11 @@ export default function FormLodging() {
     onSubmit(e);
   }
 
-  const handleEditAddres = (e) => {
-    e.preventDefault()
-    setInput({...input, address: "", longitud: "", latitud: ""})
-    setErrors({latitud:"sad"})
-  }
+  // const handleEditAddres = (e) => {
+  //   e.preventDefault()
+  //   setInput({...input, address: "", longitud: "", latitud: ""})
+  //   setErrors({latitud:"sad"})
+  // }
     
   function handleDelete(){
     document.getElementById("file").click()
@@ -299,7 +299,6 @@ return (
           className={style.input}
           title="Debes verificar la direccion"
           required={true}
-          disabled={input.latitud !== "" ? true : false}
         />
       <p>{errors.address}</p>
       <p>{errors.latitud}</p>
@@ -321,7 +320,7 @@ return (
       </input>
     </div>
     <button onClick={handleClickDirection}>Verificar dirección</button>
-    <button onClick={handleEditAddres}>Editar</button>
+    {/* <button onClick={handleEditAddres}>Editar</button> */}
          <textarea
           type="text"
           name ="description"

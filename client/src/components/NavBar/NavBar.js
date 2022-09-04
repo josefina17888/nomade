@@ -45,7 +45,7 @@ export default function NavBar(props) {
     e.preventDefault();
     if(validateHost[0] && userToken){
       const hostObject = Object.values(validateHost[0])
-      const hostId = hostObject[0]
+      const hostId = hostObject[1]
       history.push(`${hostId}/registerlodging`)
     }else if(userToken){
       history.push(`/${userToken}/form`)

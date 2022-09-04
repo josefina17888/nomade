@@ -6,6 +6,7 @@ import Menu from "../Menu/Menu";
 import NavBar from "../NavBar/NavBar";
 import styles from "./Home.module.css";
 import Profile from "../Profile/profile";
+import Footer from '../Footer/Footer'
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ console.log(user , "user")
 
 
   let stateLodgings = useSelector((state) => state.lodgings);
+  console.log(stateLodgings)
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
 
   //PAGINATED

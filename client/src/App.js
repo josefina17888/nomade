@@ -33,7 +33,6 @@ import Reservations from './components/Profile/HostReservations/hostreservations
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
   let user = JSON.parse(guestInfo);
-  console.log(user, 'USER')
   //GET HOST
   /* useEffect(()=>{
     dispatch(getHostByguestId(user.email))
@@ -46,12 +45,15 @@ function App() {
           <Route path="/map" component={GoogleMaps} />
           <Route path="/login" component={LoginUser} />
           <Route path="/registerguest" component={FormUser} />
+          <Route exact path='/forgot-password/' component={ForgotPassword}/>
           <Route exact path= '/detail/:_id' component={CardDetail}/>
           <Route path='/:idGuest/verify/:token' component={Verify}/>
           <Route exact path='/favorites' component={Favorites}/> 
           <Route exact path='/profile/:email' component={Profile}></Route>
           <Route exact path='/profile/:email/:hostId/reservations' component={Reservations}></Route>
           <Route path='/:idGuest/verify/:token' component={Verify}/>
+          <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
+          <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           {
@@ -71,9 +73,6 @@ function App() {
           }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
-          <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
-          <Route path='/forgot-password/' component={ForgotPassword}/>
           {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
