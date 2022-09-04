@@ -28,11 +28,11 @@ export default function Home() {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
   const [guestPerPage, setguestPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página
-  const indexLastLodging = currentPage * guestPerPage;
-  const indexFirstLodging = indexLastLodging - guestPerPage;
-  const currentLodging = lodgingsVisibles.slice(
-    indexFirstLodging,
-    indexLastLodging
+  const indexLastUser = currentPage * guestPerPage;
+  const indexFirstUser = indexLastUser- guestPerPage;
+  const currentUser = lodgingsVisibles.slice(
+    indexFirstUser,
+    indexLastUser
   );
 
   const paging = (pageNumber) => {
@@ -46,8 +46,8 @@ export default function Home() {
    
    <UserNav
     email={user?user.email: ""} />
-    <Menu setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentLodging}/>
-    <AllUsers setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentLodging}/>
+    <Menu setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentUser}/>
+    <AllUsers setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentUser}/>
     </div>:
     <h1>No puedes ver esta pagina.</h1>}
     </div>

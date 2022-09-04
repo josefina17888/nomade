@@ -11,7 +11,6 @@ import {
   Autocomplete,
   MarkerF,
 } from "@react-google-maps/api";
-import NavBar from "../NavBar/NavBar";
 
 
 export default function FormLodging() {
@@ -171,8 +170,8 @@ else{
 
 if (!isLoaded) return <div>Loading...</div>;
 
-
 let hostId = params.hostId
+console.log(hostId)
 return (
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
@@ -369,8 +368,7 @@ return (
      </button>
      </div>
      }
-    </form>
+  </form>
     </div>
   );
 }
-

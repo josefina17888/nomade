@@ -28,7 +28,11 @@ import { useSelector } from 'react-redux';
 import adminLodgings from './components/Admin/adminLodgings.jsx'
 import adminComplaints from './components/Admin/adminComplaints.jsx'
 import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
+import BarChart from "./components/Estadisticas/Charts/BarChart.jsx"
 import Reservations from './components/Profile/HostReservations/hostreservations';
+import Chart from "./components/Estadisticas/Charts/Doughnut.jsx"
+
+
 
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
@@ -82,6 +86,8 @@ function App() {
           <Route path= '/admin/lodgings' component={adminLodgings}/>
           <Route path= '/admin/complaints' component={adminComplaints}/>
           <Route path= '/admin/estadisticas' component={adminEstadisticas}/>
+          <Route path= '/admin/BarChart' component={BarChart}/>
+          <Route path= '/admin/Doughnut' component={Chart}/>
         </Switch>
       </BrowserRouter>
    </div>

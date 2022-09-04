@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./Status.module.css";
 import NavBar from "../NavBar/NavBar";
+import axios from "axios"
 
 export default function Status() {
   const dispatch = useDispatch();
@@ -30,6 +31,10 @@ export default function Status() {
   useEffect(() => {
     dispatch(getDetail(lodgingId));
     dispatch(createNewBooking(booking));
+    const data = async () => {
+      await axios.post(`http://localhost:3001/api/booking/emailVerified/${emailGuest}`,booking)
+   }
+   data()
   }, [dispatch]);
 
   const lodging = useSelector((state) => state.detail);
