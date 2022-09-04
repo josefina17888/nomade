@@ -39,7 +39,6 @@ console.log(bookings)
       <h2>cantidad de denuncias activas: {allcomplaints.filter(e=>e.Visibility === true).length} </h2>
       <h2>Publicaciones de hospedajes activas: {allLodgings.filter(e=>e.Visibility === true).length} </h2>
       <h2>Cantidad de paises alcanzados: {paisesAlcanzados.length} </h2>
-      <h2>Cantidad de paises alcanzados: {paisesAlcanzados.length} </h2>
 </div>
   );
 }
