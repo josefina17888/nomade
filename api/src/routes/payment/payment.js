@@ -38,11 +38,13 @@ router.post("/", async function (req, res, next) {
                 } ]
             },
             back_urls: {
-                success: "http://localhost:3000/status",
+                success: "https://nomade-khaki.vercel.app/status",
                 //"http://localhost:3000/",
+
                 // res.redirect("https://nomade-khaki.vercel.app/%22)
                 failure: "https://nomade-khaki.vercel.app/",
                 pending: "https://nomade-khaki.vercel.app/"
+
             },
         }
     console.log(preference.items)
