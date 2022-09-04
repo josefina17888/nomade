@@ -108,7 +108,7 @@ useEffect(() => {
     }
   };
   getGuestInfo();
-}, [guest]);
+}, []);
 
 console.log(email)
 console.log(guest)
