@@ -63,7 +63,7 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
     <div className={styles.container}>
       <div className={styles.container}>
         { 
-          lodgingsVisibles.map((e) => {
+          currentLodging.map((e) => {
             return (
               <div key={e._id} className={styles.cards}>
                 <div  className={styles.card}>

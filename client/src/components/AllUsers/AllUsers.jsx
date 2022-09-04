@@ -32,12 +32,13 @@ export default function AllUsers({setCurrentPage, paging, guestPerPage, currentL
   if(userId) {
     var user = JSON.parse(userId);
   }
-
+  let guestVisibles=guests.filter(e=>e.Visibility === true )
+  console.log(guestVisibles)
   return (
     <div className={styles.container}>
       <div className={styles.container}>
         {
-          guests.map((e) => {
+          currentLodging.map((e) => {
             return (
               <div key={e._id} className={styles.cards}>
                 <div  className={styles.card}>
@@ -64,7 +65,7 @@ export default function AllUsers({setCurrentPage, paging, guestPerPage, currentL
         <div>
             <AllUsersPaging
               lodgingPerPage={guestPerPage}
-              stateLodgings={guests.length}
+              stateLodgings={guestVisibles.length}
               paging={paging}
             />
         </div>
