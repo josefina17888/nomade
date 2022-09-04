@@ -20,11 +20,9 @@ cloudinary.config({
 
 /// postea el host 
 
-
-
-
 router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
+  const {cbu} = req.body
   const filename = req.file
   const result = await cloudinary.v2.uploader.upload(req.file.path)
   console.log(result)
@@ -33,12 +31,13 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     const myHost = new Host()
     myHost.dni= req.body.dni
     myHost.hostDniPicture= result.url
+    myHost.cbu = req.body.cbu
     myHost.guestId = guest._id
     await myHost.save()
 
     let hostId = myHost._id
-        // res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
-        res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
+        res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
+        // res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {
@@ -47,10 +46,23 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     }
 });
 
+//Filtra por dni
+router.get("/:dni", async (req, res) => {
+  const dniSearch = req.params.dni;
+  try {
+      Host.find({ dni: dniSearch }, (err, dni) => {
+        res.send(dni);
+      });
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 //trae todos los host con la info completa de guest(funciona)//
-router.get("/all", async (req, res) => { 
-  const host = await Host.find({}).populate({path:"guestId", model: "Guest"})
-  res.send(host) 
+router.get("/all/:hostId", async (req, res) => { 
+  const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
+let hostGuestId= host[0].guestId._id
+  res.send(hostGuestId) 
  });
 
 //TRAE TODOS LOS HOSTS///
@@ -72,6 +84,19 @@ router.get("/all", async (req, res) => {
       }
     })
 
+
+    // //BUSCAR UN HOST
+    // router.get("/:idHost", async (req, res) => {
+    //   try {
+    //     const host = await Host.findOne({_id: req.params.idGuest})
+    //     if(!host) return(400).send({message:"Could not find host"});
+    //     res.status(200).send(host)
+    //   }
+    //   catch(error) {
+    //     res.status(404).send(error)
+    //   }
+    
+    // })
 
   module.exports = router;
 

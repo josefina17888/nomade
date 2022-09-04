@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const GuestSchema = new Schema({
   name: { type: String, required: true },
   lastname: { type: String, required: true },
+
+  userName:{type: String},
   email: { type: String, required: true },
   password: { type: String, min: 6 },
   cellPhone: { type: String },
@@ -15,6 +17,8 @@ const GuestSchema = new Schema({
   reviews: [{ type: Schema.ObjectId, ref: "GuestReview", }, ],
   birthDate: { type: Date },
   verified: { type: Boolean, default: false },
+  isAdmin: { type: Boolean, default: false },
+  Visibility: { type: Boolean, default: true },
   // public_id: {
   //   type: String
   // }
