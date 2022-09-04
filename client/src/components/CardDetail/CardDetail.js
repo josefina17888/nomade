@@ -88,9 +88,6 @@ export default function CardDetail(props) {
     setIndex(selectedIndex);
   };
 
-  //Botón de reserva
-  const handleBooking = (e) => {};
-
   //renderizado
   function handleSubmit(e){
     e.preventDefault()
@@ -322,6 +319,8 @@ export default function CardDetail(props) {
                   </div>
                 </div>
               </div>
+              <div>Camas: {`${myLodging.beds}`}</div>
+              <div>Tipo: {`${myLodging.lodgingType}`}</div>
             </div>
             <div>
               <DatePickerOk lodId={lodgingId} />

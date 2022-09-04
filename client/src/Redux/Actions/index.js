@@ -485,6 +485,48 @@ export function deleteComplaint(payload){
   }
 }
 
+export function filterByRangePrice(payload){
+  return{
+    type: 'FILTER_BY_RANGE_PRICE',
+    payload
+  }
+}
+
+export function filterByQBeds(payload){
+  return{
+    type: 'FILTER_BY_Q_BEDS',
+    payload
+  }
+}
+
+export function filterByQRooms(payload){
+  return{
+    type: 'FILTER_BY_Q_ROOMS',
+    payload
+  }
+}
+
+export function filterByQBathrooms(payload){
+  return{
+    type: 'FILTER_BY_Q_BATHROOMS',
+    payload
+  }
+}
+
+export function filterByTypeRooms(payload){
+  return{
+    type: 'FILTER_BY_TYPE_OF_ROOMS',
+    payload
+  }
+}
+
+export function filterByServices(payload){
+  return{
+    type: 'FILTER_BY_SERVICES',
+    payload
+  }
+}
+
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
   return{

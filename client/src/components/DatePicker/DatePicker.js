@@ -55,24 +55,6 @@ export default function DatePickerOk({ lodId }) {
   }
   const pets = lodgingServices.filter((e) => e === "pets");
 
-  //FUNCTION DECREMENT
-  function handleDecrement(e) {
-    e.preventDefault();
-    if (info.guests > 1) {
-      setInfo({ ...info, guests: info.guests-- });
-    }
-    setInfo({ ...info, guests: info.guests });
-  }
-
-  //FUNCTION INCREMENT
-  function handleIncrement(e) {
-    e.preventDefault();
-    if (info.guests < lodging.guests) {
-      setInfo({ ...info, guests: info.guests++ });
-    }
-    setInfo({ ...info, guests: info.guests });
-  }
-
   function handleCheckBox(e) {
     setInfo({ ...info, pets: e.target.checked });
   }

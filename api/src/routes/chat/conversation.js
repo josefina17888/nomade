@@ -8,7 +8,21 @@ const toId = mongoose.Types.ObjectId;
 
 //NUEVA CONVERSACION
 
+
 router.post("/:senderId/:receiverId", async (req, res) => {
+  const newConversation = new Conversation({
+    members: [req.params.senderId, req.params.receiverId],
+  });
+
+  try {
+    const savedConversation = await newConversation.save();
+    res.status(200).json(savedConversation);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+/* router.post("/:senderId/:receiverId", async (req, res) => {
   const filtered = await Conversation.find({
     members: [req.params.senderId, req.params.receiverId],
   });
@@ -28,7 +42,7 @@ router.post("/:senderId/:receiverId", async (req, res) => {
   }
 
  
-});
+}); */
 
 
 

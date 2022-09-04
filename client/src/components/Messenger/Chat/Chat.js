@@ -12,12 +12,17 @@ export default function Chat() {
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
+  const [host, setHost] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
   const socket = useRef();
+  const booking = JSON.parse(localStorage.getItem("booking"));
+  console.log(booking)
   const user = JSON.parse(localStorage.getItem("userInfo"));
   let userId = user._id;
+
+  console.log("userId",userId)
 
   useEffect(() => {
     socket.current = io("ws://localhost:3001");
@@ -31,6 +36,38 @@ export default function Chat() {
     });
   }, []);
 
+   //crea la nueva conversacion en la db
+    console.log(host)
+
+   useEffect(() => {
+    const newConversation = async () => {
+      let prueba = conversations.filter(
+        (c) => c.members.includes(userId) && c.members.includes(host)
+      );
+      console.log("prueba", prueba);
+      if (!prueba.length) {
+        let conv = await axios.post(`/api/conversation/${userId}/${host}`);
+      }
+    }; 
+    newConversation();
+  }, [conversations]); 
+
+
+  ///lleva el Host id y trae el Id de guest
+  const hostId = booking.hostId;
+  useEffect(() => {
+    const getHostGuestId = async () => {
+      try {
+        let res = await axios.get("/api/host/all/" + hostId);
+        let hostGuestId = res.data[0].guestId._id;
+        setHost(hostGuestId);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getHostGuestId();
+  }, [host]);
+
   useEffect(() => {
     if (arrivalMessage !== null) {
       if (Object.keys(currentChat).length !== 0) {
@@ -43,8 +80,8 @@ export default function Chat() {
 
   //envia al back el usuario y trae los dos usuarios
   useEffect(() => {
-    if (user._id !== null && user !== []) {
-      socket.current.emit("addUser", user._id);
+    if (userId !== null) {
+      socket.current.emit("addUser", userId);
       socket.current.on("getUsers", (users) => {
         console.log("users que viene del back", users);
       });
@@ -64,14 +101,13 @@ export default function Chat() {
     getConversations();
   }, [userId]);
 
-  // trae todos los mensajes de ina conversacion
+  // trae todos los mensajes de una conversacion
   useEffect(() => {
     if (currentChat._id) {
       const getMessages = async () => {
         let conversationId = currentChat._id;
         try {
           let res = await axios("/api/message/" + conversationId);
-
           setMessages(res.data);
         } catch (err) {
           console.log(err);
@@ -82,7 +118,6 @@ export default function Chat() {
   }, [currentChat]);
 
   const handleSubmit = async (e) => {
-    try {
     e.preventDefault();
     //este objeto es el que va a la DB
     const message = {
@@ -90,7 +125,6 @@ export default function Chat() {
       text: newMessage,
       conversationId: currentChat._id,
     };
-
     const receiverId = currentChat.members.find((member) => member !== userId);
 
     socket.current.emit("sendMessage", {
@@ -104,7 +138,6 @@ export default function Chat() {
       const res = await axios.post("/api/message", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
-
     } catch (err) {
       console.log(err);
     }
