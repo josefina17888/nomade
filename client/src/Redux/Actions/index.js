@@ -379,11 +379,9 @@ export function getFeedback(){
 
 //TRAE HOST POR ID GUEST (EMAIL)
 export function getHostByGuestId(payload){
-  console.log(payload, 'PAYLOAAAAAD')
   return async function (dispatch){
     try {
       const res = await axios.post('/api/guest/find/host', payload)
-      console.log(res.data, 'HOLA HOLA HOLA')
       return dispatch({
         type: 'GET_HOST_BY_GUEST_ID',
         payload: res.data
@@ -498,6 +496,20 @@ export function getByUser(user){
     }catch(error){
       console.log(error)
 
+    }
+  }
+}
+
+export function getBookings(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/booking/")
+      return dispatch({
+        type: "GET_ALL_BOOKINGS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 }

@@ -3,82 +3,65 @@ import React from "react";
 import {
   GoogleMap,
   useLoadScript,
-  Autocomplete,
   MarkerF,
   MarkerClusterer,
   InfoWindow,
 } from "@react-google-maps/api";
 import style from "./GoogleMaps.module.css";
-import { getLodgings } from '../../Redux/Actions/index'
+import { getDetail, getLodgings } from "../../Redux/Actions/index";
 import { useSelector, useDispatch } from "react-redux";
-import NavBar from "../NavBar/NavBar"
+import { Link } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 
 export default function GoogleMaps() {
   const selector = useSelector((state) => state.lodgings);
-  console.log(selector)
-  const dispatch = useDispatch()
+  const selectorDetail = useSelector((state) => state.detail);
+  const dispatch = useDispatch();
+
+  const [selected, setSelected] = useState(null);
+  const [selectDetail, setSelectDetail] = useState(selectorDetail);
   const [center, setCenter] = useState({
     lat: -34.397,
     lng: 150.644,
   });
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
-  });
-  
   useEffect(() => {
-    dispatch(getLodgings())
-  }, [dispatch])
+    dispatch(getLodgings());
+    setSelected("");
+    getDetail();
+    setSelectDetail("");
+  }, [dispatch]);
 
-useEffect(() => {
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCenter({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
     });
-  } ,[])
-  const [address, setAddress] = useState("");
-  const [coordinates, setCoordinates] = useState({});
-  const [selected, setSelected] = useState(null);
+  }, []);
 
-  const onChange = (e) => {
-    setAddress(e.target.value);
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
-    );
-    const data = await response.json();
-    setCoordinates(data.results[0].geometry.location);
-  };
-
-  const centerTest = useMemo(() => {
-    return coordinates;
-  } , [coordinates]);
-
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      onSubmit(e);
-    }
-  }
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
+  });
 
   const locations = selector.map((e) => {
     return {
       lat: Number(e.latitud),
       lng: Number(e.longitud),
-    }
-  })
-  
+      title: e.title,
+      picture: e.picture,
+      _id: e._id,
+      price: e.price,
+      country: e.country,
+      city: e.city,
+    };
+  });
+
   function createKey(location) {
     return location.latitud + location.longitud;
   }
-
-
 
   const options = useMemo(
     () => ({
@@ -93,7 +76,6 @@ useEffect(() => {
     []
   );
 
-
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
@@ -101,7 +83,7 @@ useEffect(() => {
       <NavBar/>
     <div className={style.containerMap}>
       <GoogleMap
-        zoom={15}
+        zoom={12}
         center={center}
         mapContainerStyle={{
           height: "100vh",
@@ -109,48 +91,47 @@ useEffect(() => {
         }}
         options={options}
       >
-        <MarkerF position={centerTest}>
-        </MarkerF>
         <MarkerClusterer>
           {(clusters) =>
             locations.map((location) => (
-              <MarkerF key={createKey(location)}
-              position={location}
-              clusterer={clusters}
-              icon={{
-                url: 'https://i.postimg.cc/MXpXtBZL/Nomade.png',
-                scaledSize: new window.google.maps.Size(20, 20),
-              }}
-              onClick={() => {
-                setSelected(location);
-              } }>
-                {
-                  selected ? (
-                    <InfoWindow  onCloseClick={() => setSelected(null)}>
-                      <div>
-                        <div className={style.infoBox}>
-                          <h1 className={style.title}>{selector.map(e => e.title)}</h1>
-                          <img className={style.img} src={selector[0].picture[0]}></img>
-                        </div>
-                      </div>
-                    </InfoWindow>
-                  ) : null
-                }
-              </MarkerF>
+              <MarkerF
+                key={createKey(location)}
+                position={{ lat: location.lat, lng: location.lng }}
+                clusterer={clusters}
+                icon={{
+                  url: "https://i.postimg.cc/rR6NFv8h/address.png",
+                  scaledSize: new window.google.maps.Size(25, 25),
+                }}
+                onClick={() => {
+                  setSelected(location);
+                }}
+              ></MarkerF>
             ))
-          }    
+          }
         </MarkerClusterer>
+        {selected ? (
+          <InfoWindow
+            position={selected}
+            onCloseClick={() => {
+              setSelected(null);
+            }}
+          >
+            <div className={style.infoBox}>
+              <Link className={style.link} to={`/detail/${selected._id}`}>
+                <img
+                  className={style.img}
+                  src={selected.picture[0]}
+                  alt="image lodging"
+                />
+                <div className={style.containerP}>
+                  <p className={style.country}>{selected.country + ', ' + selected.city}</p>
+                  <p className={style.price}>${selected.price} Noche</p>
+                </div>
+              </Link>
+            </div>
+          </InfoWindow>
+        ) : null}
       </GoogleMap>
-      <Autocomplete>
-        <input
-          onKeyPress={handleKeyPress}
-          value={address}
-          onChange={onChange}
-          type="text"
-          placeholder="Search:"
-          className={style.input}
-        />
-      </Autocomplete>
     </div>
     </div>
   );

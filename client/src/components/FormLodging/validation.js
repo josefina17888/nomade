@@ -42,12 +42,6 @@ export default function validate (input)
         else if (!input.country){
             errors.country = "Debes completar el campo pais";
         }
-        else if(!validateName.test(input.country)){
-            errors.country ="El pais solo puede contener letras"
-        }
-        else if (!input.address ) {
-            errors.address = "Debes completar el campo direccion";
-        }
         else if (!input.description ){
             errors.description = "Debes completar el campo descripcion";
         }
@@ -56,9 +50,9 @@ export default function validate (input)
         }
         if (typeof input.picture !== 'string' && input.picture !== 3){
             errors.picture = "Debes subir 3 imagenes";
-           
         }
-   
-
+        if(!input.latitud){
+            errors.latitud = "Debes verificar la direccion";
+        }
         return errors
     }

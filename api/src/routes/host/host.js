@@ -46,6 +46,7 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     }
 });
 
+
 //Filtra por dni
 router.get("/:dni", async (req, res) => {
   const dniSearch = req.params.dni;
@@ -59,11 +60,6 @@ router.get("/:dni", async (req, res) => {
 });
 
 //trae todos los host con la info completa de guest(funciona)//
-router.get("/all/:hostId", async (req, res) => { 
-  const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
-let hostGuestId= host[0].guestId._id
-  res.send(hostGuestId) 
- });
 
 //TRAE TODOS LOS HOSTS///
   router.get("/", async (req, res) => {
