@@ -31,7 +31,6 @@ import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
   let user = JSON.parse(guestInfo);
-  console.log(user, 'USER')
   //GET HOST
   /* useEffect(()=>{
     dispatch(getHostByguestId(user.email))

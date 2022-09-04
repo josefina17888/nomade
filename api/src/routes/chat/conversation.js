@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const Conversation = require("../../models/Conversation");
+const Host = require("../../models/Host");
 const Guest = require("../../models/Guest");
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
@@ -43,6 +44,13 @@ router.post("/:senderId/:receiverId", async (req, res) => {
 
  
 }); */
+router.get("/host/:hostId", async (req, res) => { 
+  console.log("entre")
+  const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
+  console.log("el host encontrado",host)
+/* let hostGuestId= host[0].guestId._id */
+  res.send( host) 
+ });
 
 
 

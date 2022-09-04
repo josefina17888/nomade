@@ -24,13 +24,16 @@ export default function Chat() {
   let userEmail = user.email;
 
 
-  if (localStorage.booking) {
+ if (localStorage.booking) {
     useEffect(() => {
       const bookingInfo = JSON.parse(localStorage.getItem("booking"));
       let hostId = bookingInfo.hostId;
+      setBookingInfo(bookingInfo)
+      console.log("booking info del estado", bookingInfo)
       const getHostGuestId = async () => {
         try {
-          let res = await axios.get("/api/host/all/" + hostId);
+          let res = await axios.get("/api/conversation/host/" + hostId);
+          console.log("respuesta guestHostId", res)
           let guestId = res.data
           if(guestId){
             setHost(guestId)}
@@ -40,23 +43,25 @@ export default function Chat() {
       };
       getHostGuestId()
 
-      const newConversation = async () => {
+     /*  const newConversation = async () => {
+        console.log("esto es newConversation")
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
         );
-        console.log("prueba", filtered);
+        console.log("esto es el filtro para ver si ya los miembos estan en el estado", filtered);
         if (!filtered.length) {
             let conv = await axios.post(`/api/conversation/${userId}/${host}`); 
-            console.log("nueva conversacion", conv)
+            console.log("respuesta nueva conversacion creada ", conv)
         }
       };
-      newConversation()
+      newConversation() */
     }, [conversations]);
-  }
+  } 
 
   //conecta con el server y trae los mensajes
   useEffect(() => {
-    socket.current = io("ws://localhost:3001");
+    socket.current = io("ws://localhost:3001"); 
+    /*socket.current = io(`ws:https://nomade-henry.herokuapp.com`);*/
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -120,16 +125,16 @@ export default function Chat() {
     e.preventDefault();
     //este objeto es el que va a la DB
     const message = {
-      sender: user._id,
+      sender: userId,
       text: newMessage,
       conversationId: currentChat._id,
     };
     const receiverId = currentChat.members.find(
-      (member) => member !== user._id
+      (member) => member !== userId
     );
 
     socket.current.emit("sendMessage", {
-      senderId: user._id,
+      senderId: userId,
       receiverId,
       text: newMessage,
     });
@@ -158,7 +163,9 @@ export default function Chat() {
             ))}
           </div>
         </div>
+        <div className={s.try}>Titulo</div>
         <div className={s.chatBox}>
+          
           <div className={s.chatBoxWrapper}>
             {currentChat._id ? (
               <>
@@ -168,7 +175,7 @@ export default function Chat() {
                       <Message
                         key={e._id}
                         messages={e.text}
-                        own={e.sender === user._id}
+                        own={e.sender === userId}
                       />
                     </div>
                   ))}
@@ -191,11 +198,14 @@ export default function Chat() {
             )}
           </div>
         </div>
+       
         <div className={s.resDetail}>
           <div className={s.resDetailWrapper}>
-            <ResDetail />
+            Detalles de tu reserva
           </div>
+          
         </div>
+        <div className={s.reserv}><ResDetail /></div>
       </div>
     </div>
   );
