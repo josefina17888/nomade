@@ -14,10 +14,9 @@ router.post("/:senderId/:receiverId", async (req, res) => {
   const newConversation = new Conversation({
     members: [req.params.senderId, req.params.receiverId],
   });
-
   try {
-    const savedConversation = await newConversation.save();
-    res.status(200).json(savedConversation);
+     const savedConversation = await newConversation.save();
+   res.status(200).json(savedConversation);  
   } catch (err) {
     res.status(500).json(err);
   }
@@ -45,11 +44,15 @@ router.post("/:senderId/:receiverId", async (req, res) => {
  
 }); */
 router.get("/host/:hostId", async (req, res) => { 
-  console.log("entre")
-  const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
-  console.log("el host encontrado",host)
-/* let hostGuestId= host[0].guestId._id */
-  res.send( host) 
+  try{
+    const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
+let hostGuestId= host[0].guestId._id 
+  res.json( hostGuestId) 
+
+  }catch(err){
+    res.send(err)
+  }
+
  });
 
 
