@@ -502,6 +502,20 @@ export function getByUser(user){
   }
 }
 
+export function getBookings(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/booking/")
+      return dispatch({
+        type: "GET_ALL_BOOKINGS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){
   return{
