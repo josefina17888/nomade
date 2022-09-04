@@ -6,23 +6,17 @@ import axios from "axios";
 
 export default function Conversation({ conversation, currentUser }) {
   let dispatch = useDispatch();
-  const [friend, setFriend] = useState({})
-  const [sFriendId, setsFriendId] = useState(null);
-  
-  
+  const [user, setUser]= useState({});
+ 
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
     console.log("friendId", friendId)
-    setsFriendId(friendId);
     const getFriend = async () => {
       try {
-        let friendInfo = await axios(
+        let res = await axios(
           "/api/conversation/users/friend/" + friendId
           );
-          console.log("amigo",friendInfo)
-          if (friendInfo.data!==null){
-            setFriend(friendInfo.data) 
-          }
+            setUser(res.data) 
        
       } catch (err) {
         console.log(err);
@@ -30,19 +24,18 @@ export default function Conversation({ conversation, currentUser }) {
     };
     getFriend()   
   }, [currentUser, conversation]);
-  
 
   return (
     <div className={s.conversation}>
-      <img
+     <img
         className={s.convImg}
         src={
-          friend.picture 
-          ? friend.picture
+          user!=={}
+          ? user.picture
           : "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"}
         alt="Host's Profile Picture"
       />
-       <span className={s.convName}>{friend.name}</span>  
+       <span className={s.convName}>{user.name}</span>   
     </div>
   );
 }

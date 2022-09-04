@@ -8,6 +8,8 @@ const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
+const mongoose = require("mongoose");
+const toId = mongoose.Types.ObjectId;
 require('dotenv').config();
 
 
@@ -235,10 +237,24 @@ router.delete("/:id", async (req,res) => {
 router.post("/find/host", async (req, res) => {
   try {
     const infoGuest = await Guest.find({ email: req.body.email });
-    const guestId = infoGuest[0]._id;
+    const guestId = infoGuest
     console.log(guestId, 'REQ')
     const isHost = await Host.find({ guestId: guestId});
     res.status(200).json(isHost)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+//busco un host por guest id FUNCIONA
+router.get("/found/host/:guest", async (req, res) => {
+  try {
+    //const guestId = toId(req.params.guest)
+    const infoGuest = await Guest.find({email: req.params.guest})
+    const guestId = infoGuest[0]._id
+    const infoHost = await Host.find({guestId: guestId});
+    const hostId = infoHost["0"]._id
+    res.status(200).json(hostId)
   } catch (error) {
     res.status(400).json(error);
   }

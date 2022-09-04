@@ -17,12 +17,16 @@ cloudinary.config({
 //BUSCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
+    console.log(req.body)
+    console.log(req.params)
     let fotos = req.files.map(e=>e.path)
+    console.log("hola1")
     let result=[]
     for(let i=0; i<fotos.length; i++)
     {
     result.push(await cloudinary.uploader.upload(fotos[i]))
     }
+    console.log("hola1")
     const newLodging = await new Lodging(req.body);
     let fotosSubidas = result.map(e=>e.url)
     let service = await addServices(req.body)
@@ -31,15 +35,13 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.picture= fotosSubidas
     newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
+    newLodging.latitud = req.body.latitud
     newLodging.save();
-    console.log(req.body.address)
-    console.log(process.env.GOOGLE_MAPS_API_KEY)
-    const response = await axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.address}&key=${process.env.GOOGLE_MAPS_API_KEY}`)
-    console.log(response)
+    console.log("hola2")
     res.redirect("http://localhost:3000/")
     // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
-    res.send("No se pudo crear el alojamiento");
+    res.status(400).send("No se pudo crear el alojamiento");
   }
 });
 
@@ -93,11 +95,25 @@ router.get("/detail/:lodgingId", async (req, res) => {
   }
 });
 
-/// trae todos los lodgings de un host
+/// trae todos los lodgings de un host FUNCIONA
 router.get("/:hostId", async (req, res) => {
-  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+  let hostId = toId(req.params.hostId)
+  Lodging.find({hostId: hostId}, (error,docs)=>{
       res.send(docs)
   })
+})
+
+//MODIFICA ALOJAMIENTO A VISIBILITY FALSE
+router.patch("/:_id", async (req, res) => {
+      
+  try {
+    let lodgingId = toId(req.params._id)
+    await Lodging.findByIdAndUpdate(lodgingId, { Visibility: 'false' }).exec();
+    res.send("actualizado con exito")
+  } catch (error) {
+  res.status(400).send("no se pudo actualizar el lodging");
+  console.log(error);
+}
 })
 
 // esto crea una relacion al hacer get (FUNCIONA)

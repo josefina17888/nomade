@@ -169,8 +169,9 @@ else{
 
 if (!isLoaded) return <div>Loading...</div>;
 
-
+console.log(params)
 let hostId = params.hostId
+console.log(hostId)
 return (
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
