@@ -397,7 +397,7 @@ function rootReducer(state = initialState, action) {
         };
       }
 
-      case "FILTER_BY_Q_BATHROOMS":
+    case "FILTER_BY_Q_BATHROOMS":
       if (action.payload.bathrooms !== 0) {
         let qBathrooms = state.lodgings.filter(
           (e) => e.bathrooms === action.payload.bathrooms
@@ -408,88 +408,115 @@ function rootReducer(state = initialState, action) {
         };
       }
 
-      case "FILTER_BY_TYPE_OF_ROOMS":
-        switch(action.payload.lodgingType){
-          case "Casa":
-            let house = state.lodgings.filter((e) => e.lodgingType === "Casa")
-            return{
-              ...state,
+    case "FILTER_BY_TYPE_OF_ROOMS":
+      switch (action.payload.lodgingType) {
+        case "Casa":
+          let house = state.lodgings.filter((e) => e.lodgingType === "Casa");
+          return {
+            ...state,
             lodgings: house,
-            }
-            case "Albergue":
-            let hostel = state.lodgings.filter((e) => e.lodgingType === "Albergue")
-            return{
-              ...state,
+          };
+        case "Albergue":
+          let hostel = state.lodgings.filter(
+            (e) => e.lodgingType === "Albergue"
+          );
+          return {
+            ...state,
             lodgings: hostel,
-            }
-            case "Hostal":
-            let lodgingHouse = state.lodgings.filter((e) => e.lodgingType === "Hostal")
-            return{
-              ...state,
+          };
+        case "Hostal":
+          let lodgingHouse = state.lodgings.filter(
+            (e) => e.lodgingType === "Hostal"
+          );
+          return {
+            ...state,
             lodgings: lodgingHouse,
-            }
-            case "Cabaña":
-            let cabin = state.lodgings.filter((e) => e.lodgingType === "Cabaña")
-            return{
-              ...state,
+          };
+        case "Cabaña":
+          let cabin = state.lodgings.filter((e) => e.lodgingType === "Cabaña");
+          return {
+            ...state,
             lodgings: cabin,
-            }
-            case "Apartamento":
-            let apartment = state.lodgings.filter((e) => e.lodgingType === "Apartamento")
-            return{
-              ...state,
+          };
+        case "Apartamento":
+          let apartment = state.lodgings.filter(
+            (e) => e.lodgingType === "Apartamento"
+          );
+          return {
+            ...state,
             lodgings: apartment,
-            }
-            case "Habitación":
-            let room = state.lodgings.filter((e) => e.lodgingType === "Habitación")
-            return{
-              ...state,
+          };
+        case "Habitación":
+          let room = state.lodgings.filter(
+            (e) => e.lodgingType === "Habitación"
+          );
+          return {
+            ...state,
             lodgings: room,
-            }
-          default:
-            return{
-              ...state
-            }
+          };
+        default:
+          return {
+            ...state,
+          };
+      }
+    case "FILTER_BY_SERVICES":
+      let filterLodings = state.lodgings
+      let lodgings = state.lodgings.map((e) => {
+        let newObject = {
+          id: e._id,
+          wifi: e.services.wifi,
+          ac: e.services.ac,
+          tv: e.services.tv,
+          parking: e.services.parking,
+          pets: e.services.pets,
+          hotWater: e.services.hotWater,
+        };
+        return newObject;
+      });
+      let services = action.payload 
+      let exists = lodgings.map(lodging=>{
+        if(services.wifi && services.ac && services.tv && services.parking && services.pets && services.hotWater){
+          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv && lodging.parking === services.parking && lodging.pets === services.pets && lodging.hotWater === services.hotWater){let demo=[]
+        demo.push(lodging.id)
+        return demo}
+        }else if(services.wifi && services.ac && services.tv && services.parking && services.pets){
+          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv && lodging.parking === services.parking && lodging.pets === services.pets){let demo=[]
+        demo.push(lodging.id)
+        return demo}
+        }else if(services.wifi && services.ac && services.tv && services.parking){
+          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv && lodging.parking === services.parking){let demo=[]
+        demo.push(lodging.id)
+        return demo}
+        }else if(services.wifi && services.ac && services.tv){
+          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv){let demo=[]
+        demo.push(lodging.id)
+        return demo}
+        }else if(services.wifi && services.ac){
+          if(lodging.wifi === services.wifi && lodging.ac === services.ac){let demo=[]
+        demo.push(lodging.id)
+        return demo}
+        }
+        else if(services.wifi){
+          if(lodging.wifi === services.wifi){let demo=[]
+        demo.push(lodging.id)
+        return demo}
+        }
+        else{
+          return{
+            ...state
           }
-        /* case 'FILTER_BY_SERVICES':
-          let lodgings = state.lodgings
-          console.log(filtro, 'FILTRO') */
-
-
-
-
-          //ARRAY SERVICES TIENE TODOS LOS FILTROS SELECCIONADOS
-          /* let arrayServices = []
-          for(let property in services){
-            if(services[property]===true){
-              arrayServices.push(property)
-            }   
-          }
-           var servicesTrue = []
-           //TIENE LOS SERVICIOS DE LODGING
-          let lodgingServices = state.lodgings
-          let maplodgingServices = lodgingServices.filter(lodging=>{
-            for(let property in lodging){
-              console.log(property, 'PROPERTY DENTRO')
-              if(property==="services"){
-              }
-            }
-          })
-          console.log(lodgingServices, 'MAP LODGING SERVICES')
-          console.log(arrayServices, 'SERVICES DEL FILTRO') */
-          /* property.filter(serv=>{
-            for(let service in serv){
-              console.log(service, 'SOY SERVICE DENTROO')
-            }
-          }) */
-          
-          /* console.log(e, 'EEEE')
-            for(let p in e){
-              arrayServices.map(s=>{
-                if(e[p]===s)console.log(s, e[p], e, 'POR AQUI')})
-            }  */
-          //console.log(maplodgingServices, 'AQUI PACTIONPAYLOAD DE CHECKS')
-
+        }
+      }
+      )
+      let onlyIds= exists.filter(e=> e!== undefined)
+      let onlyIds2 = onlyIds.map(e=>e[0])
+      let servicesLodgings = filterLodings.filter(lodging=> 
+        onlyIds2.includes(lodging._id)
+      )
+      return{
+        ...state,
+        lodgings: servicesLodgings
+      }
 
     /*  case "GET_USER": */
     /* return {
