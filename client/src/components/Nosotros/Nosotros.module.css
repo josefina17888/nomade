@@ -1,0 +1,67 @@
+.containerNosotros {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+}
+
+.cardContainer {
+  background-color: #ffffff;
+  width: 210px;
+  height: 250px;
+  border: 2px solid #069a8e;
+  margin: 40px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 0 7px #069a8e;
+}
+
+.name {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  align-self: center;
+}
+
+.image {
+  margin-top: 10px;
+  width: 120px;
+  height: 120px;
+  align-self: center;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  object-fit: cover;
+}
+
+.pDeveloper {
+  align-self: center;
+}
+
+.Linkedin,
+.Github {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.socialContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -15px;
+    
+}
+
+.Linkedin:hover,
+.Github:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}

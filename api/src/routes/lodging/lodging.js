@@ -1,3 +1,4 @@
+
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Booking = require('../booking/booking');
@@ -7,7 +8,7 @@ const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
 const cloudinary = require("cloudinary").v2;
 const {addServices} = require("./controller")
-require('dotenv').config();
+
 
 cloudinary.config({ 
   cloud_name: 'dtw1cvtdr', 
@@ -18,7 +19,6 @@ cloudinary.config({
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
     console.log(req.body)
-    console.log(req.params)
     let fotos = req.files.map(e=>e.path)
     console.log("hola1")
     let result=[]
@@ -37,7 +37,6 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.hostId = toId(req.params.hostId);
     newLodging.latitud = req.body.latitud
     newLodging.save();
-    console.log("hola2")
     res.redirect("http://localhost:3000/")
     // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
