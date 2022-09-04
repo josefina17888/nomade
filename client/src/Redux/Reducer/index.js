@@ -22,7 +22,8 @@ const initialState = {
   allcomplaints: [],
   hosts: [],
   host: {},
-  booking: []
+  booking: [],
+  bookingsall:[]
 };
 
 var count = {
@@ -385,6 +386,11 @@ function rootReducer(state = initialState, action) {
             ...state,
             allGuests: action.payload,
           };
+          case "GET_ALL_BOOKINGS":
+            return {
+              ...state,
+              bookingsall: action.payload,
+            };
 
     default:
       return { ...state };
