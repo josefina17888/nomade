@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../NavBar/NavBar";
 import ResDetail from "../ResDetail/ResDetail";
-import axios from "axios";
 import s from "./Chat.module.css";
 import Conversation from "../Conversation/Conversation";
 import Message from "../Message/Message";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import io from "socket.io-client";
 
 
 export default function Chat() {
+  const dispatch = useDispatch();
+  const lodging = useSelector((state) => state.detail);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
@@ -112,6 +115,7 @@ export default function Chat() {
         try {
           let res = await axios("/api/message/" + conversationId);
           setMessages(res.data);
+          setNewMessage("");
         } catch (err) {
           console.log(err);
         }
@@ -120,9 +124,15 @@ export default function Chat() {
     }
   }, [currentChat]);
 
+  /* useEffect(() => {
+    if( scrollRef.current){
+      scrollRef.current.scrollInToView({behavior:"smooth"}) 
+    }
+ 
+  }, [messages]); */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //este objeto es el que va a la DB
     const message = {
       sender: userId,
       text: newMessage,
@@ -208,6 +218,5 @@ export default function Chat() {
       </div>
     </div>
   );
+
 }
-
-

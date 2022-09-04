@@ -27,7 +27,11 @@ import { useSelector } from 'react-redux';
 import adminLodgings from './components/Admin/adminLodgings.jsx'
 import adminComplaints from './components/Admin/adminComplaints.jsx'
 import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
+import BarChart from "./components/Estadisticas/Charts/BarChart.jsx"
 import Reservations from './components/Profile/HostReservations/hostreservations';
+import Chart from "./components/Estadisticas/Charts/Doughnut.jsx"
+
+
 
 function App() {
   const guestInfo = localStorage.getItem("userInfo");
@@ -50,7 +54,8 @@ function App() {
           <Route exact path='/favorites' component={Favorites}/> 
           <Route exact path='/profile/:email' component={Profile}></Route>
           <Route exact path='/profile/:email/:hostId/reservations' component={Reservations}></Route>
-          {/* <Route path='/:idGuest/verify/:token' component={Verify}/> */}
+          <Route path='/:idGuest/verify/:token' component={Verify}/>
+          <Route path='/forgot-password/' component={ForgotPassword}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           {
@@ -69,10 +74,8 @@ function App() {
             <Redirect exact to ="/login" component={LoginUser} />
           }
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
-          <Route path='/forgot-password/' component={ForgotPassword}/>
           {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
@@ -81,6 +84,8 @@ function App() {
           <Route path= '/admin/lodgings' component={adminLodgings}/>
           <Route path= '/admin/complaints' component={adminComplaints}/>
           <Route path= '/admin/estadisticas' component={adminEstadisticas}/>
+          <Route path= '/admin/BarChart' component={BarChart}/>
+          <Route path= '/admin/Doughnut' component={Chart}/>
         </Switch>
       </BrowserRouter>
    </div>
