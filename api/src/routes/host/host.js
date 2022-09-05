@@ -37,7 +37,7 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
 
     let hostId = myHost._id
         res.redirect(`http://localhost:3000/${hostId}/registerlodging`)
-        /* res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`) */
+        // res.redirect(`https://nomade-khaki.vercel.app/${hostId}/registerlodging`)
         // res.status(200).json(myHost)
 
     } catch (error) {
@@ -61,7 +61,8 @@ router.get("/:dni", async (req, res) => {
 //trae todos los host con la info completa de guest(funciona)//
 router.get("/all/:hostId", async (req, res) => { 
   const host = await Host.find({_id:req.params.hostId}).populate({path:"guestId", model: "Guest"})
-  res.send(host) 
+let hostGuestId= host[0].guestId._id
+  res.send(hostGuestId) 
  });
 
 //TRAE TODOS LOS HOSTS///

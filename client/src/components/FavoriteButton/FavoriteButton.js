@@ -44,6 +44,7 @@ if(!props.guestInfo){
       }
     }
   }
+  
 
   var stateIds = stateLodgings.map((e) => e._id);
 

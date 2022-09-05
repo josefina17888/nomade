@@ -13,8 +13,11 @@ import {
 } from "@react-google-maps/api";
 import NavBar from "../NavBar/NavBar";
 
+
+
 export default function FormLodging() {
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState({lat: -34.397,
+    lng: 150.644,});
   const [address, setAddress] = useState("");
   const params = useParams()
   const dispatch= useDispatch()
@@ -65,6 +68,15 @@ export default function FormLodging() {
     []
   );
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCoordinates({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  }, []);
+
   
   const onChange = (e) => {
     setAddress(e.target.value);
@@ -78,22 +90,24 @@ export default function FormLodging() {
       );
       const data = await response.json();
       if(data.results.length === 0){
-        return alert("No se encontro la direccion")
+        return alert("No se encontro la dirección")
       }
     setInput({...input, latitud: data.results[0].geometry.location.lat, longitud: data.results[0].geometry.location.lng})
     setCoordinates(data.results[0].geometry.location);
+    setErrors({latitud:""})
   };
  
-  const centerTest = useMemo(() => {
-    return coordinates;
-  } , [coordinates]);
+  const handleClickDirection = (e) => {
+    onSubmit(e);
+  }
 
-    const handleClickDirection = (e) => {
-      onSubmit(e);
-    }
+  // const handleEditAddres = (e) => {
+  //   e.preventDefault()
+  //   setInput({...input, address: "", longitud: "", latitud: ""})
+  //   setErrors({latitud:"sad"})
+  // }
     
   function handleDelete(){
-    
     document.getElementById("file").click()
   }
   
@@ -156,10 +170,11 @@ else{
 }
 }
 
-
 if (!isLoaded) return <div>Loading...</div>;
 
+
 let hostId = params.hostId
+console.log(hostId)
 return (
   <div>
     <NavBar/>
@@ -258,7 +273,6 @@ return (
               ))
         }
         </select>
-        <p >{errors.country}</p>
         <input
           type="text"
           name ="city"
@@ -270,25 +284,28 @@ return (
     <div className={style.containerMap}>
       <GoogleMap
         zoom={15}
-        center={centerTest}
+        center={coordinates}
         mapContainerStyle={{
           height: "40vh",
           width: "40vw",
         }}
         options={options}
       >
-        <MarkerF position={centerTest}>
+        <MarkerF position={coordinates}>
         </MarkerF>
       </GoogleMap>
-      <Autocomplete>
         <input
-          name="address" value={input.address}
+          name="address" 
+          value={input.address}
           onChange={onChange}
           type="text"
           placeholder="Direccion:"
           className={style.input}
+          title="Debes verificar la direccion"
+          required={true}
         />
-      </Autocomplete>
+      <p>{errors.address}</p>
+      <p>{errors.latitud}</p>
       <input
         value={input.latitud}
         name="latitud"
@@ -306,8 +323,8 @@ return (
       >
       </input>
     </div>
-    <button onClick={handleClickDirection}>Verificar Direccion</button>
-        <p >{errors.address}</p>
+    <button onClick={handleClickDirection}>Verificar dirección</button>
+    {/* <button onClick={handleEditAddres}>Editar</button> */}
          <textarea
           type="text"
           name ="description"
@@ -346,7 +363,7 @@ return (
           <label>Mascotas <input type="checkbox"   name="pets" /></label>
           </div>
       </div>
-      {Object.entries(errors).length === 0 && input.title !== "" && input.picture !== ""?
+      {Object.entries(errors).length === 0 && input.title !== "" && input.picture !== "" && input.latitud !== "" ?
       <div>
       <button className={style.button}  type="submit">
         Crear hospedaje
@@ -356,9 +373,9 @@ return (
      </button>
      </div>
      }
-  </form>
+
+    </form>
     </div>
     </div>
   );
 }
-

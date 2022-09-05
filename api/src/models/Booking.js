@@ -22,7 +22,10 @@ const BookingSchema = new mongoose.Schema({
   hostId:{
     type: Schema.ObjectId,
     ref: "Guest",
-  }
+  },
+  dated: {
+    type: Date
+},
 });
 
 const model = mongoose.model("Booking", BookingSchema);

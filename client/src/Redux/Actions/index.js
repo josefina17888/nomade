@@ -523,9 +523,41 @@ export function filterByTypeRooms(payload){
 export function filterByServices(payload){
   return{
     type: 'FILTER_BY_SERVICES',
-    payload
+    payload}}
+export function getByUser(user){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/admin?email=${user}`)
+      console.log(json.data)
+      return dispatch({
+        type: 'GET_BY_USER',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
   }
 }
+
+export function getBookings(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/booking/")
+      return dispatch({
+        type: "GET_ALL_BOOKINGS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }}}
+
+    export function cleanFilters(){
+      return{
+        type: 'CLEAN_FILTERS',
+      }
+    }
 
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){

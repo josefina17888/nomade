@@ -16,18 +16,13 @@ import { MdOutlinePets } from "react-icons/md";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 import Filters from "./Filters/Filters";
 export default function Menu({
-  setCurrentPage,
-  paging,
-  lodgingsPerPage,
-  currentLodging,
+  paging
 }) {
-  const allLodgings = useSelector((state) => state.lodgings);
   const dispatch = useDispatch();
   function handleSortByRating(e) {
     e.preventDefault();
     dispatch(orderByRating(e.target.value));
   }
-
   //Ordernar por Lodging tipo: Casa
   function handleFilterTypeHouse(e) {
     e.preventDefault();
@@ -47,11 +42,6 @@ export default function Menu({
     e.preventDefault();
     dispatch(orderByHigherCost(e.target.value));
   }
-
-  // function handleSortByRating(e) {
-  //   e.preventDefault()
-  //   dispatch(orderByRating(e.target.value))
-  // }
 
   return (
     <div className="n1p4yt3r dir dir-ltr">
@@ -117,47 +107,21 @@ export default function Menu({
         <div>
           <button
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
             Filtros
           </button>
           <div
-            class="modal fade"
+            className="modal fade"
             id="exampleModal"
             tabindex="-1"
-            aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
-                    Filtros
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className={s.modal_content}>
                     <Filters/>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Quitar filtros
-                  </button>
-                </div>
               </div>
             </div>
           </div>

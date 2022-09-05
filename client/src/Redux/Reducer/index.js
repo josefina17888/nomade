@@ -24,6 +24,7 @@ const initialState = {
   hosts: [],
   host: {},
   booking: [],
+  bookingsall: [],
 };
 
 var count = {
@@ -366,13 +367,19 @@ function rootReducer(state = initialState, action) {
     // FILTRA POR RANGE PRICE
     case "FILTER_BY_RANGE_PRICE":
       console.log(action.payload, "ACTION PAUUU");
-      let auxLogdings = state.allLodgings;
-      let filtered = auxLogdings.filter((e) => e.price <= action.payload.range);
+      if(action.payload.range !==0){
+        let auxLogdings = state.allLodgings;
+        let filtered = auxLogdings.filter((e) => e.price <= action.payload.range);
+        return {
+          ...state,
+          lodgings: filtered
+        };
+      }
       return {
         ...state,
-        lodgings: filtered,
-        auxLogdings: filtered,
+        lodgings: state.allLodgings,
       };
+      
 
     //FILTRA POR Q BEDS
     case "FILTER_BY_Q_BEDS":
@@ -460,7 +467,7 @@ function rootReducer(state = initialState, action) {
           };
       }
     case "FILTER_BY_SERVICES":
-      let filterLodings = state.lodgings
+      let filterLodings = state.lodgings;
       let lodgings = state.lodgings.map((e) => {
         let newObject = {
           id: e._id,
@@ -473,56 +480,136 @@ function rootReducer(state = initialState, action) {
         };
         return newObject;
       });
-      let services = action.payload 
-      let exists = lodgings.map(lodging=>{
-        if(services.wifi && services.ac && services.tv && services.parking && services.pets && services.hotWater){
-          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv && lodging.parking === services.parking && lodging.pets === services.pets && lodging.hotWater === services.hotWater){let demo=[]
-        demo.push(lodging.id)
-        return demo}
-        }else if(services.wifi && services.ac && services.tv && services.parking && services.pets){
-          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv && lodging.parking === services.parking && lodging.pets === services.pets){let demo=[]
-        demo.push(lodging.id)
-        return demo}
-        }else if(services.wifi && services.ac && services.tv && services.parking){
-          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv && lodging.parking === services.parking){let demo=[]
-        demo.push(lodging.id)
-        return demo}
-        }else if(services.wifi && services.ac && services.tv){
-          if(lodging.wifi === services.wifi && lodging.ac === services.ac && lodging.tv === services.tv){let demo=[]
-        demo.push(lodging.id)
-        return demo}
-        }else if(services.wifi && services.ac){
-          if(lodging.wifi === services.wifi && lodging.ac === services.ac){let demo=[]
-        demo.push(lodging.id)
-        return demo}
-        }
-        else if(services.wifi){
-          if(lodging.wifi === services.wifi){let demo=[]
-        demo.push(lodging.id)
-        return demo}
-        }
-        else{
-          return{
-            ...state
+      let services = action.payload;
+      let status = Object.values(services)
+      let isFalse = status.filter(e=>e===false)
+      console.log(status, 'STATUS')
+     if(isFalse.length===6) return {
+      ...state,
+      lodgings: state.allLodgings,
+    };
+     
+      let exists = lodgings.map((lodging) => {
+        if (
+          services.wifi &&
+          services.ac &&
+          services.tv &&
+          services.parking &&
+          services.pets &&
+          services.hotWater
+        ) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv &&
+            lodging.parking === services.parking &&
+            lodging.pets === services.pets &&
+            lodging.hotWater === services.hotWater
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (
+          services.wifi &&
+          services.ac &&
+          services.tv &&
+          services.parking &&
+          services.pets
+        ) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv &&
+            lodging.parking === services.parking &&
+            lodging.pets === services.pets
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (
+          services.wifi &&
+          services.ac &&
+          services.tv &&
+          services.parking
+        ) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv &&
+            lodging.parking === services.parking
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (services.wifi && services.ac && services.tv || services.wifi && services.pets && services.tv) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (services.wifi && services.ac) {
+          if (lodging.wifi === services.wifi && lodging.ac === services.ac) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (services.wifi) {
+          if (lodging.wifi === services.wifi) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
           }
         }
-      }
-      )
-      let onlyIds= exists.filter(e=> e!== undefined)
-      let onlyIds2 = onlyIds.map(e=>e[0])
-      let servicesLodgings = filterLodings.filter(lodging=> 
+      });
+      let onlyIds = exists.filter((e) => e !== undefined);
+      let onlyIds2 = onlyIds.map((e) => e[0]);
+      console.log('ONLY IDS', onlyIds2)
+      let servicesLodgings = filterLodings.filter((lodging) =>
         onlyIds2.includes(lodging._id)
-      )
-      return{
+      );
+      console.log('SERVICES', servicesLodgings)
+      return {
         ...state,
-        lodgings: servicesLodgings
-      }
+        lodgings: servicesLodgings,
+      };
 
     /*  case "GET_USER": */
     /* return {
           ...state,
           payment: action.payload,
         }; */
+
+    case "GET_CONVERSATIONS":
+      return {
+        ...state,
+        conversations: action.payload,
+      };
+    case "GET_BY_USER":
+      if (typeof action.payload === "string") {
+        return alert(" Not Found");
+      }
+      return {
+        ...state,
+        allGuests: action.payload,
+      };
+    case "GET_ALL_BOOKINGS":
+      return {
+        ...state,
+        bookingsall: action.payload,
+      };
+    case "CLEAN_FILTERS":
+      let stateClean = state.allLodgings;
+      return {
+        ...state,
+        lodgings: stateClean,
+      };
 
     default:
       return { ...state };

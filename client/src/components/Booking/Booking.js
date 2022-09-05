@@ -20,24 +20,11 @@ export default function Booking(props) {
 
   //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
+  const payment = useSelector((state) => state.bookings);
 
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
   console.log(lodgingId)
-
-  //GET DETALLES DE LODGING
-  // const [lodging, setLodging] = useState("")
-
-  // useEffect(() => {
-  //   const getLodgingDetails = async () => {
-  //     try {
-  //       let data = await axios.get("/api/lodging/detail/" + lodgingId)
-  //       let lodgingDets = data.data;
-  //       setLodging(lodgingDets)
-  //     }catch(err){
-  //       console.log(err)
-  //     }
-  //   }}, [lodging])
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
@@ -51,16 +38,20 @@ export default function Booking(props) {
   );
 
   // PARSE INFO LOCAL STORAGE BOOKING INFO
+  let costNight = JSON.parse(localStorage.getItem("priceBooking"))
     const bookingInfo = localStorage.getItem("bookingInfo");
     var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
     var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
     var check = JSON.parse(bookingInfo).pets
     var totalGuest = JSON.parse(bookingInfo).guests;
-    var costNight = JSON.parse(localStorage.getItem("priceBooking"));
-  
+
+
   //PARSE INFO LOCAL STORAGE USER INFO
     const guestInfo = localStorage.getItem("userInfo");
-    let userEmail = JSON.parse(guestInfo).email;
+    if(guestInfo){
+      var userEmail = JSON.parse(guestInfo).email;
+    }
+
     //let userEmail = true;
   
   //GET RANGES OF DATES
@@ -71,7 +62,9 @@ export default function Booking(props) {
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
   //LODGING DETAIL
-  //const costNight = lodging.price;
+  //const costNight = lodging.price; 
+  console.log(costNight)
+
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
   const picture1 = obj["0"];
@@ -113,10 +106,20 @@ export default function Booking(props) {
     setInput({ ...input, pets: e.target.checked });
   }
 
-//MERCADO PAGO
-  const preferenceId = useSelector((state) => state.payment);
-  const preference = preferenceId.preferenceId;
-  console.log(preference, 'PREFERENCE')
+
+  //MERCADO PAGO
+  //estado local para la preferenceId
+  const [preferenceId, setPreferenceId] = useState("")
+  async function getPreference (){
+    try {
+      const res = await axios.post("/api/payment/", input)
+      let id = res.data;
+      setPreferenceId(id)
+    }catch(err){
+      console.log(err)
+    }
+  }  
+
 
 //ON CHANGE CHECK IN
 function onChangeCheckIn(currentDate){
@@ -165,10 +168,15 @@ function onChangeCheckOut(currentDate){
     );
     console.log(preferenceId.hasOwnProperty(preferenceId))
     localStorage.setItem("booking", JSON.stringify(input));
-    isFound ? alert("NO DISPONIBLE") :/*  preference !== undefined? alert('Haz clic en el boton de pago'): */
-    dispatch(payBooking(input));
+    isFound ? alert("NO DISPONIBLE") :
+    preference !== undefined? alert('Haz clic en el boton de pago') :
+    // dispatch(payBooking(input))
+    getPreference(input)
   }
   
+  //MERCADO PAGO
+  const preference = preferenceId.preferenceId;
+  console.log(preference)
 
   return (
     <div>
@@ -188,7 +196,10 @@ function onChangeCheckOut(currentDate){
         </div>
       </div>
       {!userEmail ? (
-        <div> Debes registrarte</div>
+        <Link to="/login">
+              <div> Debes registrarte</div>
+        </Link>
+    
       ) : (
         <div className={s.container}>
           <div className={s.margin}>
@@ -203,6 +214,7 @@ function onChangeCheckOut(currentDate){
                 <div>
                   <div>Llegada</div>
                   <DatePicker
+                    disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkIn)}
                     onChange={(currentDate) =>onChangeCheckIn(currentDate)
@@ -218,6 +230,7 @@ function onChangeCheckOut(currentDate){
                 <div>
                   <div>Salida</div>
                   <DatePicker
+                    disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkOut)}
                       onChange={(currentDate) =>onChangeCheckOut(currentDate)

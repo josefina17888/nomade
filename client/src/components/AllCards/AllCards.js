@@ -107,7 +107,8 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
                     </Link>
                   
                     {
-                    userToken && allGuests[0]!== undefined &&  arrFilter[0].isAdmin ===true?
+                    userToken && allGuests[0]!== undefined &&(arrFilter[0]&& arrFilter[0].isAdmin === true)
+                    ?
                     <form onSubmit={(j)=>handleSubmit(j,e._id)}> 
                     <button className={styles.buttonDenunciar} type='submit'>Borrar alojamiento</button>
                     </form>:

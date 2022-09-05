@@ -7,6 +7,7 @@ import{useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar.js'
 import { getGuestByEmail, getDetail } from "../../Redux/Actions";
+import Dashboard from "./HostDash/Dashboard";
 
 export default function Profile() {
 const params = useParams()
@@ -22,6 +23,7 @@ const [lodgingDets, setLodgingDets] = useState([])
 // const [lodgingComplete, setLodgingComplete] = useState([])
 // let lodgingDetails = []
 
+
 useEffect(() => {
   const getGuestInfo = async () => {
     try {
@@ -31,23 +33,45 @@ useEffect(() => {
       setGuest(guestId)
 
       // try{
-      let response = await axios.get("/api/booking/all/" + guest);
+      let response = await axios.get("/api/booking/all/" + user._id);
       let guestBooking = response.data
       //sacar las dos fechas y el lodging id
       setBooking(guestBooking)
-      
-      let lodgingsGot = []
-      await guestBooking.forEach((e) => {
+
+      try{
+      var lodgingsGot = []
+      await guestBooking.forEach(async (e) => {
         let subArray = []
-        subArray.push(e.lodgingId)
-        subArray.push(e.checkIn)
-        subArray.push(e.checkOut)
+        let lodgingId = e.lodgingId
+        let checkIn = new Date (e.checkIn).toLocaleDateString()
+        let checkOut = new Date (e.checkOut).toLocaleDateString()
+        subArray.push(lodgingId)
+        subArray.push(checkIn)
+        subArray.push(checkOut)
+      
+          // let data = await axios.get("/api/lodging/detail/" + e.lodgingId)
+          // let title = data.data.title
+          // subArray.push(title)
+
         lodgingsGot.push(subArray)
       })
-      setLodgingIds(lodgingsGot)
-
-      // let lodgingsUnique=[]
-      // lodgingsGot.forEach((e)=>{
+      
+     async function bringTitle (){
+      await lodgingsGot.forEach(async (e)=>{
+          try{
+            let data = await axios.get("/api/lodging/detail/" + e["0"])
+            let title = data.data.title
+            // let picture = data.data.picture["0"]
+            e.push(title)
+            }catch(err){
+            console.log(err)
+            }
+          })}
+      await bringTitle()
+       
+       }catch(err){console.log(err)}
+       setLodgingIds(lodgingsGot)
+       
       // if(!lodgingsUnique.includes(e)){
       //     lodgingsUnique.push(e)
       //   }
@@ -80,7 +104,6 @@ useEffect(() => {
     //   setLodgingComplete(bookingsLodging)
     // })
     
-     
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +112,7 @@ useEffect(() => {
 }, [guest]);
 
 console.log(email)
-console.log(guest)
+console.log(user._id, 'USER ID')
 console.log(booking)
 console.log(lodgingIds)
 // console.log(lodgingDets)
@@ -116,7 +139,7 @@ console.log(lodgingIds)
             <div className={style.container}>
               <div>
                 <h2>Detalle del Perfil</h2>
-                <h4>Nombre</h4>
+                <h4 className={style.titles}>Nombre</h4>
                 <h6>
                   {user.name.charAt(0).toUpperCase() +
                     user.name.slice(1)}{" "}
@@ -126,22 +149,22 @@ console.log(lodgingIds)
                 <hr width="700"></hr>
                 {user.birthDate ? (
                   <div>
-                    <h4>Fecha de Nacimiento</h4>
+                    <h4 className={style.titles}>Fecha de Nacimiento</h4>
                     <h6>{(user.birthDate).slice(0, -14)}</h6>
                     <hr width="700"></hr>
                   </div>
                 ) : (
                   ""
                 )}
-                <h4>Correo Electronico</h4>
+                <h4 className={style.titles}>Correo Electronico</h4>
                 <h6>{user.email}</h6>
                 <hr width="700"></hr>
-                <h4>Contraseña</h4>
+                <h4 className={style.titles}>Contraseña</h4>
                 <Link to={`/${user.email}/resetPassword`} ><button>Actualizar Contraseña</button></Link>
                 <hr width="700"></hr>
                 {user.cellPhone ? (
                   <div>
-                    <h4>Telefono</h4>
+                    <h4 className={style.titles}>Telefono</h4>
                     <h6>{user.cellPhone}</h6>
                     <hr width="700"></hr>
                   </div>
@@ -149,22 +172,30 @@ console.log(lodgingIds)
                   ""
                 )}
                 <div>
-                  <h4>Reservas</h4>
-                  <div>
+                  <h4 className={style.titles}>Reservas</h4>
+                  <hr width="700"></hr>
+                  <div className={style.container1}>
                     {
                       !lodgingIds.length ?                       
                       <div>
                       Aún no tienes reservas para mostrar
                       </div> :
                       lodgingIds.map((e)=>
-                      <div key={e._id}>
-                      <h5>{e["1"]}</h5>
-                      <h5>{e["2"]}</h5>
-                        <Link to= {`/detail/${e["0"]}`}>ver detalles</Link>
+                      <div className={style.book} key={e["0"]}>
+                      <h5>{e["3"]}</h5>
+                      <h5>Check In: {e["1"]}</h5>
+                      <h5>Check Out: {e["2"]}</h5>
+                      {/* <img src={e["4"]} alt="img not found"/> */}
+                        <Link className={style.link} to= {`/detail/${e["0"]}`}>Ver detalles de mi reserva</Link>
                       </div>
                       ) 
 
                     }
+                  </div>
+                  <div>
+                  <h4 className={style.titles}>Alojamientos</h4>
+                  <hr width="700"></hr>
+                  <Dashboard emailGuest={email}/>
                   </div>
                 </div>
               </div>
