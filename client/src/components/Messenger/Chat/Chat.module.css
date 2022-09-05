@@ -1,51 +1,67 @@
-.navContainer{
-   
+.chatContainer{
+    width: 100%;
+    height: 100vh;
 }
 .chat {
-  /* max-height: calc(100vh -200px); */
-  padding: 30px;
   display: flex;
-  display: grid;
-  grid-template-columns: 1fr 3fr 1.5fr;
-  grid-template-rows: 70px 500px;
+  width: 100%;
+  
 
 }
-.chatMsjWrapper {
-  grid-area: 1 / 1 / 2 / 2;
-  font-size: 1.5em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.5em;
-  
+.convWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-items: center;
+    border: solid .5px #e0e0e075;
+    
 }
-.chatMsjBottom {
-  grid-area: 2 / 1 / 3 / 2;
+.msjs{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    border-bottom: solid .5px #e0e0e075;
+    width: 100%;
 }
-.chatMsj {
-  grid-area: 2 / 1 / 3 / 2;
+.convWrapper span{
+    font-size: 1.5em;
 }
+
 .chatBox {
-  grid-area: 2 / 2/ 3 / 3;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border: solid .5px #e0e0e075;
+    
 }
-.try {
-  grid-area: 1 / 2 / 2 / 3;
-  height: 1.5em;
+.chatBoxTop{
+    height:70px;
+    border-bottom: solid .5px #e0e0e075;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
+.chatBoxTop span{
+  font-size: 1.5em;
+   
+
+}
+.chatBoxT{
+    
+    overflow-y: scroll;
+    padding-right: 20px;
+    height: 500px;
+ 
+}
+
 .chatBoxWrapper {
-  display: flex;
-  flex-direction: column;
   position: relative;
-  grid-area: 2 / 2/ 3 / 3;
   height: 700px;
  
 }
-.chatBoxTop {
-  overflow-y: scroll;
-  padding-right: 20px;
-  height: 500px;
-}
+
 .chatBoxBottom {
   margin-top: 5px;
   display: flex;
@@ -67,32 +83,43 @@
   background-color: #069a8e;
   color: white;
 }
-/* .chatDetail{
-        flex: 3fr
-} */
-.chatMsjWrapper,
-.chatBoxWrapper,
-.resDetailWrapper {
-  padding: 10px;
-  height: calc(100vh -70px);
-}
+
+
 .noConv {
   position: absolute;
   left: 70px;
   font-size: 3em;
   color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-/* .resDetail {
- 
-} */
 .resDetailWrapper {
-  font-weight: 400;
-  font-size: 1.5em;
-  text-transform: uppercase;
+ 
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 200px) ;
+  width: 35%;
+  border:solid .5px #e0e0e075;
+
+  
+}
+.resD {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 1.5em;
-  grid-area: 1 / 3/ 2 / 4;
-}
+  height: 74px;
+  border-bottom: solid .5px #e0e0e075;
+  width: 100%;
 
+}
+.resD span{
+  font-size: 1.5em;
+}
+.reserv{
+  
+    overflow-y: scroll;
+}
+.conversation{
+    width: 100%;
+}

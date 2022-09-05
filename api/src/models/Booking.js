@@ -30,8 +30,9 @@ const BookingSchema = new mongoose.Schema({
 code: {
   type: String,
   required:true
-}
-visibility: { type: Boolean, default: true },
+},
+visibility: { 
+  type: Boolean, default: true }
 });
 
 const model = mongoose.model("Booking", BookingSchema);
