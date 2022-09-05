@@ -5,6 +5,7 @@ import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import style from "./dashboard.module.css"
+import Swal from 'sweetalert'
 
 export default function Dashboard({emailGuest}) {
 
@@ -71,7 +72,9 @@ const handleClick = ({_id}) => {
             console.log(err)
             }
         } else {
-            return alert("No puedes eliminar un alojamiento con reservas activas")
+            return Swal(
+                'No puedes eliminar un alojamiento con reservas activas','','error',{buttons:false,timer:3500}
+              )
         }
     } catch(err){console.log(err)}
         getBookingsInfo();

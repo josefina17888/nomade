@@ -13,6 +13,7 @@ import s from "../Booking/Booking.module.css";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
+import Swal from 'sweetalert'
 
 
 export default function Booking(props) {
@@ -184,8 +185,12 @@ function onChangeCheckOut(currentDate){
       allDates.includes(new Date(date).toDateString())
     );
     localStorage.setItem("booking", JSON.stringify(input));
-    isFound ? alert("NO DISPONIBLE") :
-    preference !== undefined? alert('Haz clic en el boton de pago') :
+    isFound ?  Swal(
+      'No disponible','','error',{buttons:false,timer:3000}
+    ) :
+    preference !== undefined?  Swal(
+      'Haz clic en el boton de pago','','warning',{buttons:false,timer:3000}
+    ) :
     // dispatch(payBooking(input))
     getPreference(input)
   }

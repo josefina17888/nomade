@@ -113,6 +113,7 @@ console.log(user._id)
 console.log(booking)
 console.log(lodgingIds)
 
+
 const handleClick2 = ({_id}) => {
   const getBook = async () => {
   try{

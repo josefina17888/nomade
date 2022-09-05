@@ -1,6 +1,8 @@
 import React ,  {useState } from 'react'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
+import Swal from 'sweetalert'
+
 
 // Esta ventana aparece cuando das click a olvide mi contraseña(Ventana de Login) , aca te piden tu email para enivarte un token a tu cuenta de correo y además verifica que si tu email esta en nuestra DB
 
@@ -15,7 +17,10 @@ export default function ResetPassword() {
         e.preventDefault();
         try {
           if (email === "") {
-            alert("Por favor ingrese todos los campos");
+            // alert("Por favor ingrese todos los campos");
+            Swal(
+              'Por favor ingrese todos los campos','','warning',{buttons:false,timer:3500}
+            )
           }
           const guest = `http://localhost:3001/api/guest/${email}`
           // const guest = `https://nomade-henry.herokuapp.com/api/guest/${email}`
@@ -35,7 +40,10 @@ export default function ResetPassword() {
         
          await axios.post("/api/passwordReset/",{email})
         } catch (error) {
-          alert("Algo sucedió mal");
+          // alert("Algo sucedió mal");
+          Swal(
+            'Algo sucedió mal','','warning',{buttons:false,timer:3500}
+          )
           console.log(error)
         }
       };

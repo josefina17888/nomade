@@ -65,13 +65,6 @@ function handlePhoto(e){
   })
 }
 
-// function handleSubmit(e){
-//   e.preventDefault()
-//   history.push('/form')
-//   alert("host creado")
-//  }
-
-
   return (
     <div>
       <NavBar/>
