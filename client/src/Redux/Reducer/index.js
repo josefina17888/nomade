@@ -1,3 +1,5 @@
+import Swal from 'sweetalert'
+
 const initialState = {
   lodgings: [],
   allLodgings: [],
@@ -25,6 +27,7 @@ const initialState = {
   host: {},
   booking: [],
   bookingsall: [],
+  userBusqueda:[]
 };
 
 var count = {
@@ -207,7 +210,9 @@ function rootReducer(state = initialState, action) {
       };
     case "GET_BY_CITY":
       if (typeof action.payload === "string") {
-        return alert(" Not Found");
+        return Swal(
+          'Not Found','','error',{buttons:false,timer:3500}
+        );
       }
       return {
         ...state,
@@ -230,6 +235,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allGuests: action.payload,
+        userBusqueda: action.payload,
       };
     case "GET_GUEST_BY_EMAIL":
       return {
@@ -593,7 +599,9 @@ function rootReducer(state = initialState, action) {
       };
     case "GET_BY_USER":
       if (typeof action.payload === "string") {
-        return alert(" Not Found");
+        return Swal(
+          'Not Found','','error',{buttons:false,timer:3000}
+        );
       }
       return {
         ...state,

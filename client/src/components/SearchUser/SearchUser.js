@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { getByUser } from "../../Redux/Actions";
 import s from "../SearchBar/SearchBar.module.css";
 import { BsSearch } from "react-icons/bs";
-import {getGuests} from "../../Redux/Actions/index";
+import Swal from 'sweetalert'
+
 
 export default function SearchBar(){
 const dispatch = useDispatch()
 const [user, setUser] = useState("")
-const allGuests = useSelector((state) => state.allGuests);
-useEffect(() => {
-  dispatch(getGuests());
-}, [dispatch]);
-
 
 function handleInputChange(e){
   e.preventDefault()
@@ -25,17 +21,12 @@ function handleSubmit(e){
     dispatch(getByUser(user.toLowerCase()));
     setUser("");}
     else{
-    alert("Ingresa un id para buscar")
+    Swal(
+      'Ingresa un id para buscar','','warning',{buttons:false,timer:3000}
+    )
     }
 }
-let guestId = localStorage.getItem("userInfo");
-if (!guestId) {
-} else {
-  var userToken = JSON.parse(guestId)._id;
-  var userEmail = JSON.parse(guestId).email;
-  var user1 = JSON.parse(guestId)
-}
-let arrFilter =  allGuests.filter(e => e.email === userEmail)
+
 return(
     <form className={s.searchForm} onSubmit={handleSubmit}>   
       <input className={s.searchInput}

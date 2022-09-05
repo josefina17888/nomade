@@ -20,10 +20,9 @@ export default function Home() {
     var userToken = JSON.parse(guestId)._id;
     var userEmail = JSON.parse(guestId).email;
     var user = JSON.parse(guestId)
+    var admin = JSON.parse(guestId).isAdmin;
   }
   const allGuests = useSelector((state) => state.allGuests);
-  let arrFilter =  allGuests.filter(e => e.email === userEmail)
-  let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= allGuests.filter(e=> e.Visibility===true)
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
@@ -40,10 +39,9 @@ export default function Home() {
   };
   console.log(allGuests )
 console.log(userEmail )
-console.log(arrFilter )
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined  ?
+      {userToken && allGuests[0]!== undefined && admin === true ?
     <div>
    <UserNav
     email={user?user.email: ""} />

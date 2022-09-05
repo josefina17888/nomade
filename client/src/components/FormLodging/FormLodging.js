@@ -12,6 +12,7 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import NavBar from "../NavBar/NavBar";
+import Swal from 'sweetalert'
 
 
 
@@ -90,7 +91,9 @@ export default function FormLodging() {
       );
       const data = await response.json();
       if(data.results.length === 0){
-        return alert("No se encontro la dirección")
+        return Swal(
+          'No se encontro la dirección','','warning',{buttons:false,timer:3500}
+        )
       }
     setInput({...input, latitud: data.results[0].geometry.location.lat, longitud: data.results[0].geometry.location.lng})
     setCoordinates(data.results[0].geometry.location);
@@ -171,7 +174,6 @@ else{
 }
 
 if (!isLoaded) return <div>Loading...</div>;
-
 
 let hostId = params.hostId
 console.log(hostId)

@@ -33,6 +33,7 @@ code: {
 },
 visibility: { 
   type: Boolean, default: true }
+
 });
 
 const model = mongoose.model("Booking", BookingSchema);
