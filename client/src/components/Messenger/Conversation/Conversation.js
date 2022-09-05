@@ -5,9 +5,7 @@ import axios from "axios";
 
 
 export default function Conversation({ conversation, currentUser }) {
-  console.log("conversation", conversation)
-  console.log("currentUser", currentUser)
-  let dispatch = useDispatch();
+
   const [user, setUser]= useState({});
  
   useEffect(() => {

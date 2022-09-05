@@ -9,6 +9,7 @@ import axios from "axios";
 import io from "socket.io-client";
 
 export default function Chat() {
+  const ENDPOINT = "ws://localhost:3001"/* 'https://nomade-henry.herokuapp.com/'; */
   const dispatch = useDispatch();
   const lodging = useSelector((state) => state.detail);
   const [conversations, setConversations] = useState([]);
@@ -30,11 +31,10 @@ export default function Chat() {
  
   useEffect(() => {
     console.log("uno")
-
-  /*   socket.current = io("ws://localhost:3001"); */
-     socket.current = io(process.env.REACT_APP_API);
-
-  }, []);
+    socket.current = io(ENDPOINT,{
+      transports: ['websocket'],
+  });
+  }, [ENDPOINT]);
 
 
   if (localStorage.booking) {
