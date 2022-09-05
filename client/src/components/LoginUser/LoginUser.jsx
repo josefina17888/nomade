@@ -15,7 +15,8 @@ export default function LoginUser() {
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState({
     msgNotRegister: "",
-    msgNotVerify: ""
+    msgNotVerify: "",
+    msgBan: ""
   });
   const [shown, setShown] = useState(false);
       const switchShown = () => setShown(!shown);
@@ -36,7 +37,9 @@ export default function LoginUser() {
       }
       const guest = await axios.get(`/api/guest/${email}`)
       if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
+      if(guest.data[0].Visibility === false) return setMsg({...msg , msgBan: "Tu usuario ha sido baneado de Nomade." })
       if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado" })
+     
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +114,8 @@ export default function LoginUser() {
             <label className={style.labelA}>Contraseña</label>
           </div>
           <div>
-          {msg.msgNotRegister && <div>{msg.msgNotRegister}</div>}
+          {msg.msgBan !=="" && <div>{msg.msgBan}</div>}
+          {msg.msgNotRegister && msg.msgBan ==="" && <div>{msg.msgNotRegister}</div>}
           {msg.msgNotVerify && <div>
             <p>{msg.msgNotVerify}</p>
             <button  className={style.button} onClick={handleClick}> Verificar Email</button>
@@ -131,6 +135,7 @@ export default function LoginUser() {
           <GoogleLogin
             className={style.buttonGoogle}
             onSuccess={(response) => {
+              console.log(response)
               createOrGetUserGoogle(response);
               history.push("/");
             }}
