@@ -29,7 +29,6 @@ export default function Chat() {
   let userEmail = user.email;
 
 
-
   //conecta con el server y trae los mensajes
  
   useEffect(() => {
@@ -38,7 +37,6 @@ export default function Chat() {
       transports: ['websocket'],
   });
   }, [ENDPOINT]);
-
 
   if (localStorage.booking) {
     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
@@ -57,9 +55,6 @@ export default function Chat() {
       };
       getHostGuestId();
     }, []);
-
-
-    
 
     useEffect(()=>{
       const newConversation = async () => {
@@ -129,7 +124,6 @@ export default function Chat() {
       }
     };
     getConversations()
-    
 
   }, [userId, host]);
 
@@ -232,6 +226,7 @@ export default function Chat() {
           </div>
         </div>
           <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
+
         <div className={s.reserv}>
           <ResDetail />
         </div>
