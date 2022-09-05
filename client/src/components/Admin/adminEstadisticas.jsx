@@ -18,8 +18,9 @@ export default function Home() {
     var userEmail = JSON.parse(guestId).email;
     var user = JSON.parse(guestId)
   }
+  const userBusqueda = useSelector((state) => state.userBusqueda);
   const allGuests = useSelector((state) => state.allGuests);
-  let arrFilter = allGuests.filter(e => e.email === userEmail)
+  let arrFilter = userBusqueda.filter(e => e.email === userEmail)
 
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)

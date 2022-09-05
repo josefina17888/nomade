@@ -25,6 +25,7 @@ const initialState = {
   host: {},
   booking: [],
   bookingsall: [],
+  userBusqueda:[]
 };
 
 var count = {
@@ -230,6 +231,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allGuests: action.payload,
+        userBusqueda: action.payload,
       };
     case "GET_GUEST_BY_EMAIL":
       return {

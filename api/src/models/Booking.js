@@ -30,7 +30,7 @@ const BookingSchema = new mongoose.Schema({
 code: {
   type: String,
   required:true
-}
+},
 visibility: { type: Boolean, default: true },
 });
 
