@@ -16,7 +16,6 @@ let user = JSON.parse(guestData)
 let email = params.email
 
 //BUSCANDO EL GUEST CON EL EMAIL y LOS BOOKINGS POR GUEST ID y LOS LODGING IDS DE LAS BOOKINGS
-const [guest, setGuest] = useState("")
 const [booking, setBooking] = useState("")
 const [lodgingIds, setLodgingIds] = useState("")
 const [lodgingDets, setLodgingDets] = useState([])
@@ -27,10 +26,6 @@ const [lodgingDets, setLodgingDets] = useState([])
 useEffect(() => {
   const getGuestInfo = async () => {
     try {
-
-      let res = await axios.get("/api/guest/" + email);
-      let guestId = res.data[0]._id;
-      setGuest(guestId)
 
       // try{
       let response = await axios.get("/api/booking/all/" + user._id);
@@ -109,10 +104,10 @@ useEffect(() => {
     }
   };
   getGuestInfo();
-}, [guest]);
+}, []);
 
 console.log(email)
-console.log(user._id, 'USER ID')
+console.log(user._id)
 console.log(booking)
 console.log(lodgingIds)
 // console.log(lodgingDets)

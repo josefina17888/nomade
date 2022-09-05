@@ -9,6 +9,9 @@ import axios from "axios";
 import io from "socket.io-client";
 
 export default function Chat() {
+
+  const ENDPOINT = /* "ws://localhost:3001" */ 'https://nomade-henry.herokuapp.com/'; 
+
   const dispatch = useDispatch();
   const lodging = useSelector((state) => state.detail);
   const [conversations, setConversations] = useState([]);
@@ -27,11 +30,13 @@ export default function Chat() {
 
 
   //conecta con el server y trae los mensajes
+ 
   useEffect(() => {
     console.log("uno")
-    socket.current = io("ws://localhost:3001");
-    /* socket.current = io(`ws:https://nomade-henry.herokuapp.com`);*/
-  }, []);
+    socket.current = io(ENDPOINT,{
+      transports: ['websocket'],
+  });
+  }, [ENDPOINT]);
 
   if (localStorage.booking) {
     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
@@ -49,34 +54,30 @@ export default function Chat() {
         }
       };
       getHostGuestId();
+    }, []);
 
-
-      console.log("tres")
+    useEffect(()=>{
       const newConversation = async () => {
-        console.log("esto es newConversation");
-        console.log("host del estado", host);
-        console.log("userID", userId);
-  
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
         );
         console.log(
           "esto es el filtro para ver si ya los miembos estan en el estado",
           filtered
-        );
-        if (!filtered.length) {
+        ); 
+     if (!filtered.length) { 
          
           let conv = await axios.post(
             "/api/conversation/" + userId + "/" + host
           );
           console.log("respuesta nueva conversacion creada ", conv);
-        }
-      };
-      console.log("cuatro")
+        } 
+       }; 
       newConversation();
-    }, [conversations]);
+    },[conversations])
     
   }
+
 
   useEffect(() => {
     console.log("cinco")
@@ -109,7 +110,7 @@ export default function Chat() {
     socket.current.on("getUsers", (users) => {
       console.log("users del back", users);
     });
-  }, [user]);
+  }, [conversations]);
 
   // obtiene todas las conversaciones asociadas al usuario
   useEffect(() => {
@@ -123,7 +124,6 @@ export default function Chat() {
       }
     };
     getConversations()
-    setOnlineUsers(host)
 
   }, [userId, host]);
 
@@ -225,10 +225,8 @@ export default function Chat() {
             )}
           </div>
         </div>
-
-        <div className={s.resDetail}>
           <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
-        </div>
+
         <div className={s.reserv}>
           <ResDetail />
         </div>

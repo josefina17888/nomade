@@ -61,6 +61,7 @@ router.post("/booking", async (req, res) => {
 });
 
 
+
 router.get("/", async (req, res) => {
   
   let reservas = await Booking.find();
@@ -105,6 +106,7 @@ router.post("/emailVerified/:email",async (req, res) => {
           res.status(404).send(error)
       }
 });
+
 
 
 

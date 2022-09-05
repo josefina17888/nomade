@@ -81,9 +81,9 @@ io.on("connection", (socket) => {
     console.log("socket", socket.id);
 
 
-//enviar y recibir mensajes(viene del front y de aqui se envia al otro usuario)
+ //enviar y recibir mensajes(viene del front y de aqui se envia al otro usuario)
  socket.on("sendMessage", ({ senderId, receiverId, text }) => { 
-//busca el receiver
+ //busca el receiver
  const user = getUser(receiverId);
 
       io.to(user.socketId).emit("getMessage", { 
