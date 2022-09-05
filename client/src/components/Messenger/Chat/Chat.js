@@ -24,35 +24,35 @@ export default function Chat() {
   let userEmail = user.email;
 
 
-  if (localStorage.booking) {
-    useEffect(() => {
-      const bookingInfo = JSON.parse(localStorage.getItem("booking"));
-      let hostId = bookingInfo.hostId;
-      const getHostGuestId = async () => {
-        try {
-          let res = await axios.get("/api/host/all/" + hostId);
-          let guestId = res.data
-          if(guestId){
-            setHost(guestId)}
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      getHostGuestId()
+  // if (localStorage.booking) {
+  //   useEffect(() => {
+  //     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
+  //     let hostId = bookingInfo.hostId;
+  //     const getHostGuestId = async () => {
+  //       try {
+  //         let res = await axios.get("/api/host/all/" + hostId);
+  //         let guestId = res.data
+  //         if(guestId){
+  //           setHost(guestId)}
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     };
+  //     getHostGuestId()
 
-      const newConversation = async () => {
-        let filtered = conversations.filter(
-          (c) => c.members.includes(userId) && c.members.includes(host)
-        );
-        console.log("prueba", filtered);
-        if (!filtered.length) {
-            let conv = await axios.post(`/api/conversation/${userId}/${host}`); 
-            console.log("nueva conversacion", conv)
-        }
-      };
-      newConversation()
-    }, [conversations]);
-  }
+  //     const newConversation = async () => {
+  //       let filtered = conversations.filter(
+  //         (c) => c.members.includes(userId) && c.members.includes(host)
+  //       );
+  //       console.log("prueba", filtered);
+  //       if (!filtered.length) {
+  //           let conv = await axios.post(`/api/conversation/${userId}/${host}`); 
+  //           console.log("nueva conversacion", conv)
+  //       }
+  //     };
+  //     newConversation()
+  //   }, [conversations]);
+  // }
 
   //conecta con el server y trae los mensajes
   useEffect(() => {

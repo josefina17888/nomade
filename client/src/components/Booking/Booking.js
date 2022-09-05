@@ -79,7 +79,8 @@ export default function Booking(props) {
     costNight: costNight,
     pets: check,
     hostId: lodging.hostId,
-    total: total
+    total: total,
+    currency: "USD"
   });
 
   const allDates = getDatesInRange(input.checkIn, input.checkOut);
