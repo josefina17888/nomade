@@ -1,0 +1,84 @@
+.containerInfo{
+    max-width: 500px;
+    height: 700px;
+    /* overflow:hidden; */
+}
+.carouselChatContainer{
+    height: 600px;
+    max-width: 500px;
+    margin-bottom: 50px;
+   
+
+}
+
+.carouselChat{
+    padding-left: var(--gp-padding-largeAndAbove, 30px) !important;
+    padding-right: var(--gp-padding-largeAndAbove, 30px) !important;
+    height: 400px;
+  }
+  .picture1{
+    max-width:500px ;
+    height: 600px; 
+    object-fit: cover;
+  }
+  .check{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 30px;
+   
+  }
+ 
+  .cI{
+    display: block;
+    font-weight: 600;
+    font-size: 1.2em;
+    height: 50px;
+  }
+  .cDate{
+    margin-left: 10px;
+
+  }
+  .infoRes{
+    display:flex;
+    justify-content: center;
+    display: block;
+  }
+  .cGuests{
+   
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 30px;
+   
+  }
+  
+
+  .adressC{
+    display:flex;
+    justify-content: center;
+    display: block;
+  }
+  .cD{
+    display: block;
+    font-weight: 600;
+    font-size: 1.2em;
+    height: 50px;
+    display:flex;
+  }
+  .nmds{
+    align-self: center;
+  }
+  .cM{
+    display: block;
+    font-weight: 600;
+    font-size: 1.2em;
+    height: 50px;
+   
+
+  }
+  .adressC{
+    display: flex
+
+  }
+

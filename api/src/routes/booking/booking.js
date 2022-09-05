@@ -106,6 +106,18 @@ router.post("/emailVerified/:email",async (req, res) => {
       }
 });
 
+//MODIFICA BOOKING A VISIBILITY FALSE
+router.patch("/:_id", async (req, res) => {
+      
+  try {
+    let lodgingId = toId(req.params._id)
+    await Lodging.findByIdAndUpdate(_id, { visibility: 'false' }).exec();
+    res.send("actualizado con exito")
+  } catch (error) {
+  res.status(400).send("no se pudo actualizar");
+  console.log(error);
+}
+})
 
 
 
