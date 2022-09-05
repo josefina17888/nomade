@@ -18,11 +18,10 @@ export default function Home() {
     var userToken = JSON.parse(guestId)._id;
     var userEmail = JSON.parse(guestId).email;
     var user = JSON.parse(guestId)
+    var admin = JSON.parse(guestId).isAdmin;
   }
- 
-  const userBusqueda = useSelector((state) => state.userBusqueda);
   const allGuests = useSelector((state) => state.allGuests);
-  let arrFilter = userBusqueda.filter(e => e.email === userEmail)
+
   
   let complaints = useSelector((state) => state.allcomplaints);
   let lodgingsVisibles= complaints.filter(e=> e.Visibility===true)
@@ -35,15 +34,13 @@ export default function Home() {
     indexFirstLodging,
     indexLastLodging
   );
-  console.log(allGuests )
-  console.log(userEmail )
   const paging = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined && (arrFilter[0].isAdmin || arrFilter[0].isAdmin === true)?
+      {userToken && allGuests[0]!== undefined && admin === true?
     <div>
     <NavBar
     email={user?user.email: ""} />
