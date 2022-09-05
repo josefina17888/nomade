@@ -94,6 +94,12 @@ export default function Booking(props) {
     setInput({...input, total:total})
   }, [])
 
+  const [style, setStyle] = useState("className={s.cont}");
+  
+  const changeStyle = () => {
+    setStyle("className={s.cont2}");
+  };
+
   //GET Q PETS
   const lodgingServices = []
   for (const property in services) {
@@ -180,7 +186,7 @@ function onChangeCheckOut(currentDate){
   console.log(preference)
 
   return (
-    <div>
+    <div className={style}>
       <div className={s.nav}>
         <div className={s.div_logo}>
           <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
@@ -295,7 +301,7 @@ function onChangeCheckOut(currentDate){
                 </div>
               </div>
             </div>
-            <button className={s.button2} onClick={handleBooking}>
+            <button className={s.button2} onClick={handleBooking} onmouseover={changeStyle}>
               Reservar
             </button>
             <MercadoPagoFinal preferenceId={preference} />
