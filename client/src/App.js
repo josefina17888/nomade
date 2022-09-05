@@ -60,21 +60,9 @@ function App() {
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
           <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          {
-            user?
-            <Route exact path='/booking/:_id' component={Booking}/>:
-            <Redirect exact to ="/login" component={LoginUser} />
-          }
-          {
-            user?
-            <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>:
-            <Redirect exact to ="/login" component={LoginUser} />
-          }
-          {
-            user?
-            <Route exact path= '/:email/form' component={FormHost}/>:
-            <Redirect exact to ="/login" component={LoginUser} />
-          }
+          <Route exact path='/booking/:_id' component={Booking}/>
+          <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
+          <Route exact path= '/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           {/* <Route path= "/mercadopago" component={MercadoPago}/> */}

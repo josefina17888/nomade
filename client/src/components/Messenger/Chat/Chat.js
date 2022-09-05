@@ -9,12 +9,8 @@ import axios from "axios";
 import io from "socket.io-client";
 
 export default function Chat() {
-  const ENDPOINT =
-    /* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
 
-  let stateLodgings = useSelector((state) => state.lodgings);
-  console.log(stateLodgings);
-
+  const ENDPOINT =/* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
@@ -31,11 +27,13 @@ export default function Chat() {
 
   //conecta con el server y trae los mensajes
 
+
   useEffect(() => {
     socket.current = io(ENDPOINT, {
       transports: ["websocket"],
     });
   }, [ENDPOINT]);
+
 
   if (localStorage.booking) {
     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
@@ -54,7 +52,9 @@ export default function Chat() {
       getHostGuestId();
     }, []);
 
+
     useEffect(() => {
+
       const newConversation = async () => {
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
@@ -68,6 +68,7 @@ export default function Chat() {
       newConversation();
     }, [conversations]);
   }
+
 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
@@ -110,6 +111,7 @@ export default function Chat() {
       }
     };
     getConversations();
+
   }, [userId, host]);
 
   // trae todos los mensajes de una conversacion
