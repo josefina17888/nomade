@@ -38,12 +38,13 @@ export default function Home() {
   const paging = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+  console.log(allGuests )
+console.log(userEmail )
+console.log(arrFilter )
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined && (arrFilter[0].isAdmin || arrFilter[0].isAdmin === true) ?
+      {userToken && allGuests[0]!== undefined  ?
     <div>
-   
    <UserNav
     email={user?user.email: ""} />
     <Menu setCurrentPage={setCurrentPage} paging={paging} guestPerPage={guestPerPage} currentLodging={currentUser}/>
