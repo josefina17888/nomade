@@ -9,7 +9,7 @@ import axios from "axios";
 import io from "socket.io-client";
 
 export default function Chat() {
-  const ENDPOINT = "ws://localhost:3001"/* 'https://nomade-henry.herokuapp.com/'; */
+  const ENDPOINT = /* "ws://localhost:3001" */ 'https://nomade-henry.herokuapp.com/'; 
   const dispatch = useDispatch();
   const lodging = useSelector((state) => state.detail);
   const [conversations, setConversations] = useState([]);
@@ -227,10 +227,7 @@ export default function Chat() {
             )}
           </div>
         </div>
-
-        <div className={s.resDetail}>
           <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
-        </div>
         <div className={s.reserv}>
           <ResDetail />
         </div>
