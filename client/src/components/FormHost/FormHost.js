@@ -44,6 +44,20 @@ function handleCbu(e){
   })
 }
 
+function handleBank(e){
+  setInput({
+      ...input,
+      [e.target.name]: e.target.value
+  })
+}
+
+function handleCellphone(e){
+  setInput({
+      ...input,
+      [e.target.name]: e.target.value
+  })
+}
+
 function handlePhoto(e){
   setInput({
       ...input,
@@ -67,7 +81,7 @@ function handlePhoto(e){
 
    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
 
-        <label>DNI:</label>
+        <label>Documento Nacional de Identidad:</label>
         <input 
         className={estilos.margin}
         type="number" 
@@ -77,7 +91,7 @@ function handlePhoto(e){
         placeholder="DNI"
         required
         />
-        <label>Foto de tu DNI:</label>
+        <label>Foto de tu Documento Nacional de Identidad:</label>
         <input 
         className={estilos.margin}
         name="hostDniPicture"
@@ -85,7 +99,7 @@ function handlePhoto(e){
         onChange={handlePhoto}
         required
         />
-        <label>CBU:</label>
+        <label>Clave Bancaria Única:</label>
         <input 
         type="number" 
         name="cbu"
@@ -94,13 +108,31 @@ function handlePhoto(e){
         placeholder="CBU"
         required
         />
-        <h6 className={estilos.ac}>Ingresá el CBU al que transferiremos las ganancias de tus reservas</h6>
+        <h6 className={estilos.ac}>Ingresá la Clave Bancaria Única a la que transferiremos las ganancias de tus reservas</h6>
+        <label>Entidad Bancaria:</label>
+        <input 
+        type="string" 
+        name="bank"
+        value={input.bank}
+        onChange={handleBank}
+        placeholder="Entidad Bancaria"
+        required
+        />
+        <label>Teléfono Celular:</label>
+        <input 
+        type="string" 
+        name="cellphone"
+        value={input.cellphone}
+        onChange={handleCellphone}
+        placeholder="+(54)1133445566"
+        required
+        />
         <button type='submit'>Registrarme</button>
       </form>
         :
     // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
     <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
-      <label>CBU:</label>
+      <label>Clave Bancaria Única:</label>
       <input 
       type="number" 
       name="cbu"
@@ -109,7 +141,25 @@ function handlePhoto(e){
       placeholder="CBU"
       required
       />
-    <label>Foto:</label>
+        <label>Entidad Bancaria:</label>
+        <input 
+        type="string" 
+        name="bank"
+        value={input.bank}
+        onChange={handleBank}
+        placeholder="Entidad Bancaria"
+        required
+        />
+        <label>Teléfono Celular:</label>
+        <input 
+        type="string" 
+        name="cellphone"
+        value={input.cellphone}
+        onChange={handleCellphone}
+        placeholder="+(54)1133445566"
+        required
+        />
+    <label>Foto de tu Documento Nacional de Identidad:</label>
     <input 
     name="hostDniPicture"
     type="file"

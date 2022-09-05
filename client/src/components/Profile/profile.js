@@ -40,9 +40,11 @@ useEffect(() => {
         let lodgingId = e.lodgingId
         let checkIn = new Date (e.checkIn).toLocaleDateString()
         let checkOut = new Date (e.checkOut).toLocaleDateString()
+        let bookingId = e._id
         subArray.push(lodgingId)
         subArray.push(checkIn)
         subArray.push(checkOut)
+        subArray.push(bookingId)
       
           // let data = await axios.get("/api/lodging/detail/" + e.lodgingId)
           // let title = data.data.title
@@ -110,18 +112,17 @@ console.log(email)
 console.log(user._id)
 console.log(booking)
 console.log(lodgingIds)
-// console.log(lodgingDets)
 
-
-// let bookingsLodging = []
-// lodgingDets.forEach(async (elem) => 
-//      {let id = elem._id
-//       elem.filtered = await booking.filter((e)=>e.lodgingId === id)
-//       // let concatenado = elem.concat(filtered)
-//       bookingsLodging.push(elem)
-// })
-
-// console.log(bookingsLodging)
+const handleClick2 = ({_id}) => {
+  const getBook = async () => {
+  try{
+      let data = await axios.patch("/api/booking/" + _id)
+      }catch(err){
+      console.log(err)
+      }
+  }
+  getBook();
+}
 
   return (
     <div>
@@ -167,7 +168,7 @@ console.log(lodgingIds)
                   ""
                 )}
                 <div>
-                  <h4 className={style.titles}>Reservas</h4>
+                  <h4 className={style.titles}>Mis reservas</h4>
                   <hr width="700"></hr>
                   <div className={style.container1}>
                     {
@@ -177,18 +178,20 @@ console.log(lodgingIds)
                       </div> :
                       lodgingIds.map((e)=>
                       <div className={style.book} key={e["0"]}>
-                      <h5>{e["3"]}</h5>
                       <h5>Check In: {e["1"]}</h5>
                       <h5>Check Out: {e["2"]}</h5>
                       {/* <img src={e["4"]} alt="img not found"/> */}
-                        <Link className={style.link} to= {`/detail/${e["0"]}`}>Ver detalles de mi reserva</Link>
+                        <Link className={style.link} to= {`/detail/${e["0"]}`}>Ver detalles del alojamiento</Link>
+                        <div>
+                        <button onClick={(e) => handleClick2(e["3"])} className={style.link}>Cancelar mi reserva</button>
+                        </div>
                       </div>
                       ) 
 
                     }
                   </div>
                   <div>
-                  <h4 className={style.titles}>Alojamientos</h4>
+                  <h4 className={style.titles}>Mis alojamientos</h4>
                   <hr width="700"></hr>
                   <Dashboard emailGuest={email}/>
                   </div>
