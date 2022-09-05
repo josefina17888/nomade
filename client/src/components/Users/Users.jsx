@@ -36,11 +36,12 @@ export default function Users({ email, picture,visibility, id,name,lastname, isA
          <div className={styles.card}>
       <div>
         <div>
-          <img className={styles.img} src={picture} alt="img not found" width="200px" height="250px" />
+         
         </div>
       <div className={styles.text}>
           <h3 className={styles.city}>{`${name}, ${lastname}`}</h3>
           <p className={styles.price}>{`${email} `}</p>
+          <p className={styles.price}>{`${id} `}</p>
           <form onSubmit={(e)=>handleSubmit(e)}> 
           <button className={styles.buttonDenunciar} type='submit'>Borrar Usuario</button>
           </form>

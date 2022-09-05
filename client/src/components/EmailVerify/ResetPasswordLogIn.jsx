@@ -1,4 +1,4 @@
-import React ,  {useState } from 'react'
+import React ,  {useState, useEffect } from 'react'
 import { useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
@@ -6,6 +6,7 @@ import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 
 export default function ResetPassword() {
+    const [validUrl, setValidUrl] = useState(false)
     const [password, setPassword] = useState({
       password1: "",
       password2: ""
@@ -15,7 +16,25 @@ export default function ResetPassword() {
     
     const params = useParams()
     const history = useHistory()
-    
+    useEffect( () => {
+        const verifyEmailUrl = async () => {
+            try {
+                const url = 
+                // `${process.env.REACT_APP_API}/api/guest/${params.email}`
+                `http://localhost:3001/api/guest/${params.email}`
+                const {data} = await axios.get(url);
+                console.log(data)
+                setValidUrl(true)
+
+            } catch(error) {
+                console.log(error)
+                setValidUrl(false)
+            }
+        }
+        verifyEmailUrl()
+    }, [params])
+
+
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -30,8 +49,8 @@ export default function ResetPassword() {
             },
           };
           const { data } = await axios.patch(
-            `/api/passwordReset/newPassordLogIn/${params.email}`,
-            // `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
+            // `/api/passwordReset/newPassordLogIn/${params.email}`,
+            `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
             {
               passwordOne,
             },

@@ -24,8 +24,9 @@ export default function Home() {
   const allGuests = useSelector((state) => state.allGuests);
   let arrFilter = allGuests.filter(e => e.email === userEmail)
 
-  let stateLodgings = useSelector((state) => state.lodgings);
-  let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
+  let complaints = useSelector((state) => state.allcomplaints);
+  let lodgingsVisibles= complaints.filter(e=> e.Visibility===true)
+  console.log(lodgingsVisibles)
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
   const [lodgingPerPage, setLodgingPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página

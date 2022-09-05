@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 export default function Conversation({ conversation, currentUser }) {
-  let dispatch = useDispatch();
+
   const [user, setUser]= useState({});
  
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Conversation({ conversation, currentUser }) {
 
   return (
     <div className={s.conversation}>
-     <img
+    <img
         className={s.convImg}
         src={
           user!=={}
@@ -35,7 +35,7 @@ export default function Conversation({ conversation, currentUser }) {
           : "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"}
         alt="Host's Profile Picture"
       />
-       <span className={s.convName}>{user.name}</span>   
+       <span className={s.convName}>{user.name}</span> 
     </div>
   );
 }
