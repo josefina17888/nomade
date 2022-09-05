@@ -26,6 +26,7 @@ const BookingSchema = new mongoose.Schema({
   dated: {
     type: Date
 },
+visibility: { type: Boolean, default: true },
 });
 
 const model = mongoose.model("Booking", BookingSchema);
