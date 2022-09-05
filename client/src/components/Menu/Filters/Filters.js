@@ -48,9 +48,11 @@ export default function Filters() {
     dispatch(filterByQRooms(filter));
     dispatch(filterByQBathrooms(filter));
     dispatch(filterByTypeRooms(filter));
-    dispatch(filterByServices(services));
   }, [filter, services]);
-  
+  useEffect(() => {
+    dispatch(filterByServices(services));
+  }, [services]);
+
   function handleChangeRange(e) {
     setFilter({ ...filter, range: e.target.value });
   }

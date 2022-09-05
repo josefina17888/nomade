@@ -323,10 +323,6 @@ export default function CardDetail(props) {
               </div>
               <div>Camas: {`${myLodging.beds}`}</div>
               <div>Tipo: {`${myLodging.lodgingType}`}</div>
-            </div>
-            <div>
-              <DatePickerOk lodId={lodgingId} />
-
               <h3 className={styles.h3}>Reseñas</h3>
               <div className={styles.modal}>
                 <div className={styles.reviews}>
@@ -359,6 +355,9 @@ export default function CardDetail(props) {
                   )}
                 </div>
               </div>
+            </div>
+            <div>
+              <DatePickerOk lodId={lodgingId} className="sticky-sm-bottom"/>
             </div>
           </div>
         </div>

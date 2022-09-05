@@ -53,7 +53,7 @@ export default function Menu({
           </button>
         </Link>
         <div className={s.container_icons}>
-          <div>
+          {/* <div>
             <button className={s.button_icon} onClick={handleFilterTypeHouse}>
               <span>
                 <GiSpookyHouse className={s.icons} />
@@ -62,7 +62,7 @@ export default function Menu({
                 </div>
               </span>
             </button>
-          </div>
+          </div> */}
           <div>
             <button className={s.button_icon} onClick={handleSortByRating}>
               <span>
@@ -73,7 +73,7 @@ export default function Menu({
               </span>
             </button>
           </div>
-          <div>
+          {/* <div>
             <button className={s.button_icon} onClick={handleFilterByPets}>
               <span>
                 <MdOutlinePets className={s.icons} />
@@ -82,7 +82,7 @@ export default function Menu({
                 </div>
               </span>
             </button>
-          </div>
+          </div> */}
           <div>
             <button className={s.button_icon} onClick={handleOrderByLowest}>
               <span>
