@@ -4,11 +4,9 @@ const Schema = mongoose.Schema;
 const LodgingReviewSchema = new Schema({
     guestId: {
         type: String,
-        ref: 'Guest'
     },
     lodgingId: {
         type: String,
-        ref: 'Lodging'
     },
     rating: {
         type: Number,
