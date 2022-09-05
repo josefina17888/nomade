@@ -379,11 +379,9 @@ export function getFeedback(){
 
 //TRAE HOST POR ID GUEST (EMAIL)
 export function getHostByGuestId(payload){
-  console.log(payload, 'PAYLOAAAAAD')
   return async function (dispatch){
     try {
       const res = await axios.post('/api/guest/find/host', payload)
-      console.log(res.data, 'HOLA HOLA HOLA')
       return dispatch({
         type: 'GET_HOST_BY_GUEST_ID',
         payload: res.data
@@ -485,6 +483,45 @@ export function deleteComplaint(payload){
   }
 }
 
+export function filterByRangePrice(payload){
+  return{
+    type: 'FILTER_BY_RANGE_PRICE',
+    payload
+  }
+}
+
+export function filterByQBeds(payload){
+  return{
+    type: 'FILTER_BY_Q_BEDS',
+    payload
+  }
+}
+
+export function filterByQRooms(payload){
+  return{
+    type: 'FILTER_BY_Q_ROOMS',
+    payload
+  }
+}
+
+export function filterByQBathrooms(payload){
+  return{
+    type: 'FILTER_BY_Q_BATHROOMS',
+    payload
+  }
+}
+
+export function filterByTypeRooms(payload){
+  return{
+    type: 'FILTER_BY_TYPE_OF_ROOMS',
+    payload
+  }
+}
+
+export function filterByServices(payload){
+  return{
+    type: 'FILTER_BY_SERVICES',
+    payload}}
 export function getByUser(user){
   return async function(dispatch){
     try{
@@ -512,9 +549,13 @@ export function getBookings(){
       })
     } catch (error) {
       console.log(error)
+    }}}
+
+    export function cleanFilters(){
+      return{
+        type: 'CLEAN_FILTERS',
+      }
     }
-  }
-}
 
 //FUNCION QUE ALMACENA DATOS DEL USUARIO
 /* export function getInfoGuest(){

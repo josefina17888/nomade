@@ -37,3 +37,17 @@
 .text_desc_icon{
     font-size: 0.8em;
 }
+
+.modal_content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--bs-modal-color);
+    pointer-events: auto;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 2px solid #069A8E ;
+    border-radius: var(--bs-modal-border-radius);
+    outline: 0;
+}

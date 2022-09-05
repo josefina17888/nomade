@@ -33,19 +33,20 @@ export default function NavBar(props) {
   }
 
   const location = window.location.pathname;
+  console.log(location, 'LOCATION')
 
   //GET HOST
   useEffect(()=>{
     dispatch(getHostByGuestId(email))
-  }, [dispatch])
+  }, [location])
 
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
     console.log(validateHost, 'VALIDATE HOST')
     e.preventDefault();
     if(validateHost[0] && userToken){
-      const hostObject = Object.values(validateHost[0])
-      const hostId = hostObject[0]
+      const hostObject = validateHost[0]
+      const hostId = hostObject._id
       history.push(`${hostId}/registerlodging`)
     }else if(userToken){
       history.push(`/${userToken}/form`)

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {useSelector } from "react-redux";
 import AllCards from "../AllCards/AllCards";
@@ -5,14 +6,15 @@ import Menu from "../Menu/Menu";
 import NavBar from "../NavBar/NavBar";
 import styles from "./Home.module.css";
 import Profile from "../Profile/profile";
+import Footer from '../Footer/Footer'
+
 
 export default function Home() {
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
-console.log(user , "user")
-
 
   let stateLodgings = useSelector((state) => state.lodgings);
+  console.log(stateLodgings)
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
 
   //PAGINATED
@@ -44,6 +46,7 @@ console.log(user , "user")
         lodgingPerPage={lodgingPerPage}
         currentLodging={currentLodging}
       />
+      <Footer/>
     </div>
   );
 }

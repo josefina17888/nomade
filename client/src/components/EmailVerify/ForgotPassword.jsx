@@ -17,8 +17,8 @@ export default function ResetPassword() {
           if (email === "") {
             alert("Por favor ingrese todos los campos");
           }
-          // const guest = `http://localhost:3001/api/guest/${email}`
-          const guest = `https://nomade-henry.herokuapp.com/api/guest/${email}`
+          const guest = `http://localhost:3001/api/guest/${email}`
+          // const guest = `https://nomade-henry.herokuapp.com/api/guest/${email}`
           const {data} = await axios.get(guest);
           if(!data.length) {
             return setMsg({

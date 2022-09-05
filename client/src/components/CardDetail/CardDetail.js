@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {getGuests , getDetail, getGuestByEmail, deleteLodging} from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
+import GoogleMapDetail from "../GoogleMapsDetail/GoogleMapsDetail";
 import Card from "react-bootstrap/Card";
 import DatePickerOk from "../DatePicker/DatePicker";
 import styles from "./CardDetail.module.css";
@@ -87,9 +88,6 @@ export default function CardDetail(props) {
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
-
-  //Botón de reserva
-  const handleBooking = (e) => {};
 
   //renderizado
   function handleSubmit(e){
@@ -320,8 +318,11 @@ export default function CardDetail(props) {
                       )}
                     </div>
                   </div>
+                  <GoogleMapDetail />
                 </div>
               </div>
+              <div>Camas: {`${myLodging.beds}`}</div>
+              <div>Tipo: {`${myLodging.lodgingType}`}</div>
             </div>
             <div>
               <DatePickerOk lodId={lodgingId} />
