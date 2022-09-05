@@ -22,6 +22,7 @@ export default function CardComplaint({ id, tipo, descripcion, dated, visibility
   } else {
     var userToken = JSON.parse(guestId)._id;
     var userEmail = JSON.parse(guestId).email;
+    var admin = JSON.parse(guestId).isAdmin;
   }
   let stateLodgings = useSelector((state) => state.allLodgingsReviews); 
   let cantidad = stateLodgings.map(e=> e.lodgingId)
