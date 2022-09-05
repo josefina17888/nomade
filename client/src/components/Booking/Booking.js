@@ -24,7 +24,6 @@ export default function Booking(props) {
 
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
-  console.log(lodgingId)
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
@@ -56,14 +55,12 @@ export default function Booking(props) {
   
   //GET RANGES OF DATES
     const alldates = getDatesInRange(checkIn, checkOut);
-    console.log(alldates, checkIn, checkOut, 'ALL DATES')
   
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
   //LODGING DETAIL
   //const costNight = lodging.price; 
-  console.log(costNight)
 
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
@@ -71,6 +68,16 @@ export default function Booking(props) {
   const city = lodging.city;
   const country = lodging.country;
 
+  const makeRandomId= (length) => {
+    let result = ''
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   return result;
+}
+
+  const codeFunction = makeRandomId(10)
   //STATE BOOKING FINAL
   const [input, setInput] = useState({
     checkIn: checkIn,
@@ -83,15 +90,19 @@ export default function Booking(props) {
     costNight: costNight,
     pets: check,
     hostId: lodging.hostId,
-    total: total,
-    currency: "USD"
+    totalPrice: total,
+    code: codeFunction
   });
+
+ 
+
+
 
   const allDates = getDatesInRange(input.checkIn, input.checkOut);
   //DATA JOSE
   const total = costNight * allDates.length;
   useEffect(()=>{
-    setInput({...input, total:total})
+    setInput({...input, totalPrice:total})
   }, [])
 
   //GET Q PETS
@@ -130,9 +141,8 @@ function onChangeCheckIn(currentDate){
     checkIn: new Date(currentDate).toDateString(),
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
-  console.log(input, 'INPUUUT')
 
 }
 useEffect(()=>{
@@ -141,7 +151,7 @@ useEffect(()=>{
     ...input,
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
 },[input.checkIn,input.checkOut])
 
@@ -153,7 +163,7 @@ function onChangeCheckOut(currentDate){
     checkOut: new Date(currentDate).toDateString(),
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
 
 }
@@ -167,7 +177,6 @@ function onChangeCheckOut(currentDate){
     const isFound = unavailableDatesMap.some((date) =>
       allDates.includes(new Date(date).toDateString())
     );
-    console.log(preferenceId.hasOwnProperty(preferenceId))
     localStorage.setItem("booking", JSON.stringify(input));
     isFound ? alert("NO DISPONIBLE") :
     preference !== undefined? alert('Haz clic en el boton de pago') :
@@ -177,7 +186,6 @@ function onChangeCheckOut(currentDate){
   
   //MERCADO PAGO
   const preference = preferenceId.preferenceId;
-  console.log(preference)
 
   return (
     <div>
@@ -276,7 +284,7 @@ function onChangeCheckOut(currentDate){
                 <div>
                   <h6 className={s.sub2}>Costo Total</h6>
                   <h6 className={s.h1}>
-                    ${input.total} por {input.night} noches
+                    ${input.totalPrice} por {input.night} noches
                   </h6>
                 </div>
                 <div>

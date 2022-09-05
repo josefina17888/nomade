@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
       newBooking.hostId = toId(req.body.hostId);
       const infoGuest = await Guest.find({ email: req.body.email });
       let userId = infoGuest[0]._id;
-      newBooking.totalPrice = newBooking.costNight * newBooking.night;
+      // newBooking.totalPrice = newBooking.costNight * newBooking.night;
       newBooking.dated = dated
       newBooking.guestId = userId;
       newBooking.save();
@@ -81,12 +81,9 @@ router.get("/all/:guestId", async (req, res) => {
 
 router.post("/emailVerified/:email",async (req, res) => {
   const {email} = req.params
-  console.log(email)
-  console.log(req.body)
     try{
       const userExist = await Guest.findOne({ email });
       const tokenExist = await Token.findOne({userId: userExist._id})
-      console.log(tokenExist)
       if(tokenExist === null) {
         const token = new Token({
           userId: userExist._id,
@@ -98,8 +95,10 @@ router.post("/emailVerified/:email",async (req, res) => {
       }      
       const lodging = await Lodging.findOne({_id: req.body.lodgingId})
       const title = "Tu reserva se realizó con éxito"
-      const msg = `Tu pago ha sido aprobado , tu estadia en ${lodging.title} te espera desde el ${new Date(req.body.checkIn).toLocaleDateString()} al ${new Date(req.body.checkOut).toLocaleDateString()} Ciudad: `
-      await bookingConfirm(userExist.email,"Reserva confirmada",title , msg )
+      // const msg = `Tu pago ha sido aprobado , tu estadia en ${lodging.title} te espera desde el ${new Date(req.body.checkIn).toLocaleDateString()} al ${new Date(req.body.checkOut).toLocaleDateString()} Ciudad: `
+      const infoLoding = lodging;
+      const infoBooking = req.body
+      await bookingConfirm(userExist.email,"Reserva confirmada",title , infoLoding ,infoBooking)
       res.status(201).send("Verifica tu correo")
     }
       catch (error){

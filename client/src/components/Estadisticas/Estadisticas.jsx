@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {lodgingReviews, getGuests,getComplaints,getLodgings, getBookings} from "../../Redux/Actions/index";
 import { Link,useHistory } from "react-router-dom";
 import {deleteLodging} from "../../Redux/Actions/index";
+import Doughnut from "./Charts/Doughnut"
 export default function estadisticas() {
   const dispatch = useDispatch();
   const history = useHistory()
@@ -35,7 +36,7 @@ export default function estadisticas() {
   let promedio = plata/fecha.length
   let totalNochesReservadas = mes.reduce( (a,b) => a + b.allDates.length,0)
   let totalNochesDisponibles = allLodgings.length*30
-  let ocupacion =((totalNochesReservadas/totalNochesDisponibles)*100).toFixed(2) + "%"
+  let ocupacion =((totalNochesReservadas/totalNochesDisponibles)*100).toFixed(2)
   return (
  
    <div>
@@ -82,12 +83,14 @@ export default function estadisticas() {
       </div>
       <div className={styles.estadisticasUser}>
       <h2  className={styles.tableInterior}>Ingreso promedio por reserva</h2>
-      <p className={styles.h2Interior}>   {promedio}$ </p>
+      <p className={styles.h2Interior}>   {promedio.toFixed(2)}$ </p>
       </div>
       <div className={styles.estadisticasUser}>
       <h2  className={styles.tableInterior}>Ocupación</h2>
-      <p className={styles.h2Interior}>   {ocupacion} </p>
+      <p className={styles.h2Interior}>   {ocupacion}% </p>
       </div>
+      <Doughnut ocupacion={ocupacion}/>
+
       </div>
      
       

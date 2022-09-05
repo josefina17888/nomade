@@ -9,8 +9,8 @@ router.post("/", async (req, res) => {
 
     const user = await Guest.findOne({ email });
     const password = email + process.env.SECURE_TOKEN
-    
-    
+
+
     if(!user) {
         const newUser = await Guest.create({ email, lastname, name, password, picture , verified: true});
         res.json({
@@ -25,12 +25,12 @@ router.post("/", async (req, res) => {
         })
 
     } else {
-        if(user.Visibility!== false){
+        if(user.Visibility === true) {
             res.json(user)
+        } else {
+            res.status(400).send("Usuario baneado")
         }
-        else{
-            res.json("false")
-        }
+    
     }
     
 });

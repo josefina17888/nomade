@@ -11,6 +11,7 @@ import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 export default function LoginUser() {
   const history = useHistory();
+  const[baneado, setBaneado] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState({
@@ -136,14 +137,22 @@ export default function LoginUser() {
             className={style.buttonGoogle}
             onSuccess={(response) => {
               console.log(response)
-              createOrGetUserGoogle(response);
-              history.push("/");
+                createOrGetUserGoogle(response)
+                .then( (reponse) => {
+                  console.log(response.json)
+                  history.push("/")
+                })
+                .catch( () => {
+                  alert("Estas Baneado")
+                  setBaneado("pepito")
+                } ) 
             }}
-            onError={() => {
+            onError={(response) => {
               console.log("Login Failed");
             }}
           />
         </GoogleOAuthProvider>
+        {baneado && <p>Estas baneado</p>}
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
           <Link className={style.link2} to="/registerguest">¡Crea tu cuenta aqui!</Link>
