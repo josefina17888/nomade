@@ -22,7 +22,8 @@ export default function Home() {
     var user = JSON.parse(guestId)
   }
   const allGuests = useSelector((state) => state.allGuests);
-  let arrFilter =  allGuests.filter(e => e.email === userEmail)
+  const userBusqueda = useSelector((state) => state.userBusqueda);
+  let arrFilter =  userBusqueda.filter(e => e.email === userEmail)
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= allGuests.filter(e=> e.Visibility===true)
   const dispatch = useDispatch();
@@ -40,10 +41,9 @@ export default function Home() {
   };
   console.log(allGuests )
 console.log(userEmail )
-console.log(arrFilter )
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined  ?
+      {userToken && allGuests[0]!== undefined && (arrFilter[0].isAdmin || arrFilter[0].isAdmin === true) ?
     <div>
    <UserNav
     email={user?user.email: ""} />
