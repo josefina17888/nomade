@@ -1,0 +1,30 @@
+.tableEstadisticas{
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+.tableInterior{
+    text-align: center;
+    font-weight: 600;
+}
+.estadisticasUser{
+    width: 400px;
+    height: 200px;
+    border: 2px solid #069A8E;
+    border-radius: 20px;
+    margin: 40px 30px 50px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 2px 2px #000000;
+}
+.h2Interior{
+    font-size: 3rem;
+    font-weight: 300;
+}
+

@@ -23,6 +23,8 @@ cloudinary.config({
 router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {dni} = req.body
   const {cbu} = req.body
+  const {bank} = req.body
+  const {cellphone} = req.body
   const filename = req.file
   const result = await cloudinary.v2.uploader.upload(req.file.path)
   console.log(result)
@@ -32,6 +34,8 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
     myHost.dni= req.body.dni
     myHost.hostDniPicture= result.url
     myHost.cbu = req.body.cbu
+    myHost.bank = req.body.bank
+    myHost.cellphone = req.body.cellphone
     myHost.guestId = guest._id
     await myHost.save()
 

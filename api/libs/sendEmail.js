@@ -40,8 +40,9 @@ verifyEmail =  async (email,subject,title,msg,url) => {
 
 
 
-bookingConfirm =  async (email,subject,title,msg) => {
+bookingConfirm =  async (email,subject,title,infoLoding ,infoBooking) => {
     try{
+       
         const transporter = nodemailer.createTransport({
             host: process.env.HOST,
             service: process.env.SERVICE,
@@ -60,7 +61,20 @@ bookingConfirm =  async (email,subject,title,msg) => {
             html: `
             <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
             <h2 style="text-align: center; text-transform: uppercase;color: teal;">${title}</h2>
-            <p>${msg}</p>
+            <h4>Información de tu reserva</h4>
+            <ul>
+                <li>Código de Reserva: ${infoBooking.code}</li>
+                <li> Alojamiento: ${infoLoding.title}
+                <li>Check In:  ${new Date(infoBooking.checkIn).toLocaleDateString()}</li>
+                <li>Check out:  ${new Date(infoBooking.checkOut).toLocaleDateString()}</li>
+                <li> País: ${infoLoding.country}</li>
+                <li> Ciudad: ${infoLoding.city}</li>
+                <li> Dirección:  ${infoLoding.address}</li>
+                <li>Noche: ${infoBooking.night}</li>
+                <li>Precio Noche: ${infoBooking.costNight}</li>
+                <li>Precio Total: ${infoBooking.totalPrice}</li>
+                <li>Huéspedes: ${infoBooking.guests}</li>
+            </ul>
             <p>¡Gracias por tu reserva! ¡Que la disfrutes!</p>
             </div>
         `

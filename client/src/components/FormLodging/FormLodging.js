@@ -11,6 +11,9 @@ import {
   Autocomplete,
   MarkerF,
 } from "@react-google-maps/api";
+import NavBar from "../NavBar/NavBar";
+import Swal from 'sweetalert'
+
 
 
 export default function FormLodging() {
@@ -88,7 +91,9 @@ export default function FormLodging() {
       );
       const data = await response.json();
       if(data.results.length === 0){
-        return alert("No se encontro la dirección")
+        return Swal(
+          'No se encontro la dirección','','warning',{buttons:false,timer:3500}
+        )
       }
     setInput({...input, latitud: data.results[0].geometry.location.lat, longitud: data.results[0].geometry.location.lng})
     setCoordinates(data.results[0].geometry.location);
@@ -173,6 +178,8 @@ if (!isLoaded) return <div>Loading...</div>;
 let hostId = params.hostId
 console.log(hostId)
 return (
+  <div>
+    <NavBar/>
     <div className={style.containerUser}>
       {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
       <form  encType='multipart/form-data' action={`http://localhost:3001/api/lodging/${hostId}`}  method="POST">
@@ -370,6 +377,7 @@ return (
      }
 
     </form>
+    </div>
     </div>
   );
 }

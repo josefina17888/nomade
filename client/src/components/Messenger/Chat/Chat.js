@@ -10,10 +10,7 @@ import io from "socket.io-client";
 
 export default function Chat() {
 
-  const ENDPOINT = /* "ws://localhost:3001" */ 'https://nomade-henry.herokuapp.com/'; 
-
-  const dispatch = useDispatch();
-  const lodging = useSelector((state) => state.detail);
+  const ENDPOINT =/* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
@@ -28,15 +25,13 @@ export default function Chat() {
   let userId = user._id;
   let userEmail = user.email;
 
-
-
   //conecta con el server y trae los mensajes
- 
+
+
   useEffect(() => {
-    console.log("uno")
-    socket.current = io(ENDPOINT,{
-      transports: ['websocket'],
-  });
+    socket.current = io(ENDPOINT, {
+      transports: ["websocket"],
+    });
   }, [ENDPOINT]);
 
 
@@ -44,13 +39,12 @@ export default function Chat() {
     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
     let hostId = bookingInfo.hostId;
     useEffect(() => {
-      console.log("dos")
       setBookingInfo(bookingInfo);
       const getHostGuestId = async () => {
         try {
           let res = await axios.get("/api/conversation/host/" + hostId);
           let hostGuestId = res.data;
-         setHost(hostGuestId) 
+          setHost(hostGuestId);
         } catch (err) {
           console.log(err);
         }
@@ -59,33 +53,24 @@ export default function Chat() {
     }, []);
 
 
-    
+    useEffect(() => {
 
-    useEffect(()=>{
       const newConversation = async () => {
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
         );
-        console.log(
-          "esto es el filtro para ver si ya los miembos estan en el estado",
-          filtered
-        ); 
-     if (!filtered.length) { 
-         
+        if (!filtered.length) {
           let conv = await axios.post(
             "/api/conversation/" + userId + "/" + host
           );
-          console.log("respuesta nueva conversacion creada ", conv);
-        } 
-       }; 
+        }
+      };
       newConversation();
-    },[conversations])
-    
+    }, [conversations]);
   }
 
 
   useEffect(() => {
-    console.log("cinco")
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -97,7 +82,6 @@ export default function Chat() {
 
   //mensajes entrantes
   useEffect(() => {
-    console.log("seis")
     if (arrivalMessage !== null) {
       if (Object.keys(currentChat).length !== 0) {
         if (currentChat.members.includes(arrivalMessage.sender)) {
@@ -108,7 +92,6 @@ export default function Chat() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
-    console.log("siete")
     if (userId) {
       socket.current.emit("addUser", userId);
     }
@@ -119,7 +102,6 @@ export default function Chat() {
 
   // obtiene todas las conversaciones asociadas al usuario
   useEffect(() => {
-    console.log("ocho")
     const getConversations = async () => {
       try {
         let res = await axios.get("/api/conversation/conv/" + userId);
@@ -128,14 +110,12 @@ export default function Chat() {
         console.log(err);
       }
     };
-    getConversations()
-    
+    getConversations();
 
   }, [userId, host]);
 
   // trae todos los mensajes de una conversacion
   useEffect(() => {
-    console.log("nueve")
     if (currentChat._id) {
       const getMessages = async () => {
         let conversationId = currentChat._id;
@@ -150,8 +130,8 @@ export default function Chat() {
       getMessages();
     }
   }, [currentChat]);
-
-  /* useEffect(() => {
+/* 
+   useEffect(() => {
     if( scrollRef.current){
       scrollRef.current.scrollInToView({behavior:"smooth"}) 
     }
@@ -185,7 +165,9 @@ export default function Chat() {
 
   return (
     <div className={s.chatContainer}>
-      <NavBar />
+      <div className={s.navContainer}>
+        <NavBar />
+      </div>
       <div className={s.chat}>
         <div className={s.chatMsjWrapper}>Tus Mensajes</div>
         <div className={s.chatMsj}>
@@ -231,9 +213,9 @@ export default function Chat() {
             )}
           </div>
         </div>
-          <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
-        <div className={s.reserv}>
-          <ResDetail />
+        <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
+        <div ref={scrollRef} className={s.reserv}>
+          <ResDetail bookingInfo={bookingInfo} />
         </div>
       </div>
     </div>

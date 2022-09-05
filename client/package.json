@@ -37,6 +37,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "socket.io-client": "^4.5.1",
+    "sweetalert": "^2.1.2",
     "timeago": "^1.6.7",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
