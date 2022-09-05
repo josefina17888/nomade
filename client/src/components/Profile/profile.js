@@ -22,6 +22,7 @@ const [lodgingDets, setLodgingDets] = useState([])
 // const [lodgingComplete, setLodgingComplete] = useState([])
 // let lodgingDetails = []
 
+
 useEffect(() => {
   const getGuestInfo = async () => {
     try {

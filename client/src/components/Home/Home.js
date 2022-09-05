@@ -12,8 +12,6 @@ import Footer from '../Footer/Footer'
 export default function Home() {
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
-console.log(user , "user")
-
 
   let stateLodgings = useSelector((state) => state.lodgings);
   console.log(stateLodgings)

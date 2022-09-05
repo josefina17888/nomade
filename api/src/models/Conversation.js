@@ -6,6 +6,7 @@ const ConversationSchema = new mongoose.Schema(
     members: [{
       type: Schema.ObjectId,
       ref: "Guest",
+      unique: true
     }],
 
   },

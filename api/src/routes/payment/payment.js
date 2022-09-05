@@ -40,7 +40,8 @@ router.post("/", async function (req, res, next) {
                 } ]
             },
             back_urls: {
-                success: "https://nomade-khaki.vercel.app/status",
+                success: "http://localhost:3000/status",
+                //"https://nomade-khaki.vercel.app/status"
                 //"http://localhost:3000/",
 
                 // res.redirect("https://nomade-khaki.vercel.app/%22)
