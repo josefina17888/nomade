@@ -73,7 +73,7 @@ function App() {
           <Route path= '/admin/lodgings' component={adminLodgings}/>
           <Route path= '/admin/complaints' component={adminComplaints}/>
           <Route path= '/admin/estadisticas' component={adminEstadisticas}/>
-          {/* <Route path= '/admin/BarChart' component={BarChart}/>
+       {/*    <Route path= '/admin/BarChart' component={BarChart}/>
           <Route path= '/admin/Doughnut' component={Chart}/> */}
         </Switch>
       </BrowserRouter>
