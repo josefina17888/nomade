@@ -1,37 +1,64 @@
+import { end } from "@popperjs/core";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   getBookingByLodgingId,
   getDetail,
   settingDate,
 } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
+import getDatesInRange from "../Booking/controller";
 
 export default function DatePickerOk({ lodId }) {
+  //SELECT STATES FROM REDUX
+  const availibity = useSelector((state) => state.bookings);
   const lodging = useSelector((state) => state.detail);
+  const services = lodging.services;
   const lodgingId = lodging._id;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getDetail(lodgingId));
-  }, [dispatch]);
-
   const price = lodging.price;
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [info, setInfo] = useState({
     lodgingId: lodId,
     checkIn: new Date(),
     checkOut: new Date(),
-    guests: 3,
-    pets: 0,
+    guests: 1,
+    pets: false,
   });
+
+  useEffect(() => {
+    dispatch(getDetail(lodgingId));
+    dispatch(getBookingByLodgingId(info));
+  }, [dispatch]);
+
+  //GET INFO GUEST
+  const guestInfo = localStorage.getItem("userInfo");
+  let user = JSON.parse(guestInfo);
+
+  //AVAILIBITY LODGINGS
+  const unavailableDates = availibity.map((e) =>
+    e.allDates.map((d) => new Date(d).toDateString())
+  );
+  const unavailableDatesMap = unavailableDates.flat();
+  const disabledDates = unavailableDatesMap.map((e) => new Date(e));
+
+  //GET Q PETS
+  const lodgingServices = [];
+  for (const property in services) {
+    if (services[property] === true) {
+      lodgingServices.push(property);
+    }
+  }
+  const pets = lodgingServices.filter((e) => e === "pets");
 
   //FUNCTION DECREMENT
   function handleDecrement(e) {
     e.preventDefault();
-    if (info.guests > 0) {
+    if (info.guests > 1) {
       setInfo({ ...info, guests: info.guests-- });
     }
     setInfo({ ...info, guests: info.guests });
@@ -40,22 +67,35 @@ export default function DatePickerOk({ lodId }) {
   //FUNCTION INCREMENT
   function handleIncrement(e) {
     e.preventDefault();
-    if (info.guests < 5) {
+    if (info.guests < lodging.guests) {
       setInfo({ ...info, guests: info.guests++ });
     }
     setInfo({ ...info, guests: info.guests });
   }
 
-  async function handleClick(e) {
-    setInfo({
-      ...info,
-      checkIn: info.checkIn,
-      checkOut: info.checkOut,
-    });
-    localStorage.setItem("bookingInfo", JSON.stringify(info));
-    localStorage.setItem("priceBooking", JSON.stringify(price));
-    await dispatch(getBookingByLodgingId(info));
+  function handleCheckBox(e) {
+    setInfo({ ...info, pets: e.target.checked });
   }
+
+  async function handleClick(e) {
+    const alldates = getDatesInRange(info.checkIn, info.checkOut);
+    const isFound = unavailableDatesMap.some((date) =>
+      alldates.includes(new Date(date).toDateString())
+    );
+    if(isFound){
+      return alert('Fecha no disponible')
+    }else{
+      localStorage.setItem("bookingInfo", JSON.stringify(info));
+      localStorage.setItem("priceBooking", JSON.stringify(price));
+      dispatch(getBookingByLodgingId(info));
+      if(user){
+        history.push(`/booking/${lodgingId}`)
+      }else{
+        history.push(`/login`)
+      }
+    }
+  }
+
   return (
     <div className={styles._1s21a6e2}>
       <div className="sticky-top">
@@ -78,28 +118,39 @@ export default function DatePickerOk({ lodId }) {
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Llegada</div>
                       <DatePicker
-                        className={styles.input}
                         dateFormat="dd/MM/yyyy"
-                        selected={info.checkIn}
+                        selected={new Date(info.checkIn)}
                         onChange={(currentDate) =>
-                          setInfo({ ...info, checkIn: currentDate })
+                          setInfo({
+                            ...info,
+                            checkIn: new Date(currentDate).toDateString(),
+                          })
                         }
-                        checkIn={info.checkIn}
-                        checkOut={info.checkOut}
+                        selectsStart
+                        startDate={new Date(info.checkIn)}
+                        endDate={new Date(info.checkOut)}
+                        excludeDates={disabledDates}
+                        selectsEnd
+                        minDate={new Date()}
                       />
                     </div>
                     <div className={styles._19y8o0j}>
                       <div className={styles._7eq2v2}>Salida</div>
                       <DatePicker
-                        className={styles.input}
                         dateFormat="dd/MM/yyyy"
-                        selected={info.checkOut}
+                        selected={new Date(info.checkOut)}
                         onChange={(currentDate) =>
-                          setInfo({ ...info, checkOut: currentDate })
+                          setInfo({
+                            ...info,
+                            checkOut: new Date(currentDate).toDateString(),
+                          })
                         }
+                        selectsStart
+                        startDate={new Date(info.checkIn)}
+                        endDate={new Date(info.checkOut)}
+                        excludeDates={disabledDates}
                         selectsEnd
-                        checkIn={info.checkIn}
-                        minDate={info.checkIn}
+                        minDate={new Date(info.checkIn)}
                       />
                     </div>
                   </div>
@@ -119,18 +170,28 @@ export default function DatePickerOk({ lodId }) {
                           <div>Huespedes</div>
                         </div>
                         <div className={styles.container_btn}>
-                          <button onClick={handleDecrement}>-</button>
+                          {/* <button onClick={handleDecrement}>-</button>
                           <div>{`${info.guests}`}</div>
-                          <button onClick={handleIncrement}>+</button>
+                          <button onClick={handleIncrement}>+</button> */}
+                          <input
+                            type="number"
+                            name="adults"
+                            min={1}
+                            max={lodging.guests}
+                            onChange={e => setInfo({...info, guests:e.target.value})}
+                            defaultValue={info.guests}
+                            ></input>
                         </div>
                       </div>
                       <div className="d-flex flex-row">
                         <div className={styles.div_guests_Description}>
                           <div>Mascota</div>
-                        </div>
-                        <div className={styles.container_btn}>
-                          <button>Sí</button>
-                          <button>No</button>
+                          <input
+                            type="checkbox"
+                            checked={info.pets}
+                            disabled={!pets.includes("pets")}
+                            onChange={handleCheckBox}
+                          ></input>
                         </div>
                       </div>
                     </div>
@@ -138,9 +199,7 @@ export default function DatePickerOk({ lodId }) {
                 </div>
                 <div>
                   {
-                    <Link to={`/booking/${lodgingId}`}>
-                      <button onClick={handleClick}>Disponibilidad</button>
-                    </Link>
+                      <button onClick={(e) => handleClick(e)}>Continuar</button>
                   }
                 </div>
               </div>

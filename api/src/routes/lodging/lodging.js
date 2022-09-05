@@ -1,3 +1,4 @@
+
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Booking = require('../booking/booking');
@@ -8,21 +9,24 @@ const toId = mongoose.Types.ObjectId;
 const cloudinary = require("cloudinary").v2;
 const {addServices} = require("./controller")
 
+
 cloudinary.config({ 
   cloud_name: 'dtw1cvtdr', 
   api_key: '828297737868324', 
   api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
 });
-//BUCCA LODGING Y REALCIONA EL HOST
+//BUSCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
-
   try {
+    console.log(req.body)
     let fotos = req.files.map(e=>e.path)
+    console.log("hola1")
     let result=[]
     for(let i=0; i<fotos.length; i++)
     {
     result.push(await cloudinary.uploader.upload(fotos[i]))
     }
+    console.log("hola1")
     const newLodging = await new Lodging(req.body);
     let fotosSubidas = result.map(e=>e.url)
     let service = await addServices(req.body)
@@ -31,11 +35,12 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.picture= fotosSubidas
     newLodging.city = req.body.city.toLowerCase()
     newLodging.hostId = toId(req.params.hostId);
+    newLodging.latitud = req.body.latitud
     newLodging.save();
-    //res.redirect("http://localhost:3000/")
-    res.redirect("https://nomade-khaki.vercel.app/")
+    res.redirect("http://localhost:3000/")
+    // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
-    res.send("No se pudo crear el alojamiento");
+    res.status(400).send("No se pudo crear el alojamiento");
   }
 });
 
@@ -46,11 +51,17 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
 })
 });  */
 
+
+
 ///////////trae el lodging con toda la info del host (FUNCIONA)////////////
-/* router.get("/all", async (req, res) => { 
-  const lodging = await Lodging.find({}).populate({path:"hostId", model: "Host"})
+
+router.get("/host/lodging", async (req, res) => {
+  const lodgingId = req.body.lodgingId 
+  const lodging = await Lodging.find({lodgingId}).populate({path:"hostId", model: "Host"})
+  console.log(lodging,"ID")
+  console.log(lodging.hostId, 'GO')
   res.send(lodging) 
- }); */
+ });
 
 ///BUSCA POR CIUDAD O TRAE TODO (FUNCIONA)
 router.get("/", async (req, res) => {
@@ -83,11 +94,25 @@ router.get("/detail/:lodgingId", async (req, res) => {
   }
 });
 
-/// trae todos los lodgings de un host
+/// trae todos los lodgings de un host FUNCIONA
 router.get("/:hostId", async (req, res) => {
-  Lodging.find({hostId: req.params.hostId}, (error,docs)=>{
+  let hostId = toId(req.params.hostId)
+  Lodging.find({hostId: hostId}, (error,docs)=>{
       res.send(docs)
   })
+})
+
+//MODIFICA ALOJAMIENTO A VISIBILITY FALSE
+router.patch("/:_id", async (req, res) => {
+      
+  try {
+    let lodgingId = toId(req.params._id)
+    await Lodging.findByIdAndUpdate(lodgingId, { Visibility: 'false' }).exec();
+    res.send("actualizado con exito")
+  } catch (error) {
+  res.status(400).send("no se pudo actualizar el lodging");
+  console.log(error);
+}
 })
 
 // esto crea una relacion al hacer get (FUNCIONA)

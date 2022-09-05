@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import s from "../NavBar/NavBar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Logo from "../../assets/nomadeLogo.svg";
 import { FaUserCircle } from "react-icons/fa";
 import { ImUserPlus, ImUserCheck } from "react-icons/im";
@@ -9,23 +9,52 @@ import { CgProfile } from "react-icons/cg";
 import { TbMessageCircle } from "react-icons/tb";
 import { GrFavorite } from "react-icons/gr";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { useDispatch } from "react-redux";
-import { getLodgings } from "../../Redux/Actions/index";
+import { useDispatch, useSelector } from "react-redux";
+import { getHostByGuestId, getLodgings } from "../../Redux/Actions/index";
 
 export default function NavBar(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   let guestId = localStorage.getItem("userInfo");
-console.log("por aca", guestId)
+  
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId).email;
   }
-  console.log(userToken)
+
+  const email={
+    email: userToken
+  }
+  
 
   function handleClearState(e) {
     e.preventDefault();
     dispatch(getLodgings());
   }
+
+  const location = window.location.pathname;
+
+  //GET HOST
+  useEffect(()=>{
+    dispatch(getHostByGuestId(email))
+  }, [dispatch])
+
+  const validateHost= useSelector(state=>state.hosts)
+  async function handleClick(e){
+    console.log(validateHost, 'VALIDATE HOST')
+    e.preventDefault();
+    if(validateHost[0] && userToken){
+      const hostObject = Object.values(validateHost[0])
+      const hostId = hostObject[1]
+      history.push(`${hostId}/registerlodging`)
+    }else if(userToken){
+      history.push(`/${userToken}/form`)
+    }
+    else{
+      history.push(`/login`)
+    }
+  } 
+
   return (
     <React.Fragment>
       <div className="c1kn6kxw dir dir-ltr">
@@ -47,21 +76,26 @@ console.log("por aca", guestId)
               </div>
             </div>
             <div>
-              <SearchBar />
+              {
+                location === '/' || location === '/admin/lodgings'? <SearchBar /> : <div></div>
+              }
+              
             </div>
             <div className="cylj8v3 dir dir-ltr">
               <div className="c1yo0219 dir dir-ltr">
                 <nav className={s.nav_inside}>
                   <div className="_176ugpa">
-                    <Link
-                      to={userToken ? `${userToken}/form` : "/registerguest"}
-                      className="nav-link py-2 px-0 px-lg-2"
-                    >
-                      {/* <Link to={`/form`} className="nav-link py-2 px-0 px-lg-2"> */}
-                      <button className={s.btn_host}>Hospeda nómades</button>
-                    </Link>
+                  {
+                        location === '/'? <button className={s.btn_host} onClick={handleClick}>Hospeda nómades</button> :
+                        <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
+                        <button className={s.btn_host}>Volver</button>
+                        </Link>
+                      }
                   </div>
-                  <div className={s.container_btn_icon}>
+                    <div>
+                    {
+                      location === `/profile/${userToken}` ? <div></div> :
+                      <div className={s.container_btn_icon}>
                     <button
                       className={s.button}
                       type="button"
@@ -70,7 +104,7 @@ console.log("por aca", guestId)
                     >
                       <FaUserCircle className={s.icon} />
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul className="dropdown-menu dropdown-menu-end">
                       {guestId ? (
                         <div>
                           <li>
@@ -82,7 +116,7 @@ console.log("por aca", guestId)
                             </Link>
                           </li>
                           <li>
-                            <Link className="dropdown-item">
+                            <Link to="/login" className="dropdown-item">
                               <TbMessageCircle /> Mensajes
                             </Link>
                           </li>
@@ -119,6 +153,8 @@ console.log("por aca", guestId)
                       )}
                     </ul>
                   </div>
+                      }
+                    </div>
                 </nav>
               </div>
             </div>

@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const LodgingReviewSchema = new Schema({
     guestId: {
-        type: Schema.ObjectId,
+        type: String,
         ref: 'Guest'
     },
     lodgingId: {
-        type: Schema.ObjectId,
+        type: String,
         ref: 'Lodging'
     },
     rating: {

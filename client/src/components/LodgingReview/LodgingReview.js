@@ -3,57 +3,85 @@ import {useState,useEffect} from 'react'
 import {useHistory, useParams} from 'react-router-dom'
 import { Link } from "react-router-dom";
 import{useDispatch, useSelector} from 'react-redux'
-import { postHost } from "../../Redux/Actions";
-//import estilos from './FormHost.module.css'
-import {getGuest} from '../../Redux/Actions'
+import axios from 'axios';
+import {getBookingByGuest} from '../../Redux/Actions'
 import validate from "./validate";  
 import style from "./LodgingReview.module.css";
+
 export default function FormHost(props) {
   const dispatch = useDispatch()
+
+//BUSCANDO EL LODGING POR PARAMS
+    const params = useParams()
+    const lodgingId = params.lodgingId;
+    const userEmail = params.userEmail
+    const email = params.userEmail
+
+    //BUSCANDO EL GUEST CON EL EMAIL y LOS BOOKINGS POR LODGING ID Y GUEST ID 
+// + METIENDO LAS FECHAS DE CHECKOUT EN UN ARRAY y CHEQUEANDO SI EL DÍA DE HOY ES MENOR O IGUAL
+  const [guest, setGuest] = useState("")
+  const [booking, setBooking] = useState("")
+  const [checkOuts, setCheckOuts] = useState("")
+
+
+  useEffect(() => {
+    const getGuestInfo = async () => {
+      try {
+        let res = await axios.get("/api/guest/" + userEmail);
+        let guestId = res.data[0]._id;
+        setGuest(guestId)
+       
+        let response = await axios.get(`/api/booking/${lodgingId}/${guest}`);
+        let guestBooking = response.data
+        setBooking(guestBooking)
+        
+        let checkOut = []
+        await guestBooking.forEach((e) => {
+          let checkOutDay = e.checkOut
+          checkOut.push(checkOutDay)
+        })
+        setCheckOuts(checkOut)
+
+      } catch (err) {
+        console.log(err);
+      }
+      };
+    getGuestInfo();
+  }, [guest]);
+
+  console.log(checkOuts)
+
+  let validReviews = []
+
+  for (let i = 0; i < checkOuts.length; i++){
+    if (new Date(checkOuts[i]) <= new Date())
+    validReviews.push(checkOuts[i])
+  }
+  console.log(validReviews)
+
+
   const [errors, setErrors] = useState({})
   const [input, setInput] = useState({
     rating: "",
     comments: "",})
-  let guestId = localStorage.getItem("userInfo")
-  guestId = JSON.parse(guestId)._id
-  
-const guestInfo = useSelector((state)=>state.guest)
-useEffect(() => {
-  dispatch(getGuest(guestId))
-  
-},[dispatch])
 
-function handleChange(e){
-   setInput({
+  function handleChange(e){
+    setInput({
+        ...input,
+        [e.target.name] : e.target.value,
+    })
+    setErrors(validate({
        ...input,
-       [e.target.name] : e.target.value,
-      
-   })
-   setErrors(validate({
-     ...input,
-     [e.target.name] : e.target.value
- }))
-}
-// function handleSubmit(e){
-//   e.preventDefault()
-//   history.push('/form')
-//   alert("host creado")
-//  }
+       [e.target.name] : e.target.value
+  }))
+  }
+
 
 
   return (
     <div className={style.contenedor}>
-      <form action={`http://localhost:3001/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data">
+      <form action={`http://localhost:3001/api/LodgingReview/${userEmail}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data">
       {/* <form action= {`${process.env.REACT_APP_API}/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`}  method="POST" encType="multipart/form-data" >   */}
-        {/* <label>rating</label>
-         <select onChange={handleChange}   name ="rating" >
-                    <option disabled selected>puntuacion</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-          </select> */}
           <h3 className={style.h3}>Puntaje del hospedaje</h3>
         <p className={style.clasificacion}>
         <input id="radio1" onChange={handleChange} className={style.radio} type="radio" name ="rating" value="5"/><label className={style.label} for="radio1">★</label>
@@ -76,16 +104,16 @@ function handleChange(e){
         {Object.entries(errors).length === 0 && input.comments !== ""?
           <div className={style.contenedor}>
           <button  type="submit" className={style.btn}>
-           añadir reseña
+           Reseñar
           </button></div>:<div className={style.contenedor}>
           <button  disabled  type="submit" className={style.btn}>
-          añadir reseña
+            Reseñar
           </button>
           
      </div>
      
      }
-     <div className={style.contenedor}><Link to= '/'>
+     <div className={style.contenedor}><Link to=  {"/detail/" +props.match.params.lodgingId}>
           <button className={style.button}>Volver</button>
         </Link></div>
         </form> 

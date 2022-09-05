@@ -1,98 +1,183 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getDetail, createNewBooking, getBookingByLodgingId, payBooking } from "../../Redux/Actions/index";
+import axios from "axios";
+import {
+  getDetail,
+  createNewBooking,
+  payBooking,
+  setDataPostBooking,
+} from "../../Redux/Actions/index";
 import Logo from "../../assets/nomadeLogo.svg";
 import s from "../Booking/Booking.module.css";
-import MercadoPago from "../MercadoPago/MercadoPago";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
-import ReactDatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
+
 
 export default function Booking(props) {
-  //SELECT STATES FROM REDUX
   const dispatch = useDispatch();
 
+  //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
+  const payment = useSelector((state) => state.bookings);
 
-  //DECLARATION CONST FOR USE DATES
+  //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
-  const unavailableDates = availibity.map((e) =>
-    e.allDates.map((d) => new Date(d).toDateString())
-  );
+  console.log(lodgingId)
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
   }, [dispatch]);
-
   const lodging = useSelector((state) => state.detail);
-  console.log(lodging)
-  const costNight = lodging.price;
+  const services= lodging.services
+
+  //DECLARATION CONST FOR USE DATA
+  const unavailableDates = availibity.map((e) =>
+  e.allDates.map((d) => new Date(d).toDateString())
+  );
+
+  // PARSE INFO LOCAL STORAGE BOOKING INFO
+  let costNight = JSON.parse(localStorage.getItem("priceBooking"))
+    const bookingInfo = localStorage.getItem("bookingInfo");
+    var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
+    var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
+    var check = JSON.parse(bookingInfo).pets
+    var totalGuest = JSON.parse(bookingInfo).guests;
+
+
+  //PARSE INFO LOCAL STORAGE USER INFO
+    const guestInfo = localStorage.getItem("userInfo");
+    if(guestInfo){
+      var userEmail = JSON.parse(guestInfo).email;
+    }
+
+    //let userEmail = true;
+  
+  //GET RANGES OF DATES
+    const alldates = getDatesInRange(checkIn, checkOut);
+    console.log(alldates, checkIn, checkOut, 'ALL DATES')
+  
+  //VER DISPONIBILIDAD DE DATES
+    const unavailableDatesMap = unavailableDates.flat();
+    const disabledDates = unavailableDatesMap.map((e) => new Date(e));
+  //LODGING DETAIL
+  //const costNight = lodging.price; 
+  console.log(costNight)
+
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
   const picture1 = obj["0"];
-  const city = lodging.city
-  const country = lodging.country
+  const city = lodging.city;
+  const country = lodging.country;
 
-  // PARSE INFO LOCAL STORAGE BOOKING INFO
-  const bookingInfo = localStorage.getItem("bookingInfo");
-  var checkIn = new Date(JSON.parse(bookingInfo).checkIn).toDateString();
-  var checkOut = new Date(JSON.parse(bookingInfo).checkOut).toDateString();
-  var preGuest = JSON.parse(bookingInfo).guests;
-
-  //PRICE FROM LOCAL STORAGE
-  //const costNight = JSON.parse(priceBooking);
-
-  //PARSE INFO LOCAL STORAGE USER INFO
-  const guestInfo = localStorage.getItem("userInfo");
-  let userEmail = JSON.parse(guestInfo).email;
-  //let userEmail = true;
-
-  //GET RANGES OF DATES
-  const alldates = getDatesInRange(checkIn, checkOut);
-  console.log(alldates, 'RANGO DE FECHAS QUE DESEA EL GUEST')
-  //NEW STATE WITH PROPERTIES FOR LOCAL STORAGE
+  //STATE BOOKING FINAL
   const [input, setInput] = useState({
     checkIn: checkIn,
     checkOut: checkOut,
     night: alldates.length,
-    guests: preGuest,
+    guests: totalGuest,
     allDates: alldates,
     email: userEmail,
     lodgingId: lodgingId,
-    costNight: costNight
+    costNight: costNight,
+    pets: check,
+    hostId: lodging.hostId,
+    total: total,
+    currency: "USD"
   });
 
-  
-  //VER DISPONIBILIDAD DE DATES
-  const demo = unavailableDates.flat()
-  const isFound = demo.some((date) =>
-      alldates.includes(new Date(date).toDateString()))
-
+  const allDates = getDatesInRange(input.checkIn, input.checkOut);
   //DATA JOSE
-  const night = input.night; 
-  const info = {
-    lodgingId,
-     night,
-     costNight
+  const total = costNight * allDates.length;
+  useEffect(()=>{
+    setInput({...input, total:total})
+  }, [])
+
+  //GET Q PETS
+  const lodgingServices = []
+  for (const property in services) {
+    if (services[property] === true) {
+      lodgingServices.push(property);
+    }
+  }
+  const pets = lodgingServices.filter(e=>e=== 'pets')
+
+  function handleCheckBox(e) {
+    setInput({ ...input, pets: e.target.checked });
   }
 
 
-  const total = costNight * night;
+  //MERCADO PAGO
+  //estado local para la preferenceId
+  const [preferenceId, setPreferenceId] = useState("")
+  async function getPreference (){
+    try {
+      const res = await axios.post("/api/payment/", input)
+      let id = res.data;
+      setPreferenceId(id)
+    }catch(err){
+      console.log(err)
+    }
+  }  
 
+
+//ON CHANGE CHECK IN
+function onChangeCheckIn(currentDate){
+  let start = getDatesInRange(input.checkIn, input.checkOut)
+  setInput({
+    ...input,
+    checkIn: new Date(currentDate).toDateString(),
+    allDates: start,
+    night: start.length,
+    total: costNight * start.length
+  })
+  console.log(input, 'INPUUUT')
+
+}
+useEffect(()=>{
+  let start = getDatesInRange(input.checkIn, input.checkOut)
+  setInput({
+    ...input,
+    allDates: start,
+    night: start.length,
+    total: costNight * start.length
+  })
+},[input.checkIn,input.checkOut])
+
+//ON CHANGE CHECK OUT
+function onChangeCheckOut(currentDate){
+  let start = getDatesInRange(input.checkIn, input.checkOut)
+  setInput({
+    ...input,
+    checkOut: new Date(currentDate).toDateString(),
+    allDates: start,
+    night: start.length,
+    total: costNight * start.length
+  })
+
+}
 
   //FUNCTION HANDLE BOOKING
   function handleBooking() {
-    isFound? alert('NO DISPONIBLE'):
-    dispatch(createNewBooking(input));
-    dispatch(payBooking(info));
+    setInput({...input,
+      night : allDates.length,
+      allDates: allDates
+    })
+    const isFound = unavailableDatesMap.some((date) =>
+      allDates.includes(new Date(date).toDateString())
+    );
+    console.log(preferenceId.hasOwnProperty(preferenceId))
+    localStorage.setItem("booking", JSON.stringify(input));
+    isFound ? alert("NO DISPONIBLE") :
+    preference !== undefined? alert('Haz clic en el boton de pago') :
+    // dispatch(payBooking(input))
+    getPreference(input)
   }
-
-  function handleEditDates() {}
-
-  const preferenceId = useSelector((state) => state.payment);
+  
+  //MERCADO PAGO
   const preference = preferenceId.preferenceId;
+  console.log(preference)
 
   return (
     <div>
@@ -112,52 +197,51 @@ export default function Booking(props) {
         </div>
       </div>
       {!userEmail ? (
-        <div> Debes registrarte</div>
+        <Link to="/login">
+              <div> Debes registrarte</div>
+        </Link>
+    
       ) : (
         <div className={s.container}>
           <div className={s.margin}>
-            <div className={s.left}>
-            <div className={s.titles}>Fechas de tu reservación</div>
+            <div className={s.titles}>Fechas de tu reservacion</div>
             <hr className={s.hr}></hr>
             <div>{`${new Date(input.checkIn).toLocaleDateString()} - ${new Date(
               input.checkOut
             ).toLocaleDateString()}`}</div>
             <div>
-              <div className={s.margin}>Edita tus fechas</div>
+              <div>Edita tus fechas</div>
               <div>
-                <div className={s.container1}>
-                  <div className={s.input1}>Llegada  </div>
-                  <ReactDatePicker
+                <div>
+                  <div>Llegada</div>
+                  <DatePicker
+                    disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkIn)}
-                    onChange={(currentDate) =>
-                      setInput({
-                        ...input,
-                        checkIn: new Date(currentDate).toDateString(),
-                      })
+                    onChange={(currentDate) =>onChangeCheckIn(currentDate)
                     }
+                    selectsStart
+                    startDate={new Date(input.checkIn)}
+                    endDate={new Date(input.checkOut)}
+                    excludeDates={disabledDates}
                     selectsEnd
-                    minDate={new Date()}
-                    checkIn={input.checkIn}
-                    /*checkOut={info.checkOut} */
+                        minDate={new Date()}
                   />
                 </div>
-                <div className={s.container1}>
-                  <div className={s.input2}>Salida  </div>
-                  <ReactDatePicker
+                <div>
+                  <div>Salida</div>
+                  <DatePicker
+                    disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(input.checkOut)}
-                    onChange={(currentDate) =>
-                      setInput({
-                        ...input,
-                        checkOut: new Date(currentDate).toDateString(),
-                      })
-                    }
-                    /*checkIn={info.checkIn}*/
-                    checkIn={input.checkIn}
-                    selectsEnd
-                    checkOut={input.checkOut}
-                    minDate={new Date(input.checkIn)}
+                      onChange={(currentDate) =>onChangeCheckOut(currentDate)
+                      }
+                      selectsStart
+                      startDate={new Date(input.checkIn)}
+                      endDate={new Date(input.checkOut)}
+                      excludeDates={disabledDates}
+                      selectsEnd
+                      minDate={new Date(input.checkIn)}
                   />
                 </div>
               </div>
@@ -165,61 +249,59 @@ export default function Booking(props) {
             <div className={s.titles}>Nómadas</div>
             <hr className={s.hr}></hr>
             <div className={s.selection}>
-              <div className={s.total}>
               <span>Total </span>
               <input
-                className={s.input}
                 type="number"
-                name="adults"
-                value={input.guestAdults}
-                defaultValue={preGuest}
+                defaultValue={totalGuest}
+                min={1}
+                max={lodging.guests}
               ></input>
-              </div>
-            <div>
+            </div>
+            <div className={s.selection}>
               <span>Mascotas </span>
-              <input type="checkbox" name="pets" value={input.pets}></input>
-            </div>
-            </div>
+              <input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
             </div>
           </div>
           <div className={s.card}>
             <div>
-            <img src={picture1} className={s.img} alt="img not found"/>
-            </div>
-          <div className={s.container4}>
-            <div>
-              <h6 className={s.city}>{city}, {country}</h6>
-            </div>
-          <div className={s.container1}>
-            <div className={s.container2}>
-            <div>
-              <h6 className={s.sub2}>Costo Total</h6>
-              <h6 className={s.h1}>${total} por {night} noches</h6>
+              <img src={picture1} className={s.img} alt="img not found" />
             </div>
             <div>
-              <h6 className={s.sub1}>Comisión por servicio</h6>
-              <h6 className={s.h}>$0</h6>
+              <h6 className={s.city}>
+                {city}, {country}
+              </h6>
             </div>
+            <div className={s.container1}>
+              <div className={s.container2}>
+                <div>
+                  <h6 className={s.sub2}>Costo Total</h6>
+                  <h6 className={s.h1}>
+                    ${input.total} por {input.night} noches
+                  </h6>
+                </div>
+                <div>
+                  <h6 className={s.sub1}>Comisión por servicio</h6>
+                  <h6 className={s.h}>$0</h6>
+                </div>
+              </div>
+              <div className={s.container3}>
+                <div>
+                  <h6 className={s.sub}>Fecha arribo</h6>
+                  <h6 className={s.h1}>{new Date(input.checkIn).toLocaleDateString()}</h6>
+                </div>
+                <div>
+                  <h6 className={s.sub1}>Fecha salida</h6>
+                  <h6 className={s.h}>{new Date(input.checkOut).toLocaleDateString()}</h6>
+                </div>
+              </div>
             </div>
-            <div className={s.container3}>
-            <div>
-              <h6 className={s.sub}>Fecha arribo</h6>
-              <h6 className={s.h1}>{input.checkIn}</h6>
-            </div>
-            <div>
-              <h6 className={s.sub1}>Fecha salida</h6>
-              <h6 className={s.h}>{input.checkOut}</h6>
-            </div>
-            </div>
-          </div>
             <button className={s.button2} onClick={handleBooking}>
               Reservar
             </button>
-            </div>
+            <MercadoPagoFinal preferenceId={preference} />
           </div>
         </div>
       )}
     </div>
   );
 }
-

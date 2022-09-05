@@ -1,6 +1,9 @@
 
 import axios from "axios";
 
+
+
+
 export const GET_BY_CITY = " GET_BY_CITY";
 
 export function getLodgings (lodgingId){
@@ -22,7 +25,7 @@ export function getLodgings (lodgingId){
 export function getCountry (){
     return async function(dispatch){
         try{
-        const json = await axios.get("http://localhost:3001/api/country")
+        const json = await axios.get("/api/country")
         dispatch({
             type:"GET_COUNTRY",
             payload: json.data
@@ -106,7 +109,6 @@ export function postGuest(payload){
 }
 
 
-
 //Trae un guest por Id
 export function getGuest(payload){
   return async function (dispatch){
@@ -126,7 +128,7 @@ export function getGuest(payload){
 export function getGuestByEmail(email){
   return async function(dispatch){
     try{
-      let json= await axios.get(`/api/guest?email=${email}`)
+      let json= await axios.get(`/api/guest/${email}`)
       return dispatch({
         type: 'GET_GUEST_BY_EMAIL',
         payload: json.data
@@ -139,8 +141,25 @@ export function getGuestByEmail(email){
   }
 }
 
+//Filtra el host
+export function getHost(hostId){
+  return async function(dispatch){
+    try{
+      let json= await axios.get("/api/host/" + hostId)
+      return dispatch({
+        type: 'GET_HOST',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 // Trae todos los Guests
-export function allGuests(){
+export function getGuests(){
   return async function(dispatch){
     try {
       const res = await axios.get("/api/guest")
@@ -153,6 +172,24 @@ export function allGuests(){
     }
   }
 }
+
+// Trae un Host por dni
+export function getHostByDni(dni){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/guest/:${dni}`)
+      return dispatch({
+        type: 'GET_HOST_BY_DNI',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
 
 
   export function getDetail (lodgingId){
@@ -184,7 +221,7 @@ export function addFavorite(payload){
     console.log("actions")
 
     try{
-     let response = await axios.post('http://localhost:3001/api/favorite/', payload)
+     let response = await axios.post('/api/favorite/', payload)
      console.log("response",response)
       return dispatch({
         type: "ADD_FAVORITE",
@@ -200,7 +237,7 @@ export function addFavorite(payload){
  
     return async function(dispatch){
       try{
-      var response = await axios.post('http://localhost:3001/api/favorite/fav', payload)
+      var response = await axios.post('/api/favorite/fav', payload)
         return dispatch({
           type: "GET_FAVORITES",
           payload: response.data
@@ -212,10 +249,9 @@ export function addFavorite(payload){
     }
   } 
   export function deleteFavorite(payload){
-    console.log(payload, "soy delete")
     return async function(dispatch){
       try{
-      let response = await axios.post('http://localhost:3001/api/favorite/delete', payload)
+      let response = await axios.post('/api/favorite/delete', payload)
   
         console.log(response,"okkkk")
         return dispatch({
@@ -228,8 +264,6 @@ export function addFavorite(payload){
       }
     }
   }
-
-
 
 
 export function favoriteNumber(payload){
@@ -266,44 +300,44 @@ export function lodgingReviews(){
   }
 }
 
- 
-
-// export function settingDate(payload){
-//   console.log(payload, 'SOY PAYLOAD')
-//   return{
-//     type: "SET_DATE",
-// export function orderByRating(payload){
-//   return{
-//     type: "ORDER_BY_RATING",
-//     payload
-//   }
-// }
-
-// BOOKING
-// export function createNewBooking(payload) {
-//   return async function (dispatch) {
-//     console.log(payload);
-//     var json = await axios.post(
-//       "/api/lodging/62fe7ea0b2a41b94d94fd0f2",
-//       payload
-//     );
-//     }}
-
 
 // BOOKING
 export function createNewBooking(payload) {
   return async function (dispatch) {
-    console.log(payload);
     var json = await axios.post(
       "/api/booking",
       payload
     );
   }}
 
+//ACTION QUE SETEA LOS DATOS DEL LODGING EN 
+export function setDataPostBooking(payload){
+  return{
+    type: 'SET_DATA_POSTBOOKING',
+    payload
+  }
+}
+
+//GET BOOKING BY GUEST ID
+export function getBookingByGuest (guest){
+  return async function (dispatch){
+      try{
+          const res = await axios.get("/api/booking/" + guest)
+          return dispatch({
+              type: "BOOKING_BY_GUEST",
+              payload: res.data
+          })
+      } catch (error) {
+          console.log(error)
+      }
+  }
+}
+
+
 export function payBooking(payload) {
   return async function (dispatch) {
     try{
-    const res = await axios.post(`api/payment/`,payload)
+    const res = await axios.post("/api/payment/", payload)
     return dispatch({
       type: "PAY_BOOKING",
       payload: res.data
@@ -342,6 +376,155 @@ export function getFeedback(){
     }
   }
 }
+
+//TRAE HOST POR ID GUEST (EMAIL)
+export function getHostByGuestId(payload){
+  return async function (dispatch){
+    try {
+      const res = await axios.post('/api/guest/find/host', payload)
+      return dispatch({
+        type: 'GET_HOST_BY_GUEST_ID',
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }}}
+
+export function deleteLodging(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_LODGING",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function deleteUser(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestvisibility/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_USER",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function hacerAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadmin/" + payload)
+      console.log(res)
+      return payload({
+        type: "HACER_ADMIN",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function sacarAdmin(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/guestadminfalse/" + payload)
+      console.log(res)
+      return payload({
+        type: "SACAR_ADMIN",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getComplaints(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/admin/getcomplaint")
+      return dispatch({
+        type: "GET_ALL_COMPLAINTS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function deleteComplaint(payload){
+  return async function(){
+    try {
+      console.log(payload)
+      const res = await axios.patch("/api/admin/complaintfalse/" + payload)
+      console.log(res)
+      return payload({
+        type: "DELETE_COMPLAINT",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getByUser(user){
+  return async function(dispatch){
+    try{
+      let json= await axios.get(`/api/admin?email=${user}`)
+      console.log(json.data)
+      return dispatch({
+        type: 'GET_BY_USER',
+        payload: json.data
+        
+      })
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+}
+
+export function getBookings(){
+  return async function(dispatch){
+    try {
+      const res = await axios.get("/api/booking/")
+      return dispatch({
+        type: "GET_ALL_BOOKINGS",
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+//FUNCION QUE ALMACENA DATOS DEL USUARIO
+/* export function getInfoGuest(){
+  return{
+    type: 'GET_INFO_LOCAL_STORAGE'
+  }
+} */
+
+
+
+
+ 
 
 
 

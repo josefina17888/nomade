@@ -38,6 +38,42 @@ verifyEmail =  async (email,subject,title,msg,url) => {
     }
 }
 
+
+
+bookingConfirm =  async (email,subject,title,msg) => {
+    try{
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
+            service: process.env.SERVICE,
+            port: Number(process.env.EMAIL_PORT),
+            secure: Boolean(process.env.SECURE),
+            auth: {
+                user: process.env.MAIL,
+                pass: process.env.PASS
+            }
+
+        })
+        await transporter.sendMail({
+            from: process.env.USER,
+            to: email,
+            subject: subject,
+            html: `
+            <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
+            <h2 style="text-align: center; text-transform: uppercase;color: teal;">${title}</h2>
+            <p>${msg}</p>
+            <p>¡Gracias por tu reserva! ¡Que la disfrutes!</p>
+            </div>
+        `
+        })
+        console.log("Email sent Sucess")
+    }
+    catch(error) {
+        console.log("Email not send")
+        console.log(error)
+    }
+}
+
 module.exports = {
-    verifyEmail
+    verifyEmail,
+    bookingConfirm
 }

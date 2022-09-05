@@ -4,8 +4,8 @@
   flex-direction: column;
   margin: auto;
   flex-wrap: wrap;
+  height: 100%;
   width: 50%;
-  margin-bottom: 5rem;
 }
 
 .title {
@@ -29,7 +29,6 @@
   border-radius: 5px;
   border: 1px solid rgb(0, 0, 0);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.486);
-  transition: 0.5s;
 }
 
 .button:hover {
@@ -81,17 +80,9 @@
 
 .group2 {
   position: relative;
-  margin-top: 40px;
-}
-.boton {
-  position: relative;
-  background-color: transparent;
-  border: none;
-  left: 16rem;
-  top: 2rem;
-  font-size: 1.2rem;
   margin-top: 25px;
 }
+
 .input {
   font-size: 16px;
   padding: 10px 10px 10px 5px;

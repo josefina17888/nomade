@@ -5,7 +5,7 @@ const generateToken = require("../../utils/generateToken");
 const mongoose = require ("mongoose")
 
 router.post("/", async (req, res) => {
-    const { email, lastname, username, name, picture } = req.body;
+    const { email, lastname, name, picture } = req.body;
 
     const user = await Guest.findOne({ email });
     const password = email + process.env.SECURE_TOKEN
@@ -25,11 +25,8 @@ router.post("/", async (req, res) => {
         })
 
     } else {
-        if(user) {
-            res.send('Usuario logueado')
+            res.json(user)
         }
-    }
-    
 });
 
 

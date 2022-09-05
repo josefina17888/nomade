@@ -1,5 +1,4 @@
-import React ,  {useState , useEffect} from 'react'
-import { Link , useParams, useHistory} from 'react-router-dom'
+import React ,  {useState } from 'react'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
 
@@ -19,6 +18,7 @@ export default function ResetPassword() {
             alert("Por favor ingrese todos los campos");
           }
           const guest = `http://localhost:3001/api/guest/${email}`
+          // const guest = `https://nomade-henry.herokuapp.com/api/guest/${email}`
           const {data} = await axios.get(guest);
           if(!data.length) {
             return setMsg({
@@ -33,10 +33,7 @@ export default function ResetPassword() {
             error: ""
         })   
         
-         await axios.post("http://localhost:3001/api/passwordReset/",{email})
-
-
-
+         await axios.post("/api/passwordReset/",{email})
         } catch (error) {
           alert("Algo sucedió mal");
           console.log(error)

@@ -2,52 +2,33 @@ const express = require("express");
 const router = express.Router();
 const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
+const Host = require('../../models/Host')
 const upload = require("../../../libs/storage")
 const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
+const mongoose = require("mongoose");
+const toId = mongoose.Types.ObjectId;
+require('dotenv').config();
 
 
 
+// cloudinary.config({ 
+//   cloud_name: 'dbq85fwfz', 
+//   api_key: '578434861277536', 
+//   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+// });
 
 cloudinary.config({ 
-  cloud_name: 'dbq85fwfz', 
-  api_key: '578434861277536', 
-  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 
 
 router.post("/", upload.single("picture") ,async (req, res) => {
-    // try{
-    //   const userExist = await Guest.findOne({ email });
-    //   if(userExist) {
-    //     res.send('Usuario ya existe')
-    //   }
-    //   console.log("hola")
-    //   const result = await cloudinary.uploader.upload(req.file.path)
-
-    //   const newGuest = Guest.create({username, name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
-
-    //   await newGuest.save()
-      
-    //   console.log(newGuest)
-    //   const token = new Token({
-    //     userId: newGuest._id,
-    //     token: generateToken(newGuest._id)
-    //   })
-    //   console.log(token)
-    //   token.save()
-    //   console.log(token)
-    //   const url = `Dar click al siguiente enlace para verificar tu correo: ${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}, este token expira en una hora`;
-    //   console.log(url)
-    //   await sendEmail(newGuest.email,"Verify Email", url)
-    //   // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
-    //   res.status(201).redirect("http://localhost:3000/login")
-    //   //res.redirect("https://nomade-khaki.vercel.app/");
-    //   //res.redirect("http://localhost:3000/");
-
 
   const { name , lastname , email , cellPhone , dni , country, birthDate ,password} = req.body
     try{
@@ -55,27 +36,47 @@ router.post("/", upload.single("picture") ,async (req, res) => {
       if(userExist) {
         res.send('Usuario ya existe')
       }
-      console.log("hola")
       const result = await cloudinary.uploader.upload(req.file.path)
-      console.log(result)
       const newGuest = new Guest({ name , lastname , email , cellPhone , dni , country,  birthDate,password,  picture: result.secure_url})
 
       await newGuest.save()
-      console.log(newGuest)
       const token = new Token({
         userId: newGuest._id,
         token: generateToken(newGuest._id)
       })
-      console.log(token)
       token.save()
-      console.log(token)
       const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
-      console.log(url)
+      // const url = `https://nomade-henry.herokuapp.com/api/guest/${newGuest._id}/verify/${token.token}`;
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
-      // res.status(201).send({message: "Revisa tu email para verificar tu cuenta"})
       res.status(201).redirect("http://localhost:3000/login")
+      // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
+    }
+      catch (error){
+          res.status(404).send(error)
+      }
+});
+
+router.post("/reverified",async (req, res) => {
+  const {email} = req.body
+    try{
+      const userExist = await Guest.findOne({ email });
+      const tokenExist = await Token.findOne({userId: userExist._id})
+      if(tokenExist) {
+         await tokenExist.remove()}
+      const token = new Token({
+        userId: userExist._id,
+        token: generateToken(userExist._id)
+      })
+      token.save()
+      const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
+      // const url = `https://nomade-henry.herokuapp.com/api/guest/${userExist._id}/verify/${token.token}`;
+      const title = "Gracias por unirte a la comunidad Nómade"
+      const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
+      await verifyEmail(userExist.email,"Verify Email",title , msg , url)
+      res.status(201).redirect("Verifica tu correo")
+      // res.status(201).redirect("https://nomade-khaki.vercel.app/login")
     }
       catch (error){
           res.status(404).send(error)
@@ -84,26 +85,20 @@ router.post("/", upload.single("picture") ,async (req, res) => {
 
 
 
+
 router.get("/:idGuest/verify/:token", async (req, res) => {
-  console.log(req.params.token)
-  console.log(req.params.idGuest)
   try {
     const guest = await Guest.findOne({_id: req.params.idGuest})
-    console.log(guest)
     if(!guest) return(400).send({message:"Invalid link"});
-    console.log("hola")
     const token = await Token.findOne({
       userId: guest._id,
       token: req.params.token
     });
-    console.log(token)
     if(!token) return res.status(400).send({message: "invalid link"})
-    console.log("hola2")
     await guest.updateOne({_id: guest._id, verified: true})
-    console.log("hola3")
     await token.remove()
-    // res.status(200).send({message: "Email verificado"})
     res.status(200).redirect(`http://localhost:3000/${req.params.idGuest}/verify/${req.params.token}`)
+    // res.redirect(`https://nomade-khaki.vercel.app/${req.params.idGuest}/verify/${req.params.token}`)
   }
   catch(error) {
     res.status(404).send(error)
@@ -236,6 +231,32 @@ router.delete("/:id", async (req,res) => {
         res.status(404).send(error)
     }
 })
+
+router.post("/find/host", async (req, res) => {
+  try {
+    const infoGuest = await Guest.find({ email: req.body.email });
+    const guestId = infoGuest
+    console.log(guestId, 'REQ')
+    const isHost = await Host.find({ guestId: guestId});
+    res.status(200).json(isHost)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+//busco un host por guest id FUNCIONA
+router.get("/found/host/:guest", async (req, res) => {
+  try {
+    //const guestId = toId(req.params.guest)
+    const infoGuest = await Guest.find({email: req.params.guest})
+    const guestId = infoGuest[0]._id
+    const infoHost = await Host.find({guestId: guestId});
+    const hostId = infoHost["0"]._id
+    res.status(200).json(hostId)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 
 module.exports = router

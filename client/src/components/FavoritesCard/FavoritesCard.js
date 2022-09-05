@@ -29,6 +29,9 @@ export default function FavoritesCard({
     await dispatch(deleteFavorite(favData));
   }
 
+  const obj = Object.assign({}, picture);
+  const picture1 = obj["0"];
+
   return (
    
     <div className={s.fcontGral}>
@@ -38,7 +41,7 @@ export default function FavoritesCard({
         </button>
         <Link to={`/detail/${id}`} > 
       <div className={s.favcard}>
-        <div className={s.fpicture}><img className={s.fimg} alt="" width="300px" src={picture}/></div>
+        <div className={s.fpicture}><img className={s.fimg} alt="" width="300px" src={picture1}/></div>
         <div className={s.ftext}>
           <div>{`${city}, ${country}`}</div>
 

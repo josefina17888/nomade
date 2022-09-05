@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 
 const hostSchema = new Schema({
-  
   name: {
     type: String, 
   },
@@ -20,6 +19,7 @@ const hostSchema = new Schema({
   country: String,
   birthDate: Date,
   picture: String,
+  cbu: String,
   Lodging: [
     {
       type: Schema.ObjectId,
@@ -27,7 +27,7 @@ const hostSchema = new Schema({
     },
   ],
   guestId: {type: mongoose.Types.ObjectId, ref: "Guest"},
- 
+  isAdmin: { type: Boolean, default: false },
   hostDniPicture: { type: String },
   lodgingId: {type: mongoose.Types.ObjectId, ref: "Lodging"}, 
 });

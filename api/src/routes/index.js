@@ -27,7 +27,8 @@ const country = require ('../routes/countries/index')
 const passwordReset = require("./passwordReset/passwordReset")
 const guestReview = require('../routes/guestReview/guestReview')
 const paymentRoute = require('../routes/payment/payment')
-
+const complaintRoute = require('../routes/complaint/complaint')
+const admin = require('../routes/admin/admin')
 router.use("/api/host", hostRoute);
 router.use("/api/booking", bookingRoute); 
 router.use("/api/guest", guestRoute); 
@@ -41,9 +42,9 @@ router.use("/api/favorite", favoriteRoute);
 router.use("/api/conversation", conversationRoute);
 router.use("/api/message", messageRoute);
 router.use("/api/country", country);
-
+router.use("/api/complaint", complaintRoute);
 router.use("/api/passwordReset", passwordReset);
-
+router.use("/api/admin", admin);
 
 
 
