@@ -27,6 +27,7 @@ export default function Chat() {
   let userEmail = user.email;
 
 
+
   //conecta con el server y trae los mensajes
  
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function Chat() {
     },[conversations])
     
   }
+
 
   useEffect(() => {
     console.log("cinco")
