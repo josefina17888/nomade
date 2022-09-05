@@ -1,4 +1,4 @@
-
+require("dotenv").config();
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Booking = require('../booking/booking');
@@ -20,11 +20,13 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
     console.log(req.body)
     let fotos = req.files.map(e=>e.path)
+    console.log("hola1")
     let result=[]
     for(let i=0; i<fotos.length; i++)
     {
     result.push(await cloudinary.uploader.upload(fotos[i]))
     }
+    console.log("hola1")
     const newLodging = await new Lodging(req.body);
     let fotosSubidas = result.map(e=>e.url)
     let service = await addServices(req.body)
@@ -38,7 +40,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     res.redirect("http://localhost:3000/")
     // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
-    res.send("No se pudo crear el alojamiento");
+    res.status(400).send("No se pudo crear el alojamiento");
   }
 });
 

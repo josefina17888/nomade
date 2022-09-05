@@ -22,6 +22,7 @@ router.post("/", async function (req, res, next) {
     const title = req.body.lodgingId
     const quantity = req.body.night
     const price = req.body.costNight
+    const currency = req.body.currency
     console.log(price)
     // Crea un objeto de preferencia (se le pueden poner muchas especificaciones como payer email por ej)
     // Toma del lodging el title y el unit price y toma del body la cantidad de noches
@@ -30,6 +31,7 @@ router.post("/", async function (req, res, next) {
                 title: title,
                 quantity: quantity,
                 unit_price: price,
+                currency_id: currency,
             }],
             payment_methods: {
                 installments: 1,
@@ -38,11 +40,18 @@ router.post("/", async function (req, res, next) {
                 } ]
             },
             back_urls: {
-                success: "http://localhost:3000/status",
-                //"http://localhost:3000/",
-                // res.redirect("https://nomade-khaki.vercel.app/%22)
-                failure: "https://nomade-khaki.vercel.app/",
-                pending: "https://nomade-khaki.vercel.app/"
+
+                success: "http://localhost:3000/",
+                // res.redirect("https://nomade-khaki.vercel.app/")
+                failure: "http://localhost:3000/",
+                pending: "http://localhost:3000/"
+                // success: "https://nomade-khaki.vercel.app/status",
+                // //"http://localhost:3000/",
+
+                // // res.redirect("https://nomade-khaki.vercel.app/%22)
+                // failure: "https://nomade-khaki.vercel.app/",
+                // pending: "https://nomade-khaki.vercel.app/"
+
             },
         }
     console.log(preference.items)
@@ -59,4 +68,15 @@ router.post("/", async function (req, res, next) {
 
 })
 
+
+
+router.get('/', async function(req, res) {
+	res.json({
+		Payment: req.query.payment_id,
+		Status: req.query.status,
+		MerchantOrder: req.query.merchant_order_id
+	});
+});
+
 module.exports = router;
+  

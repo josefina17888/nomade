@@ -20,6 +20,7 @@ const hostSchema = new Schema({
   birthDate: Date,
   picture: String,
   cbu: String,
+  bank: String,
   Lodging: [
     {
       type: Schema.ObjectId,

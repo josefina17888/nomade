@@ -13,6 +13,7 @@ import s from "../Booking/Booking.module.css";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
+import Swal from 'sweetalert'
 
 
 export default function Booking(props) {
@@ -20,10 +21,10 @@ export default function Booking(props) {
 
   //SELECT STATES FROM REDUX
   const availibity = useSelector((state) => state.bookings);
+  const payment = useSelector((state) => state.bookings);
 
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
-  console.log(lodgingId)
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
@@ -47,19 +48,20 @@ export default function Booking(props) {
 
   //PARSE INFO LOCAL STORAGE USER INFO
     const guestInfo = localStorage.getItem("userInfo");
-    let userEmail = JSON.parse(guestInfo).email;
+    if(guestInfo){
+      var userEmail = JSON.parse(guestInfo).email;
+    }
+
     //let userEmail = true;
   
   //GET RANGES OF DATES
     const alldates = getDatesInRange(checkIn, checkOut);
-    console.log(alldates, checkIn, checkOut, 'ALL DATES')
   
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
   //LODGING DETAIL
   //const costNight = lodging.price; 
-  console.log(costNight)
 
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
@@ -67,6 +69,16 @@ export default function Booking(props) {
   const city = lodging.city;
   const country = lodging.country;
 
+  const makeRandomId= (length) => {
+    let result = ''
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   return result;
+}
+
+  const codeFunction = makeRandomId(10)
   //STATE BOOKING FINAL
   const [input, setInput] = useState({
     checkIn: checkIn,
@@ -79,15 +91,26 @@ export default function Booking(props) {
     costNight: costNight,
     pets: check,
     hostId: lodging.hostId,
-    total: total
+    totalPrice: total,
+    code: codeFunction
   });
+
+ 
+
+
 
   const allDates = getDatesInRange(input.checkIn, input.checkOut);
   //DATA JOSE
   const total = costNight * allDates.length;
   useEffect(()=>{
-    setInput({...input, total:total})
+    setInput({...input, totalPrice:total})
   }, [])
+
+  const [style, setStyle] = useState("className={s.cont}");
+  
+  const changeStyle = () => {
+    setStyle("className={s.cont2}");
+  };
 
   //GET Q PETS
   const lodgingServices = []
@@ -125,9 +148,8 @@ function onChangeCheckIn(currentDate){
     checkIn: new Date(currentDate).toDateString(),
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
-  console.log(input, 'INPUUUT')
 
 }
 useEffect(()=>{
@@ -136,7 +158,7 @@ useEffect(()=>{
     ...input,
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
 },[input.checkIn,input.checkOut])
 
@@ -148,7 +170,7 @@ function onChangeCheckOut(currentDate){
     checkOut: new Date(currentDate).toDateString(),
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
 
 }
@@ -162,20 +184,22 @@ function onChangeCheckOut(currentDate){
     const isFound = unavailableDatesMap.some((date) =>
       allDates.includes(new Date(date).toDateString())
     );
-    console.log(preferenceId.hasOwnProperty(preferenceId))
     localStorage.setItem("booking", JSON.stringify(input));
-    isFound ? alert("NO DISPONIBLE") :
-    preference !== undefined? alert('Haz clic en el boton de pago') :
+    isFound ?  Swal(
+      'No disponible','','error',{buttons:false,timer:3000}
+    ) :
+    preference !== undefined?  Swal(
+      'Haz clic en el boton de pago','','warning',{buttons:false,timer:3000}
+    ) :
     // dispatch(payBooking(input))
     getPreference(input)
   }
   
   //MERCADO PAGO
   const preference = preferenceId.preferenceId;
-  console.log(preference)
 
   return (
-    <div>
+    <div className={style}>
       <div className={s.nav}>
         <div className={s.div_logo}>
           <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
@@ -192,7 +216,10 @@ function onChangeCheckOut(currentDate){
         </div>
       </div>
       {!userEmail ? (
-        <div> Debes registrarte</div>
+        <Link to="/login">
+              <div> Debes registrarte</div>
+        </Link>
+    
       ) : (
         <div className={s.container}>
           <div className={s.margin}>
@@ -268,7 +295,7 @@ function onChangeCheckOut(currentDate){
                 <div>
                   <h6 className={s.sub2}>Costo Total</h6>
                   <h6 className={s.h1}>
-                    ${input.total} por {input.night} noches
+                    ${input.totalPrice} por {input.night} noches
                   </h6>
                 </div>
                 <div>
@@ -287,7 +314,7 @@ function onChangeCheckOut(currentDate){
                 </div>
               </div>
             </div>
-            <button className={s.button2} onClick={handleBooking}>
+            <button className={s.button2} onClick={handleBooking} onmouseover={changeStyle}>
               Reservar
             </button>
             <MercadoPagoFinal preferenceId={preference} />

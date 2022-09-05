@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getByUser } from "../../Redux/Actions";
 import s from "../SearchBar/SearchBar.module.css";
 import { BsSearch } from "react-icons/bs";
+import Swal from 'sweetalert'
 
 
 export default function SearchBar(){
@@ -20,7 +21,9 @@ function handleSubmit(e){
     dispatch(getByUser(user.toLowerCase()));
     setUser("");}
     else{
-    alert("Ingresa un id para buscar")
+    Swal(
+      'Ingresa un id para buscar','','warning',{buttons:false,timer:3000}
+    )
     }
 }
 

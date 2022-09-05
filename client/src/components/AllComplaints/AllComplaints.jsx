@@ -53,24 +53,24 @@ if (!guestId) {
 } else {
   var userToken = JSON.parse(guestId)._id;
   var userEmail = JSON.parse(guestId).email;
+  var admin = JSON.parse(guestId).isAdmin;
 }
 let stateComplaints = useSelector((state) => state.allcomplaints);
 let lodgingsVisibles= stateComplaints.filter(e=> e.Visibility===true)
-  {console.log(stateComplaints)}
+  {console.log(admin)}
 const allGuests = useSelector((state) => state.allGuests);
-let arrFilter = allGuests.filter(e => e.email === userEmail)
+
   return (
     <div className={styles.container}>
       <div className={styles.container}>
         { 
-          lodgingsVisibles.map((e) => {
+         admin === true && currentLodging.map((e) => {
             return (
               <div key={e._id} className={styles.cards}>
                 <div  className={styles.card}>
                 <div>
                   <Link to={`/detail/${e.lodgingId}`} className={styles.link}>
-                      
-             
+                    
                     <CardComplaint
                       id={e._id}
                       tipo={e.tipo}
@@ -83,7 +83,7 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
                     </Link>
                   
                     {
-                    userToken && allGuests[0]!== undefined &&  arrFilter[0].isAdmin ===true?
+                    userToken && allGuests[0]!== undefined &&  admin===true?
                     <form onSubmit={(j)=>handleSubmit(j,e._id)}> 
                     <button className={styles.buttonDenunciar} type='submit'>Borrar Denuncia</button>
                     </form>:

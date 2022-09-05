@@ -22,7 +22,18 @@ const BookingSchema = new mongoose.Schema({
   hostId:{
     type: Schema.ObjectId,
     ref: "Guest",
-  }
+  },
+  dated: {
+    type: Date
+},
+
+code: {
+  type: String,
+  required:true
+},
+visibility: { 
+  type: Boolean, default: true }
+
 });
 
 const model = mongoose.model("Booking", BookingSchema);

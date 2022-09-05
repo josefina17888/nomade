@@ -10,7 +10,7 @@ import { TbMessageCircle } from "react-icons/tb";
 import { GrFavorite } from "react-icons/gr";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { getHostByGuestId, getLodgings } from "../../Redux/Actions/index";
+import { getHostByGuestId, getLodgings,getGuests } from "../../Redux/Actions/index";
 
 export default function NavBar(props) {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ export default function NavBar(props) {
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId).email;
+    var admin = JSON.parse(guestId).isAdmin;
   }
 
   const email={
@@ -33,19 +34,24 @@ export default function NavBar(props) {
   }
 
   const location = window.location.pathname;
+  console.log(location, 'LOCATION')
 
   //GET HOST
   useEffect(()=>{
     dispatch(getHostByGuestId(email))
-  }, [dispatch])
-
+    dispatch(getGuests());
+  }, [location])
+  const allGuests = useSelector((state) => state.allGuests);
+  const userBusqueda = useSelector((state) => state.userBusqueda);
+  let arrFilter =  allGuests.filter(e => e.email === userToken)
+  console.log(userToken)
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
     console.log(validateHost, 'VALIDATE HOST')
     e.preventDefault();
     if(validateHost[0] && userToken){
-      const hostObject = Object.values(validateHost[0])
-      const hostId = hostObject[1]
+      const hostObject = validateHost[0]
+      const hostId = hostObject._id
       history.push(`${hostId}/registerlodging`)
     }else if(userToken){
       history.push(`/${userToken}/form`)
@@ -115,6 +121,15 @@ export default function NavBar(props) {
                               <CgProfile /> Perfil
                             </Link>
                           </li>
+                          {admin === true &&
+                          <li>
+                            <Link
+                              to= {`/admin/lodgings`}
+                              className="dropdown-item current"
+                            >
+                              <CgProfile /> Panel de admin
+                            </Link>
+                          </li>}
                           <li>
                             <Link to="/login" className="dropdown-item">
                               <TbMessageCircle /> Mensajes

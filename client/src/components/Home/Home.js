@@ -14,8 +14,6 @@ import { IoChevronUpCircleOutline } from "react-icons/io5";
 export default function Home() {
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
-
-
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
 

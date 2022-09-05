@@ -1,0 +1,120 @@
+.containerInfo{
+    max-width: 500px;
+    height: 700px;
+    padding-left: 50px ;
+ 
+ 
+}
+.carouselChatContainer{
+    height:500px;
+    max-width: 500px;
+   
+   
+
+}
+
+.carouselChat{
+    padding-left: var(--gp-padding-largeAndAbove, 30px) !important;
+    padding-right: var(--gp-padding-largeAndAbove, 30px) !important;
+    height: 400px;
+  }
+  .picture1{
+    max-width:100%px ;
+    height: 500px; 
+    object-fit: cover;
+  }
+  .check{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 30px;
+   
+  }
+ 
+  .cI{
+    display: block;
+    font-weight: 600;
+    font-size: 1.2em;
+    height: 50px;
+  }
+  .cDate{
+    margin-left: 10px;
+
+  }
+  .infoRes{
+    display:flex;
+    justify-content: center;
+    display: block;
+  }
+  .cGuests{
+   
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 30px;
+   
+  }
+  
+
+  .adressC{
+    display:flex;
+    justify-content: center;
+    padding-bottom: 50px;
+    
+  }
+  .cD{
+    
+    font-weight: 600;
+    font-size: 1.2em;
+    height: 50px;
+    display:flex;
+  }
+  .nmds{
+    
+  }
+  .cM{
+    display: block;
+    font-weight: 600;
+    font-size: 1.2em;
+    height: 50px;
+   
+
+  }
+  .adressC{
+    display: flex
+
+  }
+  .code{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    
+  
+  }
+  .cR{
+    background-color: rgb(248, 240, 124);
+    font-weight: 500;
+    height: 30px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .adressC{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+.cAddress{
+  font-weight: 600;
+  font-size: 1.2em;
+  height: 50px;
+  display:flex; 
+ 
+}
+.cA{
+  text-transform: capitalize;
+}

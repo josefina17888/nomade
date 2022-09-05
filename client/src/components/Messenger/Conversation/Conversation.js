@@ -5,12 +5,11 @@ import axios from "axios";
 
 
 export default function Conversation({ conversation, currentUser }) {
-  let dispatch = useDispatch();
+
   const [user, setUser]= useState({});
  
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
-    console.log("friendId", friendId)
     const getFriend = async () => {
       try {
         let res = await axios(
@@ -27,15 +26,12 @@ export default function Conversation({ conversation, currentUser }) {
 
   return (
     <div className={s.conversation}>
-     <img
+    <img
         className={s.convImg}
-        src={
-          user!=={}
-          ? user.picture
-          : "https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"}
+        src={"https://www.nicepng.com/png/detail/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png"}
         alt="Host's Profile Picture"
       />
-       <span className={s.convName}>{user.name}</span>   
+       <span className={s.convName}>{user.name}</span> 
     </div>
   );
 }

@@ -1,20 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../NavBar/NavBar";
 import ResDetail from "../ResDetail/ResDetail";
-import axios from "axios";
 import s from "./Chat.module.css";
 import Conversation from "../Conversation/Conversation";
 import Message from "../Message/Message";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import io from "socket.io-client";
 
-
 export default function Chat() {
+  const ENDPOINT =
+    /* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [host, setHost] = useState({});
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [host, setHost] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [bookingInfo, setBookingInfo] = useState("");
   const scrollRef = useRef();
@@ -23,40 +25,47 @@ export default function Chat() {
   let userId = user._id;
   let userEmail = user.email;
 
+  //conecta con el server y trae los mensajes
+
+  useEffect(() => {
+    socket.current = io(ENDPOINT, {
+      transports: ["websocket"],
+    });
+  }, [ENDPOINT]);
 
   if (localStorage.booking) {
+    const bookingInfo = JSON.parse(localStorage.getItem("booking"));
+    let hostId = bookingInfo.hostId;
     useEffect(() => {
-      const bookingInfo = JSON.parse(localStorage.getItem("booking"));
-      let hostId = bookingInfo.hostId;
+      setBookingInfo(bookingInfo);
       const getHostGuestId = async () => {
         try {
-          let res = await axios.get("/api/host/all/" + hostId);
-          let guestId = res.data
-          if(guestId){
-            setHost(guestId)}
+          let res = await axios.get("/api/conversation/host/" + hostId);
+          let hostGuestId = res.data;
+          setHost(hostGuestId);
         } catch (err) {
           console.log(err);
         }
       };
-      getHostGuestId()
+      getHostGuestId();
+    }, []);
 
+    useEffect(() => {
       const newConversation = async () => {
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
         );
-        console.log("prueba", filtered);
         if (!filtered.length) {
-            let conv = await axios.post(`/api/conversation/${userId}/${host}`); 
-            console.log("nueva conversacion", conv)
+          let conv = await axios.post(
+            "/api/conversation/" + userId + "/" + host
+          );
         }
       };
-      newConversation()
+      newConversation();
     }, [conversations]);
   }
 
-  //conecta con el server y trae los mensajes
   useEffect(() => {
-    socket.current = io("ws://localhost:3001");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -64,7 +73,8 @@ export default function Chat() {
         createdAt: Date.now(),
       });
     });
-  }, []);
+  }, [messages]);
+
   //mensajes entrantes
   useEffect(() => {
     if (arrivalMessage !== null) {
@@ -77,15 +87,13 @@ export default function Chat() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
-
     if (userId) {
       socket.current.emit("addUser", userId);
-
     }
     socket.current.on("getUsers", (users) => {
       console.log("users del back", users);
     });
-  }, [user]);
+  }, [conversations]);
 
   // obtiene todas las conversaciones asociadas al usuario
   useEffect(() => {
@@ -98,7 +106,7 @@ export default function Chat() {
       }
     };
     getConversations();
-  }, [userId]);
+  }, [userId, host]);
 
   // trae todos los mensajes de una conversacion
   useEffect(() => {
@@ -108,6 +116,7 @@ export default function Chat() {
         try {
           let res = await axios("/api/message/" + conversationId);
           setMessages(res.data);
+          setNewMessage("");
         } catch (err) {
           console.log(err);
         }
@@ -115,21 +124,25 @@ export default function Chat() {
       getMessages();
     }
   }, [currentChat]);
+  /* 
+   useEffect(() => {
+    if( scrollRef.current){
+      scrollRef.current.scrollInToView({behavior:"smooth"}) 
+    }
+ 
+  }, [messages]); */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //este objeto es el que va a la DB
     const message = {
-      sender: user._id,
+      sender: userId,
       text: newMessage,
       conversationId: currentChat._id,
     };
-    const receiverId = currentChat.members.find(
-      (member) => member !== user._id
-    );
+    const receiverId = currentChat.members.find((member) => member !== userId);
 
     socket.current.emit("sendMessage", {
-      senderId: user._id,
+      senderId: userId,
       receiverId,
       text: newMessage,
     });
@@ -146,11 +159,15 @@ export default function Chat() {
 
   return (
     <div className={s.chatContainer}>
-      <NavBar />
+      <div className={s.navContainer}>
+        <NavBar />
+      </div>
       <div className={s.chat}>
-        <div className={s.chatMsjWrapper}>Tus Mensajes</div>
-        <div className={s.chatMsj}>
-          <div className={s.chatMsjBottom}>
+        <div className={s.convWrapper}>
+          <div className={s.msjs}>
+            <span>Tus mensajes</span>
+          </div>
+          <div className={s.conversation}>
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation key={c._id} conversation={c} currentUser={user} />
@@ -158,42 +175,54 @@ export default function Chat() {
             ))}
           </div>
         </div>
+
         <div className={s.chatBox}>
           <div className={s.chatBoxWrapper}>
-            {currentChat._id ? (
-              <>
-                <div className={s.chatBoxTop}>
-                  {messages.map((e) => (
-                    <div ref={scrollRef}>
-                      <Message
-                        key={e._id}
-                        messages={e.text}
-                        own={e.sender === user._id}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className={s.chatBoxBottom}>
-                  <input
-                    type="text"
-                    className={s.chatInput}
-                    placeholder="Escribe aqui..."
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    value={newMessage}
-                  />
-                  <button className={s.chatSubmitBtn} onClick={handleSubmit}>
-                    Enviar
-                  </button>
-                </div>
-              </>
-            ) : (
-              <span className={s.noConv}>Selecciona un Chat</span>
-            )}
+            <div className={s.chatBoxTop}>
+              <span>Acuerda los Detalles de Tu Estadia</span>
+            </div>
+            <div className={s.chatBoxCenter}>
+              {currentChat._id ? (
+                <>
+                  <div className={s.chatBoxT}>
+                    {messages.map((e) => (
+                      <div ref={scrollRef}>
+                        <Message
+                          key={e._id}
+                          messages={e.text}
+                          own={e.sender === userId}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className={s.chatBoxBottom}>
+                    <input
+                      type="text"
+                      className={s.chatInput}
+                      placeholder="Escribe aqui..."
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      value={newMessage}
+                    />
+                    <button className={s.chatSubmitBtn} onClick={handleSubmit}>
+                      Enviar
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className={s.noConv}><span >Selecciona un Chat</span></div>
+                
+              )}
+            </div>
           </div>
         </div>
-        <div className={s.resDetail}>
-          <div className={s.resDetailWrapper}>
-            <ResDetail />
+
+        <div className={s.resDetailWrapper}>
+          <div className={s.resD}>
+            <span>Detalles de tu reserva</span>
+          </div>
+
+          <div ref={scrollRef} className={s.reserv}>
+            <ResDetail bookingInfo={bookingInfo} />
           </div>
         </div>
       </div>
