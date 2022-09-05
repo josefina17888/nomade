@@ -65,7 +65,17 @@ const dispatch = useDispatch()
           console.log(bookings)
           console.log(disabledDates)
           
-
+          
+          const handleClick2 = ({_id}) => {
+            const getBook = async () => {
+            try{
+                let data = await axios.patch("/api/booking/" + _id)
+                }catch(err){
+                console.log(err)
+                }
+            }
+            getBook();
+        }
 
     return(
         <div className={style.container1}>
@@ -83,8 +93,8 @@ const dispatch = useDispatch()
         } 
         </div>
         <div className={style.calendar}>
-         <div className='app'>
-            <div className='calendar-container'>
+         <div>
+            <div>
                 <DatePicker
                 value={date}
                 highlightDates={disabledDates}
@@ -94,6 +104,28 @@ const dispatch = useDispatch()
                 />
             </div>
         </div>
+        {
+                           
+            !bookings ? <h5>Selecciona un alojamiento para conocer sus reservas</h5> :
+            bookings.map((e)=>
+            <div>
+                <div className={style.container1}>
+                <div className={style.container2}>
+                <div className={style.margin}>
+                <h6>Check In: {new Date (e.checkIn).toLocaleDateString()} </h6>
+                </div>
+                <div className={style.margin}>
+                <h6>Check Out: {new Date (e.checkOut).toLocaleDateString()} </h6>
+                </div>
+                </div>
+                <div className={style.margin}>
+                <button onClick={(e) => handleClick2(e._id)} className={style.button}>x</button>
+                </div>
+                </div>
+            </div>
+            )
+                        
+        }
         </div>
     </div>
     )
