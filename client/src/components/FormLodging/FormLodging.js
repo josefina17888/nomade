@@ -110,7 +110,6 @@ export default function FormLodging() {
   function handleDelete(){
     document.getElementById("file").click()
   }
-  
   function handleChange(e){
     if(e.target.name!== "picture")
     {  
@@ -124,17 +123,16 @@ export default function FormLodging() {
   }))
 }
 else{
-  
+ 
+  let imgs=Object.entries(e.target.files).length
   if(document.getElementById("imgPreview0"))
   {
-    for(let i = 0; i<3 ; i++)
-    {
-      if(document.getElementById("imgPreview" + i))
-      {
+    let i= 0
+    while(document.getElementById("imgPreview" + i)){
         document.getElementById("imgPreview" + i).remove();
-      }
-    }
+      i++}
   }
+  
   for(let i= 0; i<e.target.files.length;i++ )
   {
     let  reader = new FileReader()
@@ -158,7 +156,6 @@ else{
     boton.innerHTML = "Cambiar seleccion";
     buttonDelet.append(boton)
   }
-  let imgs = Object.entries(e.target.files).length
   setInput({
     ...input,
     [e.target.name] : e.target.value
