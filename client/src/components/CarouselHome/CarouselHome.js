@@ -20,13 +20,17 @@ export default function TopRated() {
     return Math.floor(Math.random() * max);
   }
 
-  const randomLodging =
-    lodgingVisibility[getRandomInt(lodgingVisibility.length)];
   const randomLodging1 =
     lodgingVisibility[getRandomInt(lodgingVisibility.length)];
   const randomLodging2 =
     lodgingVisibility[getRandomInt(lodgingVisibility.length)];
   const randomLodging3 =
+    lodgingVisibility[getRandomInt(lodgingVisibility.length)];
+  const randomLodging4 =
+    lodgingVisibility[getRandomInt(lodgingVisibility.length)];
+  const randomLodging5 =
+    lodgingVisibility[getRandomInt(lodgingVisibility.length)];
+  const randomLodging6 =
     lodgingVisibility[getRandomInt(lodgingVisibility.length)];
 
   const responsive = {
@@ -52,7 +56,7 @@ export default function TopRated() {
   return (
     <div className={style.containerTopRated}>
       <div>
-        <h2 className={style.tarifa}>Mejores tarifas</h2>
+        <h2 className={style.tarifa}>Destacados</h2>
       </div>
       <Carousel
         className={style.carousel}
@@ -73,61 +77,133 @@ export default function TopRated() {
         <div className={style.container}>
           <Link
             className={style.link}
-            to={randomLodging ? `detail/${randomLodging._id}` : ""}
+            to={randomLodging1 ? `detail/${randomLodging1._id}` : ""}
           >
-            <Card
-              picture={randomLodging ? randomLodging.picture[0] : ""}
-              city={randomLodging ? randomLodging.city : ""}
-              country={randomLodging ? randomLodging.country : ""}
-              guests={randomLodging ? randomLodging.guests : ""}
-              price={randomLodging ? randomLodging.price : ""}
-              currency={randomLodging ? randomLodging.currency : ""}
-            ></Card>
+            <img
+              className={style.imgCard}
+              src={randomLodging1 ? randomLodging1.picture[0] : ""}
+            ></img>
+            <h4 className={style.title}>
+              {randomLodging1
+                ? randomLodging1.city.charAt(0).toUpperCase() +
+                  randomLodging1.city.substring(1)
+                : ""}
+              , {randomLodging1 ? randomLodging1.country : ""}
+            </h4>
+            <p className={style.parrafo}>
+              ${randomLodging1 ? randomLodging1.price : ""}{" "}
+              {randomLodging1 ? randomLodging1.currency : ""} noche
+            </p>
           </Link>
         </div>
         <div className={style.container}>
           <Link
             className={style.link}
-            to={randomLodging ? `detail/${randomLodging._id}` : ""}
+            to={randomLodging2 ? `detail/${randomLodging2._id}` : ""}
           >
-            <Card
-              picture={randomLodging1 ? randomLodging1.picture[0] : ""}
-              city={randomLodging1 ? randomLodging1.city : ""}
-              country={randomLodging1 ? randomLodging1.country : ""}
-              guests={randomLodging1 ? randomLodging1.guests : ""}
-              price={randomLodging1 ? randomLodging1.price : ""}
-              currency={randomLodging1 ? randomLodging1.currency : ""}
-            ></Card>
+            <img
+              className={style.imgCard}
+              src={randomLodging2 ? randomLodging2.picture[0] : ""}
+            ></img>
+            <h4 className={style.title}>
+              {randomLodging2
+                ? randomLodging2.city.charAt(0).toUpperCase() +
+                  randomLodging2.city.substring(1)
+                : ""}
+              , {randomLodging2 ? randomLodging2.country : ""}
+            </h4>
+            <p className={style.parrafo}>
+              ${randomLodging2 ? randomLodging2.price : ""}{" "}
+              {randomLodging2 ? randomLodging2.currency : ""} noche
+            </p>
           </Link>
         </div>
         <div className={style.container}>
           <Link
             className={style.link}
-            to={randomLodging ? `detail/${randomLodging._id}` : ""}
+            to={randomLodging3 ? `detail/${randomLodging3._id}` : ""}
           >
-            <Card
-              picture={randomLodging2 ? randomLodging2.picture[0] : ""}
-              city={randomLodging2 ? randomLodging2.city : ""}
-              country={randomLodging2 ? randomLodging2.country : ""}
-              guests={randomLodging2 ? randomLodging2.guests : ""}
-              price={randomLodging2 ? randomLodging2.price : ""}
-              currency={randomLodging2 ? randomLodging2.currency : ""}
-            ></Card>
+            <img
+              className={style.imgCard}
+              src={randomLodging3 ? randomLodging3.picture[0] : ""}
+            ></img>
+            <h4 className={style.title}>
+              {randomLodging3
+                ? randomLodging3.city.charAt(0).toUpperCase() +
+                  randomLodging3.city.substring(1)
+                : ""}
+              , {randomLodging3 ? randomLodging3.country : ""}
+            </h4>
+            <p className={style.parrafo}>
+              ${randomLodging3 ? randomLodging3.price : ""}{" "}
+              {randomLodging3 ? randomLodging3.currency : ""} noche
+            </p>
           </Link>
         </div>
         <div className={style.container}>
           <Link
             className={style.link}
-            to={randomLodging ? `detail/${randomLodging._id}` : ""}
+            to={randomLodging4 ? `detail/${randomLodging4._id}` : ""}
           >
-            <Card
-              picture={randomLodging3 ? randomLodging3.picture[0] : ""}
-              city={randomLodging3 ? randomLodging3.city : ""}
-              country={randomLodging3 ? randomLodging3.country : ""}
-              guests={randomLodging3 ? randomLodging3.guests : ""}
-              price={randomLodging3 ? randomLodging3.price : ""}
-              currency={randomLodging3 ? randomLodging3.currency : ""}
-            ></Card>
+            <img
+              className={style.imgCard}
+              src={randomLodging4 ? randomLodging4.picture[0] : ""}
+            ></img>
+            <h4 className={style.title}>
+              {randomLodging4
+                ? randomLodging4.city.charAt(0).toUpperCase() +
+                  randomLodging4.city.substring(1)
+                : ""}
+              , {randomLodging4 ? randomLodging4.country : ""}
+            </h4>
+            <p className={style.parrafo}>
+              ${randomLodging4 ? randomLodging4.price : ""}{" "}
+              {randomLodging4 ? randomLodging4.currency : ""} noche
+            </p>
+          </Link>
+        </div>
+        <div className={style.container}>
+          <Link
+            className={style.link}
+            to={randomLodging5 ? `detail/${randomLodging5._id}` : ""}
+          >
+            <img
+              className={style.imgCard}
+              src={randomLodging5 ? randomLodging5.picture[0] : ""}
+            ></img>
+            <h4 className={style.title}>
+              {randomLodging5
+                ? randomLodging5.city.charAt(0).toUpperCase() +
+                  randomLodging5.city.substring(1)
+                : ""}
+              , {randomLodging5 ? randomLodging5.country : ""}
+            </h4>
+            <p className={style.parrafo}>
+              ${randomLodging5 ? randomLodging5.price : ""}{" "}
+              {randomLodging5 ? randomLodging5.currency : ""} noche
+            </p>
+          </Link>
+        </div>
+        <div className={style.container}>
+          <Link
+            className={style.link}
+            to={randomLodging6 ? `detail/${randomLodging6._id}` : ""}
+          >
+            <img
+              className={style.imgCard}
+              src={randomLodging6 ? randomLodging6.picture[0] : ""}
+            ></img>
+            <h4 className={style.title}>
+              {randomLodging6
+                ? randomLodging6.city.charAt(0).toUpperCase() +
+                  randomLodging6.city.substring(1)
+                : ""}
+              , {randomLodging6 ? randomLodging6.country : ""}
+            </h4>
+            <p className={style.parrafo}>
+              ${randomLodging6 ? randomLodging6.price : ""}{" "}
+              {randomLodging6 ? randomLodging6.currency : ""} noche
+            </p>
           </Link>
         </div>
       </Carousel>
