@@ -9,8 +9,8 @@ import axios from "axios";
 import io from "socket.io-client";
 
 export default function Chat() {
-
-  const ENDPOINT =/* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
+  const ENDPOINT =
+    /* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
@@ -27,13 +27,11 @@ export default function Chat() {
 
   //conecta con el server y trae los mensajes
 
-
   useEffect(() => {
     socket.current = io(ENDPOINT, {
       transports: ["websocket"],
     });
   }, [ENDPOINT]);
-
 
   if (localStorage.booking) {
     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
@@ -52,9 +50,7 @@ export default function Chat() {
       getHostGuestId();
     }, []);
 
-
     useEffect(() => {
-
       const newConversation = async () => {
         let filtered = conversations.filter(
           (c) => c.members.includes(userId) && c.members.includes(host)
@@ -68,7 +64,6 @@ export default function Chat() {
       newConversation();
     }, [conversations]);
   }
-
 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
@@ -111,7 +106,6 @@ export default function Chat() {
       }
     };
     getConversations();
-
   }, [userId, host]);
 
   // trae todos los mensajes de una conversacion
@@ -130,7 +124,7 @@ export default function Chat() {
       getMessages();
     }
   }, [currentChat]);
-/* 
+  /* 
    useEffect(() => {
     if( scrollRef.current){
       scrollRef.current.scrollInToView({behavior:"smooth"}) 
@@ -169,9 +163,11 @@ export default function Chat() {
         <NavBar />
       </div>
       <div className={s.chat}>
-        <div className={s.chatMsjWrapper}>Tus Mensajes</div>
-        <div className={s.chatMsj}>
-          <div className={s.chatMsjBottom}>
+        <div className={s.convWrapper}>
+          <div className={s.msjs}>
+            <span>Tus mensajes</span>
+          </div>
+          <div className={s.conversation}>
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation key={c._id} conversation={c} currentUser={user} />
@@ -179,43 +175,55 @@ export default function Chat() {
             ))}
           </div>
         </div>
-        <div className={s.try}>Titulo</div>
+
         <div className={s.chatBox}>
           <div className={s.chatBoxWrapper}>
-            {currentChat._id ? (
-              <>
-                <div className={s.chatBoxTop}>
-                  {messages.map((e) => (
-                    <div ref={scrollRef}>
-                      <Message
-                        key={e._id}
-                        messages={e.text}
-                        own={e.sender === userId}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className={s.chatBoxBottom}>
-                  <input
-                    type="text"
-                    className={s.chatInput}
-                    placeholder="Escribe aqui..."
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    value={newMessage}
-                  />
-                  <button className={s.chatSubmitBtn} onClick={handleSubmit}>
-                    Enviar
-                  </button>
-                </div>
-              </>
-            ) : (
-              <span className={s.noConv}>Selecciona un Chat</span>
-            )}
+            <div className={s.chatBoxTop}>
+              <span>Acuerda los Detalles de Tu Estadia</span>
+            </div>
+            <div className={s.chatBoxCenter}>
+              {currentChat._id ? (
+                <>
+                  <div className={s.chatBoxT}>
+                    {messages.map((e) => (
+                      <div ref={scrollRef}>
+                        <Message
+                          key={e._id}
+                          messages={e.text}
+                          own={e.sender === userId}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className={s.chatBoxBottom}>
+                    <input
+                      type="text"
+                      className={s.chatInput}
+                      placeholder="Escribe aqui..."
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      value={newMessage}
+                    />
+                    <button className={s.chatSubmitBtn} onClick={handleSubmit}>
+                      Enviar
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className={s.noConv}><span >Selecciona un Chat</span></div>
+                
+              )}
+            </div>
           </div>
         </div>
-        <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
-        <div ref={scrollRef} className={s.reserv}>
-          <ResDetail bookingInfo={bookingInfo} />
+
+        <div className={s.resDetailWrapper}>
+          <div className={s.resD}>
+            <span>Detalles de tu reserva</span>
+          </div>
+
+          <div ref={scrollRef} className={s.reserv}>
+            <ResDetail bookingInfo={bookingInfo} />
+          </div>
         </div>
       </div>
     </div>

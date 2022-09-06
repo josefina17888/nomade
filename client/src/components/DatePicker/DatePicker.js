@@ -12,6 +12,8 @@ import {
 } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 import getDatesInRange from "../Booking/controller";
+import Swal from 'sweetalert'
+
 
 export default function DatePickerOk({ lodId }) {
   //SELECT STATES FROM REDUX
@@ -64,9 +66,18 @@ export default function DatePickerOk({ lodId }) {
     const isFound = unavailableDatesMap.some((date) =>
       alldates.includes(new Date(date).toDateString())
     );
+<<<<<<< HEAD
     if (isFound) {
       return alert("Fecha no disponible");
     } else {
+=======
+    if(isFound){
+      // return alert('Fecha no disponible')
+      Swal(
+        'Fecha no disponible','','error',{buttons:false,timer:3000}
+      )
+    }else{
+>>>>>>> 99dd8d54ef3bf9ab19dcc192eef2fb2fe4aeb8c8
       localStorage.setItem("bookingInfo", JSON.stringify(info));
       localStorage.setItem("priceBooking", JSON.stringify(price));
       dispatch(getBookingByLodgingId(info));

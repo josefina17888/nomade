@@ -10,7 +10,11 @@ router.post("/", async (req, res) => {
   
   const { email, password } = req.body;
   const user = await Guest.findOne({ email });
-
+  if(user.Visibility === false){
+    return res
+    .status(401)
+    .send({message: "Tu usuario ha sido baneado de Nomade"})
+  }else{
   if(!user.verified){
     let token = await Token.findOne({userId: user._id})
     if(!token) {
@@ -27,6 +31,7 @@ router.post("/", async (req, res) => {
     .status(401)
     .send({message: "Revisa tu email para verificar tu cuenta"})
   }
+ 
   if(user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
@@ -42,7 +47,7 @@ router.post("/", async (req, res) => {
     res.status(400).send("Invalid email or password");
   }
 
-  
+}
 })
 
 

@@ -40,13 +40,17 @@ router.post("/", async function (req, res, next) {
                 } ]
             },
             back_urls: {
-                success: "http://localhost:3000/status",
-                //"https://nomade-khaki.vercel.app/status"
-                //"http://localhost:3000/",
 
-                // res.redirect("https://nomade-khaki.vercel.app/%22)
-                failure: "https://nomade-khaki.vercel.app/",
-                pending: "https://nomade-khaki.vercel.app/"
+                success: "http://localhost:3000/",
+                // res.redirect("https://nomade-khaki.vercel.app/")
+                failure: "http://localhost:3000/",
+                pending: "http://localhost:3000/"
+                // success: "https://nomade-khaki.vercel.app/status",
+                // //"http://localhost:3000/",
+
+                // // res.redirect("https://nomade-khaki.vercel.app/%22)
+                // failure: "https://nomade-khaki.vercel.app/",
+                // pending: "https://nomade-khaki.vercel.app/"
 
             },
         }
@@ -64,4 +68,15 @@ router.post("/", async function (req, res, next) {
 
 })
 
+
+
+router.get('/', async function(req, res) {
+	res.json({
+		Payment: req.query.payment_id,
+		Status: req.query.status,
+		MerchantOrder: req.query.merchant_order_id
+	});
+});
+
 module.exports = router;
+  
