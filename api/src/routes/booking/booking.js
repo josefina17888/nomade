@@ -83,23 +83,21 @@ router.post("/emailVerified/:email",async (req, res) => {
   const {email} = req.params
     try{
       const userExist = await Guest.findOne({ email });
-      const tokenExist = await Token.findOne({userId: userExist._id})
-      if(tokenExist === null) {
-        const token = new Token({
-          userId: userExist._id,
-          token: generateToken(userExist._id)
-        })
-        token.save()
+      const booking = await Booking.findOne({code: req.body.code})
+      if(booking.emailV === false){
+          booking.emailV = true
+          booking.save()
+          console.log(booking.emailV)
+          const infoLoding = await Lodging.findOne({_id: req.body.lodgingId})
+          const title = "Tu reserva se realizó con éxito"
+          const infoBooking = req.body
+          await bookingConfirm(userExist.email,"Reserva confirmada",title , infoLoding ,infoBooking)
+          res.status(201).send("Verifica tu correo")
+          
       } else {
-        return  res.send("Ya te envié el correo gil")
+         return  res.send("Correo de reserva ya enviado")
       }      
-      const lodging = await Lodging.findOne({_id: req.body.lodgingId})
-      const title = "Tu reserva se realizó con éxito"
-      // const msg = `Tu pago ha sido aprobado , tu estadia en ${lodging.title} te espera desde el ${new Date(req.body.checkIn).toLocaleDateString()} al ${new Date(req.body.checkOut).toLocaleDateString()} Ciudad: `
-      const infoLoding = lodging;
-      const infoBooking = req.body
-      await bookingConfirm(userExist.email,"Reserva confirmada",title , infoLoding ,infoBooking)
-      res.status(201).send("Verifica tu correo")
+     
     }
       catch (error){
           res.status(404).send(error)

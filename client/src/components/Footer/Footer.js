@@ -18,7 +18,7 @@ export default function Footer() {
       </div>
       <div>
         <Link className={style.link} to='/nosotros'>
-          <p className={style.aboutUs}>About us</p>
+          <p className={style.aboutUs}>Sobre Nostotros</p>
         </Link>
       </div>
       <div>

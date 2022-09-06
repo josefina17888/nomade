@@ -41,7 +41,7 @@ router.post("/", async function (req, res, next) {
             },
             back_urls: {
 
-                success: "http://localhost:3000/",
+                success: "http://localhost:3000/status",
                 // res.redirect("https://nomade-khaki.vercel.app/")
                 failure: "http://localhost:3000/",
                 pending: "http://localhost:3000/"

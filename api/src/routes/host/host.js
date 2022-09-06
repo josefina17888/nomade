@@ -2,19 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Guest = require("../../models/Guest")
 const upload = require('../../../libs/storage.js')
-
 const Host = require("../../models/Host");
-const Lodging = require("../../models/Lodging");
-const mongoose = require ("mongoose")
-const toId = mongoose.Types.ObjectId
-const cloudinary = require('cloudinary');
-const Model = require("../../models/Guest");
-
-cloudinary.config({ 
-  cloud_name: 'dbq85fwfz', 
-  api_key: '578434861277536', 
-  api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
-});
+const cloudinary = require("../../../libs/cloudinary")
 
 
 
@@ -26,7 +15,7 @@ router.post("/:email", upload.single("hostDniPicture"), async (req, res) => {
   const {bank} = req.body
   const {cellphone} = req.body
   const filename = req.file
-  const result = await cloudinary.v2.uploader.upload(req.file.path)
+  const result = await cloudinary.uploader.upload(req.file.path)
   console.log(result)
   try {
     const guest = await Guest.findOne({email: req.params.email})
