@@ -1,4 +1,4 @@
-import Swal from 'sweetalert'
+import Swal from "sweetalert";
 
 const initialState = {
   lodgings: [],
@@ -27,7 +27,7 @@ const initialState = {
   host: {},
   booking: [],
   bookingsall: [],
-  userBusqueda:[]
+  userBusqueda: [],
 };
 
 var count = {
@@ -210,9 +210,7 @@ function rootReducer(state = initialState, action) {
       };
     case "GET_BY_CITY":
       if (typeof action.payload === "string") {
-        return Swal(
-          'Not Found','','error',{buttons:false,timer:3500}
-        );
+        return Swal("Not Found", "", "error", { buttons: false, timer: 3500 });
       }
       return {
         ...state,
@@ -372,20 +370,20 @@ function rootReducer(state = initialState, action) {
 
     // FILTRA POR RANGE PRICE
     case "FILTER_BY_RANGE_PRICE":
-      console.log(action.payload, "ACTION PAUUU");
-      if(action.payload.range !==0){
+      if (action.payload.range !== 0) {
         let auxLogdings = state.allLodgings;
-        let filtered = auxLogdings.filter((e) => e.price <= action.payload.range);
+        let filtered = auxLogdings.filter(
+          (e) => e.price <= action.payload.range
+        );
         return {
           ...state,
-          lodgings: filtered
+          lodgings: filtered,
         };
       }
       return {
         ...state,
         lodgings: state.allLodgings,
       };
-      
 
     //FILTRA POR Q BEDS
     case "FILTER_BY_Q_BEDS":
@@ -473,8 +471,11 @@ function rootReducer(state = initialState, action) {
           };
       }
     case "FILTER_BY_SERVICES":
+      //state lodgings
       let filterLodings = state.lodgings;
-      let lodgings = state.lodgings.map((e) => {
+
+      //nuevo objecto creado con lodgings id + services
+      let lodgings = filterLodings.map((e) => {
         let newObject = {
           id: e._id,
           wifi: e.services.wifi,
@@ -486,105 +487,53 @@ function rootReducer(state = initialState, action) {
         };
         return newObject;
       });
-      let services = action.payload;
-      let status = Object.values(services)
-      let isFalse = status.filter(e=>e===false)
-      console.log(status, 'STATUS')
-     if(isFalse.length===6) return {
-      ...state,
-      lodgings: state.allLodgings,
-    };
-     
-      let exists = lodgings.map((lodging) => {
-        if (
-          services.wifi &&
-          services.ac &&
-          services.tv &&
-          services.parking &&
-          services.pets &&
-          services.hotWater
-        ) {
-          if (
-            lodging.wifi === services.wifi &&
-            lodging.ac === services.ac &&
-            lodging.tv === services.tv &&
-            lodging.parking === services.parking &&
-            lodging.pets === services.pets &&
-            lodging.hotWater === services.hotWater
-          ) {
-            let demo = [];
-            demo.push(lodging.id);
-            return demo;
-          }
-        } else if (
-          services.wifi &&
-          services.ac &&
-          services.tv &&
-          services.parking &&
-          services.pets
-        ) {
-          if (
-            lodging.wifi === services.wifi &&
-            lodging.ac === services.ac &&
-            lodging.tv === services.tv &&
-            lodging.parking === services.parking &&
-            lodging.pets === services.pets
-          ) {
-            let demo = [];
-            demo.push(lodging.id);
-            return demo;
-          }
-        } else if (
-          services.wifi &&
-          services.ac &&
-          services.tv &&
-          services.parking
-        ) {
-          if (
-            lodging.wifi === services.wifi &&
-            lodging.ac === services.ac &&
-            lodging.tv === services.tv &&
-            lodging.parking === services.parking
-          ) {
-            let demo = [];
-            demo.push(lodging.id);
-            return demo;
-          }
-        } else if (services.wifi && services.ac && services.tv || services.wifi && services.pets && services.tv) {
-          if (
-            lodging.wifi === services.wifi &&
-            lodging.ac === services.ac &&
-            lodging.tv === services.tv
-          ) {
-            let demo = [];
-            demo.push(lodging.id);
-            return demo;
-          }
-        } else if (services.wifi && services.ac) {
-          if (lodging.wifi === services.wifi && lodging.ac === services.ac) {
-            let demo = [];
-            demo.push(lodging.id);
-            return demo;
-          }
-        } else if (services.wifi) {
-          if (lodging.wifi === services.wifi) {
-            let demo = [];
-            demo.push(lodging.id);
-            return demo;
-          }
+
+      //servicios del checkbox
+      let filter = action.payload;
+      let services = [];
+
+      //CREATE NEW OBJECT WITH SERVICES ONLY
+      for (let property in filter) {
+        if (typeof filter[property] === "boolean" && filter[property] === true) {
+          services.push(property)
         }
-      });
-      let onlyIds = exists.filter((e) => e !== undefined);
-      let onlyIds2 = onlyIds.map((e) => e[0]);
-      console.log('ONLY IDS', onlyIds2)
-      let servicesLodgings = filterLodings.filter((lodging) =>
-        onlyIds2.includes(lodging._id)
-      );
-      console.log('SERVICES', servicesLodgings)
-      return {
-        ...state,
-        lodgings: servicesLodgings,
-      };
+      }
+
+      //CREATE NEW OBJECT WITH SERVICES ONLY
+      
+
+
+      //CREATE NEW ARRAY WITH TRUE SERVICES ONLY
+      let lodgingsMap = lodgings.map(lod=>{
+        let onlyTrue = []
+        for (let prop in lod) {
+          if(prop === "id"){
+            onlyTrue.push(lod[prop])
+          
+          }
+          if (typeof lod[prop] === "boolean" && lod[prop] === true) {
+            onlyTrue.push(prop)
+          }
+      }
+      return onlyTrue
+      })
+      
+
+      //convierto objetos a array con sus respectivos key value
+      let servicesFiltered = Object.entries(services);
+      let lodgingsFiltered = lodgings.map((e) => Object.entries(e));
+
+      //TRATANDO DE COMPARAR DATOS
+      let mapLodgingsFiltered = servicesFiltered.map((e) => e.map((o) => o));
+      console.log(services, "SERVICES ARRAY");
+      console.log(lodgingsMap, "lodging ARRAY");
+      console.log(mapLodgingsFiltered, "map Lodging");
+    /* let isFalse = 0
+      if (isFalse.length === 6)
+        return {
+          ...state,
+          lodgings: state.allLodgings,
+        }; */
 
     /*  case "GET_USER": */
     /* return {
@@ -599,9 +548,7 @@ function rootReducer(state = initialState, action) {
       };
     case "GET_BY_USER":
       if (typeof action.payload === "string") {
-        return Swal(
-          'Not Found','','error',{buttons:false,timer:3000}
-        );
+        return Swal("Not Found", "", "error", { buttons: false, timer: 3000 });
       }
       return {
         ...state,

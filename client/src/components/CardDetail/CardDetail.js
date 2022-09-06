@@ -56,8 +56,7 @@ export default function CardDetail(props) {
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
   const validateHost = useSelector((state) => state.hosts);
-  console.log(myLodging, "AQUI VALIDATE HOST");
-  console.log(allGuests, "ALL GUEST");
+  console.log(validateHost, "AQUI VALIDATE HOST");
   let detailReview = stateLodgings.map((e) =>
     e.lodgingId === lodgingId ? [e.comments, e.rating] : false
   );
@@ -67,7 +66,7 @@ export default function CardDetail(props) {
 
   const servicios = myLodging.services;
   let arrFilter = allGuests.filter((e) => e.email === userEmail);
-
+  console.log(allGuests, 'ALL GUESTS')
   const lodgingServices = [];
   const lodgingNoServices = [];
   var filterHost = allGuests.filter((e) => e._id === arrFilter[0]._id);

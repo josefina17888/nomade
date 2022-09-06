@@ -519,6 +519,7 @@ export function filterByTypeRooms(payload){
 }
 
 export function filterByServices(payload){
+  console.log(payload, 'PAYLOAD ACTION')
   return{
     type: 'FILTER_BY_SERVICES',
     payload}}
