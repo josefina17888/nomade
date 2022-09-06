@@ -28,6 +28,7 @@ import {
 } from "react-icons/md";
 import { FaSwimmingPool } from "react-icons/fa";
 import ConditionalReview from "./ConditionalReview/ConditionalReview";
+import CarouselItem from "react-bootstrap/esm/CarouselItem";
 
 export default function CardDetail(props) {
   const dispatch = useDispatch();
@@ -78,10 +79,11 @@ export default function CardDetail(props) {
 
   //variables necesarias para carrusel de imagenes
   const picture = myLodging.picture;
-  const obj = Object.assign({}, picture);
-  const picture1 = obj["0"];
-  const picture2 = obj["1"];
-  const picture3 = obj["2"];
+  // const obj = Object.assign({}, picture);
+  // const picture1 = obj["0"];
+  // const picture2 = obj["1"];
+  // const picture3 = obj["2"];
+  console.log(picture)
 
   const [index, setIndex] = useState(0);
 
@@ -116,27 +118,19 @@ export default function CardDetail(props) {
                       onSelect={handleSelect}
                       className="_168ht2w"
                     >
+                    {
+                      picture?
+                      picture.map((e)=>
                       <Carousel.Item className="_168ht2w">
-                        <img
-                          className="d-block w-100"
-                          src={picture1}
-                          alt="First slide"
-                        />
-                      </Carousel.Item>
-                      <Carousel.Item>
-                        <img
-                          className="d-block w-100"
-                          src={picture2}
-                          alt="Second slide"
-                        />
-                      </Carousel.Item>
-                      <Carousel.Item>
-                        <img
-                          className="d-block w-100"
-                          src={picture3}
-                          alt="Third slide"
-                        />
-                      </Carousel.Item>
+                      <img
+                        className="d-block w-100"
+                        src={e}
+                        alt="slide"
+                      /></Carousel.Item>)
+                      :
+                      <div>No pudimos proveer las imágenes</div>
+                    }
+                    
                     </Carousel>
                   </div>
                 </div>
