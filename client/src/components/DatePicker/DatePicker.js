@@ -66,18 +66,12 @@ export default function DatePickerOk({ lodId }) {
     const isFound = unavailableDatesMap.some((date) =>
       alldates.includes(new Date(date).toDateString())
     );
-<<<<<<< HEAD
-    if (isFound) {
-      return alert("Fecha no disponible");
-    } else {
-=======
     if(isFound){
       // return alert('Fecha no disponible')
       Swal(
-        'Fecha no disponible','','error',{buttons:false,timer:3000}
+        'Fecha no disponible','','error',{buttons:false,timer:1000}
       )
     }else{
->>>>>>> 99dd8d54ef3bf9ab19dcc192eef2fb2fe4aeb8c8
       localStorage.setItem("bookingInfo", JSON.stringify(info));
       localStorage.setItem("priceBooking", JSON.stringify(price));
       dispatch(getBookingByLodgingId(info));
@@ -90,21 +84,23 @@ export default function DatePickerOk({ lodId }) {
   }
 
   return (
-    <div className="sticky-md-top p-5 container text-center">
+    <div className={styles.sticky_md_top}>
+      <div className={styles.container_card}>
       <div className="card w-100">
         <div className="card-body">
-          <h3 className="fs-3">
+          <h3 className={styles.h3}>
             $ {lodging.currency}
             {lodging.price} noche
           </h3>
           <div className={styles.review}>Ver reseñas</div>
           <div className="p-2">
-            <div className="fs-5">Elige la fecha</div>
+            <div className="fs-6 pt-2 pb-2">Elige la fecha</div>
             <div className>
-              <div className="d-flex p-0">
-                <div className="d-inline p-2">
-                  <div className>Llegada</div>
+              <div className="d-flex p-0 rounded-top border border-1">
+                <div className={styles.container_datePicker_description}>
+                  <div className={styles.label_description}>LLEGADA</div>
                   <DatePicker
+                  className={styles.date_picker}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(info.checkIn)}
                     onChange={(currentDate) =>
@@ -121,9 +117,10 @@ export default function DatePickerOk({ lodId }) {
                     minDate={new Date()}
                   />
                 </div>
-                <div className className="d-inline p-2">
-                  <div>Salida</div>
+                <div className={styles.container_datePicker_description}>
+                  <div className={styles.label_description}>SALIDA</div>
                   <DatePicker
+                  className={styles.date_picker}
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(info.checkOut)}
                     onChange={(currentDate) =>
@@ -148,18 +145,15 @@ export default function DatePickerOk({ lodId }) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <label className={styles._7eq2v2}>Huespedes</label>
-                  <div>{`${info.guests}`}</div>
+                  <label className={styles.label_description}>HUESPEDES</label>
+                  <div className={styles.date_picker}>{`${info.guests}`}</div>
                 </button>
                 <div className="dropdown-menu w-100 p-3">
                   <div className="d-flex flex-row">
-                    <div className={styles.div_guests_Description}>
-                      <div>Huespedes</div>
+                    <div>
+                      <div className={styles.label_description}>Huespedes</div>
                     </div>
                     <div className={styles.container_btn}>
-                      {/* <button onClick={handleDecrement}>-</button>
-                          <div>{`${info.guests}`}</div>
-                          <button onClick={handleIncrement}>+</button> */}
                       <input
                         type="number"
                         name="adults"
@@ -173,8 +167,8 @@ export default function DatePickerOk({ lodId }) {
                     </div>
                   </div>
                   <div className="d-flex flex-row">
-                    <div className={styles.div_guests_Description}>
-                      <div>Mascota</div>
+                    <div >
+                      <div className={styles.label_description}>Mascota</div>
                       <input
                         type="checkbox"
                         checked={info.pets}
@@ -186,11 +180,12 @@ export default function DatePickerOk({ lodId }) {
                 </div>
               </div>
             </div>
-            <div>
-              {<button onClick={(e) => handleClick(e)}>Continuar</button>}
+            <div className="pt-4 pb-0 text-center">
+              {<button className={styles.button_continue} onClick={(e) => handleClick(e)}>Continuar</button>}
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

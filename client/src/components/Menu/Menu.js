@@ -10,9 +10,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import s from "../Menu/Menu.module.css";
 import { TbMap2 } from "react-icons/tb";
-import { GiSpookyHouse } from "react-icons/gi";
 import { IoIosStar } from "react-icons/io";
-import { MdOutlinePets } from "react-icons/md";
+import { CgPlayListRemove } from "react-icons/cg";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 import Filters from "./Filters/Filters";
 export default function Menu({
@@ -104,10 +103,17 @@ export default function Menu({
             </button>
           </div>
         </div>
-        <div>
+        <div className="d-flex flex-row gap-2">
+        <button
+          type="button"
+          className={s.button_remove}
+        >
+          <CgPlayListRemove />
+          Remover filtros
+        </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className={s.button_modal}
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
