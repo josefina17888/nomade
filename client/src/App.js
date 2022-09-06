@@ -65,7 +65,6 @@ function App() {
           <Route exact path= '/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
           <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
