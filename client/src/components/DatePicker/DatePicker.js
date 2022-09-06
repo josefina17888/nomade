@@ -79,22 +79,20 @@ export default function DatePickerOk({ lodId }) {
   }
 
   return (
-    <div className="sticky-md-top p-5">
+    <div className="sticky-md-top p-5 container text-center">
       <div className="card w-100">
         <div className="card-body">
-          <span className={styles._14y1gc}>
-            ${lodging.currency}
+          <h3 className="fs-3">
+            $ {lodging.currency}
             {lodging.price} noche
-          </span>
+          </h3>
           <div className={styles.review}>Ver reseñas</div>
-          <div className={styles.review}>Tarifa de limpieza</div>
-          <div className={styles.review}>Comisión por servicio</div>
-          <div>
-            <div>Elige la fecha</div>
-            <div className={styles._p03egf}>
-              <div className={styles._jro6t0}>
-                <div className={styles._19y8o0j}>
-                  <div className={styles._7eq2v2}>Llegada</div>
+          <div className="p-2">
+            <div className="fs-5">Elige la fecha</div>
+            <div className>
+              <div className="d-flex p-0">
+                <div className="d-inline p-2">
+                  <div className>Llegada</div>
                   <DatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(info.checkIn)}
@@ -112,8 +110,8 @@ export default function DatePickerOk({ lodId }) {
                     minDate={new Date()}
                   />
                 </div>
-                <div className={styles._19y8o0j}>
-                  <div className={styles._7eq2v2}>Salida</div>
+                <div className className="d-inline p-2">
+                  <div>Salida</div>
                   <DatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={new Date(info.checkOut)}

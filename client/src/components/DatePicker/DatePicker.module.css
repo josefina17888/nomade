@@ -1,60 +1,14 @@
-.flexcontainer3 {
-  border-color: rgb(176, 171, 171);
-  border-width: 2px;
-  display: flex;
-  flex-direction: column;
-  padding: 2px;
-}
-
-.flexcontainer2 {
-  display: flex;
-  padding: 10px;
-  flex-direction: row;
-  justify-content: center;
-  white-space: nowrap;
-  border-color: rgb(176, 171, 171);
-  border-width: 2px;
-}
-._1s21a6e2 {
-  position: relative !important;
-  width: auto !important;
-  margin-left: 8.333333333333332% !important;
-  margin-right: 0% !important;
-}
-.card {
-  border: 1px solid #069a8e;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
-  width: auto;
-}
-
 .review {
-  display: flex-start;
-  flex-wrap: wrap;
   font-size: 22px;
   line-height: 26px;
   font-weight: 600;
   font-size: 14px;
   line-height: 18px;
   color: #717171;
+  text-decoration-line:underline;
 }
-._c7v1se {
-  display: flex !important;
-  flex-flow: column wrap !important;
-  margin-bottom: 24px !important;
-}
-
-._14y1gc {
-  font-size: 1.5em;
-}
-._1gpyw79 {
-  position: relative !important;
-  display: flex !important;
-  width: 100% !important;
-  margin: 0px !important; 
-  border: none transparent !important;
-  background-color: transparent !important;
+.div_choose_date{
+  font-size: 1.1em;
 }
 ._p03egf {
   margin-bottom: 16px !important;
