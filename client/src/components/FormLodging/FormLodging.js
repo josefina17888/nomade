@@ -13,6 +13,8 @@ import {
 } from "@react-google-maps/api";
 import NavBar from "../NavBar/NavBar";
 import Swal from 'sweetalert'
+const cloudinary = require("../../utils/cloudinary")
+// const result = await cloudinary.uploader.upload(req.file.path)
 
 
 
