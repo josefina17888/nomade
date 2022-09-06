@@ -111,7 +111,7 @@ export default function ResDetail({ bookingInfo }) {
         </div>
         <div className={styles.petsC}>
           <span className={styles.cM}>Mascotas</span>
-          <span className={styles.cDate}>{/* {pets} */}</span>
+         {/*  <span className={styles.cDate}>{ pets? (<div>si</div>) :( <div>no</div>)}</span> */}
         </div>
       </div>
       <hr />
