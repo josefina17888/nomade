@@ -1,4 +1,4 @@
-
+require("dotenv").config();
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Booking = require('../booking/booking');
