@@ -445,3 +445,4 @@ export default function CardDetail(props) {
     </div>
   );
 }
+
