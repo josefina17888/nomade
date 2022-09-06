@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getByCity } from "../../Redux/Actions";
 import s from "./SearchBar.module.css";
 import { BsSearch } from "react-icons/bs";
+import Swal from 'sweetalert'
 
 
 export default function SearchBar(){
@@ -20,7 +21,9 @@ function handleSubmit(e){
     dispatch(getByCity(city.toLowerCase()));
     setCity("");}
     else{
-    alert("Ingresa una ciudad para buscar")
+    Swal(
+      'Ingresa una ciudad para buscar','','warning',{buttons:false,timer:3000}
+    )
     }
 }
 

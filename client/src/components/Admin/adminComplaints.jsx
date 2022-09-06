@@ -18,15 +18,13 @@ export default function Home() {
     var userToken = JSON.parse(guestId)._id;
     var userEmail = JSON.parse(guestId).email;
     var user = JSON.parse(guestId)
+    var admin = JSON.parse(guestId).isAdmin;
   }
- 
-  
   const allGuests = useSelector((state) => state.allGuests);
-  let arrFilter = allGuests.filter(e => e.email === userEmail)
 
+  
   let complaints = useSelector((state) => state.allcomplaints);
   let lodgingsVisibles= complaints.filter(e=> e.Visibility===true)
-  console.log(lodgingsVisibles)
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1); // guardar en estado local la página actual
   const [lodgingPerPage, setLodgingPerPage] = useState(10); // setear en 20 la cantidad de hospedajes por página
@@ -36,14 +34,13 @@ export default function Home() {
     indexFirstLodging,
     indexLastLodging
   );
-
   const paging = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   return (
     <div className="c1kae56o dir dir-ltr">
-      {userToken && allGuests[0]!== undefined && arrFilter[0].isAdmin === true ?
+      {userToken && allGuests[0]!== undefined && admin === true?
     <div>
     <NavBar
     email={user?user.email: ""} />

@@ -12,6 +12,8 @@ import {
 } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 import getDatesInRange from "../Booking/controller";
+import Swal from 'sweetalert'
+
 
 export default function DatePickerOk({ lodId }) {
   //SELECT STATES FROM REDUX
@@ -65,7 +67,10 @@ export default function DatePickerOk({ lodId }) {
       alldates.includes(new Date(date).toDateString())
     );
     if(isFound){
-      return alert('Fecha no disponible')
+      // return alert('Fecha no disponible')
+      Swal(
+        'Fecha no disponible','','error',{buttons:false,timer:3000}
+      )
     }else{
       localStorage.setItem("bookingInfo", JSON.stringify(info));
       localStorage.setItem("priceBooking", JSON.stringify(price));
