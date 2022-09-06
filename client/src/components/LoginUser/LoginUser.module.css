@@ -207,3 +207,8 @@
   left: 16rem;
   bottom:2.5rem;
 }
+
+.msg {
+  background-color: red;
+  color: white;
+}

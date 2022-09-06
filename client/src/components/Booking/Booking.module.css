@@ -124,6 +124,14 @@
     justify-content: center;
   }
 
+  .cont {
+    padding: 2%;
+  }
+
+  .cont2 {
+  color: #47454580;
+  }
+
   .container2{
     display: flex;
     flex-direction: column;

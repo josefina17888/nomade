@@ -12,6 +12,7 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import NavBar from "../NavBar/NavBar";
+import Swal from 'sweetalert'
 
 export default function FormLodging() {
   const [coordinates, setCoordinates] = useState({
@@ -86,6 +87,7 @@ export default function FormLodging() {
     e.preventDefault();
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+
     );
     const data = await response.json();
     if (data.results.length === 0) {
@@ -96,6 +98,7 @@ export default function FormLodging() {
       latitud: data.results[0].geometry.location.lat,
       longitud: data.results[0].geometry.location.lng,
     });
+
     setCoordinates(data.results[0].geometry.location);
     setErrors({ latitud: "" });
   };
@@ -113,6 +116,7 @@ export default function FormLodging() {
   function handleDelete() {
     document.getElementById("file").click();
   }
+
 
   function handleChange(e) {
     if (e.target.name !== "picture") {
@@ -188,6 +192,7 @@ export default function FormLodging() {
           <div className={style.titulo}>
             <h1 className={style.lTitle}>Registra tu alojamiento</h1>
           </div>
+
 
             <input
             className={style.lodTitle}

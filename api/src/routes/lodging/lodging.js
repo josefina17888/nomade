@@ -1,4 +1,4 @@
-
+require("dotenv").config();
 const router = require("express").Router();
 const Lodging = require("../../models/Lodging");
 const Booking = require('../booking/booking');
@@ -6,15 +6,11 @@ const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
-const cloudinary = require("cloudinary").v2;
 const {addServices} = require("./controller")
+const cloudinary = require("../../../libs/cloudinary")
 
 
-cloudinary.config({ 
-  cloud_name: 'dtw1cvtdr', 
-  api_key: '828297737868324', 
-  api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
-});
+
 //BUSCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {

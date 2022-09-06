@@ -31,8 +31,8 @@ code: {
   type: String,
   required:true
 },
-visibility: { 
-  type: Boolean, default: true }
+visibility: { type: Boolean, default: true },
+emailV: { type: Boolean, default: false },
 });
 
 const model = mongoose.model("Booking", BookingSchema);

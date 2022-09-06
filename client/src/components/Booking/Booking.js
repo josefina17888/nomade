@@ -13,6 +13,7 @@ import s from "../Booking/Booking.module.css";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
+import Swal from 'sweetalert'
 
 
 export default function Booking(props) {
@@ -105,6 +106,12 @@ export default function Booking(props) {
     setInput({...input, totalPrice:total})
   }, [])
 
+  const [style, setStyle] = useState("className={s.cont}");
+  
+  const changeStyle = () => {
+    setStyle("className={s.cont2}");
+  };
+
   //GET Q PETS
   const lodgingServices = []
   for (const property in services) {
@@ -178,8 +185,12 @@ function onChangeCheckOut(currentDate){
       allDates.includes(new Date(date).toDateString())
     );
     localStorage.setItem("booking", JSON.stringify(input));
-    isFound ? alert("NO DISPONIBLE") :
-    preference !== undefined? alert('Haz clic en el boton de pago') :
+    isFound ?  Swal(
+      'No disponible','','error',{buttons:false,timer:3000}
+    ) :
+    preference !== undefined?  Swal(
+      'Haz clic en el boton de pago','','warning',{buttons:false,timer:3000}
+    ) :
     // dispatch(payBooking(input))
     getPreference(input)
   }
@@ -188,7 +199,7 @@ function onChangeCheckOut(currentDate){
   const preference = preferenceId.preferenceId;
 
   return (
-    <div>
+    <div className={style}>
       <div className={s.nav}>
         <div className={s.div_logo}>
           <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
@@ -303,7 +314,7 @@ function onChangeCheckOut(currentDate){
                 </div>
               </div>
             </div>
-            <button className={s.button2} onClick={handleBooking}>
+            <button className={s.button2} onClick={handleBooking} onmouseover={changeStyle}>
               Reservar
             </button>
             <MercadoPagoFinal preferenceId={preference} />

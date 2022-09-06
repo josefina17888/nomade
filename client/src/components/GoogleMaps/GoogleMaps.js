@@ -86,8 +86,8 @@ export default function GoogleMaps() {
         zoom={12}
         center={center}
         mapContainerStyle={{
-          height: "100vh",
-          width: "100vw",
+          height: "91vh",
+          width: "100%",
         }}
         options={options}
       >

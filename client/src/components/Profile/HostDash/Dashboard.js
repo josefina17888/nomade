@@ -5,6 +5,7 @@ import {useHistory, useParams} from 'react-router-dom'
 import{useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom';
 import style from "./dashboard.module.css"
+import Swal from 'sweetalert'
 
 export default function Dashboard({emailGuest}) {
 
@@ -15,6 +16,8 @@ console.log(guest)
 const [host, setHost] = useState("")
 const [lodg, setLodg] = useState("")
 // const [lodgingDets, setLodgingDets] = useState([])
+const[bookings, setBookings]= useState("")
+const[disabledDates, setDisabledDates]= useState("")
 
 useEffect(() => {
 const getHostInfo = async () => {
@@ -39,15 +42,43 @@ const getHostInfo = async () => {
 console.log(host)
 console.log(lodg)
 
+
+
 const handleClick = ({_id}) => {
-    const getLod = async () => {
-    try{
-        let data = await axios.patch("/api/lodging/detail/" + _id)
-        }catch(err){
-        console.log(err)
+    const target= _id
+    const id= { lodgingId: target }
+    const getBookingsInfo = async () => {
+        try {
+            const res = await axios.post('/api/booking/booking', id )
+            console.log(target)
+            let bookingsGot = res.data
+            console.log(bookingsGot)
+            setBookings(bookingsGot)
+
+            const unavailableDates = 
+            await bookingsGot.map((e) =>
+            e.allDates.map((d) => new Date(d).toDateString())
+            );
+
+                   //VER DISPONIBILIDAD DE DATES
+            const unavailableDatesMap = unavailableDates.flat();
+            const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
+            setDisabledDates(disabledDates)
+
+        if (!disabledDates){
+        try{
+            let data = await axios.patch("/api/lodging/detail/" + _id)
+            }catch(err){
+            console.log(err)
+            }
+        } else {
+            return Swal(
+                'No puedes eliminar un alojamiento con reservas activas','','error',{buttons:false,timer:3500}
+              )
         }
-    }
-    getLod();
+    } catch(err){console.log(err)}
+        getBookingsInfo();
+}
 }
 
    return (

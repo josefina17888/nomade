@@ -8,6 +8,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import { createOrGetUserGoogle } from "../../utils/userGoogle";
 import logoImage from '../../assets/nomadeLogo.svg';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import Swal from 'sweetalert'
+
 
 export default function LoginUser() {
   const history = useHistory();
@@ -34,7 +36,11 @@ export default function LoginUser() {
     e.preventDefault();
     try {
       if (email === "" || password === "") {
-        alert("Por favor ingrese todos los campos");
+        // alert("Por favor ingrese todos los campos");
+        Swal(
+          'Por favor ingrese todos los campos','','warning',{buttons:false,timer:3500}
+        )
+
       }
       const guest = await axios.get(`/api/guest/${email}`)
       if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
@@ -60,8 +66,10 @@ export default function LoginUser() {
       setPassword("");
       history.push("/");
     } catch (error) {
-      alert("Usuario o contraseña incorrectos");
-      console.log(error);
+      // alert("Usuario o contraseña incorrectos");
+      Swal(
+        'Usuario o contraseña incorrecta','','error',{buttons:false,timer:3500}
+      )
     }
   };
 
@@ -115,10 +123,10 @@ export default function LoginUser() {
             <label className={style.labelA}>Contraseña</label>
           </div>
           <div>
-          {msg.msgBan !=="" && <div>{msg.msgBan}</div>}
-          {msg.msgNotRegister && msg.msgBan ==="" && <div>{msg.msgNotRegister}</div>}
+          {msg.msgBan !=="" && <div className={style.msg}>{msg.msgBan}</div>}
+          {msg.msgNotRegister && msg.msgBan ==="" && <div  className={style.msg}>{msg.msgNotRegister}</div>}
           {msg.msgNotVerify && <div>
-            <p>{msg.msgNotVerify}</p>
+            <p  className={style.msg}>{msg.msgNotVerify}</p>
             <button  className={style.button} onClick={handleClick}> Verificar Email</button>
             </div>}
           </div>
@@ -143,7 +151,9 @@ export default function LoginUser() {
                   history.push("/")
                 })
                 .catch( () => {
-                  alert("Estas Baneado")
+                  Swal(
+                    'Usuario baneado','','error',{buttons:false,timer:3500}
+                  )
                   setBaneado("pepito")
                 } ) 
             }}

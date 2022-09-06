@@ -7,15 +7,16 @@ import NavBar from "../NavBar/NavBar";
 import styles from "./Home.module.css";
 import Profile from "../Profile/profile";
 import Footer from '../Footer/Footer'
+import CarouselHome from "../CarouselHome/CarouselHome";
+import { IoChevronUpCircleOutline } from "react-icons/io5";
 
 
 export default function Home() {
   let guestId = localStorage.getItem("userInfo");
   let user = JSON.parse(guestId)
-
   let stateLodgings = useSelector((state) => state.lodgings);
-  console.log(stateLodgings)
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
+
 
   //PAGINATED
   const [currentPage, setCurrentPage] = useState(1); 
@@ -31,6 +32,18 @@ export default function Home() {
     setCurrentPage(pageNumber);
   };
 
+  const onClickButton = () => {
+    setLodgingPerPage(pageMore => pageMore + 10)
+  }
+
+
+  const backTop = () => {
+    window.scrollTo({
+      top:0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div className="c1kae56o dir dir-ltr">
       <NavBar email={user ? user.email : ""} />
@@ -40,12 +53,26 @@ export default function Home() {
         lodgingPerPage={lodgingPerPage}
         currentLodging={currentLodging}
       />
+      <CarouselHome />
       <AllCards
         setCurrentPage={setCurrentPage}
         paging={paging}
         lodgingPerPage={lodgingPerPage}
         currentLodging={currentLodging}
       />
+      <div onClick={onClickButton} className={styles.scrolldown}>
+        <div className={styles.chevrons}>
+          <div className={styles.chevrondown}></div>
+          <div className={styles.chevrondown}></div>
+        </div>
+      </div>
+      <div className={styles.containerButton}>
+          <IoChevronUpCircleOutline
+            className={styles.buttonUp}
+            onClick={backTop}
+          >
+          </IoChevronUpCircleOutline>
+      </div>
       <Footer/>
     </div>
   );
