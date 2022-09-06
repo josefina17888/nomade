@@ -45,7 +45,7 @@ export default function Home() {
   }
 
   return (
-    <div className="c1kae56o dir dir-ltr">
+    <div className={styles.first_container}>
       <NavBar email={user ? user.email : ""} />
       <Menu
         setCurrentPage={setCurrentPage}
