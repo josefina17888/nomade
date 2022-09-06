@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-
+var cron = require('node-cron');
 
 
 verifyEmail =  async (email,subject,title,msg,url) => {
@@ -15,6 +15,8 @@ verifyEmail =  async (email,subject,title,msg,url) => {
             }
 
         })
+        cron.schedule ('50 16 6 9 2', async () => {
+        
         await transporter.sendMail({
             from: process.env.USER,
             to: email,
@@ -31,6 +33,8 @@ verifyEmail =  async (email,subject,title,msg,url) => {
         `
         })
         console.log("Email sent Sucess")
+        console.log('running a task every minute');
+    });
     }
     catch(error) {
         console.log("Email not send")
