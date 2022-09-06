@@ -3,6 +3,8 @@ import {useParams, useHistory} from 'react-router-dom'
 import axios from 'axios'
 import style from "./ResetPassword.module.css";
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import Swal from 'sweetalert'
+
 
 export default function ResetPassword() {
     const [validUrl , setValidUrl] = useState(false)
@@ -34,7 +36,10 @@ export default function ResetPassword() {
         try {
 
           if (password.password1 !== password.password2) {
-            return alert("La contraseñas deben ser iguales");
+            // return alert("La contraseñas deben ser iguales");
+            return Swal(
+              'La contraseñas deben ser iguales','','warning',{buttons:false,timer:3000}
+            )
           }
            let passwordOne = password.password1
           const config = {
@@ -53,7 +58,10 @@ export default function ResetPassword() {
           setPassword("");
           history.push("/login");
         } catch (error) {
-          alert("Usuario o contraseña incorrectos");
+          // alert("Usuario o contraseña incorrectos");
+          Swal(
+            'Usuario o contraseña incorrecta','','error',{buttons:false,timer:3500}
+          )
           console.log(error)
         }
       };
