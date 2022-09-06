@@ -14,10 +14,9 @@ import { IoIosStar } from "react-icons/io";
 import { CgPlayListRemove } from "react-icons/cg";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 import Filters from "./Filters/Filters";
-export default function Menu({
-  paging
-}) {
+export default function Menu({ paging }) {
   const dispatch = useDispatch();
+  const [clean, setClean] = useState(false);
   function handleSortByRating(e) {
     e.preventDefault();
     dispatch(orderByRating(e.target.value));
@@ -42,6 +41,11 @@ export default function Menu({
     dispatch(orderByHigherCost(e.target.value));
   }
 
+  function changeCleaner(e){
+    e.preventDefault();
+    setClean(true)
+    setTimeout(()=>{setClean(false)},2000)
+  }
   return (
     <div className="n1p4yt3r dir dir-ltr">
       <div className={s.container}>
@@ -104,13 +108,10 @@ export default function Menu({
           </div>
         </div>
         <div className="d-flex flex-row gap-2">
-        <button
-          type="button"
-          className={s.button_remove}
-        >
-          <CgPlayListRemove />
-          Remover filtros
-        </button>
+          <button type="button" className={s.button_remove} onClick={changeCleaner}>
+            <CgPlayListRemove/>
+            Remover filtros
+          </button>
           <button
             type="button"
             className={s.button_modal}
@@ -127,7 +128,7 @@ export default function Menu({
           >
             <div className="modal-dialog modal-dialog-centered">
               <div className={s.modal_content}>
-                    <Filters/>
+                <Filters clean={clean}/>
               </div>
             </div>
           </div>
