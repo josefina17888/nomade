@@ -115,10 +115,10 @@ export default function LoginUser() {
             <label className={style.labelA}>Contraseña</label>
           </div>
           <div>
-          {msg.msgBan !=="" && <div>{msg.msgBan}</div>}
-          {msg.msgNotRegister && msg.msgBan ==="" && <div>{msg.msgNotRegister}</div>}
+          {msg.msgBan !=="" && <div className={style.msg}>{msg.msgBan}</div>}
+          {msg.msgNotRegister && msg.msgBan ==="" && <div  className={style.msg}>{msg.msgNotRegister}</div>}
           {msg.msgNotVerify && <div>
-            <p>{msg.msgNotVerify}</p>
+            <p  className={style.msg}>{msg.msgNotVerify}</p>
             <button  className={style.button} onClick={handleClick}> Verificar Email</button>
             </div>}
           </div>

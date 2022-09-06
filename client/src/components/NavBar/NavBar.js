@@ -20,6 +20,7 @@ export default function NavBar(props) {
   if (!guestId) {
   } else {
     var userToken = JSON.parse(guestId).email;
+    var admin = JSON.parse(guestId).isAdmin;
   }
 
   const email={
@@ -116,6 +117,15 @@ export default function NavBar(props) {
                               <CgProfile /> Perfil
                             </Link>
                           </li>
+                          {admin === true &&
+                          <li>
+                            <Link
+                              to= {"/admin/estadisticas"}
+                              className="dropdown-item current"
+                            >
+                              <CgProfile /> Panel de admin
+                            </Link>
+                          </li>}
                           <li>
                             <Link to="/login" className="dropdown-item">
                               <TbMessageCircle /> Mensajes
