@@ -128,7 +128,8 @@ export default function CardDetail(props) {
                         alt="slide"
                       /></Carousel.Item>)
                       :
-                      <div>No pudimos proveer las imágenes</div>
+                      <div>No pudimos proveer las imágenes
+                      </div>
                     }
                     
                     </Carousel>
