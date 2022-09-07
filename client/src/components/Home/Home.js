@@ -17,6 +17,10 @@ export default function Home() {
   let stateLodgings = useSelector((state) => state.lodgings);
   let lodgingsVisibles= stateLodgings.filter(e=> e.Visibility===true)
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
 
   //PAGINATED
   const [currentPage, setCurrentPage] = useState(1); 
@@ -36,6 +40,7 @@ export default function Home() {
     setLodgingPerPage(pageMore => pageMore + 10)
   }
 
+  
 
   const backTop = () => {
     window.scrollTo({
@@ -45,7 +50,7 @@ export default function Home() {
   }
 
   return (
-    <div className="c1kae56o dir dir-ltr">
+    <div className={styles.first_container}>
       <NavBar email={user ? user.email : ""} />
       <Menu
         setCurrentPage={setCurrentPage}

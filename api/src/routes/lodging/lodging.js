@@ -33,7 +33,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.hostId = toId(req.params.hostId);
     newLodging.latitud = req.body.latitud
     newLodging.save();
-    res.redirect("http://localhost:3000/")
+    res.redirect("http://localhost:3000/")  
     // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.status(400).send("No se pudo crear el alojamiento");
@@ -120,5 +120,8 @@ router.patch("/:_id", async (req, res) => {
   res.json(lodging)
 
 }); */
+
+
+
 
 module.exports = router;

@@ -37,7 +37,7 @@ const LodgingSchema = new mongoose.Schema({
     dining: { type: Boolean },
     pets: { type: Boolean },
   },
-  description: { type: String, required:true  },
+  description: { type: String, required:true, max: 500,  },
   hostId: {
     type: mongoose.Types.ObjectId, 
     ref:"Host",

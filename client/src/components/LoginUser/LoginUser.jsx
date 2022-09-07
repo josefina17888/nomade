@@ -45,7 +45,7 @@ export default function LoginUser() {
       const guest = await axios.get(`/api/guest/${email}`)
       if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
       if(guest.data[0].Visibility === false) return setMsg({...msg , msgBan: "Tu usuario ha sido baneado de Nomade." })
-      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado" })
+      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado", msgNotRegister: "" })
      
       const config = {
         headers: {
