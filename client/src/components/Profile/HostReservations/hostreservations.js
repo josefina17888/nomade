@@ -31,7 +31,7 @@ const dispatch = useDispatch()
                 let lodgingsGot = response.data
                 console.log(lodgingsGot)
                 let lodgingsVisibles= await lodgingsGot.filter((e)=> (e).Visibility===true)
-                 setLodgings(lodgingsVisibles)
+                setLodgings(lodgingsVisibles)
                }catch(err){
                 console.log(err)
                 }
@@ -40,12 +40,11 @@ const dispatch = useDispatch()
         }, []);
     
         const handleClick = (e) => {
-            const target= e.target.value
-            const id= { lodgingId: target }
+            let id= { lodgingId: e.target.value }
+            console.log(id)
             const getBookingsInfo = async () => {
                 try {
                     const res = await axios.post('/api/booking/booking', id )
-                    console.log(e.target.value)
                     let bookingsGot = res.data
                     console.log(bookingsGot)
                     setBookings(bookingsGot)
@@ -56,7 +55,7 @@ const dispatch = useDispatch()
                     );
 
                            //VER DISPONIBILIDAD DE DATES
-                    const unavailableDatesMap = unavailableDates.flat();
+                    const unavailableDatesMap = await unavailableDates.flat();
                     const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
                     setDisabledDates(disabledDates)
 
@@ -85,8 +84,7 @@ const dispatch = useDispatch()
                 <div className={style.book} key={e._id}>
                 <h6>{e.title}</h6>
                 <img src={e.picture["0"]} alt="img not found" width="200" height="130"/>
-                <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}>
-                {e._id}</button>
+                <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}>{e._id}</button>
                 </div>
                 )) 
             } 
