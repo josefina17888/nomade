@@ -8,138 +8,178 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import io from "socket.io-client";
 
-
 export default function Chat() {
-  const dispatch = useDispatch();
+
+  const ENDPOINT =/* "ws://localhost:3001" */ "https://nomade-henry.herokuapp.com/";
   const [conversations, setConversations] = useState([]);
-  const [user, setUser] = useState({});
   const [currentChat, setCurrentChat] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [host, setHost] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [bookingInfo, setBookingInfo] = useState("");
   const scrollRef = useRef();
   const socket = useRef();
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  let userEmail = userInfo.email;
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  let userId = user._id;
+  let userEmail = user.email;
+
+  //conecta con el server y trae los mensajes
+
 
   useEffect(() => {
-    socket.current = io("ws://localhost:3001");
-    socket.current.on("getMessage", data =>{
+    socket.current = io(ENDPOINT, {
+      transports: ["websocket"],
+    });
+  }, [ENDPOINT]);
+
+
+  if (localStorage.booking) {
+    const bookingInfo = JSON.parse(localStorage.getItem("booking"));
+    let hostId = bookingInfo.hostId;
+    useEffect(() => {
+      setBookingInfo(bookingInfo);
+      const getHostGuestId = async () => {
+        try {
+          let res = await axios.get("/api/conversation/host/" + hostId);
+          let hostGuestId = res.data;
+          setHost(hostGuestId);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getHostGuestId();
+    }, []);
+
+
+    useEffect(() => {
+
+      const newConversation = async () => {
+        let filtered = conversations.filter(
+          (c) => c.members.includes(userId) && c.members.includes(host)
+        );
+        if (!filtered.length) {
+          let conv = await axios.post(
+            "/api/conversation/" + userId + "/" + host
+          );
+        }
+      };
+      newConversation();
+    }, [conversations]);
+  }
+
+
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
         createdAt: Date.now(),
-      })
-    })
-
-  }, []);
-  console.log("user",user)
-  console.log("socket",socket.current)
-  console.log("arrival",arrivalMessage)
-
-  useEffect(()=>{
-    arrivalMessage && currentChat.members.includes(arrivalMessage.sender) &&
-setMessages(prev=>[...prev, arrivalMessage ])
-  },[arrivalMessage, currentChat])
-  
-  useEffect(() => {
-    socket.current.emit("addUser", user._id);
-    socket.current.on("getUsers", (users) => {
-      console.log(users);
+      });
     });
-  }, [user]);
+  }, [messages]);
 
+  //mensajes entrantes
+  useEffect(() => {
+    if (arrivalMessage !== null) {
+      if (Object.keys(currentChat).length !== 0) {
+        if (currentChat.members.includes(arrivalMessage.sender)) {
+          setMessages((prev) => [...prev, arrivalMessage]);
+        }
+      }
+    }
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    if (userId) {
+      socket.current.emit("addUser", userId);
+    }
+    socket.current.on("getUsers", (users) => {
+      console.log("users del back", users);
+    });
+  }, [conversations]);
+
+  // obtiene todas las conversaciones asociadas al usuario
   useEffect(() => {
     const getConversations = async () => {
       try {
-        let res = await axios.get(
-          "http://localhost:3001/api/conversation/conv/" + userEmail
-        );
+        let res = await axios.get("/api/conversation/conv/" + userId);
         setConversations(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     getConversations();
-  }, [userEmail]);
 
+  }, [userId, host]);
+
+  // trae todos los mensajes de una conversacion
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        let userData = await axios(
-          "http://localhost:3001/api/conversation/users/" + userEmail
-        );
-        setUser(userData.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getUser();
-  }, [userEmail]);
-
-  useEffect(() => {
-    const getMessages = async () => {
-      let conversationId = currentChat._id;
-      try {
-        let res = await axios(
-          "http://localhost:3001/api/message/" + conversationId
-        );
-        setMessages(res.data);
-        setNewMessage("");
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getMessages();
+    if (currentChat._id) {
+      const getMessages = async () => {
+        let conversationId = currentChat._id;
+        try {
+          let res = await axios("/api/message/" + conversationId);
+          setMessages(res.data);
+          setNewMessage("");
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getMessages();
+    }
   }, [currentChat]);
-
-
-  useEffect(() => {
-    /* scrollRef.current?.scrollInToView({behavior:"smooth"}) */
-  }, [messages]);
+/* 
+   useEffect(() => {
+    if( scrollRef.current){
+      scrollRef.current.scrollInToView({behavior:"smooth"}) 
+    }
+ 
+  }, [messages]); */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
-      sender: user._id,
+      sender: userId,
       text: newMessage,
       conversationId: currentChat._id,
     };
+    const receiverId = currentChat.members.find((member) => member !== userId);
 
-    const receiverId = currentChat.members.find(
-      (member) => member !== user._id
-    );
     socket.current.emit("sendMessage", {
-      senderId: user._id,
+      senderId: userId,
       receiverId,
       text: newMessage,
     });
 
     try {
-      const res = await axios.post(
-        "http://localhost:3001/api/message",
-        message
-      );
+      //envia el mensaje a la db
+      const res = await axios.post("/api/message", message);
       setMessages([...messages, res.data]);
+      setNewMessage("");
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(currentChat.members);
 
   return (
     <div className={s.chatContainer}>
-      <NavBar />
+      <div className={s.navContainer}>
+        <NavBar />
+      </div>
       <div className={s.chat}>
+        <div className={s.chatMsjWrapper}>Tus Mensajes</div>
         <div className={s.chatMsj}>
-          <div className={s.chatMsjWrapper}>Mensajes</div>
-          {conversations.map((c) => (
-            <div onClick={() => setCurrentChat(c)}>
-              <Conversation key={c._id} conversation={c} currentUser={user} />
-            </div>
-          ))}
+          <div className={s.chatMsjBottom}>
+            {conversations.map((c) => (
+              <div onClick={() => setCurrentChat(c)}>
+                <Conversation key={c._id} conversation={c} currentUser={user} />
+              </div>
+            ))}
+          </div>
         </div>
+        <div className={s.try}>Titulo</div>
         <div className={s.chatBox}>
           <div className={s.chatBoxWrapper}>
             {currentChat._id ? (
@@ -150,7 +190,7 @@ setMessages(prev=>[...prev, arrivalMessage ])
                       <Message
                         key={e._id}
                         messages={e.text}
-                        own={e.sender === user._id}
+                        own={e.sender === userId}
                       />
                     </div>
                   ))}
@@ -173,141 +213,12 @@ setMessages(prev=>[...prev, arrivalMessage ])
             )}
           </div>
         </div>
-        <div className={s.resDetail}>
-          <div className={s.resDetailWrapper}>
-            <ResDetail />
-          </div>
+        
+        <div className={s.resDetailWrapper}>Detalles de tu reserva</div>
+        <div ref={scrollRef} className={s.reserv}>
+          <ResDetail bookingInfo={bookingInfo} />
         </div>
       </div>
     </div>
   );
 }
-
-
-////////////////////////////////////////////
-/* CONVERSATION */
-
-const express = require("express");
-const router = express.Router();
-const axios = require("axios");
-const Conversation = require("../../models/Conversation");
-const Guest = require("../../models/Guest");
-const mongoose = require("mongoose");
-const toId = mongoose.Types.ObjectId;
-
-
-//NUEVA CONVERSACION
-
-router.post("/:senderId/:receiverId", async (req, res) => {
-
-  const filtered= await Conversation.find({members: [req.params.senderId, req.params.receiverId]})
-  console.log("filtered",filtered)
-  if (!filtered.length){
-    try{
-      const newConversation = await Conversation.create({
-        members: [req.params.senderId, req.params.receiverId]})
-        console.log("NEW",newConversation)
-        res.send(newConversation)
-
-    }catch(err){
-      res.status(500).json(err);
-    }
-  }else{
-    res.status(500).json("err");
-  }
-  
-
-
-  /* try {
-    await newConversation.save(); 
-    res.status(200).json(newConversation);
-    console.log("saved",newConversation)
-  } catch (err) {
-    res.status(500).json(err);
-  } */
-});
-
-/* router.post("/", async (req, res) => {
-  let sender= await Guest.findOne({ email: senderEmail })
-  let senderId= sender._id
-  let receiver= await Guest.findOne({ email: receiverEmail })
-  let receiverId= receiver._id
-    const newConversation = new Conversation({
-      members: [senderId, receiverId],
-    });
-  
-    try {
-      const savedConversation = await newConversation.save();
-      res.status(200).json(savedConversation);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  }); */
-
-//GET CONVERSACION DE USUARIO
-
-router.get("/conv/:userEmail", async (req, res) => {
-  try {
-    let userInfo = await Guest.findOne({ email: req.params.userEmail });
-    console.log("userInfo", userInfo);
-    let userId = userInfo._id;
-    console.log("userID", userId);
-    const conversation = await Conversation.find({
-      members: { $in: [userId] },
-    });
-    console.log("convers", conversation);
-    res.status(200).json(conversation);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// get conv includes two userId
-
-router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
-  try {
-    const conversation = await Conversation.findOne({
-      members: { $all: [req.params.firstUserId, req.params.secondUserId] },
-    });
-    res.status(200).json(conversation);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//get users para chat//  puede ser cualquiera de los dos usuarios, uno va por query y el otro por params
-
-router.get("/users/:userEmail", async (req, res) => {
-  const userEmail= req.params.userEmail
-  try {
-    let user= await Guest.findOne({ email: userEmail })
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-router.get("/users/friend/:friendId", async (req, res) => {
-  const friendId= req.params.friendId
-  try {
-    let user= await Guest.findOne({ _id: friendId })
-    console.log(user)
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-// get current User
-
-/* router.get("/users/:userEmail", async (req, res) => {
-  const User
-  const userId = toId(req.query.guestId);
-  const username = req.query.username;
-  try {
-    let myUser = await Guest.findById({ _id: req.query.guestId });
-    res.status(200).json(myUser);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-}); */
-
-module.exports = router;

@@ -21,7 +21,7 @@ import {
 import { GiWoodCabin, GiHouse } from "react-icons/gi";
 import { TbBuildingWarehouse } from "react-icons/tb";
 
-export default function Filters() {
+export default function Filters({clean}) {
   const [filter, setFilter] = useState({
     range: 0,
     beds: 0,
@@ -52,7 +52,29 @@ export default function Filters() {
   useEffect(() => {
     dispatch(filterByServices(services));
   }, [services]);
+  useEffect(()=>{
+    if(clean){
+      setServices({
+        wifi: false,
+        ac: false,
+        tv: false,
+        parking: false,
+        pets: false,
+        hotWater: false,
+      });
+      setFilter({
+        range: 0,
+        beds: 0,
+        rooms: 0,
+        bathrooms: 0,
+        lodgingType: "",
+        services: services,
+      });
   
+      dispatch(cleanFilters());
+    }
+  })
+
   function handleChangeRange(e) {
     setFilter({ ...filter, range: e.target.value });
   }
@@ -412,3 +434,4 @@ export default function Filters() {
     </div>
   );
 }
+

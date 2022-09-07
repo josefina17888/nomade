@@ -46,11 +46,15 @@ export default function validate (input)
             errors.description = "Debes completar el campo descripcion";
         }
         else if (input.picture < 1){
-            errors.picture = "Debe completar el campo imagen. recuerde subir 3 fotos";
+            errors.picture = "Debe completar el campo imagen. Minimo 3 fotos";
         }
-        if (typeof input.picture !== 'string' && input.picture !== 3){
-            errors.picture = "Debes subir 3 imagenes";
+        if (typeof input.picture !== 'string' && input.picture < 3){
+            errors.picture = "Debes subir minimo 3 imagenes";
         }
+        else if(input.picture > 10){
+            errors.picture = "Puedes subir como maximo 10 imagenes";
+        }
+        
         if(!input.latitud){
             errors.latitud = "Debes verificar la direccion";
         }
