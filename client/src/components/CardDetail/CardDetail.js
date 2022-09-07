@@ -52,6 +52,11 @@ export default function CardDetail(props) {
     dispatch(getGuestByEmail(userEmail));
     dispatch(lodgingReviews());
   }, [dispatch]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+  
   const myLodging = useSelector((state) => state.detail);
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
