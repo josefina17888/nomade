@@ -298,10 +298,6 @@ function onChangeCheckOut(currentDate){
                     ${input.totalPrice} por {input.night} noches
                   </h6>
                 </div>
-                <div>
-                  <h6 className={s.sub1}>Comisión por servicio</h6>
-                  <h6 className={s.h}>$0</h6>
-                </div>
               </div>
               <div className={s.container3}>
                 <div>
