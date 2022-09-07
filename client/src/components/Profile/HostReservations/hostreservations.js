@@ -85,8 +85,8 @@ const dispatch = useDispatch()
                 <div className={style.book} key={e._id}>
                 <h6>{e.title}</h6>
                 <img src={e.picture["0"]} alt="img not found" width="200" height="130"/>
-                <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}><AiTwotoneCalendar>
-                <div>{e._id}</div></AiTwotoneCalendar></button>
+                <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}>
+                <div>{e._id}</div></button>
                 </div>
                 )) 
             } 
