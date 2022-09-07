@@ -52,8 +52,8 @@ function handlePhoto(e){
 
   return (
     <div >
-      <form action={`http://localhost:3001/api/guestReview/62fe7e5f63af87bd0c2a035b/${guestId}`} method="POST" encType="multipart/form-data">
-      {/* <form action= {`${process.env.REACT_APP_API}/api/guestReview/62fe7e5f63af87bd0c2a035b/${guestId}`}  method="POST" encType="multipart/form-data" >   */}
+      {/* <form action={`http://localhost:3001/api/guestReview/62fe7e5f63af87bd0c2a035b/${guestId}`} method="POST" encType="multipart/form-data"> */}
+      <form action= {`${process.env.REACT_APP_API}/api/guestReview/62fe7e5f63af87bd0c2a035b/${guestId}`}  method="POST" encType="multipart/form-data" >  
         <label>rating</label>
          <select   onChange={handleDni}  name ="rating" >
                     <option disabled selected>puntuacion</option>

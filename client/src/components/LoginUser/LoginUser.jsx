@@ -53,8 +53,8 @@ export default function LoginUser() {
         },
       };
       const { data } = await axios.post(
-        // `/api/login`,
-        "http://localhost:3001/api/login",
+         `/api/login`,
+        // "http://localhost:3001/api/login",
         {
           email,
           password,

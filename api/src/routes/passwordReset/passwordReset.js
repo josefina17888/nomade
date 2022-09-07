@@ -35,8 +35,8 @@ router.get("/:_id/:token", async (req, res) => {
       });
       if(!token) return res.status(400).send({message: "invalid link"})
       await token.remove()
-      res.status(200).redirect(`http://localhost:3000/${req.params._id}/resetPassword/${req.params.token}`)
-      // res.status(200).redirect(`https://nomade-khaki.vercel.app/${req.params._id}/resetPassword/${req.params.token}`)
+      // res.status(200).redirect(`http://localhost:3000/${req.params._id}/resetPassword/${req.params.token}`)
+       res.status(200).redirect(`https://nomade-khaki.vercel.app/${req.params._id}/resetPassword/${req.params.token}`)
     }
     catch(error) {
       res.status(404).send(error)

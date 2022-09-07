@@ -82,8 +82,8 @@ export default function FormHost(props) {
 
   return (
     <div className={style.contenedor}>
-      <form action={`http://localhost:3001/api/LodgingReview/${userId}/${lodgingId}/`} method="POST" encType="multipart/form-data">
-      {/* <form action= {`${process.env.REACT_APP_API}/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`}  method="POST" encType="multipart/form-data" >   */}
+      {/* <form action={`http://localhost:3001/api/LodgingReview/${userId}/${lodgingId}/`} method="POST" encType="multipart/form-data"> */}
+      <form action= {`${process.env.REACT_APP_API}/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`}  method="POST" encType="multipart/form-data" >  
           <h3 className={style.h3}>Puntaje del hospedaje</h3>
         <p className={style.clasificacion}>
         <input id="radio1" onChange={handleChange} className={style.radio} type="radio" name ="rating" value="5"/><label className={style.label} for="radio1">★</label>

@@ -72,9 +72,9 @@ function handlePhoto(e){
       <NavBar/>
     <div className={estilos.formulario}>
     { tieneDni ?
-    // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
+   <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 
 
-   <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+   {/* <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> */}
 
         <label>Documento Nacional de Identidad:</label>
         <input 
@@ -125,8 +125,8 @@ function handlePhoto(e){
         <button type='submit'>Registrarme</button>
       </form>
         :
-    // <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
-    <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data">
+     <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" >
+    {/* <form action={`http://localhost:3001/api/host/${guestId}`} method="POST" encType="multipart/form-data"> */}
       <label>Clave Bancaria Única:</label>
       <input 
       type="number" 

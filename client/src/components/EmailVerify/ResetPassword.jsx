@@ -19,8 +19,8 @@ export default function ResetPassword() {
     useEffect( () => {
         const verifyEmailUrl = async () => {
             try {
-                const url =`http://localhost:3001/api/guest/${params.idGuest}`
-                // const url =`https://nomade-henry.herokuapp.com/api/guest/${params.idGuest}`
+                // const url =`http://localhost:3001/api/guest/${params.idGuest}`
+                 const url =`https://nomade-henry.herokuapp.com/api/guest/${params.idGuest}`
                 const {data} = await axios.get(url);
                 setValidUrl(true)
 
@@ -48,8 +48,8 @@ export default function ResetPassword() {
             },
           };
           const { data } = await axios.patch(
-            // `${process.env.REACT_APP_API}/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
-            `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
+             `${process.env.REACT_APP_API}/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
+            // `http://localhost:3001/api/passwordReset/newPassord/${params.idGuest}/${params.token}`,
             {
               passwordOne,
             },
