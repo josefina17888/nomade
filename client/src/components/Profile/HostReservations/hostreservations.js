@@ -29,6 +29,7 @@ const dispatch = useDispatch()
             try {
                 const response = await axios.get("/api/lodging/" + hostId)
                 let lodgingsGot = response.data
+                console.log(lodgingsGot)
                 let lodgingsVisibles= await lodgingsGot.filter((e)=> (e).Visibility===true)
                 setLodgings(lodgingsVisibles)
                }catch(err){
@@ -67,6 +68,7 @@ const dispatch = useDispatch()
           };
           console.log(bookings)
           console.log(disabledDates)
+          console.log(lodgings)
           
           
 
@@ -106,7 +108,7 @@ const dispatch = useDispatch()
                 bookings.map((e)=>
                 <div>
                 <div className={style.container1}>
-                <div className={style.container2}>
+                <div className={style.container5}>
                 <div className={style.margin}>
                 <h6>Check In: {new Date (e.checkIn).toLocaleDateString()} </h6>
                 </div>
