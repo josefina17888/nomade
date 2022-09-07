@@ -90,11 +90,9 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
                     : 
                     <Link to={`/login`} className={styles.link}><FavoriteButton ></FavoriteButton></Link>
                   }
-
-                  <Link to={`/detail/${e._id}`} className={styles.link}>
-                      
-             
-                    <Card
+                  
+                  <Link to={`/detail/${e._id}`} className={styles.link}> 
+                      <Card
                       id={e._id}
                       city={e.city}
                       country={e.country}
@@ -104,7 +102,8 @@ let arrFilter = allGuests.filter(e => e.email === userEmail)
                       picture={e.picture[0]}
                       currency={e.currency}
                     />
-                    </Link>
+                  </Link>
+                  
                   
                     {
                     userToken && allGuests[0]!== undefined &&(arrFilter[0]&& arrFilter[0].isAdmin === true)
