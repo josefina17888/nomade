@@ -6,6 +6,8 @@ import { postHost } from "../../Redux/Actions";
 import estilos from './FormHost.module.css'
 import {getGuest} from '../../Redux/Actions'
 import NavBar from '../NavBar/NavBar';
+// const cloudinary = require("../../utils/cloudinary")
+// const result = await cloudinary.uploader.upload(req.file.path)
 
 export default function FormHost() {
   const dispatch = useDispatch()

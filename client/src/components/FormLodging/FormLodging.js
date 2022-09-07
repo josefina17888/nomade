@@ -367,31 +367,31 @@ return (
           <h3>servicios</h3>
           <div className={style.services}>
 
-
+{/* 
             <label>WIFI
               <input name="wifi" checked="false" type="checkbox" />
               <span className={style.checkbox} />
-            </label>
+            </label> */}
 
-            {/*  <label>WIFI <input type="checkbox" name="wifi" className=""/></label> */}
-            <label>AC
+             <label>WIFI <input type="checkbox" name="wifi" className=""/></label>
+            {/* <label>AC
               <input name="ac" checked="false" type="checkbox" />
               <span className={style.checkbox} />
-            </label>
-            {/* <label>
-              AC <input type="checkbox" name="ac" />
-            </label> */}
-
-            <label>TV
-              <input name="tv" checked="false" type="checkbox" />
-              <span className={style.checkbox} />
-            </label>
-
-            {/* <label>
-              TV <input type="checkbox" name="tv" />
             </label> */}
             <label>
-              securidad <input type="checkbox" name="security" />
+              AC <input type="checkbox" name="ac" />
+            </label>
+
+            {/* <label>TV
+              <input name="tv" checked="false" type="checkbox" />
+              <span className={style.checkbox} />
+            </label> */}
+
+            <label>
+              TV <input type="checkbox" name="tv" />
+            </label>
+            <label>
+              seguridad <input type="checkbox" name="security" />
             </label>
             <label>
               Limpieza <input type="checkbox" name="cleaning" />
