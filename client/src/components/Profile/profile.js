@@ -30,12 +30,14 @@ useEffect(() => {
       // try{
       let response = await axios.get("/api/booking/all/" + user._id);
       let guestBooking = response.data
+      console.log(guestBooking)
+      let bookingsVisibles= await guestBooking.filter((e)=> (e).visibility===true)
       //sacar las dos fechas y el lodging id
-      setBooking(guestBooking)
+      setBooking(bookingsVisibles)
 
       try{
       var lodgingsGot = []
-      await guestBooking.forEach(async (e) => {
+      await bookingsVisibles.forEach(async (e) => {
         let subArray = []
         let lodgingId = e.lodgingId
         let checkIn = new Date (e.checkIn).toLocaleDateString()
@@ -114,10 +116,15 @@ console.log(booking)
 console.log(lodgingIds)
 
 
-const handleClick2 = ({_id}) => {
+const handleClick2 = (e) => {
+  const target= e.target.value
+  const _id = target
+  console.log(e.target.value)
   const getBook = async () => {
   try{
+
       let data = await axios.patch("/api/booking/" + _id)
+      window.location.reload(true);
       }catch(err){
       console.log(err)
       }
@@ -179,12 +186,12 @@ const handleClick2 = ({_id}) => {
                       </div> :
                       lodgingIds.map((e)=>
                       <div className={style.book} key={e["0"]}>
-                      <h5>Check In: {e["1"]}</h5>
-                      <h5>Check Out: {e["2"]}</h5>
+                        <Link className={style.link} to= {`/detail/${e["0"]}`}>Ir a detalles del alojamiento</Link>
+                      <h6>Check In: {e["1"]}</h6>
+                      <h6>Check Out: {e["2"]}</h6>
                       {/* <img src={e["4"]} alt="img not found"/> */}
-                        <Link className={style.link} to= {`/detail/${e["0"]}`}>Ver detalles del alojamiento</Link>
                         <div>
-                        <button onClick={(e) => handleClick2(e["3"])} className={style.link}>Cancelar mi reserva</button>
+                        <button value={e["3"]} onClick={(e) => handleClick2(e)} className={style.link2}>Cancelar mi reserva</button>
                         </div>
                       </div>
                       ) 
@@ -211,7 +218,6 @@ const handleClick2 = ({_id}) => {
                           ></img>
                         </div>
                       </div>
-                      <div>Actualizar foto</div>
                     </div>
                   </div>
                 </div>

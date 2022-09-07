@@ -53,10 +53,12 @@ export default function Filters({clean}) {
     dispatch(filterByQRooms(filter));
     dispatch(filterByQBathrooms(filter));
     dispatch(filterByTypeRooms(filter));
+
     dispatch(filterByServices(filter));
   }, [filter]);
   /* useEffect(() => {
   }, [services]); */
+
   useEffect(()=>{
     if(clean){
       setFilter({
@@ -72,6 +74,7 @@ export default function Filters({clean}) {
         pets: false,
         hotWater: false,
       });
+
       dispatch(cleanFilters());
     }
   })

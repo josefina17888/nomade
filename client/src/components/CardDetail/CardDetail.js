@@ -58,6 +58,7 @@ export default function CardDetail(props) {
     dispatch(lodgingReviews());
   }, [dispatch]);
 
+
   useEffect(() => { 
     setTimeout(()=>{
       setHostId({...hostId, hostId:myLodging.hostId}) 
@@ -65,7 +66,8 @@ export default function CardDetail(props) {
     window.scrollTo(0, 0);
   }, []);
 
- 
+  const myLodging = useSelector((state) => state.detail);
+
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
   const validateHost = useSelector((state) => state.hosts);
@@ -83,7 +85,9 @@ export default function CardDetail(props) {
 
   const lodgingServices = [];
   const lodgingNoServices = [];
+
   // var filterHost = allGuests.filter((e) => e._id === validateHost[0]._id);
+
   var nameHost = "";
 
   // for (let property in filterHost[0]) {
@@ -163,6 +167,7 @@ export default function CardDetail(props) {
                     <h3 className={styles.titles}>Alojamiento</h3>
                     <div className={styles.description_lodging}>
                       <div>
+                        <div>Anfitrión: {nameHost}</div>
                         <div>Tipo: {myLodging.lodgingType}</div>
                         <div>Baños: {myLodging.bathrooms}</div>
                       </div>
@@ -262,6 +267,7 @@ export default function CardDetail(props) {
                                 <p className={styles.p2}>Estacionamiento</p>
                               )}
                             </div>
+
                           </div>
                         </div>
                         <div>
