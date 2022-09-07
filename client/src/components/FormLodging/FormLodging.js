@@ -443,6 +443,7 @@ export default function FormLodging() {
           </div>
           <p>{errors.picture}</p>
           <div className={style.services}>
+
             <h3>Servicios</h3>
             <div className={style.serv}>
               <label className={style.fcontainer}>
@@ -501,6 +502,7 @@ export default function FormLodging() {
                 <div className={style.checkmark} />
               </label>
             </div>
+
           </div>
 
           {Object.entries(errors).length === 0 &&

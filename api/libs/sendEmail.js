@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+var cron = require('node-cron');
 
 
 
@@ -87,7 +88,55 @@ bookingConfirm =  async (email,subject,title,infoLoding ,infoBooking) => {
     }
 }
 
+
+review =  async (email,subject,title,infoLoding ,infoBooking,url) => {
+    const arrayDate = infoBooking.checkOut.split(" ")
+    const day = arrayDate[2]
+    const month = arrayDate[1]
+    const year = arrayDate[3]
+    try{
+       
+        const transporter = nodemailer.createTransport({
+            host: process.env.HOST,
+            service: process.env.SERVICE,
+            port: Number(process.env.EMAIL_PORT),
+            secure: Boolean(process.env.SECURE),
+            auth: {
+                user: process.env.MAIL,
+                pass: process.env.PASS
+            }
+
+        })
+     cron.schedule(`00 20 ${day} ${month} *`, async () => {
+        await transporter.sendMail({
+            from: process.env.USER,
+            to: email,
+            subject: subject,
+            html: `
+            <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
+            <h2 style="text-align: center; text-transform: uppercase;color: teal;">${title}</h2>
+            <h4>Califica tu estadía en ${infoLoding.title}</h4>
+            <a href=${url} style="background: #069A8E; text-decoration: none; border-radius: 5px;
+            border: 1px solid rgb(0, 0, 0); color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Deja tu reseña</a>
+            <p>Si el boton no funciona da click al enlace de abajo</p>
+            <div>${url}</div>
+            <p>¡Gracias por tu reserva! ¡Que la disfrutes!</p>
+            </div>
+        `
+        })
+        console.log("Email sent Sucess")
+        console.log('running a mail review');
+
+        });
+
+    }
+    catch(error) {
+        console.log("Email not send")
+        console.log(error)
+    }
+}
 module.exports = {
     verifyEmail,
-    bookingConfirm
+    bookingConfirm,
+    review
 }

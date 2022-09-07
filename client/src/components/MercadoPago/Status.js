@@ -34,7 +34,8 @@ export default function Status() {
     const data = async () => {
       await axios.post(`http://localhost:3001/api/booking/emailVerified/${emailGuest}`,booking)
    }
-   data()
+   setTimeout(() =>  {data()},3000)
+  
   }, [dispatch]);
 
   const lodging = useSelector((state) => state.detail);
