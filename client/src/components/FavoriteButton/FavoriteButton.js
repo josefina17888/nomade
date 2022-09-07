@@ -67,9 +67,9 @@ if(!props.guestInfo){
   }
   return (
     <div className={s.favContainer}>
-      {/* <button onClick={handleClick} className={s.favButtonF}>
+       <button onClick={handleClick} className={s.favButtonF}>
         <FaHeart className={isfaved ? s.favT : s.favF} />
-      </button> */}
+      </button> 
     </div>
   );
 }

@@ -12,6 +12,8 @@ import {
 } from "../../Redux/Actions";
 import styles from "./DatePicker.module.css";
 import getDatesInRange from "../Booking/controller";
+import Swal from 'sweetalert'
+
 
 export default function DatePickerOk({ lodId }) {
   //SELECT STATES FROM REDUX
@@ -55,24 +57,6 @@ export default function DatePickerOk({ lodId }) {
   }
   const pets = lodgingServices.filter((e) => e === "pets");
 
-  //FUNCTION DECREMENT
-  function handleDecrement(e) {
-    e.preventDefault();
-    if (info.guests > 1) {
-      setInfo({ ...info, guests: info.guests-- });
-    }
-    setInfo({ ...info, guests: info.guests });
-  }
-
-  //FUNCTION INCREMENT
-  function handleIncrement(e) {
-    e.preventDefault();
-    if (info.guests < lodging.guests) {
-      setInfo({ ...info, guests: info.guests++ });
-    }
-    setInfo({ ...info, guests: info.guests });
-  }
-
   function handleCheckBox(e) {
     setInfo({ ...info, pets: e.target.checked });
   }
@@ -83,129 +67,125 @@ export default function DatePickerOk({ lodId }) {
       alldates.includes(new Date(date).toDateString())
     );
     if(isFound){
-      return alert('Fecha no disponible')
+      // return alert('Fecha no disponible')
+      Swal(
+        'Fecha no disponible','','error',{buttons:false,timer:1000}
+      )
     }else{
       localStorage.setItem("bookingInfo", JSON.stringify(info));
       localStorage.setItem("priceBooking", JSON.stringify(price));
       dispatch(getBookingByLodgingId(info));
-      if(user){
-        history.push(`/booking/${lodgingId}`)
-      }else{
-        history.push(`/login`)
+      if (user) {
+        history.push(`/booking/${lodgingId}`);
+      } else {
+        history.push(`/login`);
       }
     }
   }
 
   return (
-    <div className={styles._1s21a6e2}>
-      <div className="sticky-top">
-        <div className="c1yo0219 dir dir-ltr">
-          <div className={styles.card}>
-            <div className="_ud8a1c">
-              <div className={styles._c7v1se}>
-                <span className={styles._14y1gc}>
-                  ${lodging.currency}
-                  {lodging.price} noche
-                </span>
-                <div className={styles.review}>Ver reseñas</div>
-                <div className={styles.review}>Tarifa de limpieza</div>
-                <div className={styles.review}>Comisión por servicio</div>
-              </div>
-              <div>
-                <div>Elige la fecha</div>
-                <div className={styles._p03egf}>
-                  <div className={styles._jro6t0}>
-                    <div className={styles._19y8o0j}>
-                      <div className={styles._7eq2v2}>Llegada</div>
-                      <DatePicker
-                        dateFormat="dd/MM/yyyy"
-                        selected={new Date(info.checkIn)}
-                        onChange={(currentDate) =>
-                          setInfo({
-                            ...info,
-                            checkIn: new Date(currentDate).toDateString(),
-                          })
-                        }
-                        selectsStart
-                        startDate={new Date(info.checkIn)}
-                        endDate={new Date(info.checkOut)}
-                        excludeDates={disabledDates}
-                        selectsEnd
-                        minDate={new Date()}
-                      />
-                    </div>
-                    <div className={styles._19y8o0j}>
-                      <div className={styles._7eq2v2}>Salida</div>
-                      <DatePicker
-                        dateFormat="dd/MM/yyyy"
-                        selected={new Date(info.checkOut)}
-                        onChange={(currentDate) =>
-                          setInfo({
-                            ...info,
-                            checkOut: new Date(currentDate).toDateString(),
-                          })
-                        }
-                        selectsStart
-                        startDate={new Date(info.checkIn)}
-                        endDate={new Date(info.checkOut)}
-                        excludeDates={disabledDates}
-                        selectsEnd
-                        minDate={new Date(info.checkIn)}
-                      />
-                    </div>
-                  </div>
-                  <div className="dropdown w-100">
-                    <button
-                      className={styles.dropdown}
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <label className={styles._7eq2v2}>Huespedes</label>
-                      <div>{`${info.guests}`}</div>
-                    </button>
-                    <div className="dropdown-menu w-100 p-3">
-                      <div className="d-flex flex-row">
-                        <div className={styles.div_guests_Description}>
-                          <div>Huespedes</div>
-                        </div>
-                        <div className={styles.container_btn}>
-                          {/* <button onClick={handleDecrement}>-</button>
-                          <div>{`${info.guests}`}</div>
-                          <button onClick={handleIncrement}>+</button> */}
-                          <input
-                            type="number"
-                            name="adults"
-                            min={1}
-                            max={lodging.guests}
-                            onChange={e => setInfo({...info, guests:e.target.value})}
-                            defaultValue={info.guests}
-                            ></input>
-                        </div>
-                      </div>
-                      <div className="d-flex flex-row">
-                        <div className={styles.div_guests_Description}>
-                          <div>Mascota</div>
-                          <input
-                            type="checkbox"
-                            checked={info.pets}
-                            disabled={!pets.includes("pets")}
-                            onChange={handleCheckBox}
-                          ></input>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+    <div className={styles.sticky_md_top}>
+      <div className={styles.container_card}>
+      <div className="card w-100">
+        <div className="card-body">
+          <h3 className={styles.h3}>
+            $ {lodging.currency}
+            {lodging.price} noche
+          </h3>
+          <div className={styles.review}>Ver reseñas</div>
+          <div className="p-2">
+            <div className="fs-6 pt-2 pb-2">Elige la fecha</div>
+            <div className>
+              <div className="d-flex p-0 rounded-top border border-1">
+                <div className={styles.container_datePicker_description}>
+                  <div className={styles.label_description}>LLEGADA</div>
+                  <DatePicker
+                  className={styles.date_picker}
+                    dateFormat="dd/MM/yyyy"
+                    selected={new Date(info.checkIn)}
+                    onChange={(currentDate) =>
+                      setInfo({
+                        ...info,
+                        checkIn: new Date(currentDate).toDateString(),
+                      })
+                    }
+                    selectsStart
+                    startDate={new Date(info.checkIn)}
+                    endDate={new Date(info.checkOut)}
+                    excludeDates={disabledDates}
+                    selectsEnd
+                    minDate={new Date()}
+                  />
                 </div>
-                <div>
-                  {
-                      <button onClick={(e) => handleClick(e)}>Continuar</button>
-                  }
+                <div className={styles.container_datePicker_description}>
+                  <div className={styles.label_description}>SALIDA</div>
+                  <DatePicker
+                  className={styles.date_picker}
+                    dateFormat="dd/MM/yyyy"
+                    selected={new Date(info.checkOut)}
+                    onChange={(currentDate) =>
+                      setInfo({
+                        ...info,
+                        checkOut: new Date(currentDate).toDateString(),
+                      })
+                    }
+                    selectsStart
+                    startDate={new Date(info.checkIn)}
+                    endDate={new Date(info.checkOut)}
+                    excludeDates={disabledDates}
+                    selectsEnd
+                    minDate={new Date(info.checkIn)}
+                  />
+                </div>
+              </div>
+              <div className="dropdown w-100">
+                <button
+                  className={styles.dropdown}
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <label className={styles.label_description}>HUESPEDES</label>
+                  <div className={styles.date_picker}>{`${info.guests}`}</div>
+                </button>
+                <div className="dropdown-menu w-100 p-3">
+                  <div className="d-flex flex-row">
+                    <div>
+                      <div className={styles.label_description}>Huespedes</div>
+                    </div>
+                    <div className={styles.container_btn}>
+                      <input
+                        type="number"
+                        name="adults"
+                        min={1}
+                        max={lodging.guests}
+                        onChange={(e) =>
+                          setInfo({ ...info, guests: e.target.value })
+                        }
+                        defaultValue={info.guests}
+                      ></input>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-row">
+                    <div >
+                      <div className={styles.label_description}>Mascota</div>
+                      <input
+                        type="checkbox"
+                        checked={info.pets}
+                        disabled={!pets.includes("pets")}
+                        onChange={handleCheckBox}
+                      ></input>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="pt-4 pb-0 text-center">
+              {<button className={styles.button_continue} onClick={(e) => handleClick(e)}>Continuar</button>}
+            </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

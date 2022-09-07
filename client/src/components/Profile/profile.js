@@ -22,6 +22,7 @@ const [lodgingDets, setLodgingDets] = useState([])
 // const [lodgingComplete, setLodgingComplete] = useState([])
 // let lodgingDetails = []
 
+
 useEffect(() => {
   const getGuestInfo = async () => {
     try {
@@ -111,6 +112,7 @@ console.log(email)
 console.log(user._id)
 console.log(booking)
 console.log(lodgingIds)
+
 
 const handleClick2 = ({_id}) => {
   const getBook = async () => {

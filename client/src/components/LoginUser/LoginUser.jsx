@@ -8,14 +8,18 @@ import { GoogleLogin } from "@react-oauth/google";
 import { createOrGetUserGoogle } from "../../utils/userGoogle";
 import logoImage from '../../assets/nomadeLogo.svg';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
+import Swal from 'sweetalert'
+
 
 export default function LoginUser() {
   const history = useHistory();
+  const[baneado, setBaneado] = useState("")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState({
     msgNotRegister: "",
-    msgNotVerify: ""
+    msgNotVerify: "",
+    msgBan: ""
   });
   const [shown, setShown] = useState(false);
       const switchShown = () => setShown(!shown);
@@ -32,11 +36,17 @@ export default function LoginUser() {
     e.preventDefault();
     try {
       if (email === "" || password === "") {
-        alert("Por favor ingrese todos los campos");
+        // alert("Por favor ingrese todos los campos");
+        Swal(
+          'Por favor ingrese todos los campos','','warning',{buttons:false,timer:3500}
+        )
+
       }
       const guest = await axios.get(`/api/guest/${email}`)
       if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
-      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado" })
+      if(guest.data[0].Visibility === false) return setMsg({...msg , msgBan: "Tu usuario ha sido baneado de Nomade." })
+      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado", msgNotRegister: "" })
+     
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -56,8 +66,10 @@ export default function LoginUser() {
       setPassword("");
       history.push("/");
     } catch (error) {
-      alert("Usuario o contraseña incorrectos");
-      console.log(error);
+      // alert("Usuario o contraseña incorrectos");
+      Swal(
+        'Usuario o contraseña incorrecta','','error',{buttons:false,timer:3500}
+      )
     }
   };
 
@@ -111,9 +123,10 @@ export default function LoginUser() {
             <label className={style.labelA}>Contraseña</label>
           </div>
           <div>
-          {msg.msgNotRegister && <div>{msg.msgNotRegister}</div>}
+          {msg.msgBan !=="" && <div className={style.msg}>{msg.msgBan}</div>}
+          {msg.msgNotRegister && msg.msgBan ==="" && <div  className={style.msg}>{msg.msgNotRegister}</div>}
           {msg.msgNotVerify && <div>
-            <p>{msg.msgNotVerify}</p>
+            <p  className={style.msg}>{msg.msgNotVerify}</p>
             <button  className={style.button} onClick={handleClick}> Verificar Email</button>
             </div>}
           </div>
@@ -131,14 +144,25 @@ export default function LoginUser() {
           <GoogleLogin
             className={style.buttonGoogle}
             onSuccess={(response) => {
-              createOrGetUserGoogle(response);
-              history.push("/");
+              console.log(response)
+                createOrGetUserGoogle(response)
+                .then( (reponse) => {
+                  console.log(response.json)
+                  history.push("/")
+                })
+                .catch( () => {
+                  Swal(
+                    'Usuario baneado','','error',{buttons:false,timer:3500}
+                  )
+                  setBaneado("pepito")
+                } ) 
             }}
-            onError={() => {
+            onError={(response) => {
               console.log("Login Failed");
             }}
           />
         </GoogleOAuthProvider>
+        {baneado && <p>Estas baneado</p>}
         <div className={style.textFinal}>
           <p>¿Aun no tienes cuenta?</p>
           <Link className={style.link2} to="/registerguest">¡Crea tu cuenta aqui!</Link>

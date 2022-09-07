@@ -25,8 +25,14 @@ router.post("/", async (req, res) => {
         })
 
     } else {
+        if(user.Visibility === true) {
             res.json(user)
+        } else {
+            res.status(400).send("Usuario baneado")
         }
+    
+    }
+    
 });
 
 

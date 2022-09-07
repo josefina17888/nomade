@@ -14,7 +14,7 @@ export default function FormHost(props) {
 //BUSCANDO EL LODGING POR PARAMS
     const params = useParams()
     const lodgingId = params.lodgingId;
-    const userEmail = params.userEmail
+    const userId = params.guestId
     const email = params.userEmail
 
     //BUSCANDO EL GUEST CON EL EMAIL y LOS BOOKINGS POR LODGING ID Y GUEST ID 
@@ -24,40 +24,42 @@ export default function FormHost(props) {
   const [checkOuts, setCheckOuts] = useState("")
 
 
-  useEffect(() => {
-    const getGuestInfo = async () => {
-      try {
-        let res = await axios.get("/api/guest/" + userEmail);
-        let guestId = res.data[0]._id;
-        setGuest(guestId)
+  // useEffect(() => {
+  //   const getGuestInfo = async () => {
+  //     try {
+  //       let res = await axios.get("/api/guest/" + userId);
+  //       let guestId = res.data[0]._id;
+  //       setGuest(guestId)
        
-        let response = await axios.get(`/api/booking/${lodgingId}/${guest}`);
-        let guestBooking = response.data
-        setBooking(guestBooking)
+  //       let response = await axios.get(`/api/booking/${lodgingId}/${guest}`);
+  //       let guestBooking = response.data
+  //       setBooking(guestBooking)
         
-        let checkOut = []
-        await guestBooking.forEach((e) => {
-          let checkOutDay = e.checkOut
-          checkOut.push(checkOutDay)
-        })
-        setCheckOuts(checkOut)
+  //       let checkOut = []
+  //       await guestBooking.forEach((e) => {
+  //         let checkOutDay = e.checkOut
+  //         checkOut.push(checkOutDay)
+  //       })
+  //       setCheckOuts(checkOut)
 
-      } catch (err) {
-        console.log(err);
-      }
-      };
-    getGuestInfo();
-  }, [guest]);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //     };
+  //   getGuestInfo();
+  // }, [guest]);
 
-  console.log(checkOuts)
+  
 
-  let validReviews = []
+  // console.log(checkOuts)
 
-  for (let i = 0; i < checkOuts.length; i++){
-    if (new Date(checkOuts[i]) <= new Date())
-    validReviews.push(checkOuts[i])
-  }
-  console.log(validReviews)
+  // let validReviews = []
+
+  // for (let i = 0; i < checkOuts.length; i++){
+  //   if (new Date(checkOuts[i]) <= new Date())
+  //   validReviews.push(checkOuts[i])
+  // }
+  // console.log(validReviews)
 
 
   const [errors, setErrors] = useState({})
@@ -80,7 +82,7 @@ export default function FormHost(props) {
 
   return (
     <div className={style.contenedor}>
-      <form action={`http://localhost:3001/api/LodgingReview/${userEmail}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data">
+      <form action={`http://localhost:3001/api/LodgingReview/${userId}/${lodgingId}/`} method="POST" encType="multipart/form-data">
       {/* <form action= {`${process.env.REACT_APP_API}/api/LodgingReview/${guestId}/${props.match.params.lodgingId}/`}  method="POST" encType="multipart/form-data" >   */}
           <h3 className={style.h3}>Puntaje del hospedaje</h3>
         <p className={style.clasificacion}>

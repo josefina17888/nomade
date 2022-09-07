@@ -1,6 +1,9 @@
+import Swal from 'sweetalert'
+
 const initialState = {
   lodgings: [],
   allLodgings: [],
+  auxLogdings: [],
   loader: true,
   detail: {},
   user: null,
@@ -23,7 +26,8 @@ const initialState = {
   hosts: [],
   host: {},
   booking: [],
-  bookingsall:[]
+  bookingsall: [],
+  userBusqueda:[]
 };
 
 var count = {
@@ -32,7 +36,6 @@ var count = {
   countCasa: 0,
   countCaro: 0,
   countBarato: 0,
-
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -207,7 +210,9 @@ function rootReducer(state = initialState, action) {
       };
     case "GET_BY_CITY":
       if (typeof action.payload === "string") {
-        return alert(" Not Found");
+        return Swal(
+          'Not Found','','error',{buttons:false,timer:3500}
+        );
       }
       return {
         ...state,
@@ -230,6 +235,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allGuests: action.payload,
+        userBusqueda: action.payload,
       };
     case "GET_GUEST_BY_EMAIL":
       return {
@@ -241,7 +247,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         host: action.payload,
-        };
+      };
 
     case "GET_FAVORITES":
       return {
@@ -262,16 +268,16 @@ function rootReducer(state = initialState, action) {
       };
 
     case "GET_HOST_BY_GUEST_ID":
-      console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
-        hosts: action.payload
+        hosts: action.payload,
       };
     case "BOOKING_BY_GUEST":
-        return {
-          ...state,
-          booking: action.payload,
-        };
+      return {
+        ...state,
+        booking: action.payload,
+      };
 
     case "DELETE_FAVORITE":
       return {
@@ -305,8 +311,6 @@ function rootReducer(state = initialState, action) {
         payment: action.payload,
       };
 
-    
-
     case "SET_DATA_POSTBOOKING":
       return {
         ...state,
@@ -328,69 +332,292 @@ function rootReducer(state = initialState, action) {
         ...state,
         postBooking: bookingFinal,
       };
-    case 'GET_HOST_BY_DNI':
+    case "GET_HOST_BY_DNI":
       return {
         ...state,
-        host: action.payload
-      }
+        host: action.payload,
+      };
 
-      case "DELETE_LODGING":
+    case "DELETE_LODGING":
       return {
         ...state,
         allLodgings: action.payload,
       };
-      case "HACER_ADMIN":
+    case "HACER_ADMIN":
+      return {
+        ...state,
+        allGuests: action.payload,
+      };
+    case "DELETE_USER":
+      return {
+        ...state,
+        allGuests: action.payload,
+      };
+    case "SACAR_ADMIN":
+      return {
+        ...state,
+        allGuests: action.payload,
+      };
+
+    case "GET_ALL_COMPLAINTS":
+      return {
+        ...state,
+        allcomplaints: action.payload,
+      };
+    case "DELETE_COMPLAINT":
+      return {
+        ...state,
+        allcomplaints: action.payload,
+      };
+
+    // FILTRA POR RANGE PRICE
+    case "FILTER_BY_RANGE_PRICE":
+      console.log(action.payload, "ACTION PAUUU");
+      if(action.payload.range !==0){
+        let auxLogdings = state.allLodgings;
+        let filtered = auxLogdings.filter((e) => e.price <= action.payload.range);
         return {
           ...state,
-          allGuests: action.payload,
+          lodgings: filtered
         };
-      case "DELETE_USER":
+      }
+      return {
+        ...state,
+        lodgings: state.allLodgings,
+      };
+      
+
+    //FILTRA POR Q BEDS
+    case "FILTER_BY_Q_BEDS":
+      if (action.payload.beds !== 0) {
+        let qBeds = state.lodgings.filter(
+          (e) => e.beds === action.payload.beds
+        );
         return {
           ...state,
-          allGuests: action.payload,
+          lodgings: qBeds,
         };
-        case "SACAR_ADMIN":
+      }
+
+    case "FILTER_BY_Q_ROOMS":
+      if (action.payload.rooms !== 0) {
+        let qRooms = state.lodgings.filter(
+          (e) => e.rooms === action.payload.rooms
+        );
+        return {
+          ...state,
+          lodgings: qRooms,
+        };
+      }
+
+    case "FILTER_BY_Q_BATHROOMS":
+      if (action.payload.bathrooms !== 0) {
+        let qBathrooms = state.lodgings.filter(
+          (e) => e.bathrooms === action.payload.bathrooms
+        );
+        return {
+          ...state,
+          lodgings: qBathrooms,
+        };
+      }
+
+    case "FILTER_BY_TYPE_OF_ROOMS":
+      switch (action.payload.lodgingType) {
+        case "Casa":
+          let house = state.lodgings.filter((e) => e.lodgingType === "Casa");
           return {
             ...state,
-            allGuests: action.payload,
+            lodgings: house,
           };
-
-
-        case "GET_ALL_COMPLAINTS":
+        case "Albergue":
+          let hostel = state.lodgings.filter(
+            (e) => e.lodgingType === "Albergue"
+          );
           return {
             ...state,
-            allcomplaints: action.payload,
+            lodgings: hostel,
           };
-          case "DELETE_COMPLAINT":
-            return {
-              ...state,
-              allcomplaints: action.payload,
-            };
+        case "Hostal":
+          let lodgingHouse = state.lodgings.filter(
+            (e) => e.lodgingType === "Hostal"
+          );
+          return {
+            ...state,
+            lodgings: lodgingHouse,
+          };
+        case "Cabaña":
+          let cabin = state.lodgings.filter((e) => e.lodgingType === "Cabaña");
+          return {
+            ...state,
+            lodgings: cabin,
+          };
+        case "Apartamento":
+          let apartment = state.lodgings.filter(
+            (e) => e.lodgingType === "Apartamento"
+          );
+          return {
+            ...state,
+            lodgings: apartment,
+          };
+        case "Habitación":
+          let room = state.lodgings.filter(
+            (e) => e.lodgingType === "Habitación"
+          );
+          return {
+            ...state,
+            lodgings: room,
+          };
+        default:
+          return {
+            ...state,
+          };
+      }
+    case "FILTER_BY_SERVICES":
+      let filterLodings = state.lodgings;
+      let lodgings = state.lodgings.map((e) => {
+        let newObject = {
+          id: e._id,
+          wifi: e.services.wifi,
+          ac: e.services.ac,
+          tv: e.services.tv,
+          parking: e.services.parking,
+          pets: e.services.pets,
+          hotWater: e.services.hotWater,
+        };
+        return newObject;
+      });
+      let services = action.payload;
+      let status = Object.values(services)
+      let isFalse = status.filter(e=>e===false)
+      console.log(status, 'STATUS')
+     if(isFalse.length===6) return {
+      ...state,
+      lodgings: state.allLodgings,
+    };
+     
+      let exists = lodgings.map((lodging) => {
+        if (
+          services.wifi &&
+          services.ac &&
+          services.tv &&
+          services.parking &&
+          services.pets &&
+          services.hotWater
+        ) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv &&
+            lodging.parking === services.parking &&
+            lodging.pets === services.pets &&
+            lodging.hotWater === services.hotWater
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (
+          services.wifi &&
+          services.ac &&
+          services.tv &&
+          services.parking &&
+          services.pets
+        ) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv &&
+            lodging.parking === services.parking &&
+            lodging.pets === services.pets
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (
+          services.wifi &&
+          services.ac &&
+          services.tv &&
+          services.parking
+        ) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv &&
+            lodging.parking === services.parking
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (services.wifi && services.ac && services.tv || services.wifi && services.pets && services.tv) {
+          if (
+            lodging.wifi === services.wifi &&
+            lodging.ac === services.ac &&
+            lodging.tv === services.tv
+          ) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (services.wifi && services.ac) {
+          if (lodging.wifi === services.wifi && lodging.ac === services.ac) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        } else if (services.wifi) {
+          if (lodging.wifi === services.wifi) {
+            let demo = [];
+            demo.push(lodging.id);
+            return demo;
+          }
+        }
+      });
+      let onlyIds = exists.filter((e) => e !== undefined);
+      let onlyIds2 = onlyIds.map((e) => e[0]);
+      console.log('ONLY IDS', onlyIds2)
+      let servicesLodgings = filterLodings.filter((lodging) =>
+        onlyIds2.includes(lodging._id)
+      );
+      console.log('SERVICES', servicesLodgings)
+      return {
+        ...state,
+        lodgings: servicesLodgings,
+      };
 
-     /*  case "GET_USER": */
-        /* return {
+    /*  case "GET_USER": */
+    /* return {
           ...state,
           payment: action.payload,
         }; */
 
-       case "GET_CONVERSATIONS":
-        return {
-          ...state,
-          conversations: action.payload,
-        };
-        case "GET_BY_USER":
-          if (typeof action.payload === "string") {
-            return alert(" Not Found");
-          }
-          return {
-            ...state,
-            allGuests: action.payload,
-          };
-          case "GET_ALL_BOOKINGS":
-            return {
-              ...state,
-              bookingsall: action.payload,
-            };
+    case "GET_CONVERSATIONS":
+      return {
+        ...state,
+        conversations: action.payload,
+      };
+    case "GET_BY_USER":
+      if (typeof action.payload === "string") {
+        return Swal(
+          'Not Found','','error',{buttons:false,timer:3000}
+        );
+      }
+      return {
+        ...state,
+        allGuests: action.payload,
+      };
+    case "GET_ALL_BOOKINGS":
+      return {
+        ...state,
+        bookingsall: action.payload,
+      };
+    case "CLEAN_FILTERS":
+      let stateClean = state.allLodgings;
+      return {
+        ...state,
+        lodgings: stateClean,
+      };
 
     default:
       return { ...state };

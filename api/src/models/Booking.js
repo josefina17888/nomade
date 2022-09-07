@@ -26,7 +26,13 @@ const BookingSchema = new mongoose.Schema({
   dated: {
     type: Date
 },
+
+code: {
+  type: String,
+  required:true
+},
 visibility: { type: Boolean, default: true },
+emailV: { type: Boolean, default: false },
 });
 
 const model = mongoose.model("Booking", BookingSchema);

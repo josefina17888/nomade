@@ -13,6 +13,7 @@ import s from "../Booking/Booking.module.css";
 import getDatesInRange from "../Booking/controller";
 import MercadoPagoFinal from "../MercadoPago/MercadoPagoFinal";
 import DatePicker from "react-datepicker";
+import Swal from 'sweetalert'
 
 
 export default function Booking(props) {
@@ -24,7 +25,6 @@ export default function Booking(props) {
 
   //DECLARATION CONST FOR USE DATA
   const lodgingId = props.match.params._id;
-  console.log(lodgingId)
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
@@ -56,14 +56,12 @@ export default function Booking(props) {
   
   //GET RANGES OF DATES
     const alldates = getDatesInRange(checkIn, checkOut);
-    console.log(alldates, checkIn, checkOut, 'ALL DATES')
   
   //VER DISPONIBILIDAD DE DATES
     const unavailableDatesMap = unavailableDates.flat();
     const disabledDates = unavailableDatesMap.map((e) => new Date(e));
   //LODGING DETAIL
   //const costNight = lodging.price; 
-  console.log(costNight)
 
   const picture = lodging.picture;
   const obj = Object.assign({}, picture);
@@ -71,6 +69,16 @@ export default function Booking(props) {
   const city = lodging.city;
   const country = lodging.country;
 
+  const makeRandomId= (length) => {
+    let result = ''
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+   }
+   return result;
+}
+
+  const codeFunction = makeRandomId(10)
   //STATE BOOKING FINAL
   const [input, setInput] = useState({
     checkIn: checkIn,
@@ -83,15 +91,19 @@ export default function Booking(props) {
     costNight: costNight,
     pets: check,
     hostId: lodging.hostId,
-    total: total,
-    currency: "USD"
+    totalPrice: total,
+    code: codeFunction
   });
+
+ 
+
+
 
   const allDates = getDatesInRange(input.checkIn, input.checkOut);
   //DATA JOSE
   const total = costNight * allDates.length;
   useEffect(()=>{
-    setInput({...input, total:total})
+    setInput({...input, totalPrice:total})
   }, [])
 
   const [style, setStyle] = useState("className={s.cont}");
@@ -136,9 +148,8 @@ function onChangeCheckIn(currentDate){
     checkIn: new Date(currentDate).toDateString(),
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
-  console.log(input, 'INPUUUT')
 
 }
 useEffect(()=>{
@@ -147,7 +158,7 @@ useEffect(()=>{
     ...input,
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
 },[input.checkIn,input.checkOut])
 
@@ -159,7 +170,7 @@ function onChangeCheckOut(currentDate){
     checkOut: new Date(currentDate).toDateString(),
     allDates: start,
     night: start.length,
-    total: costNight * start.length
+    totalPrice: costNight * start.length
   })
 
 }
@@ -173,21 +184,23 @@ function onChangeCheckOut(currentDate){
     const isFound = unavailableDatesMap.some((date) =>
       allDates.includes(new Date(date).toDateString())
     );
-    console.log(preferenceId.hasOwnProperty(preferenceId))
     localStorage.setItem("booking", JSON.stringify(input));
-    isFound ? alert("NO DISPONIBLE") :
-    preference !== undefined? alert('Haz clic en el boton de pago') :
+    isFound ?  Swal(
+      'No disponible','','error',{buttons:false,timer:3000}
+    ) :
+    preference !== undefined?  Swal(
+      'Haz clic en el boton de pago','','warning',{buttons:false,timer:3000}
+    ) :
     // dispatch(payBooking(input))
     getPreference(input)
   }
   
   //MERCADO PAGO
   const preference = preferenceId.preferenceId;
-  console.log(preference)
 
   return (
-    <div className={style}>
-      <div className={s.nav}>
+    <div>
+        <div className={s.nav}>
         <div className={s.div_logo}>
           <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
             <div className="l10sdlqs dir dir-ltr">
@@ -198,17 +211,18 @@ function onChangeCheckOut(currentDate){
                 width="150"
                 height="60"
               />
-            </div>
-          </Link>
-        </div>
-      </div>
+              </div>
+              </Link>
+          </div>
+          </div>
       {!userEmail ? (
         <Link to="/login">
               <div> Debes registrarte</div>
         </Link>
     
       ) : (
-        <div className={s.container}>
+      <div className={s.container4}>
+          <div className={s.container}>
           <div className={s.margin}>
             <div className={s.titles}>Fechas de tu reservacion</div>
             <hr className={s.hr}></hr>
@@ -216,10 +230,10 @@ function onChangeCheckOut(currentDate){
               input.checkOut
             ).toLocaleDateString()}`}</div>
             <div>
-              <div>Edita tus fechas</div>
+              <div className={s.div}>Edita tus fechas</div>
               <div>
                 <div>
-                  <div>Llegada</div>
+                  <div className={s.div}>Llegada</div>
                   <DatePicker
                     disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
@@ -235,7 +249,7 @@ function onChangeCheckOut(currentDate){
                   />
                 </div>
                 <div>
-                  <div>Salida</div>
+                  <div className={s.div}>Salida</div>
                   <DatePicker
                     disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
@@ -255,7 +269,7 @@ function onChangeCheckOut(currentDate){
             <div className={s.titles}>Nómadas</div>
             <hr className={s.hr}></hr>
             <div className={s.selection}>
-              <span>Total </span>
+              <h6 className={s.inputcheck}>Total </h6>
               <input
                 type="number"
                 defaultValue={totalGuest}
@@ -263,9 +277,8 @@ function onChangeCheckOut(currentDate){
                 max={lodging.guests}
               ></input>
             </div>
-            <div className={s.selection}>
-              <span>Mascotas </span>
-              <input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
+            <div className={s.selection2}>
+              <h6 className={s.inputcheck}>Mascotas </h6><input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
             </div>
           </div>
           <div className={s.card}>
@@ -282,12 +295,8 @@ function onChangeCheckOut(currentDate){
                 <div>
                   <h6 className={s.sub2}>Costo Total</h6>
                   <h6 className={s.h1}>
-                    ${input.total} por {input.night} noches
+                    ${input.totalPrice} por {input.night} noches
                   </h6>
-                </div>
-                <div>
-                  <h6 className={s.sub1}>Comisión por servicio</h6>
-                  <h6 className={s.h}>$0</h6>
                 </div>
               </div>
               <div className={s.container3}>
@@ -304,9 +313,11 @@ function onChangeCheckOut(currentDate){
             <button className={s.button2} onClick={handleBooking} onmouseover={changeStyle}>
               Reservar
             </button>
-            <MercadoPagoFinal preferenceId={preference} />
           </div>
+          </div>
+          <MercadoPagoFinal preferenceId={preference} />                     
         </div>
+
       )}
     </div>
   );

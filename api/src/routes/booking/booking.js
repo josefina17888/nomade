@@ -8,7 +8,7 @@ const Guest = require("../../models/Guest");
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 const Token = require("../../models/Token")
-const {bookingConfirm} = require("../../../libs/sendEmail");
+const {bookingConfirm, review} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
 
 
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
       newBooking.hostId = toId(req.body.hostId);
       const infoGuest = await Guest.find({ email: req.body.email });
       let userId = infoGuest[0]._id;
-      newBooking.totalPrice = newBooking.costNight * newBooking.night;
+      // newBooking.totalPrice = newBooking.costNight * newBooking.night;
       newBooking.dated = dated
       newBooking.guestId = userId;
       newBooking.save();
@@ -81,26 +81,25 @@ router.get("/all/:guestId", async (req, res) => {
 
 router.post("/emailVerified/:email",async (req, res) => {
   const {email} = req.params
-  console.log(email)
-  console.log(req.body)
     try{
       const userExist = await Guest.findOne({ email });
-      const tokenExist = await Token.findOne({userId: userExist._id})
-      console.log(tokenExist)
-      if(tokenExist === null) {
-        const token = new Token({
-          userId: userExist._id,
-          token: generateToken(userExist._id)
-        })
-        token.save()
+      const booking = await Booking.findOne({code: req.body.code})
+      if(booking.emailV === false){
+          booking.emailV = true
+          booking.save()
+          const infoLoding = await Lodging.findOne({_id: req.body.lodgingId})
+          const title = "Tu reserva se realizó con éxito"
+          const title2 = "¿Cómo estuvo tu experiencia nómade? Déjanos tus comentarios"
+          const infoBooking = req.body
+          const url = `http://localhost:3000/lodgingreview/${userExist._id}/${infoLoding._id}`
+          await bookingConfirm(userExist.email,"Reserva confirmada",title , infoLoding ,infoBooking)
+          await review(userExist.email,"Deja tu reseña",title2 , infoLoding ,infoBooking,url)
+          res.status(201).send("Verifica tu correo")
+          
       } else {
-        return  res.send("Ya te envié el correo gil")
+         return  res.send("Correo de reserva ya enviado")
       }      
-      const lodging = await Lodging.findOne({_id: req.body.lodgingId})
-      const title = "Tu reserva se realizó con éxito"
-      const msg = `Tu pago ha sido aprobado , tu estadia en ${lodging.title} te espera desde el ${new Date(req.body.checkIn).toLocaleDateString()} al ${new Date(req.body.checkOut).toLocaleDateString()} Ciudad: `
-      await bookingConfirm(userExist.email,"Reserva confirmada",title , msg )
-      res.status(201).send("Verifica tu correo")
+     
     }
       catch (error){
           res.status(404).send(error)

@@ -11,12 +11,12 @@ export default function AllCardsPaging ({lodgingPerPage, stateLodgings, paging})
     return(
         
            <div>
-                {pageNumbers.map((number) => {
+                {/* {pageNumbers.map((number) => {
                     return(
                     <button key = {number}
                    className={styles.pag} onClick = { ()=> paging(number) } > {number} </button>
                     )})
-                }
+                } */}
             </div>
         
     )
