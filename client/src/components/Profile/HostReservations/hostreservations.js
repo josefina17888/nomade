@@ -20,6 +20,7 @@ export default function Reservations() {
     const[lodgings, setLodgings] = useState("")
     const [date, setDate] = useState(new Date());
     const[bookings, setBookings]= useState("")
+    const [id, setId]= useState("")
     const[disabledDates, setDisabledDates]= useState("")
 
 //SELECT STATES FROM REDUX
@@ -41,7 +42,34 @@ const dispatch = useDispatch()
     
         const handleClick = (e) => {
             let id= { lodgingId: e.target.value }
-            console.log(id)
+            setId(id)
+            // const getBookingsInfo = async () => {
+            //     try {
+            //         const res = await axios.post('/api/booking/booking', id )
+            //         let bookingsGot = res.data
+            //         console.log(bookingsGot)
+            //         setBookings(bookingsGot)
+
+            //         const unavailableDates = 
+            //         await bookingsGot.map((e) =>
+            //         e.allDates.map((d) => new Date(d).toDateString())
+            //         );
+
+            //                //VER DISPONIBILIDAD DE DATES
+            //         const unavailableDatesMap = await unavailableDates.flat();
+            //         const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
+            //         setDisabledDates(disabledDates)
+
+            //        }catch(err){
+            //         console.log(err)
+            //         }
+            //     }
+            //    getBookingsInfo();
+          };
+
+          console.log(id)
+          
+          useEffect(()=>{
             const getBookingsInfo = async () => {
                 try {
                     const res = await axios.post('/api/booking/booking', id )
@@ -64,13 +92,11 @@ const dispatch = useDispatch()
                     }
                 }
                getBookingsInfo();
-          };
+          }, [id])
+
+          console.log(lodgings)
           console.log(bookings)
           console.log(disabledDates)
-          console.log(lodgings)
-          
-          
-
 
     return(
         <div className={style.container1}>
