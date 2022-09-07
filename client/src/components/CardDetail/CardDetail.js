@@ -129,26 +129,18 @@ export default function CardDetail(props) {
                   <Carousel activeIndex={index} onSelect={handleSelect}>
                     <Carousel.Item>
                       <img
-                        className="d-block w-100 rounded"
-                        src={picture1}
-                        alt="First slide"
-                      />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <img
-                        className="d-block w-100 rounded"
-                        src={picture2}
-                        alt="Second slide"
-                      />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <img
-                        className="d-block w-100 rounded"
-                        src={picture3}
-                        alt="Third slide"
-                      />
-                    </Carousel.Item>
-                  </Carousel>
+                        className="d-block w-100"
+                        src={e}
+                        alt="slide"
+                      /></Carousel.Item>)
+                      :
+                      <div>No pudimos proveer las imágenes
+                      </div>
+                    }
+                    
+                    </Carousel>
+                  </div>
+
                 </div>
               </div>
               <div className="d-block">
