@@ -52,7 +52,7 @@ export default function Status() {
   } */
   return (
     <div className="_16grqhk">
-      <NavBar />
+     {/*  <NavBar /> */}
       <div className={styles.container2}>
         {realStatus === "approved" ? (
           <div>
