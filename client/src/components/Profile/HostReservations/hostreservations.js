@@ -31,7 +31,7 @@ const dispatch = useDispatch()
                 let lodgingsGot = response.data
                 console.log(lodgingsGot)
                 let lodgingsVisibles= await lodgingsGot.filter((e)=> (e).Visibility===true)
-                setLodgings(lodgingsVisibles)
+                 setLodgings(lodgingsVisibles)
                }catch(err){
                 console.log(err)
                 }
