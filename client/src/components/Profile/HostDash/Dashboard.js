@@ -44,13 +44,14 @@ console.log(lodg)
 
 
 
-const handleClick = ({_id}) => {
-    const target= _id
-    const id= { lodgingId: target }
+const handleClick = (e) => {
+    const target= e.target.value
+    const id = target
+    console.log(id)
+
     const getBookingsInfo = async () => {
         try {
             const res = await axios.post('/api/booking/booking', id )
-            console.log(target)
             let bookingsGot = res.data
             console.log(bookingsGot)
             setBookings(bookingsGot)
@@ -60,25 +61,26 @@ const handleClick = ({_id}) => {
             e.allDates.map((d) => new Date(d).toDateString())
             );
 
+            console.log(unavailableDates)
+
                    //VER DISPONIBILIDAD DE DATES
-            const unavailableDatesMap = unavailableDates.flat();
+            const unavailableDatesMap = await unavailableDates.flat();
             const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
             setDisabledDates(disabledDates)
+            console.log(disabledDates)
 
-        if (!disabledDates){
-        try{
-            let data = await axios.patch("/api/lodging/detail/" + _id)
-            }catch(err){
-            console.log(err)
-            }
-        } else {
+            if (!disabledDates.length){
+            let data = await axios.patch(`/api/lodging/detail/${id}`)
+            window.location.reload(true);
+            } else {
             return Swal(
                 'No puedes eliminar un alojamiento con reservas activas','','error',{buttons:false,timer:3500}
               )
         }
     } catch(err){console.log(err)}
-        getBookingsInfo();
+        
 }
+getBookingsInfo();
 }
 
    return (
@@ -92,7 +94,7 @@ const handleClick = ({_id}) => {
                 <h5>{e.title}</h5>
                 <div className={style.container1}>
                 <img src={e.picture["0"]} alt="img not found" width="200" height="130" className={style.img}/>
-                <button  onClick={(e) => handleClick(e._id)} className={style.button}>x</button>
+                <button value={e._id} onClick={(e) => handleClick(e)} className={style.button}>x</button>
                 </div>
                 </div>
                 )) 
