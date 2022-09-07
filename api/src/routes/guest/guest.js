@@ -33,8 +33,8 @@ router.post("/", upload.single("picture") ,async (req, res) => {
         token: generateToken(newGuest._id)
       })
       token.save()
-      const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
-      // const url = `https://nomade-henry.herokuapp.com/api/guest/${newGuest._id}/verify/${token.token}`;
+      //const url = `${process.env.BASE_URL}api/guest/${newGuest._id}/verify/${token.token}`;
+       const url = `https://nomade-henry.herokuapp.com/api/guest/${newGuest._id}/verify/${token.token}`;
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(newGuest.email,"Verify Email",title , msg , url)
@@ -58,8 +58,8 @@ router.post("/reverified",async (req, res) => {
         token: generateToken(userExist._id)
       })
       token.save()
-      const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
-      // const url = `https://nomade-henry.herokuapp.com/api/guest/${userExist._id}/verify/${token.token}`;
+      //const url = `${process.env.BASE_URL}api/guest/${userExist._id}/verify/${token.token}`;
+       const url = `https://nomade-henry.herokuapp.com/api/guest/${userExist._id}/verify/${token.token}`;
       const title = "Gracias por unirte a la comunidad Nómade"
       const msg = "Estas a unos pasos de poder disfrutar todos nuestros alojamientos Sólo da click al boton de abajo."
       await verifyEmail(userExist.email,"Verify Email",title , msg , url)
