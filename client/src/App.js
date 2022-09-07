@@ -59,12 +59,11 @@ function App() {
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
-          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route exact path='/booking/:_id' component={Booking}/>
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route exact path= '/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
+          <Route exact path='/lodgingreview/:guestId/:lodgingId' component={LodgingReview}/>
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
