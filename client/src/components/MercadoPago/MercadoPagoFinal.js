@@ -1,7 +1,9 @@
 
 import React, { useEffect, useState }  from 'react';
+import s from "../Booking/Booking.module.css"
 // import MercadoPago from "react-sdk-mercadopago"
 const FORM_ID = 'payment-form';
+
 
 export default function MercadoPagoFinal({preferenceId}) {
 
@@ -46,8 +48,8 @@ export default function MercadoPagoFinal({preferenceId}) {
   
 
 return (
-  <div>
-  <form id={FORM_ID} method="GET" />
+  <div className={s.mp}>
+  <form id={FORM_ID} method="GET" className={s.mp1}/>
  
   </div>
 )

@@ -8,7 +8,7 @@ const Guest = require("../../models/Guest");
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 const Token = require("../../models/Token")
-const {bookingConfirm} = require("../../../libs/sendEmail");
+const {bookingConfirm, review} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
 
 
@@ -87,11 +87,13 @@ router.post("/emailVerified/:email",async (req, res) => {
       if(booking.emailV === false){
           booking.emailV = true
           booking.save()
-          console.log(booking.emailV)
           const infoLoding = await Lodging.findOne({_id: req.body.lodgingId})
           const title = "Tu reserva se realizó con éxito"
+          const title2 = "¿Cómo estuvo tu experiencia nómade? Déjanos tus comentarios"
           const infoBooking = req.body
+          const url = `http://localhost:3000/lodgingreview/${userExist._id}/${infoLoding._id}`
           await bookingConfirm(userExist.email,"Reserva confirmada",title , infoLoding ,infoBooking)
+          await review(userExist.email,"Deja tu reseña",title2 , infoLoding ,infoBooking,url)
           res.status(201).send("Verifica tu correo")
           
       } else {

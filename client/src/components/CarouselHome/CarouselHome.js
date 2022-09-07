@@ -69,7 +69,7 @@ export default function TopRated() {
         autoPlay={true}
         autoPlaySpeed={3000}
         keyBoardControl={true}
-        customTransition="all .5"
+        customTransition="all 1s ease"
         transitionDuration={500}
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
@@ -79,10 +79,12 @@ export default function TopRated() {
             className={style.link}
             to={randomLodging1 ? `detail/${randomLodging1._id}` : ""}
           >
+            <div className={style.containerImage}>
             <img
               className={style.imgCard}
               src={randomLodging1 ? randomLodging1.picture[0] : ""}
             ></img>
+            </div>
             <h4 className={style.title}>
               {randomLodging1
                 ? randomLodging1.city.charAt(0).toUpperCase() +
@@ -101,10 +103,12 @@ export default function TopRated() {
             className={style.link}
             to={randomLodging2 ? `detail/${randomLodging2._id}` : ""}
           >
+            <div className={style.containerImage}>
             <img
               className={style.imgCard}
               src={randomLodging2 ? randomLodging2.picture[0] : ""}
             ></img>
+            </div>
             <h4 className={style.title}>
               {randomLodging2
                 ? randomLodging2.city.charAt(0).toUpperCase() +
@@ -123,10 +127,12 @@ export default function TopRated() {
             className={style.link}
             to={randomLodging3 ? `detail/${randomLodging3._id}` : ""}
           >
+            <div className={style.containerImage}>
             <img
               className={style.imgCard}
               src={randomLodging3 ? randomLodging3.picture[0] : ""}
             ></img>
+            </div>
             <h4 className={style.title}>
               {randomLodging3
                 ? randomLodging3.city.charAt(0).toUpperCase() +
@@ -145,10 +151,12 @@ export default function TopRated() {
             className={style.link}
             to={randomLodging4 ? `detail/${randomLodging4._id}` : ""}
           >
+            <div className={style.containerImage}>
             <img
               className={style.imgCard}
               src={randomLodging4 ? randomLodging4.picture[0] : ""}
             ></img>
+            </div>
             <h4 className={style.title}>
               {randomLodging4
                 ? randomLodging4.city.charAt(0).toUpperCase() +
@@ -167,10 +175,12 @@ export default function TopRated() {
             className={style.link}
             to={randomLodging5 ? `detail/${randomLodging5._id}` : ""}
           >
+            <div className={style.containerImage}>
             <img
               className={style.imgCard}
               src={randomLodging5 ? randomLodging5.picture[0] : ""}
             ></img>
+            </div>
             <h4 className={style.title}>
               {randomLodging5
                 ? randomLodging5.city.charAt(0).toUpperCase() +
@@ -189,10 +199,12 @@ export default function TopRated() {
             className={style.link}
             to={randomLodging6 ? `detail/${randomLodging6._id}` : ""}
           >
+            <div className={style.containerImage}>
             <img
               className={style.imgCard}
               src={randomLodging6 ? randomLodging6.picture[0] : ""}
             ></img>
+            </div>
             <h4 className={style.title}>
               {randomLodging6
                 ? randomLodging6.city.charAt(0).toUpperCase() +
