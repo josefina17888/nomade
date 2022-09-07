@@ -42,29 +42,58 @@ const dispatch = useDispatch()
         const handleClick = (e) => {
             let id= { lodgingId: e.target.value }
             console.log(id)
-            const getBookingsInfo = async () => {
-                try {
-                    const res = await axios.post('/api/booking/booking', id )
-                    let bookingsGot = res.data
-                    console.log(bookingsGot)
-                    setBookings(bookingsGot)
+            // const getBookingsInfo = async () => {
+            //     try {
+            //         const res = await axios.post('/api/booking/booking', id )
+            //         let bookingsGot = res.data
+            //         console.log(bookingsGot)
+            //         setBookings(bookingsGot)
 
-                    const unavailableDates = 
-                    await bookingsGot.map((e) =>
-                    e.allDates.map((d) => new Date(d).toDateString())
-                    );
+            //         const unavailableDates = 
+            //         await bookingsGot.map((e) =>
+            //         e.allDates.map((d) => new Date(d).toDateString())
+            //         );
 
-                           //VER DISPONIBILIDAD DE DATES
-                    const unavailableDatesMap = await unavailableDates.flat();
-                    const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
-                    setDisabledDates(disabledDates)
+            //                //VER DISPONIBILIDAD DE DATES
+            //         const unavailableDatesMap = await unavailableDates.flat();
+            //         const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
+            //         setDisabledDates(disabledDates)
 
-                   }catch(err){
-                    console.log(err)
-                    }
-                }
-               getBookingsInfo();
+            //        }catch(err){
+            //         console.log(err)
+            //         }
+            //     }
+            //    getBookingsInfo();
           };
+
+          useEffect (() => {
+            const getBookingsInfo = async () => {
+                    try {
+                        let id= { lodgingId: e.target.value }
+                        const res = await axios.post('/api/booking/booking', id )
+                        let bookingsGot = res.data
+                        console.log(bookingsGot)
+                        setBookings(bookingsGot)
+    
+                        const unavailableDates = 
+                        await bookingsGot.map((e) =>
+                        e.allDates.map((d) => new Date(d).toDateString())
+                        );
+    
+                               //VER DISPONIBILIDAD DE DATES
+                        const unavailableDatesMap = await unavailableDates.flat();
+                        const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
+                        setDisabledDates(disabledDates)
+    
+                       }catch(err){
+                        console.log(err)
+                        }
+                    }
+                   getBookingsInfo();
+    
+                }, [])
+
+
           console.log(bookings)
           console.log(disabledDates)
           console.log(lodgings)
