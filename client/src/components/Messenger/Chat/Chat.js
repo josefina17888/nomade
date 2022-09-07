@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../../NavBar/NavBar";
 import ResDetail from "../ResDetail/ResDetail";
+import ResDetailHost from "../ResDetailHost/ResDetailHost";
 import s from "./Chat.module.css";
 import Conversation from "../Conversation/Conversation";
 import Message from "../Message/Message";
@@ -33,6 +34,8 @@ export default function Chat() {
     });
   }, [ENDPOINT]);
 
+
+
   if (localStorage.booking) {
     const bookingInfo = JSON.parse(localStorage.getItem("booking"));
     let hostId = bookingInfo.hostId;
@@ -64,6 +67,7 @@ export default function Chat() {
       newConversation();
     }, [conversations]);
   }
+
 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
@@ -209,7 +213,7 @@ export default function Chat() {
                   </div>
                 </>
               ) : (
-                <div className={s.noConv}><span >Selecciona un Chat</span></div>
+                <div className={s.noConv}><span >Selecciona una Conversacion</span></div>
                 
               )}
             </div>
@@ -222,7 +226,8 @@ export default function Chat() {
           </div>
 
           <div ref={scrollRef} className={s.reserv}>
-            <ResDetail bookingInfo={bookingInfo} />
+            {localStorage.booking?(<ResDetail bookingInfo={bookingInfo} />):(<ResDetailHost/>)}
+            
           </div>
         </div>
       </div>
