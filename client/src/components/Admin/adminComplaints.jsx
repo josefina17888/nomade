@@ -4,6 +4,7 @@ import AllComplaints from '../AllComplaints/AllComplaints.jsx';
 import Menu from './menuAdmin';
 import NavBar from '../NavBar/NavBar';
 import {getGuests} from "../../Redux/Actions/index";
+import styles from './admin.module.css'
 //import styles from './Home.module.css'
 import Profile from '../Profile/profile';
 export default function Home() {
@@ -39,12 +40,12 @@ export default function Home() {
   };
 
   return (
-    <div className="c1kae56o dir dir-ltr">
+    <div className={styles.ComplaintsNavBar}>
       {userToken && allGuests[0]!== undefined && admin === true?
     <div>
     <NavBar
     email={user?user.email: ""} />
-    <Menu setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
+    <Menu  setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     <AllComplaints setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     </div>:
     <h1>No puedes ver esta pagina.</h1>}

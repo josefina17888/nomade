@@ -6,6 +6,7 @@ import NavBar from '../NavBar/NavBar';
 import {getGuests} from "../../Redux/Actions/index";
 import { IoChevronUpCircleOutline } from "react-icons/io5";
 import styles from "../Home/Home.module.css";
+import s from './admin.module.css'
 //import styles from './Home.module.css'
 import Profile from '../Profile/profile';
 export default function Home() {
@@ -51,11 +52,12 @@ export default function Home() {
 
 
   return (
-    <div className="c1kae56o dir dir-ltr">
+    <div className={s.lodgingsNavBar}>
        {userToken && allGuests[0]!== undefined && admin === true ?
     <div>
     <NavBar
     email={user?user.email: ""} />
+    <Menu  setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
     <AllCards
         setCurrentPage={setCurrentPage}
         paging={paging}
