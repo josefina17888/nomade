@@ -20,7 +20,6 @@ export default function Reservations() {
     const[lodgings, setLodgings] = useState("")
     const [date, setDate] = useState(new Date());
     const[bookings, setBookings]= useState("")
-    const [id, setId]= useState("")
     const[disabledDates, setDisabledDates]= useState("")
 
 //SELECT STATES FROM REDUX
@@ -42,34 +41,7 @@ const dispatch = useDispatch()
     
         const handleClick = (e) => {
             let id= { lodgingId: e.target.value }
-            setId(id)
-            // const getBookingsInfo = async () => {
-            //     try {
-            //         const res = await axios.post('/api/booking/booking', id )
-            //         let bookingsGot = res.data
-            //         console.log(bookingsGot)
-            //         setBookings(bookingsGot)
-
-            //         const unavailableDates = 
-            //         await bookingsGot.map((e) =>
-            //         e.allDates.map((d) => new Date(d).toDateString())
-            //         );
-
-            //                //VER DISPONIBILIDAD DE DATES
-            //         const unavailableDatesMap = await unavailableDates.flat();
-            //         const disabledDates = await unavailableDatesMap.map((e) => new Date(e));
-            //         setDisabledDates(disabledDates)
-
-            //        }catch(err){
-            //         console.log(err)
-            //         }
-            //     }
-            //    getBookingsInfo();
-          };
-
-          console.log(id)
-          
-          useEffect(()=>{
+            console.log(id)
             const getBookingsInfo = async () => {
                 try {
                     const res = await axios.post('/api/booking/booking', id )
@@ -92,15 +64,17 @@ const dispatch = useDispatch()
                     }
                 }
                getBookingsInfo();
-          }, [id])
-
-          console.log(lodgings)
+          };
           console.log(bookings)
           console.log(disabledDates)
+          console.log(lodgings)
+          
+          
+
 
     return(
-        <div className={style.container1}>
-            <NavBar />
+    <div className={style.container1}>
+                <NavBar />
         <div className={style.container3}>
             <div className={style.container2}>
             {
@@ -111,47 +85,47 @@ const dispatch = useDispatch()
                 <h6>{e.title}</h6>
                 <img src={e.picture["0"]} alt="img not found" width="200" height="130"/>
                 <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}>
-                    <AiTwotoneCalendar>
-                    <div className={style.hidden}>{e._id}</div>
-                    </AiTwotoneCalendar>
-                    </button>
+                   Id: {e._id}
+                </button>
                 </div>
                 )) 
             } 
             </div>
+            
             <div className={style.calendar}>
                 <div>
-                    <div>
                 <DatePicker
                 value={date}
                 highlightDates={disabledDates}
                 disabledKeyboardNavigation
                 monthsShown={2}
                 inline
-                />
-                    </div>
-                </div>
-            {
+                /></div>
+                {
                            
-                !bookings ? <h5>Haz doble click sobre un alojamiento para conocer sus reservas</h5> :
+                !bookings ? <h5></h5> : 
+                
                 bookings.map((e)=>
                 <div>
-                <div className={style.container1}>
-                <div className={style.container5}>
-                <div className={style.margin}>
-                <h6>Check In: {new Date (e.checkIn).toLocaleDateString()} </h6>
+                <div className={style.container6}>
+                    <div className={style.container5}>
+                        <div className={style.margin}>
+                        <h6>Check In: {new Date (e.checkIn).toLocaleDateString()} </h6>
+                        </div>
+                        <div className={style.margin}>
+                        <h6>Check Out: {new Date (e.checkOut).toLocaleDateString()} </h6>
+                        </div>
+                    </div>
                 </div>
-                <div className={style.margin}>
-                <h6>Check Out: {new Date (e.checkOut).toLocaleDateString()} </h6>
-                </div>
-                </div>
-                </div>
-                </div>
+            </div>
                 )
                         
             }
+            <div>
+            <h5>Haz doble click sobre un alojamiento para conocer sus reservas</h5>
             </div>
         </div>
-        </div>
+    </div>
+    </div>
     )
 }

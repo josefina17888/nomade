@@ -33,8 +33,8 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.hostId = toId(req.params.hostId);
     newLodging.latitud = req.body.latitud
     newLodging.save();
-    //res.redirect("http://localhost:3000/")  
-     res.redirect("https://nomade-khaki.vercel.app/")
+    res.redirect("http://localhost:3000/")  
+    // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.status(400).send("No se pudo crear el alojamiento");
   }
@@ -99,10 +99,10 @@ router.get("/:hostId", async (req, res) => {
 })
 
 //MODIFICA ALOJAMIENTO A VISIBILITY FALSE
-router.patch("/:_id", async (req, res) => {
+router.patch("/detail/:id", async (req, res) => {
       
   try {
-    let lodgingId = toId(req.params._id)
+    let lodgingId = toId(req.params.id)
     await Lodging.findByIdAndUpdate(lodgingId, { Visibility: 'false' }).exec();
     res.send("actualizado con exito")
   } catch (error) {
