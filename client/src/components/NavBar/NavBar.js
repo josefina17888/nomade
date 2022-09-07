@@ -34,7 +34,6 @@ export default function NavBar(props) {
   }
 
   const location = window.location.pathname;
-  console.log(location, 'LOCATION')
 
   //GET HOST
   useEffect(()=>{
@@ -44,10 +43,8 @@ export default function NavBar(props) {
   const allGuests = useSelector((state) => state.allGuests);
   const userBusqueda = useSelector((state) => state.userBusqueda);
   let arrFilter =  allGuests.filter(e => e.email === userToken)
-  console.log(userToken)
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
-    console.log(validateHost, 'VALIDATE HOST')
     e.preventDefault();
     if(validateHost[0] && userToken){
       const hostObject = validateHost[0]

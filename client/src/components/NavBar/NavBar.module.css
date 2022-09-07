@@ -8,6 +8,7 @@
     align-items: center;
     padding: 2em 6em 0em 6em;
     width: 100%;
+    position: relative;
   }
 .div_logo{
     width: 150px;

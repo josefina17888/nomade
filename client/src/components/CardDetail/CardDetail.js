@@ -7,6 +7,7 @@ import {
   getDetail,
   getGuestByEmail,
   deleteLodging,
+  getGuestByHostId,
 } from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
 import GoogleMapDetail from "../GoogleMapsDetail/GoogleMapsDetail";
@@ -45,7 +46,11 @@ export default function CardDetail(props) {
   } else {
     var userToken = JSON.parse(guestId)._id;
     var userEmail = JSON.parse(guestId).email;
-  }
+  } 
+  const myLodging = useSelector((state) => state.detail); 
+  const [hostId, setHostId]=useState({
+    hostId:""
+  })
   useEffect(() => {
     dispatch(getGuests());
     dispatch(getDetail(lodgingId));
@@ -53,11 +58,16 @@ export default function CardDetail(props) {
     dispatch(lodgingReviews());
   }, [dispatch]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-  
+
+  useEffect(() => { 
+    setTimeout(()=>{
+      setHostId({...hostId, hostId:myLodging.hostId}) 
+    dispatch(getGuestByHostId(hostId))},2000)
+    window.scrollTo(0, 0);
+  }, []);
+
   const myLodging = useSelector((state) => state.detail);
+
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
   const validateHost = useSelector((state) => state.hosts);
@@ -75,14 +85,16 @@ export default function CardDetail(props) {
 
   const lodgingServices = [];
   const lodgingNoServices = [];
-  var filterHost = allGuests.filter((e) => e._id === arrFilter[0]._id);
+
+  // var filterHost = allGuests.filter((e) => e._id === validateHost[0]._id);
+
   var nameHost = "";
 
-  for (let property in filterHost[0]) {
-    if (property === "name") {
-      nameHost = filterHost[0].name;
-    }
-  }
+  // for (let property in filterHost[0]) {
+  //   if (property === "name") {
+  //     nameHost = filterHost[0].name;
+  //   }
+  // }
 
   for (const property in servicios) {
     if (servicios[property] === true) {
@@ -118,7 +130,6 @@ export default function CardDetail(props) {
       {myLodging === undefined ? (
         <p>Loading...</p>
       ) : (
-        <div>
         <div className={styles.first_container}>
           <div className="w-75">
             <div className={styles.container}>
@@ -128,280 +139,266 @@ export default function CardDetail(props) {
               <div className="p-2 w-100 rounded d-flex justify-content-center">
                 <div className={styles.container_img}>
                   <Carousel
-                      activeIndex={index}
-                      onSelect={handleSelect}
-                      className="_168ht2w"
-                    >
-                    {
-                      picture?
-                      picture.map((e)=>
-                      <Carousel.Item className="_168ht2w">
-                      <img
-                        className="d-block w-100"
-                        src={e}
-                        alt="slide"
-                      /></Carousel.Item>)
-                      :
-                      <div>No pudimos proveer las imágenes
-                      </div>
-                    }
-                    
-                    </Carousel>
-                  </div>
-
+                    activeIndex={index}
+                    onSelect={handleSelect}
+                    className="_168ht2w"
+                  >
+                    {picture ? (
+                      picture.map((e) => (
+                        <Carousel.Item className="_168ht2w">
+                          <img className="d-block w-100" src={e} alt="slide" />
+                        </Carousel.Item>
+                      ))
+                    ) : (
+                      <div>No pudimos proveer las imágenes</div>
+                    )}
+                  </Carousel>
                 </div>
               </div>
-              <div className="d-block">
-                <div className="d-flex justify-content-center">
-                  <h5 className={styles.city}>{myLodging.city}, {myLodging.country}</h5>
-                </div>
-                <div className="d-flex justify-content-center">
-                  <div className={styles.container_text}>
-                    <div>
-                      <h3 className={styles.titles}>Alojamiento</h3>
-                      <div className={styles.description_lodging}>
-                        <div>
-                          <div>Anfitrión: {nameHost}</div>
-                          <div>Tipo: {myLodging.lodgingType}</div>
-                        </div>
-                        <div>
-                          <div>Huéspedes: {myLodging.guests} </div>
-                          <div>Recámaras: {myLodging.rooms}</div>
-                        </div>
-                        <div>
-                          <div>Camas: {myLodging.beds}</div>
-                          <div>Baños: {myLodging.bathrooms}</div>
-                        </div>
+              <div className="d-block"></div>
+              <div className="d-flex justify-content-center">
+                <h5 className={styles.city}>
+                  {myLodging.city}, {myLodging.country}
+                </h5>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div className={styles.container_text}>
+                  <div>
+                    <h3 className={styles.titles}>Alojamiento</h3>
+                    <div className={styles.description_lodging}>
+                      <div>
+                        <div>Anfitrión: {nameHost}</div>
+                        <div>Tipo: {myLodging.lodgingType}</div>
+                        <div>Baños: {myLodging.bathrooms}</div>
+                      </div>
+                      <div>
+                        <div>Huéspedes: {myLodging.guests} </div>
+                        <div>Habitaciones: {myLodging.rooms}</div>
+                      </div>
+                      <div>
+                        <div>Camas: {myLodging.beds}</div>
+                        <div>Mascotas: {myLodging.pets?"si":"no"}</div>
                       </div>
                     </div>
-                    <div>
-                      <h3 className={styles.titles}>Descripción</h3>
-                      <div className="d-flex justify-content-center">
-                        <div className={styles.description}>
-                          {myLodging.description}
-                        </div>
+                  </div>
+                  <div>
+                    <h3 className={styles.titles}>Descripción</h3>
+                    <div className="d-flex justify-content-center">
+                      <div className={styles.description}>
+                        {myLodging.description}
                       </div>
                     </div>
-                    <div>
-                      <h3 className={styles.titles}>Servicios Incluidos</h3>
-                      <div className="d-flex justify-content-center">
-                        <div className={styles.services}>
-                          <div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <AiOutlineWifi />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("wifi") ? (
-                                  <p className={styles.p1}>Wifi</p>
-                                ) : (
-                                  <p className={styles.p2}>Wifi</p>
-                                )}
-                              </div>
+                  </div>
+                  <div>
+                    <h3 className={styles.titles}>Servicios Incluidos</h3>
+                    <div className="d-flex justify-content-center">
+                      <div className={styles.services}>
+                        <div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <AiOutlineWifi />
                             </div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <GiThermometerCold />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("ac") === true ? (
-                                  <p className={styles.p1}>
-                                    Aire Acondicionado
-                                  </p>
-                                ) : (
-                                  <p className={styles.p2}>
-                                    Aire Acondicionado
-                                  </p>
-                                )}
-                              </div>
-                            </div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <GiShower />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("hotWater") ===
-                                true ? (
-                                  <p className={styles.p1}>Agua Caliente</p>
-                                ) : (
-                                  <p className={styles.p2}>Agua Caliente</p>
-                                )}
-                              </div>
+                            <div>
+                              {lodgingServices.includes("wifi") ? (
+                                <p className={styles.p1}>Wifi</p>
+                              ) : (
+                                <p className={styles.p2}>Wifi</p>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <MdOndemandVideo />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("tv") === true ? (
-                                  <p className={styles.p1}>Televisión</p>
-                                ) : (
-                                  <p className={styles.p2}>Televisión</p>
-                                )}
-                              </div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <GiThermometerCold />
                             </div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <MdSecurity />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("security") ===
-                                true ? (
-                                  <p className={styles.p1}>Seguridad</p>
-                                ) : (
-                                  <p className={styles.p2}>Seguridad</p>
-                                )}
-                              </div>
-                            </div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <AiFillCar />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("parking") ===
-                                true ? (
-                                  <p className={styles.p1}>Estacionamiento</p>
-                                ) : (
-                                  <p className={styles.p2}>Estacionamiento</p>
-                                )}
-                              </div>
+                            <div>
+                              {lodgingServices.includes("ac") === true ? (
+                                <p className={styles.p1}>Aire Acondicionado</p>
+                              ) : (
+                                <p className={styles.p2}>Aire Acondicionado</p>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <MdCleaningServices />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("cleaning") ===
-                                true ? (
-                                  <p className={styles.p1}>Limpieza</p>
-                                ) : (
-                                  <p className={styles.p2}>Limpieza</p>
-                                )}
-                              </div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <GiShower />
                             </div>
-
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <GiWashingMachine />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("laundry") ===
-                                true ? (
-                                  <p className={styles.p1}>Lavandería</p>
-                                ) : (
-                                  <p className={styles.p2}>Lavandería</p>
-                                )}
-                              </div>
-                            </div>
-
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <GiCookingPot />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("kitchen") ===
-                                true ? (
-                                  <p className={styles.p1}>Cocina</p>
-                                ) : (
-                                  <p className={styles.p2}>Cocina</p>
-                                )}
-                              </div>
+                            <div>
+                              {lodgingServices.includes("hotWater") === true ? (
+                                <p className={styles.p1}>Agua Caliente</p>
+                              ) : (
+                                <p className={styles.p2}>Agua Caliente</p>
+                              )}
                             </div>
                           </div>
-                          <div>
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <MdLocalDining />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("dining") === true ? (
-                                  <p className={styles.p1}>Comedor</p>
-                                ) : (
-                                  <p className={styles.p2}>Comedor</p>
-                                )}
-                              </div>
+                        </div>
+                        <div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <MdOndemandVideo />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("tv") === true ? (
+                                <p className={styles.p1}>Televisión</p>
+                              ) : (
+                                <p className={styles.p2}>Televisión</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <MdSecurity />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("security") === true ? (
+                                <p className={styles.p1}>Seguridad</p>
+                              ) : (
+                                <p className={styles.p2}>Seguridad</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <AiFillCar />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("parking") === true ? (
+                                <p className={styles.p1}>Estacionamiento</p>
+                              ) : (
+                                <p className={styles.p2}>Estacionamiento</p>
+                              )}
                             </div>
 
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <FaSwimmingPool />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("pool") === true ? (
-                                  <p className={styles.p1}>Piscina</p>
-                                ) : (
-                                  <p className={styles.p2}>Piscina</p>
-                                )}
-                              </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <MdCleaningServices />
                             </div>
+                            <div>
+                              {lodgingServices.includes("cleaning") === true ? (
+                                <p className={styles.p1}>Limpieza</p>
+                              ) : (
+                                <p className={styles.p2}>Limpieza</p>
+                              )}
+                            </div>
+                          </div>
 
-                            <div className="d-flex flex-row gap-1">
-                              <div>
-                                <MdOutlinePets />
-                              </div>
-                              <div>
-                                {lodgingServices.includes("pets") === true ? (
-                                  <p className={styles.p1}>Mascotas</p>
-                                ) : (
-                                  <p className={styles.p2}>Mascotas</p>
-                                )}
-                              </div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <GiWashingMachine />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("laundry") === true ? (
+                                <p className={styles.p1}>Lavandería</p>
+                              ) : (
+                                <p className={styles.p2}>Lavandería</p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <GiCookingPot />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("kitchen") === true ? (
+                                <p className={styles.p1}>Cocina</p>
+                              ) : (
+                                <p className={styles.p2}>Cocina</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <MdLocalDining />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("dining") === true ? (
+                                <p className={styles.p1}>Comedor</p>
+                              ) : (
+                                <p className={styles.p2}>Comedor</p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <FaSwimmingPool />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("pool") === true ? (
+                                <p className={styles.p1}>Piscina</p>
+                              ) : (
+                                <p className={styles.p2}>Piscina</p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="d-flex flex-row gap-1">
+                            <div>
+                              <MdOutlinePets />
+                            </div>
+                            <div>
+                              {lodgingServices.includes("pets") === true ? (
+                                <p className={styles.p1}>Mascotas</p>
+                              ) : (
+                                <p className={styles.p2}>Mascotas</p>
+                              )}
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <h3 className={styles.titles}>Mapa</h3>
-                      <div className="d-flex justify-content-center">
-                        <div>
-                          <GoogleMapDetail />
-                        </div>
+                  </div>
+                  <div>
+                    <h3 className={styles.titles}>Mapa</h3>
+                    <div className="d-flex justify-content-center">
+                      <div>
+                        <GoogleMapDetail />
                       </div>
                     </div>
-                    <div>
-                      <h3 className={styles.titles}>Reseñas</h3>
-                      <div className="d-flex justify-content-center">
-                        <div className={styles.reviews}>
-                          {filtrado[0] !== undefined ? (
-                            <div className={styles.texto}>
-                              {filtrado.map((e) => (
-                                <div className="d-flex flex-column pe-4">
-                                  <label
-                                    className={styles.estrellas}
-                                    value={e[1]}
-                                  >
-                                    {e[1] === 5
-                                      ? "★★★★★ "
-                                      : e[1] === 4
-                                      ? "★★★★ "
-                                      : e[1] === 3
-                                      ? "★★★ "
-                                      : e[1] === 2
-                                      ? "★★ "
-                                      : e[1] === 1
-                                      ? "★ "
-                                      : false}
-                                  </label>
-                                  <label
-                                    className={styles.value_reviews}
-                                    value={e[0]}
-                                  >
-                                    {e[0]}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <div className={styles.aun}>
-                              <h5>{"Aún no hay reseñas"}</h5>
-                            </div>
-                          )}
-                        </div>
+                  </div>
+                  <div>
+                    <h3 className={styles.titles}>Reseñas</h3>
+                    <div className="d-flex justify-content-center">
+                      <div className={styles.reviews}>
+                        {filtrado[0] !== undefined ? (
+                          <div className={styles.texto}>
+                            {filtrado.map((e) => (
+                              <div className="d-flex flex-column pe-4">
+                                <label
+                                  className={styles.estrellas}
+                                  value={e[1]}
+                                >
+                                  {e[1] === 5
+                                    ? "★★★★★ "
+                                    : e[1] === 4
+                                    ? "★★★★ "
+                                    : e[1] === 3
+                                    ? "★★★ "
+                                    : e[1] === 2
+                                    ? "★★ "
+                                    : e[1] === 1
+                                    ? "★ "
+                                    : false}
+                                </label>
+                                <label
+                                  className={styles.value_reviews}
+                                  value={e[0]}
+                                >
+                                  {e[0]}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className={styles.aun}>
+                            <h5>{"Aún no hay reseñas"}</h5>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -440,8 +437,9 @@ export default function CardDetail(props) {
                 <div></div>
               )}
             </div>
-            </div>
           </div>
+          </div>
+          
           <div>
             <DatePickerOk lodId={lodgingId} />
           </div>
