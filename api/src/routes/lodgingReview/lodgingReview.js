@@ -7,8 +7,8 @@ const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
 const upload = require("../../../libs/storage")
 
-router.post("/:email/:lodgingId" ,upload.single(), async (req, res) => {
-    let {rating, comments} = req.body;
+router.post("/:_id/:lodgingId" ,upload.single(), async (req, res) => {  
+  let {rating, comments} = req.body;
     if (!rating || !comments){
         return res.status(400).send({message: 'Rating and comments are required'})
     }
@@ -18,10 +18,10 @@ router.post("/:email/:lodgingId" ,upload.single(), async (req, res) => {
     else { 
         try {
             let dated = new Date()
-            const guest = await Guest.findOne({email: req.params.email})
+            const guest = await Guest.findOne({_id: req.params._id})
             const lodgingRevs = await lodgingReview.create(req.body);
             lodgingRevs.dated = dated
-            lodgingRevs.guestId = guest._id;
+            lodgingRevs.guestId = toId(req.params._id);
             lodgingRevs.lodgingId = toId(req.params.lodgingId);
             lodgingRevs.save();
             res.redirect("http://localhost:3000/detail/" + req.params.lodgingId)

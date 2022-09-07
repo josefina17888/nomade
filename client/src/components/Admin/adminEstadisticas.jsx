@@ -4,6 +4,7 @@ import Estadistica from '../Estadisticas/Estadisticas.jsx';
 import Menu from './menuAdmin';
 import NavBar from '../NavBar/NavBar';
 import {getGuests} from "../../Redux/Actions/index";
+import styles from './admin.module.css'
 //import styles from './Home.module.css'
 import Profile from '../Profile/profile';
 export default function Home() {
@@ -40,7 +41,7 @@ export default function Home() {
   };
 
   return (
-    <div className="c1kae56o dir dir-ltr">
+    <div className={styles.ComplaintsNavBar}>
        {userToken && allGuests[0]!== undefined && admin === true ?
     <div>
     <NavBar

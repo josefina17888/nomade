@@ -45,7 +45,7 @@ export default function LoginUser() {
       const guest = await axios.get(`/api/guest/${email}`)
       if(guest.data.length === 0) return setMsg({...msg , msgNotRegister: "Correo no está registrado" , msgNotVerify: "" })
       if(guest.data[0].Visibility === false) return setMsg({...msg , msgBan: "Tu usuario ha sido baneado de Nomade." })
-      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado" })
+      if(guest.data[0].verified === false) return setMsg({...msg , msgNotVerify: "Tu correo no esta verificado", msgNotRegister: "" })
      
       const config = {
         headers: {
@@ -123,10 +123,10 @@ export default function LoginUser() {
             <label className={style.labelA}>Contraseña</label>
           </div>
           <div>
-          {msg.msgBan !=="" && <div>{msg.msgBan}</div>}
-          {msg.msgNotRegister && msg.msgBan ==="" && <div>{msg.msgNotRegister}</div>}
+          {msg.msgBan !=="" && <div className={style.msg}>{msg.msgBan}</div>}
+          {msg.msgNotRegister && msg.msgBan ==="" && <div  className={style.msg}>{msg.msgNotRegister}</div>}
           {msg.msgNotVerify && <div>
-            <p>{msg.msgNotVerify}</p>
+            <p  className={style.msg}>{msg.msgNotVerify}</p>
             <button  className={style.button} onClick={handleClick}> Verificar Email</button>
             </div>}
           </div>

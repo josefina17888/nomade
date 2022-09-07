@@ -4,6 +4,9 @@ import AllCards from '../AllCards/AllCards';
 import Menu from './menuAdmin';
 import NavBar from '../NavBar/NavBar';
 import {getGuests} from "../../Redux/Actions/index";
+import { IoChevronUpCircleOutline } from "react-icons/io5";
+import styles from "../Home/Home.module.css";
+import s from './admin.module.css'
 //import styles from './Home.module.css'
 import Profile from '../Profile/profile';
 export default function Home() {
@@ -35,15 +38,45 @@ export default function Home() {
   const paging = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const onClickButton = () => {
+    setLodgingPerPage(pageMore => pageMore + 10)
+  }
+
+
+  const backTop = () => {
+    window.scrollTo({
+      top:0,
+      behavior: 'smooth'
+    })
+  }
+
 
   return (
-    <div className="c1kae56o dir dir-ltr">
+    <div className={s.lodgingsNavBar}>
        {userToken && allGuests[0]!== undefined && admin === true ?
     <div>
     <NavBar
     email={user?user.email: ""} />
-    <Menu setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
-    <AllCards setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
+    <Menu  setCurrentPage={setCurrentPage} paging={paging} lodgingPerPage={lodgingPerPage} currentLodging={currentLodging}/>
+    <AllCards
+        setCurrentPage={setCurrentPage}
+        paging={paging}
+        lodgingPerPage={lodgingPerPage}
+        currentLodging={currentLodging}
+      />
+      <div onClick={onClickButton} className={styles.scrolldown}>
+        <div className={styles.chevrons}>
+          <div className={styles.chevrondown}></div>
+          <div className={styles.chevrondown}></div>
+        </div>
+      </div>
+      <div className={styles.containerButton}>
+          <IoChevronUpCircleOutline
+            className={styles.buttonUp}
+            onClick={backTop}
+          >
+          </IoChevronUpCircleOutline>
+      </div>
     </div>:
     <h1>No puedes ver esta pagina.</h1>}
     </div>

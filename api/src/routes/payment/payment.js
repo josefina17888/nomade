@@ -46,7 +46,6 @@ router.post("/", async function (req, res, next) {
                 failure: "https://nomade-khaki.vercel.app/status",
                 pending: "https://nomade-khaki.vercel.app/status"
 
-
             },
         }
     console.log(preference.items)

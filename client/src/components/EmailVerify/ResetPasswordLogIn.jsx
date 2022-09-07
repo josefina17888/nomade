@@ -41,7 +41,6 @@ export default function ResetPassword() {
         try {
 
           if (password.password1 !== password.password2) {
-            // return alert("La contraseñas deben ser iguales");
             return Swal(
               'La contraseñas deben ser iguales','','warning',{buttons:false,timer:3000}
             )
@@ -61,9 +60,8 @@ export default function ResetPassword() {
             config
           );
           setPassword("");
-          history.push("/login");
+          history.push(`/profile/${params.email}`);
         } catch (error) {
-          // alert("Usuario o contraseña incorrectos");
           Swal(
             'Usuario o contraseña incorrecta','','error',{buttons:false,timer:3500}
           )

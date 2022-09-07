@@ -4,27 +4,15 @@ const Guest = require("../../models/Guest");
 const Booking = require('../../models/Booking')
 const Host = require('../../models/Host')
 const upload = require("../../../libs/storage")
-const cloudinary = require("cloudinary").v2;
 const Token = require("../../models/Token")
 const {verifyEmail} = require("../../../libs/sendEmail");
 const generateToken = require("../../utils/generateToken");
 const mongoose = require("mongoose");
 const toId = mongoose.Types.ObjectId;
-require('dotenv').config();
+const cloudinary = require("../../../libs/cloudinary")
 
 
 
-// cloudinary.config({ 
-//   cloud_name: 'dbq85fwfz', 
-//   api_key: '578434861277536', 
-//   api_secret: 'wtuN2zPkgy26qkfXvl03QhAxgxI' 
-// });
-
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 
 
@@ -130,7 +118,6 @@ router.get("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     Guest.find({}, function (err, guest) {
-      console.log(guest)
       res.status(200).send(guest);
     });
   } catch (error) {
@@ -145,6 +132,17 @@ router.get("/", async (req, res) => {
 router.get("/:email", async(req,res) => {
   try {
     Guest.find({email: req.params.email},(error, guest)=>{
+          res.json(guest)
+      })
+  }
+  catch(error) {
+      res.status(500).send(error)
+  }
+})
+// trae un guest por Id
+router.get("/:_id", async(req,res) => {
+  try {
+    Guest.find({_id: req.params._id},(error, guest)=>{
           res.json(guest)
       })
   }
@@ -236,7 +234,6 @@ router.post("/find/host", async (req, res) => {
   try {
     const infoGuest = await Guest.find({ email: req.body.email });
     const guestId = infoGuest
-    console.log(guestId, 'REQ')
     const isHost = await Host.find({ guestId: guestId});
     res.status(200).json(isHost)
   } catch (error) {
@@ -258,5 +255,15 @@ router.get("/found/host/:guest", async (req, res) => {
   }
 });
 
+router.get("/search/guest/host", async(req, res)=>{
+  try {
+    const infoGuest = await Host.find({ hostId: req.body.hostId });
+    const guestId = infoGuest
+    const isHost = await Guest.find({ guestId: guestId});
+    res.status(200).json(isHost)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 
 module.exports = router

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import styles from "./Status.module.css";
 import NavBar from "../NavBar/NavBar";
 import axios from "axios"
+import {IoChatbubbles} from 'react-icons/io5'
 
 export default function Status() {
   const dispatch = useDispatch();
@@ -34,7 +35,8 @@ export default function Status() {
     const data = async () => {
       await axios.post(`http://localhost:3001/api/booking/emailVerified/${emailGuest}`,booking)
    }
-   data()
+   setTimeout(() =>  {data()},3000)
+  
   }, [dispatch]);
 
   const lodging = useSelector((state) => state.detail);
@@ -51,8 +53,10 @@ export default function Status() {
     
   } */
   return (
-    <div className="_16grqhk">
-      <NavBar />
+    <div >
+      <NavBar />  
+      <div className={styles.contenedorTotal}>
+
       <div className={styles.container2}>
         {realStatus === "approved" ? (
           <div>
@@ -67,15 +71,19 @@ export default function Status() {
                   ¡Gracias por tu reserva! ¡Que la disfrutes!
                 </div>
               </div>
-              <div>
+              <div className={styles.foto}>
                 <img
                   className={styles.img}
                   src={picture1}
                   alt="img not found"
                 />
               </div>
-              <div>
-        <Link className={styles.link2} to='/chat'>Comunicate con tu Host</Link>
+              <div className={styles.link2}>
+        <Link  to='/chat'>
+          <div className={styles.icono}>
+        <IoChatbubbles/>
+          </div>
+        Comunicate con tu Host</Link>
         </div>
             </div>
           </div>
@@ -91,6 +99,7 @@ export default function Status() {
         </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

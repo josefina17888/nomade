@@ -34,7 +34,6 @@ export default function NavBar(props) {
   }
 
   const location = window.location.pathname;
-  console.log(location, 'LOCATION')
 
   //GET HOST
   useEffect(()=>{
@@ -44,10 +43,8 @@ export default function NavBar(props) {
   const allGuests = useSelector((state) => state.allGuests);
   const userBusqueda = useSelector((state) => state.userBusqueda);
   let arrFilter =  allGuests.filter(e => e.email === userToken)
-  console.log(userToken)
   const validateHost= useSelector(state=>state.hosts)
   async function handleClick(e){
-    console.log(validateHost, 'VALIDATE HOST')
     e.preventDefault();
     if(validateHost[0] && userToken){
       const hostObject = validateHost[0]
@@ -63,8 +60,7 @@ export default function NavBar(props) {
 
   return (
     <React.Fragment>
-      <div className="c1kn6kxw dir dir-ltr">
-        <header className="c1kffd0v cxy853f c1g36qz5 dir dir-ltr">
+      <nav className="navbar fixed-top bg-white">
           <div className={s.nav}>
             <div className="c1xsvlgx dir dir-ltr">
               <div className={s.div_logo} onClick={handleClearState}>
@@ -124,7 +120,7 @@ export default function NavBar(props) {
                           {admin === true &&
                           <li>
                             <Link
-                              to= {`/admin/lodgings`}
+                              to= {"/admin/estadisticas"}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Panel de admin
@@ -174,8 +170,7 @@ export default function NavBar(props) {
               </div>
             </div>
           </div>
-        </header>
-      </div>
+      </nav>
     </React.Fragment>
   );
 }

@@ -7,32 +7,19 @@ import {
   orderByLowerCost,
   orderByRating,
 } from "../../Redux/Actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import s from "../Menu/Menu.module.css";
 import { TbMap2 } from "react-icons/tb";
-import { GiSpookyHouse } from "react-icons/gi";
 import { IoIosStar } from "react-icons/io";
-import { MdOutlinePets } from "react-icons/md";
+import { CgPlayListRemove } from "react-icons/cg";
 import { TbTrendingDown, TbTrendingUp } from "react-icons/tb";
 import Filters from "./Filters/Filters";
-export default function Menu({
-  paging
-}) {
+export default function Menu({ paging }) {
   const dispatch = useDispatch();
+  const [clean, setClean] = useState(false);
   function handleSortByRating(e) {
     e.preventDefault();
     dispatch(orderByRating(e.target.value));
-  }
-  //Ordernar por Lodging tipo: Casa
-  function handleFilterTypeHouse(e) {
-    e.preventDefault();
-    dispatch(filterTypeHouse(e.target.value));
-    paging(1);
-  }
-  function handleFilterByPets(e) {
-    e.preventDefault();
-    dispatch(filterByPets(e.target.value));
-    paging(1);
   }
   function handleOrderByLowest(e) {
     e.preventDefault();
@@ -43,6 +30,11 @@ export default function Menu({
     dispatch(orderByHigherCost(e.target.value));
   }
 
+  function changeCleaner(e){
+    e.preventDefault();
+    setClean(true)
+    setTimeout(()=>{setClean(false)},2000)
+  }
   return (
     <div className="n1p4yt3r dir dir-ltr">
       <div className={s.container}>
@@ -53,7 +45,7 @@ export default function Menu({
           </button>
         </Link>
         <div className={s.container_icons}>
-          <div>
+          {/* <div>
             <button className={s.button_icon} onClick={handleFilterTypeHouse}>
               <span>
                 <GiSpookyHouse className={s.icons} />
@@ -62,23 +54,13 @@ export default function Menu({
                 </div>
               </span>
             </button>
-          </div>
+          </div> */}
           <div>
             <button className={s.button_icon} onClick={handleSortByRating}>
               <span>
                 <IoIosStar className={s.icons} />
                 <div>
                   <span className={s.text_desc_icon}>Rating</span>
-                </div>
-              </span>
-            </button>
-          </div>
-          <div>
-            <button className={s.button_icon} onClick={handleFilterByPets}>
-              <span>
-                <MdOutlinePets className={s.icons} />
-                <div>
-                  <span className={s.text_desc_icon}>Mascotas</span>
                 </div>
               </span>
             </button>
@@ -104,10 +86,14 @@ export default function Menu({
             </button>
           </div>
         </div>
-        <div>
+        <div className="d-flex flex-row gap-2">
+          <button type="button" className={s.button_remove} onClick={changeCleaner}>
+            <CgPlayListRemove/>
+            Remover filtros
+          </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className={s.button_modal}
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
@@ -121,7 +107,7 @@ export default function Menu({
           >
             <div className="modal-dialog modal-dialog-centered">
               <div className={s.modal_content}>
-                    <Filters/>
+                <Filters clean={clean}/>
               </div>
             </div>
           </div>

@@ -1,9 +1,15 @@
 .container1{
     display: flex;
-    flex-direction: row;
-    white-space: nowrap;
+    flex-direction: column;
+    /* white-space: nowrap; */
     margin-top: 5%;
-    margin-left: 5%;
+    padding: 2%;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    margin-right: 5%;
+    
 }
   
   .margin{
@@ -26,16 +32,55 @@
     margin-top: 2%;
     border-width: 0%;
     margin-bottom: 5%;
+    position: absolute;
+    border: 0vh;
+    padding: 1%;
 }
 
 .calendar{
   margin-left: 10%;
+  align-self: center;
 }
 
 .container2{
   display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-  margin-left: 1%;
+  flex-direction: row;
+  /* margin-left: 30%; */
+  margin-right: 15%;
+  padding: 2%;
+  align-self: center;
+  white-space: pre-wrap;
 }
 
+.container5{
+  display: flex;
+  flex-direction: row;
+  /* margin-left: 30%; */
+  /* margin-right: 15%; */
+  padding: 2%;
+  align-self: center;
+  white-space: pre-wrap;
+}
+
+.container4{
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 2%;
+}
+
+.container3{
+  display: flex;
+  flex-direction: column;
+  white-space: pre-wrap;
+  white-space: nowrap;
+  align-items: center;
+  margin-left: 30%;
+  margin-right: 30%;
+  justify-content: center;
+  align-self: center;
+  align-content: center;
+  justify-items: center;
+  justify-self: center;
+}

@@ -28,9 +28,9 @@ import { useSelector } from 'react-redux';
 import adminLodgings from './components/Admin/adminLodgings.jsx'
 import adminComplaints from './components/Admin/adminComplaints.jsx'
 import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
+import Terminos from "./components/Terminos/terminos"
 /* import BarChart from "./components/Estadisticas/Charts/BarChart.jsx" */
 import Reservations from './components/Profile/HostReservations/hostreservations';
-/* import Chart from "./components/Estadisticas/Charts/Doughnut.jsx" */
 
 
 
@@ -59,23 +59,20 @@ function App() {
           <Route path='/:idGuest/resetPassword/:token' component={ResetPassword}/>
           <Route path='/:email/resetPassword' component={ResetPasswordLogIn}/>
          {/*  <Route exact path='/admindashboard' component={AdminDash}/> */}
-          <Route path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
           <Route exact path='/booking/:_id' component={Booking}/>
           <Route exact path= '/:hostId/registerlodging' component={FormLodging}/>
           <Route exact path= '/:email/form' component={FormHost}/>
           <Route path='/guestreview/:hostId/:guestId' component={GuestReview}/>
-          <Route exact path='/lodgingreview/:hostId/:lodgingId' component={LodgingReview}/>
-          {/* <Route path= "/mercadopago" component={MercadoPago}/> */}
+          <Route exact path='/lodgingreview/:guestId/:lodgingId' component={LodgingReview}/>
           <Route exact path= '/complaint/:guestId/:lodgingId' component={complaint}/>
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
           <Route path= '/nosotros' component={Nosotros}/>
+          <Route exact path= '/terminos' component={Terminos}/>
           <Route path= '/admin/users' component={adminUsers}/>
           <Route path= '/admin/lodgings' component={adminLodgings}/>
           <Route path= '/admin/complaints' component={adminComplaints}/>
           <Route path= '/admin/estadisticas' component={adminEstadisticas}/>
-       {/*    <Route path= '/admin/BarChart' component={BarChart}/>
-          <Route path= '/admin/Doughnut' component={Chart}/> */}
         </Switch>
       </BrowserRouter>
    </div>
