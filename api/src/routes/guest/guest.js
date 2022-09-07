@@ -118,7 +118,6 @@ router.get("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     Guest.find({}, function (err, guest) {
-      console.log(guest)
       res.status(200).send(guest);
     });
   } catch (error) {
@@ -133,6 +132,17 @@ router.get("/", async (req, res) => {
 router.get("/:email", async(req,res) => {
   try {
     Guest.find({email: req.params.email},(error, guest)=>{
+          res.json(guest)
+      })
+  }
+  catch(error) {
+      res.status(500).send(error)
+  }
+})
+// trae un guest por Id
+router.get("/:_id", async(req,res) => {
+  try {
+    Guest.find({_id: req.params._id},(error, guest)=>{
           res.json(guest)
       })
   }
@@ -224,7 +234,6 @@ router.post("/find/host", async (req, res) => {
   try {
     const infoGuest = await Guest.find({ email: req.body.email });
     const guestId = infoGuest
-    console.log(guestId, 'REQ')
     const isHost = await Host.find({ guestId: guestId});
     res.status(200).json(isHost)
   } catch (error) {

@@ -1,90 +1,224 @@
+.contForm {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .containerUser {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: auto;
-    flex-wrap: wrap;
-    height: 100vh;
-    width: 50%;
-    
-}
-.containerUser form{
-    padding-bottom: 50px;
+  width: 50%;
+
 }
 
-.title {
-    margin-top: 80px;
-    font-size: 30px;
+.lselect {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
 }
-.titulo{
+.lselect select {
+  width: 200px;
+  margin-right: 20px;
+
+  /*  margin-top: 20px; */
+}
+.select1 {
+  width: 180px;
+  margin-right: 20px;
+}
+
+.containerUser {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.s1 {
+  height: 2em;
+}
+.s2 {
+  height: 2em;
+  width: 180px;
   
-    margin-bottom:-50px ;
 }
 
-.containerForm {
-    margin-top: 50px;
-    width: 250px;
+.lodTitle {
+  width: 90%;
+  /*  margin-bottom: 20px; */
+}
+.titulo {
+  display: flex;
+  justify-content: center;
 }
 
-.inputEmail {
-    width: 100%;
-    height: 25px;
+.lTitle {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-transform: capitalize;
 }
 
-.inputPassword {
-    width: 100%;
-    margin-top: 40px;
-    height: 25px;
+.mapL {
+  margin-bottom: 30px;
 }
+/* .aInput{
+    width:60%;
+    float: left;
+    margin-right: 20px;
+} */
 
-.button {
-    width: 220px;
-    margin-top: 50px;
-    background-color: #069A8E;
-    height: 35px;
-    font-size: 18px;
-    color: #f0f0f0;
-    cursor: pointer;
-}
-
-.line {
-    display: inline-block;
-    position: relative;
-    margin-top: 30px;
-}
-
-.line::after, .line::before {
-    content: "";
-    position: absolute;
-    width: 200px;
-    height: 1px;
-    background-color: #069A8E;
-    top: 0.6em;
-}
-
-.line::before {
-    left: -220px;
-}
-
-.line::after {
-    right: -220px;
-}
-
-.buttonGoogle {
-    margin-top: 30px;
-}
-
-.textFinal {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #069A8E;
-    text-align: center;
-}
-
-.services label{
-margin: 5px;
+.textA {
+  resize: none;
+  height: 150px;
+  width: 100%;
 }
 
 .inputLtgLtg {
-    display: none;
+  display: none;
 }
+.group1,
+.group2,
+.group3 {
+  display: flex;
+ 
+}
+/* check */
+.fcontainer {
+  margin-right: 100px;
+  padding-right: 20px;
+  text-transform: uppercase;
+  height: 1.5em;
+  width: 1.5em;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.fcontainer input {
+  position: absolute;
+  transform: scale(0);
+}
+
+.fcontainer input:checked ~ .checkmark {
+  transform: rotate(45deg);
+  height: 1.5em;
+  width: 0.7em;
+  border-color: #32cd32;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-radius: 0;
+}
+
+.fcontainer .checkmark {
+  display: block;
+  width: inherit;
+  height: inherit;
+  border: 2px solid #32cd32;
+  border-radius: 4px;
+  transition: all 0.3s;
+  margin-left: 15px;
+  
+}
+.services {
+  width: 700px;
+}
+
+/* BOTON */
+/* From uiverse.io */
+.lButton {
+  margin-bottom: 50px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid #4f4f4f;
+  border-radius: 4px;
+  transition: all 0.2s ease-in;
+  position: relative;
+  overflow: hidden;
+  font-size: 19px;
+  color: black;
+  z-index: 1;
+}
+
+.lButton:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.25);
+  top: 100%;
+  width: 140%;
+  height: 180%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+}
+
+.lButton:after {
+  content: "";
+  position: absolute;
+  left: 55%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.45);
+  top: 180%;
+  width: 160%;
+  height: 190%;
+  background-color: #39bda7;
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+}
+
+.lButton:hover {
+  color: #ffffff;
+  border: 1px solid #39bda7;
+}
+
+.lButton:hover:before {
+  top: -35%;
+  background-color: #39bda7;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.lButton:hover:after {
+  top: -45%;
+  background-color: #39bda7;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+.error{
+    color: red;
+   
+  }
+
+  .group3{
+ 
+    height: 70px;
+    gap: 15px;
+   
+  }
+
+.bathCheck {
+  width: 60px;
+  height: 50px;
+}
+.bthrooms{
+    margin-top: 20px;
+    margin-bottom: 70px;
+}
+.containerMap{
+    margin-top: 20px;
+    
+}
+
+.group4{
+    display: flex;
+    gap: 20px;
+   
+  }
+  .eAddress input{
+    width: 400px;
+    height: 2.5em;
+  }
+  .group4 button{
+    height: 2.5em;
+  }
