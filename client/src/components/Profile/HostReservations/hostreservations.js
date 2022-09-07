@@ -122,7 +122,7 @@ const dispatch = useDispatch()
                         
             }
             <div>
-            <h5>Haz doble click sobre un alojamiento para conocer sus reservas</h5>
+            <h5>Haz click sobre un alojamiento para conocer sus reservas</h5>
             </div>
         </div>
     </div>
