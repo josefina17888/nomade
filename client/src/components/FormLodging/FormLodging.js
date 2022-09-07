@@ -12,7 +12,7 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import NavBar from "../NavBar/NavBar";
-import Swal from 'sweetalert'
+import Swal from "sweetalert";
 
 export default function FormLodging() {
   const [coordinates, setCoordinates] = useState({
@@ -87,7 +87,6 @@ export default function FormLodging() {
     e.preventDefault();
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
-
     );
     const data = await response.json();
     if (data.results.length === 0) {
@@ -116,7 +115,6 @@ export default function FormLodging() {
   function handleDelete() {
     document.getElementById("file").click();
   }
-
 
   function handleChange(e) {
     if (e.target.name !== "picture") {
@@ -182,7 +180,8 @@ export default function FormLodging() {
       <NavBar />
       <div className={style.containerUser}>
         {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
-        <form className={style.lodgForm}
+        <form
+          className={style.lodgForm}
           encType="multipart/form-data"
           action={`http://localhost:3001/api/lodging/${hostId}`}
           method="POST"
@@ -193,291 +192,330 @@ export default function FormLodging() {
             <h1 className={style.lTitle}>Registra tu alojamiento</h1>
           </div>
 
-
-            <input
+          <input
             className={style.lodTitle}
-              type="text"
-              name="title"
-              value={input.title}
-              placeholder="Titulo de tu publicacion"
-              onChange={handleChange}
-            />
-            <p>{errors.title}</p>
-            <div className={style.lselect}>
+            type="text"
+            name="title"
+            value={input.title}
+            placeholder="Titulo de tu publicacion"
+            onChange={handleChange}
+          />
+          <p className={style.error}>{errors.title}</p>
+
+          <div className={style.lselect}>
+            <div className={style.group1}>
               <div className={style.select1}>
-            <select className={style.s1} onChange={handleChange} name="lodgingType">
-              <option disabled selected>
-                Tipo de hospedaje
-              </option>
-              <option>Cabaña</option>
-              <option>Albergue</option>
-              <option>Hostal</option>
-              <option>Hotel</option>
-              <option>Casa</option>
-              <option>Apartamento</option>
-              <option>habitacion</option>
-            </select>
+                <select
+                  className={style.s1}
+                  onChange={handleChange}
+                  name="lodgingType"
+                >
+                  <option disabled selected>
+                    Tipo de hospedaje
+                  </option>
+                  <option>Cabaña</option>
+                  <option>Albergue</option>
+                  <option>Hostal</option>
+                  <option>Hotel</option>
+                  <option>Casa</option>
+                  <option>Apartamento</option>
+                  <option>habitacion</option>
+                  
+                </select>
+                <p className={style.error}>{errors.lodgingType}</p>
+    
+              </div>
+
+              <div className={style.group1}>
+                <div>
+                  <select
+                    className={style.s1}
+                    onChange={handleChange}
+                    name="guests"
+                  >
+                    <option disabled selected>
+                      Huespedes
+                    </option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>+10</option>
+                  </select>
+                  <p className={style.error}>{errors.guests}</p>
+                </div>
+              </div>
+              <div>
+                <select
+                  className={style.s1}
+                  onChange={handleChange}
+                  name="rooms"
+                >
+                  <option disabled selected>
+                    Habitaciones
+                  </option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>+5</option>
+                </select>
+                <p className={style.error}>{errors.rooms}</p>
+              </div>
             </div>
-            <p>{errors.lodgingType}</p>
-            <div className={style.select1}>
-            <select className={style.s1} onChange={handleChange} name="guests">
-              <option disabled selected>
-                Huespedes
-              </option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>+10</option>
-            </select>
-            
-            <p>{errors.guests}</p>
-            <select onChange={handleChange} name="rooms">
-              <option disabled selected>
-                habitaciones
-              </option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>+5</option>
-            </select>
-            <p>{errors.rooms}</p>
-            <select className={style.s1}  onChange={handleChange} name="beds">
-              <option  disabled selected>
-                Camas
-              </option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>+5</option>
-            </select>
-            <p>{errors.beds}</p>
-            <select onChange={handleChange} name="currency">
-              <option  disabled selected>
-                moneda:
-              </option>
-              <option>USD</option>
-              <option>EUR</option>
-              <option>ARS</option>
-              <option>CLP</option>
-              <option>MXN</option>
-            </select>
-            <p>{errors.currency}</p>
+            <div className={style.group2}>
+              <div>
+                <select
+                  className={style.s1}
+                  onChange={handleChange}
+                  name="beds"
+                >
+                  <option disabled selected>
+                    Camas
+                  </option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>+5</option>
+                </select>
+                <p className={style.error}>{errors.beds}</p>
+              </div>
+              <div>
+                <select
+                  className={style.s1}
+                  onChange={handleChange}
+                  name="currency"
+                >
+                  <option disabled selected>
+                    Moneda:
+                  </option>
+                  <option>USD</option>
+                  <option>EUR</option>
+                  <option>ARS</option>
+                  <option>CLP</option>
+                  <option>MXN</option>
+                </select>
+                <p className={style.error}>{errors.currency}</p>
+              </div>
+              <div>
+                <input
+                  className={style.s2}
+                  type="number"
+                  name="price"
+                  min="1"
+                  step="any"
+                  value={input.price}
+                  placeholder="Precio por noche"
+                  onChange={handleChange}
+                />
+                <p className={style.error}>{errors.price}</p>
+              </div>
             </div>
-            <input className={style.s1} 
-              type="number"
-              name="price"
-              min="1"
-              step="any"
-              value={input.price}
-              placeholder="Precio por noche"
-              onChange={handleChange}
-            />
-            <p>{errors.price}</p>
-            <label >
-              Baño propio
-              <input
-                type="checkbox"
-                onChange={handleChange}
-                name="ownBathroom"
-              />
-            </label>
-            <select onChange={handleChange} name="bathrooms">
-              <option disabled selected>
-                Baños
-              </option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>+4</option>
-            </select>
-            <p>{errors.bathrooms}</p>
-            <select onChange={handleChange} name="country">
-              <option value="" disabled selected>
-                País
-              </option>
-              {countries.map((e) => (
-                <option key={e.name} value={e.name}>
-                  {e.name}
+          </div>
+
+          <div className={style.group3}>
+            <div className={style.bathCheck}>
+              <label className={style.fcontainer}>
+                Baño propio
+                <input
+                  type="checkbox"
+                  onChange={handleChange}
+                  name="ownBathroom"
+                />
+                <div className={style.checkmark} />
+              </label>
+             
+            </div>
+
+            <div className={style.bthrooms}>
+              <select className={style.s1} onChange={handleChange} name="bathrooms">
+                <option disabled selected>
+                  Numero de Baños
                 </option>
-              ))}
-            </select>
-            <input
-              type="text"
-              name="city"
-              value={input.city}
-              placeholder="Ciudad"
-              onChange={handleChange}
-            />
-            <p>{errors.city}</p>
-            <div className={style.containerMap}>
-              <div className={style.mapL}>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>+4</option>
+              </select>
+              <p className={style.error}>{errors.bathrooms}</p>
+            </div>
+          
+
+          <div className={style.bthrooms}>
+          <select className={style.s2} onChange={handleChange} name="country">
+            <option value="" disabled selected>
+              País
+            </option>
+            {countries.map((e) => (
+              <option key={e.name} value={e.name}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+          </div>
+          <div className={style.bthrooms}>
+          <input
+            type="text"
+            name="city"
+            value={input.city}
+            placeholder="Ciudad"
+            onChange={handleChange}
+          />
+          <p className={style.error}>{errors.city}</p>
+          </div>
+          </div>
+          <div className={style.containerMap}>
+            <div className={style.mapL}>
               <GoogleMap
                 zoom={15}
                 center={coordinates}
                 mapContainerStyle={{
-                  height: "40vh",
-                  width: "40vw",
+                  height: "30vh",
+                  width: "30vw",
                 }}
                 options={options}
               >
                 <MarkerF position={coordinates}></MarkerF>
               </GoogleMap>
-              </div>
-              <input
-                name="address"
-                value={input.address}
-                onChange={onChange}
-                type="text"
-                placeholder="Direccion Exacta:"
-                className={style.input}
-                title="Debes verificar la direccion"
-                required={true}
-              />
-              <p>{errors.address}</p>
-              <p>{errors.latitud}</p>
-              <input
-                value={input.latitud}
-                name="latitud"
-                onChange={(e) => onChange(e)}
-                type="text"
-                className={style.inputLtgLtg}
-              ></input>
-              <input
-                value={input.longitud}
-                name="longitud"
-                onChange={(e) => onChange(e)}
-                type="text"
-                className={style.inputLtgLtg}
-              ></input>
             </div>
-            <button onClick={handleClickDirection}>Verificar dirección</button>
-            {/* <button onClick={handleEditAddres}>Editar</button> */}
-            <textarea
-              type="text"
-              name="description"
-              value={input.description}
-              placeholder="Descripcion"
-              onChange={handleChange}
-            />
-            <p>{errors.description}</p>
+            <div className={style.group4}>
+              <div className={style.eAddress}>
             <input
-              type="file"
-              name="picture"
-              id="file"
-              value={input.picture}
-              placeholder="picture"
-              onChange={handleChange}
-              multiple
+              name="address"
+              value={input.address}
+              onChange={onChange}
+              type="text"
+              placeholder="Direccion Exacta:"
+              className={style.aInput}
+              title="Debes verificar la direccion"
+              required={true}
             />
-            <div id="contenedorHandle">
-              <div id="preview"></div>
-              <div id="buttonDelet"></div>
+            <p className={style.error}>{errors.address}</p>
             </div>
-            <p>{errors.picture}</p>
-            <h3>servicios</h3>
-            <div className={style.services}>
+            <button className={style.verButton} onClick={handleClickDirection}>
+              Verificar dirección
+            </button></div>
+            <p>{errors.latitud}</p>
+            <input
+              value={input.latitud}
+              name="latitud"
+              onChange={(e) => onChange(e)}
+              type="text"
+              className={style.inputLtgLtg}
+            ></input>
+            <input
+              value={input.longitud}
+              name="longitud"
+              onChange={(e) => onChange(e)}
+              type="text"
+              className={style.inputLtgLtg}
+            ></input>
+          </div>
+          {/* <button onClick={handleEditAddres}>Editar</button> */}
+          <textarea
+            maxlength="400"
+            className={style.textA}
+            type="text"
+            name="description"
+            value={input.description}
+            placeholder="Describe tu alojamiento (Maximo 500 caractéres)"
+            onChange={handleChange}
+          />
+          <p className={style.error}>{errors.description}</p>
+          <input
+            type="file"
+            name="picture"
+            id="file"
+            value={input.picture}
+            placeholder="picture"
+            onChange={handleChange}
+            multiple
+          />
+          <div id="contenedorHandle">
+            <div id="preview"></div>
+            <div id="buttonDelet"></div>
+          </div>
+          <p>{errors.picture}</p>
+          <div className={style.services}>
+            <h3>Servicios</h3>
+            <div className={style.serv}>
               <label className={style.fcontainer}>
-                {" "}
                 WIFI
                 <input name="wifi" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 AC
                 <input name="ac" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
-                securidad
+                Seguridad
                 <input name="security" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Limpieza
                 <input name="cleaning" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Estacionamiento
                 <input name="parking" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Lavanderia
                 <input name="laundry" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Agua caliente
                 <input name="hotWater" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
-                cocina
+                Cocina
                 <input name="kitchen" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Piscina
                 <input name="pool" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Comedor
                 <input name="dining" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>
-                {" "}
                 Mascotas
                 <input name="pets" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
-
-              {/*    <label>WIFI <input type="checkbox" name="wifi" /></label> */}
-              {/*  <label>AC <input type="checkbox" name="ac" /></label> */}
-              {/*  <label>TV <input type="checkbox" name="tv" /></label> */}
-              {/*  <label>securidad <input type="checkbox"  name="security" /></label> */}
-              {/*   <label>Limpieza <input type="checkbox"  name="cleaning" /></label> */}
-              {/*    <label>Estacionamiento <input type="checkbox"  name="parking" /></label> */}
-              {/*   <label>Lavanderia <input type="checkbox"  name="laundry" /></label> */}
-              {/*   <label>Agua caliente <input type="checkbox"   name="hotWater" /></label> */}
-              {/*  <label>cocina <input type="checkbox"  name="kitchen" /></label> */}
-              {/*   <label>Piscina <input type="checkbox" name="pool"  /></label> */}
-              {/* <label>Comedor <input type="checkbox"    name="dining" /></label> */}
-              {/* <label>Mascotas <input type="checkbox"   name="pets" /></label> */}
             </div>
           </div>
+
           {Object.entries(errors).length === 0 &&
           input.title !== "" &&
           input.picture !== "" &&
           input.latitud !== "" ? (
             <div>
-              <button className={style.button} type="submit">
-                Crear hospedaje
+              <button className={style.lButton} type="submit">
+                Publicar Hospedaje
               </button>
             </div>
           ) : (
             <div>
-              <button className={style.buttonL} disabled type="submit">
-                Crear hospedaje
+              <button className={style.lButton} disabled type="submit">
+                Publicar Hospedaje
               </button>
             </div>
           )}
