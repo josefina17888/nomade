@@ -40,13 +40,8 @@ export default function ResDetail({ bookingInfo }) {
     setIndex(selectedIndex);
   };
 
-  /* const pets = (bookingInfo)=>{
-  if (bookingInfo.pets=== true){
-    return "Si"
-  }else{
-    return "No"
-  }
-} */
+
+console.log("INFO", bookingInfo)
 
   return (
     <div ref={scrollRef} className={styles.containerInfo}>
@@ -111,7 +106,7 @@ export default function ResDetail({ bookingInfo }) {
         </div>
         <div className={styles.petsC}>
           <span className={styles.cM}>Mascotas</span>
-          <span className={styles.cDate}>{/* {pets} */}</span>
+          <span className={styles.cDate}>{ bookingInfo.pets?("si") :( "no")}</span> 
         </div>
       </div>
       <hr />
