@@ -52,7 +52,6 @@ export default function Filters({clean}) {
   useEffect(() => {
     dispatch(filterByServices(services));
   }, [services]);
-
   useEffect(()=>{
     if(clean){
       setServices({
@@ -71,7 +70,6 @@ export default function Filters({clean}) {
         lodgingType: "",
         services: services,
       });
-
   
       dispatch(cleanFilters());
     }
