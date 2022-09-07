@@ -4,9 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 150px;
+  
 }
 .containerUser {
-  width: 50%;
+  width: 750px;
 
 }
 
@@ -16,14 +18,10 @@
   flex-direction: column;
 }
 .lselect select {
-  width: 200px;
+  width: 180px;
   margin-right: 20px;
 
   /*  margin-top: 20px; */
-}
-.select1 {
-  width: 180px;
-  margin-right: 20px;
 }
 
 .containerUser {
@@ -34,6 +32,7 @@
 }
 .s1 {
   height: 2em;
+  width: 150px;
 }
 .s2 {
   height: 2em;
@@ -42,7 +41,7 @@
 }
 
 .lodTitle {
-  width: 90%;
+  min-width: 620px;
   /*  margin-bottom: 20px; */
 }
 .titulo {
@@ -68,7 +67,7 @@
 .textA {
   resize: none;
   height: 150px;
-  width: 100%;
+  min-width: 620px;
 }
 
 .inputLtgLtg {
@@ -185,6 +184,8 @@
   transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
 }
 
+/* fin del boton */
+
 .error{
     color: red;
    
@@ -221,4 +222,14 @@
   }
   .group4 button{
     height: 2.5em;
+  }
+  .preview{
+    background-color: black;
+    max-width: 750px;
+    max-height: 750px;
+  }
+  .centerButton{
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }

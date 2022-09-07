@@ -68,7 +68,7 @@ export default function Chat() {
     }, [conversations]);
   }
 
-
+ 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
@@ -100,6 +100,8 @@ export default function Chat() {
   }, [conversations]);
 
   // obtiene todas las conversaciones asociadas al usuario
+
+  
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -109,8 +111,11 @@ export default function Chat() {
         console.log(err);
       }
     };
-    getConversations();
+      getConversations();
+ 
   }, [userId, host]);
+
+ 
 
   // trae todos los mensajes de una conversacion
   useEffect(() => {

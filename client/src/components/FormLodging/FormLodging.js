@@ -176,7 +176,7 @@ export default function FormLodging() {
   let hostId = params.hostId;
   console.log(hostId);
   return (
-    <div className={style.ContForm}>
+    <div className={style.contForm}>
       <NavBar />
       <div className={style.containerUser}>
         {/* <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" > */}
@@ -204,7 +204,7 @@ export default function FormLodging() {
 
           <div className={style.lselect}>
             <div className={style.group1}>
-              <div className={style.select1}>
+              <div >
                 <select
                   className={style.s1}
                   onChange={handleChange}
@@ -226,8 +226,8 @@ export default function FormLodging() {
     
               </div>
 
-              <div className={style.group1}>
-                <div>
+              <div >
+                <div >
                   <select
                     className={style.s1}
                     onChange={handleChange}
@@ -417,7 +417,8 @@ export default function FormLodging() {
               className={style.inputLtgLtg}
             ></input>
           </div>
-          {/* <button onClick={handleEditAddres}>Editar</button> */}
+          {/*  <button onClick={handleEditAddres}>Editar</button>  */}
+          <div>
           <textarea
             maxlength="400"
             className={style.textA}
@@ -428,20 +429,27 @@ export default function FormLodging() {
             onChange={handleChange}
           />
           <p className={style.error}>{errors.description}</p>
+          </div>
+<div>
           <input
+      
             type="file"
             name="picture"
             id="file"
             value={input.picture}
             placeholder="picture"
+           
             onChange={handleChange}
             multiple
           />
           <div id="contenedorHandle">
-            <div id="preview"></div>
+            <div className={style.preview} id="preview"></div>
             <div id="buttonDelet"></div>
           </div>
           <p>{errors.picture}</p>
+          </div>
+
+          
           <div className={style.services}>
 
             <h3>Servicios</h3>
@@ -504,23 +512,26 @@ export default function FormLodging() {
             </div>
 
           </div>
-
+<div className={style.centerButton}>
           {Object.entries(errors).length === 0 &&
           input.title !== "" &&
           input.picture !== "" &&
           input.latitud !== "" ? (
-            <div>
+            
+            <div >
               <button className={style.lButton} type="submit">
                 Publicar Hospedaje
               </button>
             </div>
           ) : (
-            <div>
+            <div >
               <button className={style.lButton} disabled type="submit">
                 Publicar Hospedaje
               </button>
             </div>
+        
           )}
+          </div>
         </form>
       </div>
     </div>
