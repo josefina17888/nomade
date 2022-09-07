@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import style from "./hostreservations.module.css"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import NavBar from "../../NavBar/NavBar";
+import {AiTwotoneCalendar} from "react-icons/ai"
 
 
 export default function Reservations() {
@@ -27,7 +29,8 @@ const dispatch = useDispatch()
             try {
                 const response = await axios.get("/api/lodging/" + hostId)
                 let lodgingsGot = response.data
-                setLodgings(lodgingsGot)
+                let lodgingsVisibles= await lodgingsGot.filter((e)=> (e).Visibility===true)
+                setLodgings(lodgingsVisibles)
                }catch(err){
                 console.log(err)
                 }
@@ -70,22 +73,24 @@ const dispatch = useDispatch()
 
     return(
         <div className={style.container1}>
-        <div className={style.container2}>
-        {
+            <NavBar />
+        <div className={style.container3}>
+            <div className={style.container2}>
+            {
             !lodgings.length ?
             (<div>Aún no has publicado alojamientos</div>) :
             (lodgings.map((e)=>
                 <div className={style.book} key={e._id}>
                 <h5>{e.title}</h5>
                 <img src={e.picture["0"]} alt="img not found" width="200" height="130"/>
-                <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}>ver calendario de reservas</button>
+                <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}><AiTwotoneCalendar /></button>
                 </div>
                 )) 
-        } 
-        </div>
-        <div className={style.calendar}>
-         <div>
-            <div>
+            } 
+            </div>
+            <div className={style.calendar}>
+                <div>
+                    <div>
                 <DatePicker
                 value={date}
                 highlightDates={disabledDates}
@@ -93,13 +98,13 @@ const dispatch = useDispatch()
                 monthsShown={2}
                 inline
                 />
-            </div>
-        </div>
-        {
+                    </div>
+                </div>
+            {
                            
-            !bookings ? <h5>Selecciona un alojamiento para conocer sus reservas</h5> :
-            bookings.map((e)=>
-            <div>
+                !bookings ? <h5>Selecciona un alojamiento para conocer sus reservas</h5> :
+                bookings.map((e)=>
+                <div>
                 <div className={style.container1}>
                 <div className={style.container2}>
                 <div className={style.margin}>
@@ -110,11 +115,12 @@ const dispatch = useDispatch()
                 </div>
                 </div>
                 </div>
-            </div>
-            )
+                </div>
+                )
                         
-        }
+            }
+            </div>
         </div>
-    </div>
+        </div>
     )
 }

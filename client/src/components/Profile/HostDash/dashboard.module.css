@@ -9,10 +9,17 @@
     flex-direction: column;
   }
 
+  .img{
+    border-radius: 2%;
+  }
+
   .link{
     cursor: pointer;
-    /* text-decoration: none; */
-    font-style: italic;
+    background-color: rgb(228, 232, 236);
+    text-decoration: none;
+    padding: 1%;
+    border-radius: 1%;
+    font-weight: bold;
     font-size: large;
     color: black;
     margin-top: 2%;
@@ -38,4 +45,12 @@
 
 .button{
   max-height: 30%;
+  background-color: rgb(228, 232, 236);
+  border: 0vh;
+  border-radius: 4%;
+  position: absolute;
+  justify-self: right;
+  justify-content: right;
+  align-self: auto;
+
 }

@@ -110,8 +110,8 @@ router.post("/emailVerified/:email",async (req, res) => {
 router.patch("/:_id", async (req, res) => {
       
   try {
-    let lodgingId = toId(req.params._id)
-    await Lodging.findByIdAndUpdate(_id, { visibility: 'false' }).exec();
+    let bookingId = toId(req.params._id)
+    await Booking.findByIdAndUpdate(bookingId, { visibility: 'false' }).exec();
     res.send("actualizado con exito")
   } catch (error) {
   res.status(400).send("no se pudo actualizar");

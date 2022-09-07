@@ -91,7 +91,7 @@ const handleClick = ({_id}) => {
                 <div className={style.book} key={e._id}>
                 <h5>{e.title}</h5>
                 <div className={style.container1}>
-                <img src={e.picture["0"]} alt="img not found" width="200" height="130"/>
+                <img src={e.picture["0"]} alt="img not found" width="200" height="130" className={style.img}/>
                 <button  onClick={(e) => handleClick(e._id)} className={style.button}>x</button>
                 </div>
                 </div>
