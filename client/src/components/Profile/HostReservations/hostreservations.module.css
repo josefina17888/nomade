@@ -37,6 +37,10 @@
     padding: 1%;
 }
 
+.hidden{
+  display: none;
+}
+
 .calendar{
   margin-left: 10%;
   align-self: center;
