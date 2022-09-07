@@ -133,7 +133,7 @@ const dispatch = useDispatch()
                 </div>
             {
                            
-                !bookings ? <h5>Selecciona un alojamiento para conocer sus reservas</h5> :
+                !bookings ? <h5>Haz doble click sobre un alojamiento para conocer sus reservas</h5> :
                 bookings.map((e)=>
                 <div>
                 <div className={style.container1}>
