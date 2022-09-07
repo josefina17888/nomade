@@ -91,6 +91,7 @@ export default function Booking(props) {
     costNight: costNight,
     pets: check,
     hostId: lodging.hostId,
+    currency: "USD",
     totalPrice: total,
     code: codeFunction
   });
