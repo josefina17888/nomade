@@ -23,7 +23,7 @@ import { TbBuildingWarehouse } from "react-icons/tb";
 
 export default function Filters({clean}) {
   const [filter, setFilter] = useState({
-    range: 0,
+    range: 350,
     beds: 0,
     rooms: 0,
     bathrooms: 0,
@@ -55,6 +55,7 @@ export default function Filters({clean}) {
     dispatch(filterByTypeRooms(filter));
     dispatch(filterByServices(filter));
   }, [filter]);
+  console.log(filtered, 'AQUI LOS FILTRADOS')
   /* useEffect(() => {
   }, [services]); */
   useEffect(()=>{
@@ -117,21 +118,18 @@ export default function Filters({clean}) {
 
   function stateCleaner(e) {
     e.preventDefault();
-    setServices({
+    setFilter({
+      range: 350,
+      beds: 0,
+      rooms: 0,
+      bathrooms: 0,
+      lodgingType: "",
       wifi: false,
       ac: false,
       tv: false,
       parking: false,
       pets: false,
       hotWater: false,
-    });
-    setFilter({
-      range: 0,
-      beds: 0,
-      rooms: 0,
-      bathrooms: 0,
-      lodgingType: "",
-      services: services,
     });
 
     dispatch(cleanFilters());
@@ -160,7 +158,7 @@ export default function Filters({clean}) {
               max="350"
               step="1"
               onChange={handleChangeRange}
-              defaultValue="0"
+              defaultValue="350"
             ></input>
             <span>De 0 a {`${filter.range}`} USD</span>
           </div>

@@ -471,10 +471,7 @@ function rootReducer(state = initialState, action) {
           };
       }
     case "FILTER_BY_SERVICES":
-      //state lodgings
       let filterLodings = state.lodgings;
-
-      //nuevo objecto creado con lodgings id + services
       let lodgings = filterLodings.map((e) => {
         let newObject = {
           id: e._id,
@@ -487,59 +484,64 @@ function rootReducer(state = initialState, action) {
         };
         return newObject;
       });
-
-      //servicios del checkbox
       let filter = action.payload;
-      let services = [];
-
-      //CREATE NEW OBJECT WITH SERVICES ONLY
+      var services = [];
       for (let property in filter) {
-        if (typeof filter[property] === "boolean" && filter[property] === true) {
-          services.push(property)
+        if (
+          typeof filter[property] === "boolean" &&
+          filter[property] === true
+        ) {
+          services.push(property);
         }
       }
 
-      //CREATE NEW OBJECT WITH SERVICES ONLY
-      
-
-
-      //CREATE NEW ARRAY WITH TRUE SERVICES ONLY
-      let lodgingsMap = lodgings.map(lod=>{
-        let onlyTrue = []
+      let lodgingsMap = lodgings.map((lod) => {
+        let onlyTrue = [];
         for (let prop in lod) {
-          if(prop === "id"){
-            onlyTrue.push(lod[prop])
-          
+          if (prop === "id") {
+            onlyTrue.push(lod[prop]);
           }
           if (typeof lod[prop] === "boolean" && lod[prop] === true) {
-            onlyTrue.push(prop)
+            onlyTrue.push(prop);
           }
-      }
-      return onlyTrue
-      })
-      
-
-      //convierto objetos a array con sus respectivos key value
-      let servicesFiltered = Object.entries(services);
-      let lodgingsFiltered = lodgings.map((e) => Object.entries(e));
-
-      //TRATANDO DE COMPARAR DATOS
-      let mapLodgingsFiltered = servicesFiltered.map((e) => e.map((o) => o));
-      console.log(services, "SERVICES ARRAY");
-      console.log(lodgingsMap, "lodging ARRAY");
-      console.log(mapLodgingsFiltered, "map Lodging");
-    /* let isFalse = 0
-      if (isFalse.length === 6)
+        }
+        return onlyTrue;
+      });
+      let mapLodgingsFiltered = lodgingsMap.map((e) => {
+        var id = [e.shift()];
+        if (services.length <= e.length) {
+          let concatServ = id.concat(
+            e.filter((data) => {
+              var includesServices = services.includes(data);
+              return includesServices;
+            })
+          );
+          return concatServ;
+        }
+      });
+      let filtered = mapLodgingsFiltered.filter((e) => e !== undefined);
+      let finalLodgings = filtered.filter(
+        (e) => e.length - 1 === services.length
+      );
+      let onlyId = finalLodgings.map((e) => e[0]);
+      let result = [];
+      filterLodings.forEach((element) => {
+        onlyId.forEach((id) => {
+          if (element._id === id) {
+            result.push(element);
+          }
+        });
+      });
+      if(!services.length){
         return {
           ...state,
           lodgings: state.allLodgings,
-        }; */
-
-    /*  case "GET_USER": */
-    /* return {
-          ...state,
-          payment: action.payload,
-        }; */
+        };
+      }
+      return {
+        ...state,
+        lodgings: result
+      }
 
     case "GET_CONVERSATIONS":
       return {
