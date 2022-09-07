@@ -7,7 +7,7 @@ import {
   orderByLowerCost,
   orderByRating,
 } from "../../Redux/Actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import s from "../Menu/Menu.module.css";
 import { TbMap2 } from "react-icons/tb";
 import { IoIosStar } from "react-icons/io";
@@ -20,17 +20,6 @@ export default function Menu({ paging }) {
   function handleSortByRating(e) {
     e.preventDefault();
     dispatch(orderByRating(e.target.value));
-  }
-  //Ordernar por Lodging tipo: Casa
-  function handleFilterTypeHouse(e) {
-    e.preventDefault();
-    dispatch(filterTypeHouse(e.target.value));
-    paging(1);
-  }
-  function handleFilterByPets(e) {
-    e.preventDefault();
-    dispatch(filterByPets(e.target.value));
-    paging(1);
   }
   function handleOrderByLowest(e) {
     e.preventDefault();
@@ -76,16 +65,6 @@ export default function Menu({ paging }) {
               </span>
             </button>
           </div>
-          {/* <div>
-            <button className={s.button_icon} onClick={handleFilterByPets}>
-              <span>
-                <MdOutlinePets className={s.icons} />
-                <div>
-                  <span className={s.text_desc_icon}>Mascotas</span>
-                </div>
-              </span>
-            </button>
-          </div> */}
           <div>
             <button className={s.button_icon} onClick={handleOrderByLowest}>
               <span>

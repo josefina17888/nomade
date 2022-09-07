@@ -31,6 +31,7 @@ export default function DatePickerOk({ lodId }) {
     guests: 1,
     pets: false,
   });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     dispatch(getDetail(lodgingId));
@@ -83,6 +84,12 @@ export default function DatePickerOk({ lodId }) {
     }
   }
 
+  function hlandeChangeInputGuest(e){
+    if(e.target.value>lodging.guest){
+      setErrors({...errors,[e.target.name]: "Ingresa un número válido"})
+    }
+    setInfo({ ...info, guests: e.target.value })
+  }
   return (
     <div className={styles.sticky_md_top}>
       <div className={styles.container_card}>
@@ -147,6 +154,7 @@ export default function DatePickerOk({ lodId }) {
                 >
                   <label className={styles.label_description}>HUESPEDES</label>
                   <div className={styles.date_picker}>{`${info.guests}`}</div>
+                  {<span>{errors.guests}</span>}
                 </button>
                 <div className="dropdown-menu w-100 p-3">
                   <div className="d-flex flex-row">
@@ -156,11 +164,11 @@ export default function DatePickerOk({ lodId }) {
                     <div className={styles.container_btn}>
                       <input
                         type="number"
-                        name="adults"
+                        name="guests"
                         min={1}
                         max={lodging.guests}
-                        onChange={(e) =>
-                          setInfo({ ...info, guests: e.target.value })
+                        onChange={
+                          hlandeChangeInputGuest
                         }
                         defaultValue={info.guests}
                       ></input>

@@ -55,7 +55,6 @@ export default function Filters({clean}) {
     dispatch(filterByTypeRooms(filter));
     dispatch(filterByServices(filter));
   }, [filter]);
-  console.log(filtered, 'AQUI LOS FILTRADOS')
   /* useEffect(() => {
   }, [services]); */
   useEffect(()=>{
@@ -101,7 +100,6 @@ export default function Filters({clean}) {
   }
 
   function handleChangeTypeProperty(e) {
-    console.log(e.target.name);
     setFilter({
       ...filter,
       lodgingType: e.target.name,

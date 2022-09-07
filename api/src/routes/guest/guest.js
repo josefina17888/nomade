@@ -255,5 +255,15 @@ router.get("/found/host/:guest", async (req, res) => {
   }
 });
 
+router.get("/search/guest/host", async(req, res)=>{
+  try {
+    const infoGuest = await Host.find({ hostId: req.body.hostId });
+    const guestId = infoGuest
+    const isHost = await Guest.find({ guestId: guestId});
+    res.status(200).json(isHost)
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 
 module.exports = router

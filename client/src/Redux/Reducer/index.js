@@ -28,6 +28,7 @@ const initialState = {
   booking: [],
   bookingsall: [],
   userBusqueda: [],
+  guestByHostId: [],
 };
 
 var count = {
@@ -532,7 +533,7 @@ function rootReducer(state = initialState, action) {
           }
         });
       });
-      if(!services.length){
+      if (!services.length) {
         return {
           ...state,
           lodgings: state.allLodgings,
@@ -540,8 +541,8 @@ function rootReducer(state = initialState, action) {
       }
       return {
         ...state,
-        lodgings: result
-      }
+        lodgings: result,
+      };
 
     case "GET_CONVERSATIONS":
       return {
@@ -566,6 +567,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         lodgings: stateClean,
+      };
+    case "SEARCH_GUEST_BY_HOST_ID":
+      return {
+        ...state,
+        guestByHostId: action.payload,
       };
 
     default:
