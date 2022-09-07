@@ -13,46 +13,46 @@ export default function validate (input)
             errors.title ="El titulo solo puede contener letras"
         }
         else if (!input.lodgingType ) {
-            errors.lodgingType = "Debes completar el campo de hospedaje";
+            errors.lodgingType = "Campo Requerido";
         }
         else if(!input.guests){
-            errors.guests = "Debes completar el campo de huespeds";
+            errors.guests = "Campo Requerido";
         }
         else if (!input.rooms ) {
-            errors.rooms = "Debes completar el campo de habitaciones";
+            errors.rooms = "Campo Requerido";
         }
         else if (!input.beds ){
-            errors.beds= "Debes completar el campo camas";
+            errors.beds= "Campo Requerido";
         }
         else if (!input.currency ){
-            errors.currency= "Debes completar el campo de moneda";
+            errors.currency= "Campo Requerido";
         }
         else if (!input.price ) {
-            errors.price = "Debes completar el campo de precio";
+            errors.price = "Campo Requerido";
         }
         else if (!input.bathrooms ) {
-            errors.bathrooms = "Debes completar el campo de baños";
+            errors.bathrooms = "Campo Requerido";
         }
         else if (!input.city) {
-            errors.city = "Debes completar el campo ciudad";
+            errors.city = "Campo Requerido";
         }
         else if(!validateName.test(input.city)){
             errors.city ="La ciudad solo puede contener letras"
         }
         else if (!input.country){
-            errors.country = "Debes completar el campo pais";
+            errors.country = "Campo Requerido";
         }
         else if (!input.description ){
-            errors.description = "Debes completar el campo descripcion";
+            errors.description = "Campo Requerido";
         }
         else if (input.picture < 1){
-            errors.picture = "Debe completar el campo imagen. Minimo 3 fotos";
+            errors.picture = "Minimo 3 fotos";
         }
         if (typeof input.picture !== 'string' && input.picture < 3){
-            errors.picture = "Debes subir minimo 3 imagenes";
+            errors.picture = "Minimo 3 imagenes";
         }
         else if(input.picture > 10){
-            errors.picture = "Puedes subir como maximo 10 imagenes";
+            errors.picture = "Maximo 10 imagenes";
         }
         
         if(!input.latitud){
