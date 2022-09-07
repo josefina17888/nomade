@@ -6,15 +6,11 @@ const Host = require("../../models/Host");
 const mongoose = require("mongoose");
 const upload = require("../../../libs/storage")
 const toId = mongoose.Types.ObjectId;
-const cloudinary = require("cloudinary").v2;
 const {addServices} = require("./controller")
+const cloudinary = require("../../../libs/cloudinary")
 
 
-cloudinary.config({ 
-  cloud_name: 'dtw1cvtdr', 
-  api_key: '828297737868324', 
-  api_secret: 'SquU2x_RLJntjaBnd1nX2UpBFy8' 
-});
+
 //BUSCA LODGING Y REALCIONA EL HOST
 router.post("/:hostId",upload.array("picture"), async (req, res) => {
   try {
@@ -37,7 +33,7 @@ router.post("/:hostId",upload.array("picture"), async (req, res) => {
     newLodging.hostId = toId(req.params.hostId);
     newLodging.latitud = req.body.latitud
     newLodging.save();
-    res.redirect("http://localhost:3000/")
+    res.redirect("http://localhost:3000/")  
     // res.redirect("https://nomade-khaki.vercel.app/")
   } catch (err) {
     res.status(400).send("No se pudo crear el alojamiento");
@@ -124,5 +120,8 @@ router.patch("/:_id", async (req, res) => {
   res.json(lodging)
 
 }); */
+
+
+
 
 module.exports = router;

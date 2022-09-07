@@ -19,9 +19,6 @@ const GuestSchema = new Schema({
   verified: { type: Boolean, default: false },
   isAdmin: { type: Boolean, default: false },
   Visibility: { type: Boolean, default: true },
-  // public_id: {
-  //   type: String
-  // }
 });
 
 

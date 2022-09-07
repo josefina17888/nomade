@@ -123,7 +123,7 @@ export default function NavBar(props) {
                           {admin === true &&
                           <li>
                             <Link
-                              to= {`/admin/lodgings`}
+                              to= {"/admin/estadisticas"}
                               className="dropdown-item current"
                             >
                               <CgProfile /> Panel de admin

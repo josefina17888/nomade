@@ -199,8 +199,8 @@ function onChangeCheckOut(currentDate){
   const preference = preferenceId.preferenceId;
 
   return (
-    <div className={style}>
-      <div className={s.nav}>
+    <div>
+        <div className={s.nav}>
         <div className={s.div_logo}>
           <Link to="/" className="c13cw3wj cbavvlr dir dir-ltr">
             <div className="l10sdlqs dir dir-ltr">
@@ -211,17 +211,18 @@ function onChangeCheckOut(currentDate){
                 width="150"
                 height="60"
               />
-            </div>
-          </Link>
-        </div>
-      </div>
+              </div>
+              </Link>
+          </div>
+          </div>
       {!userEmail ? (
         <Link to="/login">
               <div> Debes registrarte</div>
         </Link>
     
       ) : (
-        <div className={s.container}>
+      <div className={s.container4}>
+          <div className={s.container}>
           <div className={s.margin}>
             <div className={s.titles}>Fechas de tu reservacion</div>
             <hr className={s.hr}></hr>
@@ -229,10 +230,10 @@ function onChangeCheckOut(currentDate){
               input.checkOut
             ).toLocaleDateString()}`}</div>
             <div>
-              <div>Edita tus fechas</div>
+              <div className={s.div}>Edita tus fechas</div>
               <div>
                 <div>
-                  <div>Llegada</div>
+                  <div className={s.div}>Llegada</div>
                   <DatePicker
                     disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
@@ -248,7 +249,7 @@ function onChangeCheckOut(currentDate){
                   />
                 </div>
                 <div>
-                  <div>Salida</div>
+                  <div className={s.div}>Salida</div>
                   <DatePicker
                     disabled ={preference !== undefined}
                     dateFormat="dd/MM/yyyy"
@@ -268,7 +269,7 @@ function onChangeCheckOut(currentDate){
             <div className={s.titles}>Nómadas</div>
             <hr className={s.hr}></hr>
             <div className={s.selection}>
-              <span>Total </span>
+              <h6 className={s.inputcheck}>Total </h6>
               <input
                 type="number"
                 defaultValue={totalGuest}
@@ -276,9 +277,8 @@ function onChangeCheckOut(currentDate){
                 max={lodging.guests}
               ></input>
             </div>
-            <div className={s.selection}>
-              <span>Mascotas </span>
-              <input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
+            <div className={s.selection2}>
+              <h6 className={s.inputcheck}>Mascotas </h6><input type="checkbox" checked={input.pets} onChange={handleCheckBox} disabled={!pets.includes('pets')}></input>
             </div>
           </div>
           <div className={s.card}>
@@ -298,10 +298,6 @@ function onChangeCheckOut(currentDate){
                     ${input.totalPrice} por {input.night} noches
                   </h6>
                 </div>
-                <div>
-                  <h6 className={s.sub1}>Comisión por servicio</h6>
-                  <h6 className={s.h}>$0</h6>
-                </div>
               </div>
               <div className={s.container3}>
                 <div>
@@ -317,9 +313,11 @@ function onChangeCheckOut(currentDate){
             <button className={s.button2} onClick={handleBooking} onmouseover={changeStyle}>
               Reservar
             </button>
-            <MercadoPagoFinal preferenceId={preference} />
           </div>
+          </div>
+          <MercadoPagoFinal preferenceId={preference} />                     
         </div>
+
       )}
     </div>
   );
