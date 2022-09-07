@@ -23,12 +23,17 @@ import { TbBuildingWarehouse } from "react-icons/tb";
 
 export default function Filters({clean}) {
   const [filter, setFilter] = useState({
-    range: 0,
+    range: 350,
     beds: 0,
     rooms: 0,
     bathrooms: 0,
     lodgingType: "",
-    services: {},
+    wifi: false,
+    ac: false,
+    tv: false,
+    parking: false,
+    pets: false,
+    hotWater: false,
   });
   const [services, setServices] = useState({
     wifi: false,
@@ -48,13 +53,20 @@ export default function Filters({clean}) {
     dispatch(filterByQRooms(filter));
     dispatch(filterByQBathrooms(filter));
     dispatch(filterByTypeRooms(filter));
-  }, [filter, services]);
-  useEffect(() => {
-    dispatch(filterByServices(services));
-  }, [services]);
+
+    dispatch(filterByServices(filter));
+  }, [filter]);
+  /* useEffect(() => {
+  }, [services]); */
+
   useEffect(()=>{
     if(clean){
-      setServices({
+      setFilter({
+        range: 0,
+        beds: 0,
+        rooms: 0,
+        bathrooms: 0,
+        lodgingType: "",
         wifi: false,
         ac: false,
         tv: false,
@@ -62,15 +74,7 @@ export default function Filters({clean}) {
         pets: false,
         hotWater: false,
       });
-      setFilter({
-        range: 0,
-        beds: 0,
-        rooms: 0,
-        bathrooms: 0,
-        lodgingType: "",
-        services: services,
-      });
-  
+
       dispatch(cleanFilters());
     }
   })
@@ -99,7 +103,6 @@ export default function Filters({clean}) {
   }
 
   function handleChangeTypeProperty(e) {
-    console.log(e.target.name);
     setFilter({
       ...filter,
       lodgingType: e.target.name,
@@ -108,29 +111,26 @@ export default function Filters({clean}) {
 
   function handleCheckBoxes(e) {
     const { value, checked } = e.target;
-    setServices({
-      ...services,
+    setFilter({
+      ...filter,
       [e.target.value]: checked,
     });
   }
 
   function stateCleaner(e) {
     e.preventDefault();
-    setServices({
+    setFilter({
+      range: 350,
+      beds: 0,
+      rooms: 0,
+      bathrooms: 0,
+      lodgingType: "",
       wifi: false,
       ac: false,
       tv: false,
       parking: false,
       pets: false,
       hotWater: false,
-    });
-    setFilter({
-      range: 0,
-      beds: 0,
-      rooms: 0,
-      bathrooms: 0,
-      lodgingType: "",
-      services: services,
     });
 
     dispatch(cleanFilters());
@@ -159,7 +159,7 @@ export default function Filters({clean}) {
               max="350"
               step="1"
               onChange={handleChangeRange}
-              defaultValue="0"
+              defaultValue="350"
             ></input>
             <span>De 0 a {`${filter.range}`} USD</span>
           </div>
@@ -344,7 +344,7 @@ export default function Filters({clean}) {
                   type="checkbox"
                   name="services"
                   value="wifi"
-                  checked={services.wifi}
+                  checked={filter.wifi}
                   onChange={handleCheckBoxes}
                   id="checkWifi"
                 />
@@ -357,7 +357,7 @@ export default function Filters({clean}) {
                   type="checkbox"
                   name="services"
                   value="ac"
-                  checked={services.ac}
+                  checked={filter.ac}
                   onChange={handleCheckBoxes}
                 />
                 <label className="form-check-label" for="inlineCheckbox2">
@@ -369,7 +369,7 @@ export default function Filters({clean}) {
                   type="checkbox"
                   name="services"
                   value="tv"
-                  checked={services.tv}
+                  checked={filter.tv}
                   onChange={handleCheckBoxes}
                 />
                 <label className="form-check-label" for="inlineCheckbox1">
@@ -383,7 +383,7 @@ export default function Filters({clean}) {
                   type="checkbox"
                   name="services"
                   value="parking"
-                  checked={services.parking}
+                  checked={filter.parking}
                   onChange={handleCheckBoxes}
                 />
                 <label className="form-check-label" for="inlineCheckbox2">
@@ -395,7 +395,7 @@ export default function Filters({clean}) {
                   type="checkbox"
                   name="services"
                   value="hotWater"
-                  checked={services.hotWater}
+                  checked={filter.hotWater}
                   onChange={handleCheckBoxes}
                 />
                 <label className="form-check-label" for="inlineCheckbox2">
@@ -407,7 +407,7 @@ export default function Filters({clean}) {
                   type="checkbox"
                   name="services"
                   value="pets"
-                  checked={services.pets}
+                  checked={filter.pets}
                   onChange={handleCheckBoxes}
                 />
                 <label className="form-check-label" for="inlineCheckbox2">

@@ -7,6 +7,7 @@ import {
   getDetail,
   getGuestByEmail,
   deleteLodging,
+  getGuestByHostId,
 } from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
 import GoogleMapDetail from "../GoogleMapsDetail/GoogleMapsDetail";
@@ -45,7 +46,11 @@ export default function CardDetail(props) {
   } else {
     var userToken = JSON.parse(guestId)._id;
     var userEmail = JSON.parse(guestId).email;
-  }
+  } 
+  const myLodging = useSelector((state) => state.detail); 
+  const [hostId, setHostId]=useState({
+    hostId:""
+  })
   useEffect(() => {
     dispatch(getGuests());
     dispatch(getDetail(lodgingId));
@@ -53,11 +58,16 @@ export default function CardDetail(props) {
     dispatch(lodgingReviews());
   }, [dispatch]);
 
-  useEffect(() => {
+
+  useEffect(() => { 
+    setTimeout(()=>{
+      setHostId({...hostId, hostId:myLodging.hostId}) 
+    dispatch(getGuestByHostId(hostId))},2000)
     window.scrollTo(0, 0);
   }, []);
 
   const myLodging = useSelector((state) => state.detail);
+
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
   const validateHost = useSelector((state) => state.hosts);
@@ -75,7 +85,9 @@ export default function CardDetail(props) {
 
   const lodgingServices = [];
   const lodgingNoServices = [];
-  // var filterHost = allGuests.filter((e) => e._id === arrFilter[0]._id);
+
+  // var filterHost = allGuests.filter((e) => e._id === validateHost[0]._id);
+
   var nameHost = "";
 
   // for (let property in filterHost[0]) {
@@ -157,14 +169,15 @@ export default function CardDetail(props) {
                       <div>
                         <div>Anfitrión: {nameHost}</div>
                         <div>Tipo: {myLodging.lodgingType}</div>
+                        <div>Baños: {myLodging.bathrooms}</div>
                       </div>
                       <div>
                         <div>Huéspedes: {myLodging.guests} </div>
-                        <div>Recámaras: {myLodging.rooms}</div>
+                        <div>Habitaciones: {myLodging.rooms}</div>
                       </div>
                       <div>
                         <div>Camas: {myLodging.beds}</div>
-                        <div>Baños: {myLodging.bathrooms}</div>
+                        <div>Mascotas: {myLodging.pets?"si":"no"}</div>
                       </div>
                     </div>
                   </div>
@@ -254,6 +267,7 @@ export default function CardDetail(props) {
                                 <p className={styles.p2}>Estacionamiento</p>
                               )}
                             </div>
+
                           </div>
                         </div>
                         <div>
