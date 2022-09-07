@@ -118,6 +118,7 @@ export default function CardDetail(props) {
       {myLodging === undefined ? (
         <p>Loading...</p>
       ) : (
+        <div>
         <div className={styles.first_container}>
           <div className="w-75">
             <div className={styles.container}>
@@ -126,8 +127,15 @@ export default function CardDetail(props) {
               </div>
               <div className="p-2 w-100 rounded d-flex justify-content-center">
                 <div className={styles.container_img}>
-                  <Carousel activeIndex={index} onSelect={handleSelect}>
-                    <Carousel.Item>
+                  <Carousel
+                      activeIndex={index}
+                      onSelect={handleSelect}
+                      className="_168ht2w"
+                    >
+                    {
+                      picture?
+                      picture.map((e)=>
+                      <Carousel.Item className="_168ht2w">
                       <img
                         className="d-block w-100"
                         src={e}
@@ -442,4 +450,3 @@ export default function CardDetail(props) {
     </div>
   );
 }
-
