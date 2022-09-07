@@ -28,6 +28,8 @@ import { useSelector } from 'react-redux';
 import adminLodgings from './components/Admin/adminLodgings.jsx'
 import adminComplaints from './components/Admin/adminComplaints.jsx'
 import adminEstadisticas from './components/Admin/adminEstadisticas.jsx'
+import Terminos from "./components/Terminos/terminos"
+/* import BarChart from "./components/Estadisticas/Charts/BarChart.jsx" */
 import Reservations from './components/Profile/HostReservations/hostreservations';
 
 
@@ -66,6 +68,7 @@ function App() {
           <Route path= "/status" component={Status}/>
           <Route path= '/chat' component={Chat}/>
           <Route path= '/nosotros' component={Nosotros}/>
+          <Route exact path= '/terminos' component={Terminos}/>
           <Route path= '/admin/users' component={adminUsers}/>
           <Route path= '/admin/lodgings' component={adminLodgings}/>
           <Route path= '/admin/complaints' component={adminComplaints}/>

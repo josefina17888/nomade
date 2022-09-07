@@ -25,7 +25,9 @@ export default function Footer() {
         <div className={style.point}></div>
       </div>
       <div>
+      <Link className={style.link} to='/terminos'>
         <p className={style.TyC}>Terminos y condiciones</p>
+        </Link>
       </div>
       <div className={style.containerSocials}>
         <a href="https://www.facebook.com/" target='__BLANK'><img className={style.facebook} src={Facebook} alt='Img Facebook'></img></a>
