@@ -82,7 +82,7 @@ const dispatch = useDispatch()
             (<div>Aún no has publicado alojamientos</div>) :
             (lodgings.map((e)=>
                 <div className={style.book} key={e._id}>
-                <h6>{e.title}</h6>
+                <p>{e.title}</p>
                 <img src={e.picture["0"]} alt="img not found" width="200" height="130"/>
                 <button className={style.link} value={e._id} onClick={(e) => handleClick(e)}>
                    Id: {e._id}

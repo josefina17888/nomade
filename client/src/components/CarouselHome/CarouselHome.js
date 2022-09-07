@@ -55,7 +55,7 @@ export default function TopRated() {
 
   return (
     <div className={style.containerTopRated}>
-      <div>
+      <div className="d-flex w-100 pe-2 justify-content-center">
         <h2 className={style.tarifa}>Destacados</h2>
       </div>
       <Carousel
