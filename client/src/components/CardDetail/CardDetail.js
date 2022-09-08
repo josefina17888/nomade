@@ -69,7 +69,6 @@ export default function CardDetail(props) {
    
   }, []);
 
-  
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
   const validateHost = useSelector((state) => state.hosts);
