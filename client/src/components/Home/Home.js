@@ -50,6 +50,7 @@ export default function Home() {
   }
 
   return (
+    <div>
     <div className={styles.first_container}>
       <NavBar email={user ? user.email : ""} />
       <Menu
@@ -78,7 +79,9 @@ export default function Home() {
           >
           </IoChevronUpCircleOutline>
       </div>
-      <Footer/>
+      
+    </div>
+    <Footer/>
     </div>
   );
 }
