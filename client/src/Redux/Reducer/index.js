@@ -536,7 +536,6 @@ function rootReducer(state = initialState, action) {
       if (!services.length) {
         return {
           ...state,
-          lodgings: state.allLodgings,
         };
       }
       return {

@@ -21,8 +21,8 @@ export default function ResetPassword() {
         const verifyEmailUrl = async () => {
             try {
                 const url = 
-                // `${process.env.REACT_APP_API}/api/guest/${params.email}`
-                `http://localhost:3001/api/guest/${params.email}`
+                 `${process.env.REACT_APP_API}/api/guest/${params.email}`
+                // `http://localhost:3001/api/guest/${params.email}`
                 const {data} = await axios.get(url);
                 console.log(data)
                 setValidUrl(true)
@@ -52,8 +52,8 @@ export default function ResetPassword() {
             },
           };
           const { data } = await axios.patch(
-            // `/api/passwordReset/newPassordLogIn/${params.email}`,
-            `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
+           `/api/passwordReset/newPassordLogIn/${params.email}`,
+            // `http://localhost:3001/api/passwordReset/newPassordLogIn/${params.email}`,
             {
               passwordOne,
             },

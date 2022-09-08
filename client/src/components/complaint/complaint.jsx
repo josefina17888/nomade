@@ -41,7 +41,7 @@ function handleChange(e){
 
   return (
     <div className={style.contenedor}>
-      <form action={`http://localhost:3001/api/complaint/${guestId}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data">
+      <form action={`${process.env.REACT_APP_API}/api/complaint/${guestId}/${props.match.params.lodgingId}/`} method="POST" encType="multipart/form-data">
           <h3 className={style.h3}>¿Que sucede con este alojamiento?</h3>
         <p className={style.clasificacion}>
         <select name="tipo" onChange={handleChange}  id="">

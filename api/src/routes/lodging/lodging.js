@@ -99,10 +99,10 @@ router.get("/:hostId", async (req, res) => {
 })
 
 //MODIFICA ALOJAMIENTO A VISIBILITY FALSE
-router.patch("/:_id", async (req, res) => {
+router.patch("/detail/:id", async (req, res) => {
       
   try {
-    let lodgingId = toId(req.params._id)
+    let lodgingId = toId(req.params.id)
     await Lodging.findByIdAndUpdate(lodgingId, { Visibility: 'false' }).exec();
     res.send("actualizado con exito")
   } catch (error) {

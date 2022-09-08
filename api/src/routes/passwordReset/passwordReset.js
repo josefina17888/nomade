@@ -17,8 +17,8 @@ router.post("/" , async (req, res) => {
             token: generateToken(guest._id)
         }).save()
     }
-    const url = `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
-    // const url = `https://nomade-henry.herokuapp.com/api/passwordReset/${guest._id}/${token.token}`;
+    // const url = `${process.env.BASE_URL}api/passwordReset/${guest._id}/${token.token}`;
+    const url = `https://nomade-henry.herokuapp.com/api/passwordReset/${guest._id}/${token.token}`;
     const title = "Tranquilo Nómade, todo esto por tu seguridad"
     const msg = "Estas a unos pasos de ingresar tu nueva contraseña. Sólo da click al boton de abajo."
     await verifyEmail(guest.email,"Password Reset", title , msg , url)
@@ -35,8 +35,8 @@ router.get("/:_id/:token", async (req, res) => {
       });
       if(!token) return res.status(400).send({message: "invalid link"})
       await token.remove()
-      res.status(200).redirect(`http://localhost:3000/${req.params._id}/resetPassword/${req.params.token}`)
-      // res.status(200).redirect(`https://nomade-khaki.vercel.app/${req.params._id}/resetPassword/${req.params.token}`)
+      // res.status(200).redirect(`http://localhost:3000/${req.params._id}/resetPassword/${req.params.token}`)
+       res.status(200).redirect(`https://nomade-khaki.vercel.app/${req.params._id}/resetPassword/${req.params.token}`)
     }
     catch(error) {
       res.status(404).send(error)

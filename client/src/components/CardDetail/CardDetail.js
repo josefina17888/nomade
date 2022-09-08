@@ -71,16 +71,6 @@ export default function CardDetail(props) {
    
   }, []);
 
-  
- /*  useEffect(()=>{
-    return()=>{
-      dispatch(cleanDetail())
-    }
-    
-  },[])
- */
-  /* const myLodging = useSelector((state) => state.detail); */
-
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);
   const validateHost = useSelector((state) => state.hosts);
@@ -180,7 +170,6 @@ export default function CardDetail(props) {
                     <h3 className={styles.titles}>Alojamiento</h3>
                     <div className={styles.description_lodging}>
                       <div>
-                        <div>Anfitrión: {nameHost}</div>
                         <div>Tipo: {myLodging.lodgingType}</div>
                         <div>Baños: {myLodging.bathrooms}</div>
                       </div>
