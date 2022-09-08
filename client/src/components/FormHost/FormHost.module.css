@@ -1,6 +1,7 @@
 .formulario{
     top: 2rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding-top: 9em;
 
 }
 .formulario > form{

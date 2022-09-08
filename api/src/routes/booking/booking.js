@@ -91,7 +91,7 @@ router.post("/emailVerified/:email",async (req, res) => {
           const title = "Tu reserva se realizó con éxito"
           const title2 = "¿Cómo estuvo tu experiencia nómade? Déjanos tus comentarios"
           const infoBooking = req.body
-          const url = `http://localhost:3000/lodgingreview/${userExist._id}/${infoLoding._id}`
+          const url = `https://nomade-khaki.vercel.app/lodgingreview/${userExist._id}/${infoLoding._id}`
           await bookingConfirm(userExist.email,"Reserva confirmada",title , infoLoding ,infoBooking)
           await review(userExist.email,"Deja tu reseña",title2 , infoLoding ,infoBooking,url)
           res.status(201).send("Verifica tu correo")

@@ -33,7 +33,7 @@ export default function Status() {
     dispatch(getDetail(lodgingId));
     dispatch(createNewBooking(booking));
     const data = async () => {
-      await axios.post(`http://localhost:3001/api/booking/emailVerified/${emailGuest}`,booking)
+      await axios.post(`/api/booking/emailVerified/${emailGuest}`,booking)
    }
    setTimeout(() =>  {data()},3000)
   

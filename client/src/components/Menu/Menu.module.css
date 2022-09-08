@@ -8,12 +8,17 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    padding-top: 0em;
     padding: 0.8em;
 }
 .container_icons{
     display: flex;
     flex-direction: row;
     gap: 0.625em;
+<<<<<<< HEAD
+=======
+    justify-content: center;
+>>>>>>> 4819244087d1f6d864f07a57bc65300a8b8cc3e6
     padding-left: 8em;
 }
 

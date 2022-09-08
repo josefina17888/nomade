@@ -1,10 +1,5 @@
 import React from 'react'
 import style from './Nosotros.module.css'
-import Julio from '../../assets/Julio.jpg'
-import Yairys from '../../assets/Yayi.jfif'
-import Nabil from '../../assets/Nabil.jfif'
-import Josefina from '../../assets/Josefina.jfif'
-import Bruno from '../../assets/Bruno.jfif'
 import Footer from '../Footer/Footer'
 import Linkedin from '../../assets/linkedin.png'
 import Github from '../../assets/silueta-del-logo-de-github-en-un-cuadrado.png'
@@ -14,7 +9,7 @@ export default function Nostros() {
     <div>
       <div className={style.containerNosotros}>
         <div className={style.cardContainer}>
-          <img className={style.image} src={Julio} alt='Image'></img>
+          <img className={style.image} src={"https://res.cloudinary.com/dbq85fwfz/image/upload/v1662560700/samples/Abel%20PIC/WhatsApp_Image_2022-09-07_at_09.16.24_3_n3xr39.jpg"} alt='Image'></img>
           <h2 className={style.name}>Julio Peña</h2>
           <p className={style.pDeveloper}>Full Stack Developer</p>
           <div className={style.socialContainer}>
@@ -23,7 +18,7 @@ export default function Nostros() {
           </div>
         </div>
         <div className={style.cardContainer}>
-          <img className={style.image} src={'https://cdn.discordapp.com/attachments/998009338000064551/1015713683269230824/UTP_MARTINEZ_DIAZ_YULISSA_AZUCENA.jpg'} alt='Image'></img>
+          <img className={style.image} src={'https://res.cloudinary.com/dbq85fwfz/image/upload/v1662560508/samples/Abel%20PIC/UTP_MARTINEZ_DIAZ_YULISSA_AZUCENA_fu4r49.jpg'} alt='Image'></img>
           <h2 className={style.name}>Yulissa Azucena</h2>
           <p className={style.pDeveloper}>Full Stack Developer</p>
           <div className={style.socialContainer}>
@@ -32,7 +27,7 @@ export default function Nostros() {
           </div>
         </div>
         <div className={style.cardContainer}>
-          <img className={style.image} src={Josefina} alt='Image'></img>
+          <img className={style.image} src={"https://res.cloudinary.com/dbq85fwfz/image/upload/v1662560653/samples/Abel%20PIC/WhatsApp_Image_2022-09-07_at_09.16.24_2_i1sfhp.jpg"} alt='Image'></img>
           <h2 className={style.name}>Josefina Berro</h2>
           <p className={style.pDeveloper}>Full Stack Developer</p>
           <div className={style.socialContainer}>
@@ -41,7 +36,7 @@ export default function Nostros() {
           </div>
         </div>
         <div className={style.cardContainer}>
-          <img className={style.image} src={Nabil} alt='Image'></img>
+          <img className={style.image} src={"https://res.cloudinary.com/dbq85fwfz/image/upload/v1662560561/samples/Abel%20PIC/nabil_qfviyb.jpg"} alt='Image'></img>
           <h2 className={style.name}>Nabil Allis</h2>
           <p className={style.pDeveloper}>Full Stack Developer</p>
           <div className={style.socialContainer}>
@@ -50,7 +45,7 @@ export default function Nostros() {
           </div>
         </div>
         <div className={style.cardContainer}>
-          <img className={style.image} src={Bruno} alt='Image'></img>
+          <img className={style.image} src={"https://res.cloudinary.com/dbq85fwfz/image/upload/v1662560620/samples/Abel%20PIC/WhatsApp_Image_2022-09-07_at_09.16.24_1_qh1ggy.jpg"} alt='Image'></img>
           <h2 className={style.name}>Bruno Lauricella</h2>
           <p className={style.pDeveloper}>Full Stack Developer</p>
           <div className={style.socialContainer}>
@@ -68,7 +63,7 @@ export default function Nostros() {
           </div>
         </div>
         <div className={style.cardContainer}>
-          <img className={style.image} src={Yairys} alt='Image'></img>
+          <img className={style.image} src={"https://res.cloudinary.com/dbq85fwfz/image/upload/v1662560840/samples/Abel%20PIC/WhatsApp_Image_2022-09-07_at_09.16.24_4_rk369z.jpg"} alt='Image'></img>
           <h2 className={style.name}>Yairys Aristigueta</h2>
           <p className={style.pDeveloper}>Full Stack Developer</p>
           <div className={style.socialContainer}>
