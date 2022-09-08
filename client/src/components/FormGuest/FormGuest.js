@@ -6,6 +6,7 @@ import { Link,useHistory } from "react-router-dom";
 import {getGuestByEmail} from '../../Redux/Actions'
 import {IoCheckmarkCircleOutline, IoCloseCircleOutline,IoEyeOutline,IoEyeOffOutline} from 'react-icons/io5'
 import style from "./FormUser.module.css";
+import NavBar from "../NavBar/NavBar";
 
 
 export default function FormUser() {
@@ -42,6 +43,7 @@ function handleChange(e){
 
   return (
     <div className={style.containerUser}>
+      <NavBar/>
       {/* <form action={"http://localhost:3001/api/guest/"}  method="POST" encType="multipart/form-data"> */}
     <form action= {`${process.env.REACT_APP_API}/api/guest/`}  method="POST" encType="multipart/form-data" >
       <h1 className={style.title}>Registrate!</h1>
