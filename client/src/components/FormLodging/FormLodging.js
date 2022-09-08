@@ -130,10 +130,10 @@ export default function FormLodging() {
       );
     } else {
       if (document.getElementById("imgPreview0")) {
-        for (let i = 0; i < 3; i++) {
-          if (document.getElementById("imgPreview" + i)) {
-            document.getElementById("imgPreview" + i).remove();
-          }
+        let i = 0
+        while(document.getElementById("imgPreview" + i)){
+          document.getElementById("imgPreview" + i).remove();
+          i++
         }
       }
       for (let i = 0; i < e.target.files.length; i++) {
@@ -462,6 +462,11 @@ export default function FormLodging() {
               <label className={style.fcontainer}>
                 AC
                 <input name="ac" type="checkbox" />
+                <div className={style.checkmark} />
+              </label>
+              <label className={style.fcontainer}>
+                TV
+                <input name="tv" type="checkbox" />
                 <div className={style.checkmark} />
               </label>
               <label className={style.fcontainer}>

@@ -37,6 +37,7 @@ const getHostInfo = async () => {
         }
     }
    getHostInfo();
+  
 }, [host]);
 
 console.log(host)
@@ -98,7 +99,8 @@ const handleClick = ({_id}) => {
                 )) 
         } 
     </div>
-    <Link className={style.link} to= {`/profile/${guest}/${host}/reservations`}>Ver reservas de mis alojamientos</Link>
+    {lodg?(<Link className={style.link} to= {`/profile/${guest}/${host}/reservations`}>Ver reservas de mis alojamientos</Link>) : ( <div></div>)}
+    
     </div>
    )
 }

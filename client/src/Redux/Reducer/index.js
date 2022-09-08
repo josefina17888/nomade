@@ -576,7 +576,7 @@ function rootReducer(state = initialState, action) {
       case 'CLEAN_DETAIL':
         return{
           ...state,
-          detail: action.payload
+          detail: []
         }
        
 

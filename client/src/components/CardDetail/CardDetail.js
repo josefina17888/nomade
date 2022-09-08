@@ -64,10 +64,8 @@ export default function CardDetail(props) {
 
 
   useEffect(() => { 
-    setTimeout(()=>{
-      setHostId({...hostId, hostId:myLodging.hostId}) 
-    dispatch(getGuestByHostId(hostId))},2000)
     window.scrollTo(0, 0);
+    dispatch(cleanDetail())
    
   }, []);
 
