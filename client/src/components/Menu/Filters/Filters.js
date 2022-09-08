@@ -206,7 +206,7 @@ export default function Filters({clean}) {
             </div>
             <div className={s.container_icons_quantity}>
               <MdMeetingRoom />
-              Recámaras {filter.rooms !== 0 ? `${filter.rooms}` : ``}
+              Habitaciones {filter.rooms !== 0 ? `${filter.rooms}` : ``}
             </div>
             <div
               className="btn-group mb-2 top-50 start-50 translate-middle btn-group-sm"
