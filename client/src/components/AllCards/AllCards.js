@@ -8,7 +8,8 @@ import {
   setLoaderFalse,
   setLoaderTrue,
   getGuests,
-  deleteLodging
+  deleteLodging, 
+  cleanDetail
 } from "../../Redux/Actions/index";
 import AllCardsPaging from "../AllCardsPaging/AllCardsPaging";
 import Card from "../Card/Card";
@@ -48,6 +49,10 @@ export default function AllCards({setCurrentPage, paging, lodgingPerPage, curren
     dispatch(deleteLodging(id))  
     window.location.reload();
   }
+
+useEffect(() => { 
+    dispatch(cleanDetail())
+  }, []);
 
  
 

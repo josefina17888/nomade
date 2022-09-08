@@ -572,6 +572,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         guestByHostId: action.payload,
       };
+      case 'CLEAN_DETAIL':
+        return{
+          ...state,
+          detail: []
+        }
+       
 
     default:
       return { ...state };

@@ -62,7 +62,7 @@ export default function ConditionalReview({lodId, email, userToken1}) {
         <Link
           to={
             userToken
-              ? `/lodgingreview/${userEmail}/${lodgingId}`
+              ? `/lodgingreview/${guest}/${lodgingId}`
               : "/login"
           }
           className="nav-link py-2 px-0 px-lg-2"

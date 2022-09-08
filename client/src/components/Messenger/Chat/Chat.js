@@ -68,7 +68,7 @@ export default function Chat() {
     }, [conversations]);
   }
 
-
+ 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
@@ -100,6 +100,8 @@ export default function Chat() {
   }, [conversations]);
 
   // obtiene todas las conversaciones asociadas al usuario
+
+  
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -109,8 +111,11 @@ export default function Chat() {
         console.log(err);
       }
     };
-    getConversations();
+      getConversations();
+ 
   }, [userId, host]);
+
+ 
 
   // trae todos los mensajes de una conversacion
   useEffect(() => {
@@ -136,6 +141,7 @@ export default function Chat() {
  
   }, [messages]); */
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
@@ -144,14 +150,15 @@ export default function Chat() {
       conversationId: currentChat._id,
     };
     const receiverId = currentChat.members.find((member) => member !== userId);
-
+    
     socket.current.emit("sendMessage", {
       senderId: userId,
       receiverId,
       text: newMessage,
     });
-
+    
     try {
+      
       //envia el mensaje a la db
       const res = await axios.post("/api/message", message);
       setMessages([...messages, res.data]);
@@ -226,7 +233,7 @@ export default function Chat() {
           </div>
 
           <div ref={scrollRef} className={s.reserv}>
-            {localStorage.booking?(<ResDetail bookingInfo={bookingInfo} />):(<ResDetailHost/>)}
+            {localStorage.booking?(<ResDetail bookingInfo={bookingInfo} />):(<ResDetailHost currentUser/>)}
             
           </div>
         </div>

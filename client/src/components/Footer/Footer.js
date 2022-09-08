@@ -31,8 +31,8 @@ export default function Footer() {
       </div>
       <div className={style.containerSocials}>
         <a href="https://www.facebook.com/" target='__BLANK'><img className={style.facebook} src={Facebook} alt='Img Facebook'></img></a>
-        <a href="https://twitter.com/" target='__BLANK'><img className={style.twitter} src={Twitter} alt='Img Twitter'></img></a>
-        <a href="https://www.instagram.com/" target='__BLANK'><img className={style.instagram} src={Instagram} alt='Img Instagram'></img></a>
+        <a href="https://twitter.com/HenryNomade" target='__BLANK'><img className={style.twitter} src={Twitter} alt='Img Twitter'></img></a>
+        <a href="https://www.instagram.com/nomade.world/" target='__BLANK'><img className={style.instagram} src={Instagram} alt='Img Instagram'></img></a>
       </div>
     </div>
   );

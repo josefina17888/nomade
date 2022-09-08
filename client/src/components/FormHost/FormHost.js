@@ -69,7 +69,7 @@ function handlePhoto(e){
 
   return (
     <div>
-      <NavBar/>
+      {/* <NavBar/> */}
     <div className={estilos.formulario}>
     { tieneDni ?
    <form action= {`${process.env.REACT_APP_API}/api/host/${guestId}`}  method="POST" encType="multipart/form-data" > 

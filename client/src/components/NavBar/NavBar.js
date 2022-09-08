@@ -127,7 +127,7 @@ export default function NavBar(props) {
                             </Link>
                           </li>}
                           <li>
-                            <Link to="/login" className="dropdown-item">
+                            <Link to="/chat" className="dropdown-item">
                               <TbMessageCircle /> Mensajes
                             </Link>
                           </li>

@@ -41,16 +41,15 @@
 
 .tarifa {
   margin-top: 10px;
-  margin-left: 30px;
   font-size: 1.7rem;
   font-weight: 500;
   color: #069a8e;
   padding-top: 0.5em;
   padding-bottom: 1em;
-  padding-left: 10em;
   display: flex;
-  justify-content: flex-start;
-  width: 50%;
+  justify-content: center;
+  width: 100%;
+
 }
 
 .carousel ul li button {
