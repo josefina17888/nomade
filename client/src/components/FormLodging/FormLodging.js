@@ -130,10 +130,10 @@ export default function FormLodging() {
       );
     } else {
       if (document.getElementById("imgPreview0")) {
-        let i = 0
-        while(document.getElementById("imgPreview" + i)){
+        let i = 0;
+        while (document.getElementById("imgPreview" + i)) {
           document.getElementById("imgPreview" + i).remove();
-          i++
+          i++;
         }
       }
       for (let i = 0; i < e.target.files.length; i++) {
@@ -179,8 +179,12 @@ export default function FormLodging() {
     <div className={style.contForm}>
       <NavBar />
       <div className={style.containerUser}>
-        <form action= {`${process.env.REACT_APP_API}/api/lodging/${hostId}`}  method="POST" encType="multipart/form-data" >
-        {/* <form
+        <form
+          action={`${process.env.REACT_APP_API}/api/lodging/${hostId}`}
+          method="POST"
+          encType="multipart/form-data"
+        >
+          {/* <form
           className={style.lodgForm}
           encType="multipart/form-data"
           action={`http://localhost:3001/api/lodging/${hostId}`}
@@ -204,7 +208,7 @@ export default function FormLodging() {
 
           <div className={style.lselect}>
             <div className={style.group1}>
-              <div >
+              <div>
                 <select
                   className={style.s1}
                   onChange={handleChange}
@@ -220,14 +224,12 @@ export default function FormLodging() {
                   <option>Casa</option>
                   <option>Apartamento</option>
                   <option>habitacion</option>
-                  
                 </select>
                 <p className={style.error}>{errors.lodgingType}</p>
-    
               </div>
 
-              <div >
-                <div >
+              <div>
+                <div>
                   <select
                     className={style.s1}
                     onChange={handleChange}
@@ -330,11 +332,14 @@ export default function FormLodging() {
                 />
                 <div className={style.checkmark} />
               </label>
-             
             </div>
 
             <div className={style.bthrooms}>
-              <select className={style.s1} onChange={handleChange} name="bathrooms">
+              <select
+                className={style.s1}
+                onChange={handleChange}
+                name="bathrooms"
+              >
                 <option disabled selected>
                   Numero de Baños
                 </option>
@@ -345,30 +350,33 @@ export default function FormLodging() {
               </select>
               <p className={style.error}>{errors.bathrooms}</p>
             </div>
-          
 
-          <div className={style.bthrooms}>
-          <select className={style.s2} onChange={handleChange} name="country">
-            <option value="" disabled selected>
-              País
-            </option>
-            {countries.map((e) => (
-              <option key={e.name} value={e.name}>
-                {e.name}
-              </option>
-            ))}
-          </select>
-          </div>
-          <div className={style.bthrooms}>
-          <input
-            type="text"
-            name="city"
-            value={input.city}
-            placeholder="Ciudad"
-            onChange={handleChange}
-          />
-          <p className={style.error}>{errors.city}</p>
-          </div>
+            <div className={style.bthrooms}>
+              <select
+                className={style.s2}
+                onChange={handleChange}
+                name="country"
+              >
+                <option value="" disabled selected>
+                  País
+                </option>
+                {countries.map((e) => (
+                  <option key={e.name} value={e.name}>
+                    {e.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div >
+              <input className={style.cty}
+                type="text"
+                name="city"
+                value={input.city}
+                placeholder="Ciudad"
+                onChange={handleChange}
+              />
+              <p className={style.error}>{errors.city}</p>
+            </div>
           </div>
           <div className={style.containerMap}>
             <div className={style.mapL}>
@@ -386,21 +394,25 @@ export default function FormLodging() {
             </div>
             <div className={style.group4}>
               <div className={style.eAddress}>
-            <input
-              name="address"
-              value={input.address}
-              onChange={onChange}
-              type="text"
-              placeholder="Direccion Exacta:"
-              className={style.aInput}
-              title="Debes verificar la direccion"
-              required={true}
-            />
-            <p className={style.error}>{errors.address}</p>
+                <input
+                  name="address"
+                  value={input.address}
+                  onChange={onChange}
+                  type="text"
+                  placeholder="Direccion Exacta:"
+                  className={style.aInput}
+                  title="Debes verificar la direccion"
+                  required={true}
+                />
+                <p className={style.error}>{errors.address}</p>
+              </div>
+              <button
+                className={style.verButton}
+                onClick={handleClickDirection}
+              >
+                Verificar dirección
+              </button>
             </div>
-            <button className={style.verButton} onClick={handleClickDirection}>
-              Verificar dirección
-            </button></div>
             <p>{errors.latitud}</p>
             <input
               value={input.latitud}
@@ -419,39 +431,35 @@ export default function FormLodging() {
           </div>
           {/*  <button onClick={handleEditAddres}>Editar</button>  */}
           <div>
-          <textarea
-            maxlength="400"
-            className={style.textA}
-            type="text"
-            name="description"
-            value={input.description}
-            placeholder="Describe tu alojamiento (Maximo 500 caractéres)"
-            onChange={handleChange}
-          />
-          <p className={style.error}>{errors.description}</p>
+            <textarea
+              maxlength="400"
+              className={style.textA}
+              type="text"
+              name="description"
+              value={input.description}
+              placeholder="Describe tu alojamiento (Maximo 500 caractéres)"
+              onChange={handleChange}
+            />
+            <p className={style.error}>{errors.description}</p>
           </div>
-<div>
-          <input
-      
-            type="file"
-            name="picture"
-            id="file"
-            value={input.picture}
-            placeholder="picture"
-           
-            onChange={handleChange}
-            multiple
-          />
-          <div id="contenedorHandle">
-            <div className={style.preview} id="preview"></div>
-            <div id="buttonDelet"></div>
-          </div>
-          <p>{errors.picture}</p>
+          <div>
+            <input
+              type="file"
+              name="picture"
+              id="file"
+              value={input.picture}
+              placeholder="picture"
+              onChange={handleChange}
+              multiple
+            />
+            <div id="contenedorHandle">
+              <div className={style.preview} id="preview"></div>
+              <div id="buttonDelet"></div>
+            </div>
+            <p>{errors.picture}</p>
           </div>
 
-          
           <div className={style.services}>
-
             <h3>Servicios</h3>
             <div className={style.serv}>
               <label className={style.fcontainer}>
@@ -515,27 +523,24 @@ export default function FormLodging() {
                 <div className={style.checkmark} />
               </label>
             </div>
-
           </div>
-<div className={style.centerButton}>
-          {Object.entries(errors).length === 0 &&
-          input.title !== "" &&
-          input.picture !== "" &&
-          input.latitud !== "" ? (
-            
-            <div >
-              <button className={style.lButton} type="submit">
-                Publicar Hospedaje
-              </button>
-            </div>
-          ) : (
-            <div >
-              <button className={style.lButton} disabled type="submit">
-                Publicar Hospedaje
-              </button>
-            </div>
-        
-          )}
+          <div className={style.centerButton}>
+            {Object.entries(errors).length === 0 &&
+            input.title !== "" &&
+            input.picture !== "" &&
+            input.latitud !== "" ? (
+              <div>
+                <button className={style.lButton} type="submit">
+                  Publicar Hospedaje
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button className={style.lButton} disabled type="submit">
+                  Publicar Hospedaje
+                </button>
+              </div>
+            )}
           </div>
         </form>
       </div>

@@ -41,7 +41,7 @@
 }
 
 .lodTitle {
-  min-width: 620px;
+  min-width: 580px;
   /*  margin-bottom: 20px; */
 }
 .titulo {
@@ -81,7 +81,7 @@
 }
 /* check */
 .fcontainer {
-  margin-right: 100px;
+  margin-right: 150px;
   padding-right: 20px;
   text-transform: uppercase;
   height: 1.5em;
@@ -119,6 +119,7 @@
 .services {
   width: 700px;
 }
+
 
 /* BOTON */
 /* From uiverse.io */
@@ -231,4 +232,9 @@
     display: flex;
     width: 100%;
     justify-content: center;
+  }
+  .cty{
+    margin-top: 20px;
+    margin-bottom: 70px;
+width: 150px;
   }
