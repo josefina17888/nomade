@@ -8,6 +8,7 @@ import {
   getGuestByEmail,
   deleteLodging,
   getGuestByHostId,
+  cleanDetail
 } from "../../Redux/Actions/index";
 import Carousel from "react-bootstrap/Carousel";
 import GoogleMapDetail from "../GoogleMapsDetail/GoogleMapsDetail";
@@ -52,10 +53,13 @@ export default function CardDetail(props) {
     hostId:""
   })
   useEffect(() => {
+   
     dispatch(getGuests());
     dispatch(getDetail(lodgingId));
     dispatch(getGuestByEmail(userEmail));
     dispatch(lodgingReviews());
+    
+
   }, [dispatch]);
 
 
@@ -64,9 +68,18 @@ export default function CardDetail(props) {
       setHostId({...hostId, hostId:myLodging.hostId}) 
     dispatch(getGuestByHostId(hostId))},2000)
     window.scrollTo(0, 0);
+   
   }, []);
 
-  const myLodging = useSelector((state) => state.detail);
+  
+ /*  useEffect(()=>{
+    return()=>{
+      dispatch(cleanDetail())
+    }
+    
+  },[])
+ */
+  /* const myLodging = useSelector((state) => state.detail); */
 
   let stateLodgings = useSelector((state) => state.allLodgingsReviews);
   const allGuests = useSelector((state) => state.allGuests);

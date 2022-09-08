@@ -556,3 +556,13 @@ export function cleanFilters() {
     type: 'GET_INFO_LOCAL_STORAGE'
   }
 } */
+
+export function cleanDetail(payload){
+  
+  return{
+    type: 'CLEAN_DETAIL',
+    payload
+
+  }
+}
+
